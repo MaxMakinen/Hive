@@ -6,9 +6,11 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 17:39:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/10/29 17:51:44 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/03 15:16:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+void	ft_putchar(char c);
 
 void	ft_putstr(char *str)
 {

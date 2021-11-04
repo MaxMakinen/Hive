@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
+/*   ft_count_if.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 12:04:45 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/03 15:14:30 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/03 13:41:08 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/03 13:49:53 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
-
-void	ft_print_numbers(void)
+int	ft_count_if(char **tab, int(*f)(char*))
 {
-	int	x;	
+	int	counter;
+	int	answer;
 
-	x = 48;
-	while (x < 58)
+	answer = 0;
+	counter = 0;
+	while (tab[counter] != 0)
 	{
-		ft_putchar(x);
-		x++;
+		if (f(tab[counter]) == 1)
+			answer++;
+		counter++;
 	}
+	return (answer);
 }

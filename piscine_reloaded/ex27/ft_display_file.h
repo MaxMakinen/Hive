@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
+/*   ft_display_file.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 12:04:45 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/03 15:14:30 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/03 14:14:35 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/03 14:35:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
+#ifndef FT_DISPLAY_FILE_H
+# define FT_DISPLAY_FILE_H
 
-void	ft_print_numbers(void)
-{
-	int	x;	
+# define BUF_SIZE 1
+# include <unistd.h>
+# include <fcntl.h>
 
-	x = 48;
-	while (x < 58)
-	{
-		ft_putchar(x);
-		x++;
-	}
-}
+#endif

@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
+/*   ft_print_params.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 12:04:45 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/03 15:14:30 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/02 12:19:19 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/02 16:20:03 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+
 void	ft_putchar(char c);
 
-void	ft_print_numbers(void)
+void	ft_print_params(char *str)
 {
-	int	x;	
+	int	check;
 
-	x = 48;
-	while (x < 58)
+	check = 0;
+	while (str[check] != '\0')
 	{
-		ft_putchar(x);
-		x++;
+		ft_putchar(str[check]);
+		check++;
 	}
+	ft_putchar('\n');
+}
+
+int	main(int argc, char **argv)
+{
+	int	counter;
+
+	counter = 1;
+	while (counter < argc)
+	{
+		ft_print_params(argv[counter]);
+		counter++;
+	}
+	return (0);
 }

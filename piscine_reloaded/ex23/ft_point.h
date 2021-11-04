@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
+/*   ft_point.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 12:04:45 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/03 15:14:30 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/03 12:01:30 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/03 12:13:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
+#ifndef FT_POINT_H
+# define FT_POINT_H
 
-void	ft_print_numbers(void)
+typedef struct s_point
 {
-	int	x;	
+	int	x;
+	int	y;
+}	t_point;
 
-	x = 48;
-	while (x < 58)
-	{
-		ft_putchar(x);
-		x++;
-	}
-}
+#endif

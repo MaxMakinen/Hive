@@ -1,1 +1,1 @@
-find . -type f -name '*.sh' | sed "s/\.\///" | sed "s/\.sh//"
+find . -type f -name "*.sh" | xargs basename -s .sh

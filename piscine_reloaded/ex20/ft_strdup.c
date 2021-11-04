@@ -1,25 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 12:04:45 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/03 15:14:30 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/02 16:11:51 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/02 17:03:28 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
+#include <stdlib.h>
 
-void	ft_print_numbers(void)
+int	ft_strlen(char *str)
 {
-	int	x;	
+	int	count;
 
-	x = 48;
-	while (x < 58)
+	count = 0;
+	while (str[count] != '\0')
+		count++;
+	return (count);
+}
+
+char	*ft_strdup(char *src)
+{
+	int		len;
+	int		count;
+	char	*dest;
+
+	count = 0;
+	len = ft_strlen (src);
+	dest = malloc(sizeof(dest) * len);
+	if (dest == 0)
+		return (0);
+	while (src[count] != '\0')
 	{
-		ft_putchar(x);
-		x++;
+		dest[count] = src[count];
+		count++;
 	}
+	dest[count] = '\0';
+	return (dest);
 }

@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
+/*   ft_foreach.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 12:04:45 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/03 15:14:30 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/03 13:33:33 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/03 13:38:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
-
-void	ft_print_numbers(void)
+void	ft_foreach(int *tab, int length, void(*f)(int))
 {
-	int	x;	
+	int	counter;
 
-	x = 48;
-	while (x < 58)
+	counter = 0;
+	while (counter < length)
 	{
-		ft_putchar(x);
-		x++;
+		f(tab[counter]);
+		counter++;
 	}
 }
