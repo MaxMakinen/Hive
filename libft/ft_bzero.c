@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striter.c                                       :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:02:07 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 10:29:56 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/10 14:03:30 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/10 14:11:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_striter(char *s, void (*f)(char*))
+void	ft_bzero(void *s, size_t n)
 {
-	int		counter;
+	int	count;
 
-	counter = 0;
-	while (s[counter] != '\0')
+	count = 0;
+	while (count <= n)
 	{
-		f(s[counter]);
-		counter++;
+		s[count] = 0;
+		count++;
 	}
 }

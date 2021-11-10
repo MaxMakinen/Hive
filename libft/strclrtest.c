@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striter.c                                       :+:      :+:    :+:   */
+/*   strclrtest.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:02:07 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 10:29:56 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/10 10:53:01 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/10 11:09:20 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_striter(char *s, void (*f)(char*))
+int main (int argc, char **argv)
 {
-	int		counter;
-
-	counter = 0;
-	while (s[counter] != '\0')
+	if (argc != 2)
 	{
-		f(s[counter]);
-		counter++;
+		ft_putstr("give one string\n");
+		return (1);
 	}
+	ft_putstr(argv[1]);
+	ft_putstr(": END\n");
+	ft_strclr(argv[1]);
+	ft_putstr(argv[1]);
+	ft_putstr(": END\n");
+	return (0);
 }

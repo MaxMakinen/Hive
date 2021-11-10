@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 17:10:48 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/10 13:31:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len);
 int		ft_strequ(char const *s1, char const *s2);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
 char	*ft_strmap(char const *s, char (*f)(char));
-void	ft_striter(char *s, void (*f)(char));
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+void	ft_striter(char *s, void (*f)(char*));
+void	ft_striteri(char *s, void(*f)(unsigned int, char*));
+void	ft_strclr(char *c);
+void	ft_strdel(char **as);
+char	*ft_strnew(size_t size);
+void	ft_memdel(void **ap);
+void	*ft_memalloc(size_t size);
 
 #endif

@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striter.c                                       :+:      :+:    :+:   */
+/*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:02:07 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 10:29:56 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/10 13:09:10 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/10 13:38:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_striter(char *s, void (*f)(char*))
+void	ft_memdel(void **ap)
 {
-	int		counter;
-
-	counter = 0;
-	while (s[counter] != '\0')
-	{
-		f(s[counter]);
-		counter++;
-	}
+	free(*ap);
+	*ap = NULL;
 }

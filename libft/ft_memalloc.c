@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striter.c                                       :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:02:07 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 10:29:56 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/10 13:17:06 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/10 13:29:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_striter(char *s, void (*f)(char*))
+void	*ft_memalloc(size_t size)
 {
-	int		counter;
+	void	*memory;
+	int		count;
 
-	counter = 0;
-	while (s[counter] != '\0')
+	memory = (void *)malloc(sizeof(memory) * size);
+	if (memory == 0)
+		return (NULL);
+	while (count <= size)
 	{
-		f(s[counter]);
-		counter++;
+		memory[count] = 0;
+		count++;
 	}
+	return (memory);
 }
