@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/05 17:15:09 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/08 11:08:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,30 @@ static int	wordlen(char const *s, char c, int p)
 	return (count);
 }
 
+static char	*writer(char *arr, char const *s, char c, int *pos)
+{
+	int		symbol;
+	int		position;
+
+	position = *pos;
+	symbol = 0;
+	while (s[position] != c && s[position] != '\0')
+		arr[symbol++] = s[position++];
+	arr[symbol] = '\0';
+	*pos = position;
+	return (arr);
+}
+
 char	**ft_strsplit(char const *s, char c)
 {
 	char	**arr;
 	int		pos;
-	int		s_count;
 	int		w_count;
 
 	w_count = 0;
 	pos = 0;
-	if ((arr = (char **)malloc(sizeof(arr) * wordcount(s, c) + 1)) == 0)
+	arr = (char **)malloc(sizeof(arr) * wordcount(s, c) + 1);
+	if (arr == 0)
 		return (NULL);
 	while (s[pos] != '\0')
 	{
@@ -65,12 +79,11 @@ char	**ft_strsplit(char const *s, char c)
 			pos++;
 		if (s[pos] != '\0')
 		{
-			s_count = 0;
-			if ((arr[w_count] = (char *)malloc(sizeof(arr) * wordlen(s, c, pos) + 1)) == 0)
+			arr[w_count] = (char *)malloc(sizeof(arr) * wordlen(s, c, pos) + 1);
+			if (arr[w_count] == 0)
 				return (NULL);
-			while (s[pos] != c && s[pos] != '\0')
-				arr[w_count][s_count++] = s[pos++];
-			arr[w_count++][s_count] = '\0';
+			writer(arr[w_count], s, c, &pos);
+			w_count++;
 		}
 	}
 	arr[w_count] = 0;
