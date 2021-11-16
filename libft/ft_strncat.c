@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:41:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/15 14:44:22 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/15 16:44:42 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/16 11:42:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*memset(void *b, int c, size_t len)
+char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
-	char	*copy;
-	char	*end;
+	char		*printer;
+	const char	*reader;
+	const char	*end2;
 
-	copy = *b;
-	end = copy + len;
-	while (copy < end)
-	{
-		*copy++ = (unsigned char *)c;
-	}
-	return (b);
+	if (n == 0)
+		return (s1);
+	printer = *s1;
+	reader = *s2;
+	end2 = s2 + n;
+	while (printer != '\0')
+		printer++;
+	while (reader != end2)
+		printer++ = reader++;
+	preinter = '\0';
+	return (s1);
 }

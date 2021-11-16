@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 10:21:42 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/11 10:29:46 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/15 17:13:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	count;
+	char		*dstp;
+	const char	*srcp;
+	size_t		count;
 
 	count = 0;
-	while (count <= n)
+	if (n == 0 || dst == src)
+		return (dst);
+
+	while (count < n)
 	{
 		dst[count] = src[count];
 		count++;

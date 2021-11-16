@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:41:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/15 14:44:22 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/16 15:07:52 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/16 15:25:48 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*memset(void *b, int c, size_t len)
+char	*ft_strrchr(const char *s, int c)
 {
-	char	*copy;
-	char	*end;
+	const char	*seeker;
+	const char	*last;
 
-	copy = *b;
-	end = copy + len;
-	while (copy < end)
+	seeker = *s;
+	last = NULL;
+	while (seeker != '\0')
 	{
-		*copy++ = (unsigned char *)c;
+		if (seeker == (char)c)
+			last = *seeker;
+		seeker++;
 	}
-	return (b);
+	if ((char)c == '\0')
+		return (seeker);
+	return (last);
 }

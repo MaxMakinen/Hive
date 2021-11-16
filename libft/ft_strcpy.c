@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:41:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/15 14:44:22 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/15 15:50:40 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/15 16:07:26 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*memset(void *b, int c, size_t len)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	char	*copy;
-	char	*end;
+	unsigned char	pointer1;
+	unsigned char	pointer2;
 
-	copy = *b;
-	end = copy + len;
-	while (copy < end)
+	pointer1 = *dst;
+	pointer2 = *src;
+	while (pointer2 != '\0')
 	{
-		*copy++ = (unsigned char *)c;
+		pointer1++ = pointer2++;
 	}
-	return (b);
-}
+	pointer1 = pointer2;
+	return (dst);

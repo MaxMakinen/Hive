@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:41:54 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/11 15:30:10 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/15 14:56:17 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,5 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		}
 		count++;
 	}
-	return(NULL);
+	return (NULL);
 }
-

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:32:32 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/04 12:55:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:25:44 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,5 @@
 
 void	ft_putstr(char const *s)
 {
-	int	counter;
-
-	counter = 0;
-	while (s[counter] != '\0')
-	{
-		ft_putchar(s[counter]);
-		counter++;
-	}
+	write(1, &s, ft_strlen(s));
 }

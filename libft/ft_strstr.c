@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:41:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/15 14:44:22 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/16 15:26:08 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/16 15:42:14 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*memset(void *b, int c, size_t len)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	char	*copy;
-	char	*end;
+	const char *seeker;
+	size_t len;
 
-	copy = *b;
-	end = copy + len;
-	while (copy < end)
+	if (needle == 0)
+		return (haystack);
+	len = ft_strlen(needle);
+	seeker = *haystack;
+	while (seeker != '\0')
 	{
-		*copy++ = (unsigned char *)c;
+		if (ft_strncmp(seeker, needle, len) == 0)
+			return (seeker);
+		seeker++;
 	}
-	return (b);
+	return (NULL);
 }

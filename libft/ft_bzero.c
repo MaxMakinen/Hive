@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 14:03:30 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 14:11:59 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/15 14:46:36 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,5 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	int	count;
-
-	count = 0;
-	while (count <= n)
-	{
-		s[count] = 0;
-		count++;
-	}
+	memset(s, 0, n);
 }
