@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 15:28:52 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 16:00:48 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/18 17:55:28 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	ft_strcmp(char const *s1, char const *s2)
 {
-	int	counter;
+	int	count;
 
-	counter = 0;
-	while (s1[counter] != '\0' || s2[counter] != '\0')
+	count = 0;
+	while (s1[count] == s2[count])
 	{
-		if (s1[counter] > s2[counter])
-			return (1);
-		if (s1[counter] < s2[counter])
+		if (s1[count] == 0)
+			return (0);
+		if (s1[count] < s2[count])
 			return (-1);
-		counter++;
+		count++;
 	}
-	return (0);
+	return ((unsigned int)s1[count] - (unsigned int)s2[count]);
 }
