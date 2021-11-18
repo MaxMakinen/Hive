@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:32:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 16:38:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/18 13:48:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,5 @@
 
 int	ft_isalpha(int c)
 {
-	if ((c > 96 && c < 123) || (c > 64 && c < 91))
-		return (1);
-	else
-		return (0);
+	return (ft_isupper(c) || ft_islower(c));
 }

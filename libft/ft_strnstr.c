@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 15:07:52 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 14:29:56 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/17 09:04:48 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/18 14:29:22 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 {
 	const char	*seeker;
-	const char	*last;
+	const char	*end;
+	size_t		len;
 
-	seeker = *s;
-	last = NULL;
-	while (seeker != '\0')
+	if (needle == 0)
+		return (haystack);
+	len = ft_strlen(needle);
+	seeker = *haystack;
+	end = seeker + n;
+	while (seeker != '\0' && seeker != end)
 	{
-		if (seeker == (char)c)
-			last = *seeker;
+		if (ft_strncmp(seeker, needle, len) == 0)
+			return (seeker);
 		seeker++;
 	}
-	if ((char)c == '\0')
-		return (seeker);
-	return (last);
+	return (NULL);
 }

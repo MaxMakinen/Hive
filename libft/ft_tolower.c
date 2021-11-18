@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 15:07:52 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 14:29:56 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/18 14:10:36 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/18 14:14:17 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+int	ft_tolower(int c)
 {
-	const char	*seeker;
-	const char	*last;
-
-	seeker = *s;
-	last = NULL;
-	while (seeker != '\0')
-	{
-		if (seeker == (char)c)
-			last = *seeker;
-		seeker++;
-	}
-	if ((char)c == '\0')
-		return (seeker);
-	return (last);
-}
+	if ((c >= 'A') && (c <= 'Z'))
+		return (c + ('a' - 'A'));
+	return (c);
