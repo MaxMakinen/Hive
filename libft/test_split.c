@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 17:00:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 11:47:43 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:42:18 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(void)
 //	char	d4;
 	int		c1 = 0;
 
-	d = 'k';
+	d = '\0';
 	arr = ft_strsplit(str2, d);
 	while (arr[c1] != '\0')
 	{

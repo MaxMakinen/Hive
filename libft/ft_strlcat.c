@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:43:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/19 11:23:50 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/23 16:23:09 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,11 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	siz = dstsize - dstlen;
 	if (siz == 0)
 		return (dstlen + ft_strlen(src));
-	while (*reader != '0')
+	while (*reader != '\0' && siz > 1)
 	{
-		if (siz > 1)
-		{
-			*printer++ = *reader;
+			*printer++ = *reader++;
 			siz--;
-		}
-		reader++;
 	}
 	*printer = '\0';
-	return (dstlen + (reader - src));
+	return (dstlen + (reader - src) - 1);
 }

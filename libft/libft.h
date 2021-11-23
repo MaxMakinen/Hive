@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 14:36:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/23 11:07:41 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_putendl_fd(char const *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_itoa(int n);
 char	**ft_strsplit(char const *s, char c);
+char	**ft_split(char const *s, char c); //delete
 char	*ft_strtrim(char const *s);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
