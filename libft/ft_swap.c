@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 13:21:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/19 13:14:55 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/10/29 14:54:54 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/10/29 15:38:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putnbr(int n)
+void	ft_swap(int *a, int *b)
 {
-	long ln;
-	ln = n;
-	if (ln < 0)
-	{
-		ln *= -1;
-		ft_putchar('-');
-	}
-	if (ln > 9)
-		ft_putnbr(ln / 10);
-	ft_putchar(48 + (ln % 10));
+	int	x;
+
+	x = *a;
+	*a = *b;
+	*b = x;
 }

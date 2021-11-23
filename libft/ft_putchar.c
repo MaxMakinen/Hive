@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:04:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 18:57:56 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 13:52:25 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 
 void	ft_putchar(char c)
 {
-	write(1, &c, sizeof(c));
+	unsigned char	uc;
+
+	uc = (unsigned char)c;
+	write(1, &uc, 1);
 }

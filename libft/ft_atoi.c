@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:23:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 14:23:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:27:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ static int	hexval(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (c - '0');
-	if (c >= 'a' && c <= 'f')
+	else if (c >= 'a' && c <= 'f')
 		return (c - 'a' + 10);
-	if (c >= 'A' && c <= 'F')
+	else if (c >= 'A' && c <= 'F')
 		return (c - 'A' + 10);
+	return (c);
 }
 
 int	ft_atoi(const char *nptr)

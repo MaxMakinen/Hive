@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:26:08 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 14:30:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:32:31 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*ft_strstr(const char *haystack, const char *needle)
 	size_t		len;
 
 	if (needle == 0)
-		return (haystack);
+		return ((char *)haystack);
 	len = ft_strlen(needle);
-	seeker = *haystack;
-	while (seeker != '\0')
+	seeker = haystack;
+	while (*seeker != '\0')
 	{
 		if (ft_strncmp(seeker, needle, len) == 0)
-			return (seeker);
+			return ((char *)seeker);
 		seeker++;
 	}
 	return (NULL);

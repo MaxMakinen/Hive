@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:41:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 11:48:35 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:29:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	*memset(void *s, int c, size_t len)
 {
-	char	*copy;
-	char	*end;
+	unsigned char	*copy;
+	unsigned char	*end;
 
-	copy = *s;
+	copy = (unsigned char *)s;
 	end = copy + len;
 	while (copy < end)
 	{
-		*copy++ = (unsigned char *)c;
+		*copy++ = (unsigned char)c;
 	}
 	return (s);
 }

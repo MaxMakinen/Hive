@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:46:15 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 12:01:54 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:18:01 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,18 @@
 char	*ft_strnew(size_t size)
 {
 	char	*str;
-	int		count;
-
-	count = 0;
-	str = (char *)malloc(sizeof(str) * size + 1);
-	if (str == 0)
+	char	*strnew;
+	char	*end;
+	
+	strnew = (char *)malloc(sizeof(str) * size + 1);
+	if (strnew == 0)
 		return (NULL);
-	while (count <= size)
+	str = strnew;
+	end = str + size;
+	while (str <= end)
 	{
-		str[count] = '\0';
-		count++;
+		*str++ = '\0';
 	}
-	str[count] = '\0';
-	return (str);
+	*str = '\0';
+	return (strnew);
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:32:32 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 18:50:12 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 13:47:09 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 void	ft_putstr(char const *s)
 {
-	write(1, s, ft_strlen(s) * sizeof(*s));
+	unsigned char	*uc;
+
+	uc = (unsigned char *)s;
+	if (s != NULL || s != 0)
+	{
+		
+		write(1, uc, ft_strlen((const char *)uc) * sizeof(*uc));
+	}
 }

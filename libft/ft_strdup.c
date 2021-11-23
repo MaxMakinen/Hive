@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/15 15:49:09 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:58:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ char	*ft_strdup(const char *s1)
 	str = ft_strnew(size);
 	if (str == NULL)
 		return (NULL);
-	ft_memcopy(str, s1, size);
+	ft_memcpy(str, s1, size);
 	return (str);
 }

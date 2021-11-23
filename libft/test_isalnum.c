@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 13:26:45 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 13:37:43 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:06:08 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 #include <stdio.h>
 #include <ctype.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	char a = 'd';
 	char b = 9;
 	char c = '5';
 	char d = 27;
 
-	printf("a : %d\n", ft_isalnum(a));
-	printf("a : %d\n", isalnum(a));
-	printf("b : %d\n", ft_isalnum(b));
-	printf("b : %d\n", isalnum(b));
-	printf("c : %d\n", ft_isalnum(c));
-	printf("c : %d\n", isalnum(c));
-	printf("d : %d\n", ft_isalnum(d));
-	printf("d : %d\n", isalnum(d));
+	printf("ft_isanlum	: %d\n", ft_isalnum(a));
+	printf("isalnum		: %d\n", isalnum(a));
+	printf("ft_isalnum	: %d\n", ft_isalnum(b));
+	printf("isalnum		: %d\n", isalnum(b));
+	printf("ft_isalnum	: %d\n", ft_isalnum(c));
+	printf("isalnum		: %d\n", isalnum(c));
+	printf("ft_isalnum	: %d\n", ft_isalnum(d));
+	printf("isalnum		: %d\n", isalnum(d));
 	return (0);
 }

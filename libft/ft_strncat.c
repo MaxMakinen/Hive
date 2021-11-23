@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:44:42 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/16 11:42:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:42:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ char	*ft_strncat(char *s1, const char *s2, size_t n)
 
 	if (n == 0)
 		return (s1);
-	printer = *s1;
-	reader = *s2;
+	printer = s1;
+	reader = s2;
 	end2 = s2 + n;
-	while (printer != '\0')
+	while (*printer != '\0')
 		printer++;
 	while (reader != end2)
-		printer++ = reader++;
-	preinter = '\0';
+		*printer++ = *reader++;
+	*printer = '\0';
 	return (s1);
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:47:01 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/18 14:27:31 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:30:56 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_isxdigit(int c)
 {
 	if (ft_isdigit(c))
 		return (1);
-	else if ((c >= 'a') && (c <= 'f') || (c >= 'A') && (c <= 'F'))
+	else if ((c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))
 		return (1);
 	return (0);
 }
