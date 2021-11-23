@@ -6,11 +6,11 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2021/11/23 13:03:50 by mmakinen         ###   ########.fr        #
+#    Updated: 2021/11/23 20:25:25 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-C =			gcc
+CC =			gcc
 FLAGS = 	-Wall -Wextra -Werror -c
 NAME =		libft.a
 SRC_PATH =	./
@@ -32,5 +32,10 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+
+so:
+	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
+	gcc -nostartfiles -shared -o libft.so $(OBJECTS)
+
 
 re: fclean all
