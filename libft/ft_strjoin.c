@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:53:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 15:24:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/24 12:00:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		count;
 
 	count = 0;
+	if (s1 == 0 || s2 == 0)
+		return (NULL);
 	len = (ft_strlen(s1) + ft_strlen(s2));
-	newstr = (char *)malloc(sizeof(newstr) * len + 1);
+	newstr = (char *)malloc(sizeof(*newstr) * len + 1);
 	if (newstr == 0)
 		return (NULL);
 	while (s1[count] != '\0')

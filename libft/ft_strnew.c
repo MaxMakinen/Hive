@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:46:15 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/19 12:18:01 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/24 11:20:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,11 @@
 
 char	*ft_strnew(size_t size)
 {
-	char	*str;
 	char	*strnew;
-	char	*end;
 	
-	strnew = (char *)malloc(sizeof(str) * size + 1);
+	strnew = (char *)malloc(sizeof(*strnew) * size + 1);
 	if (strnew == 0)
 		return (NULL);
-	str = strnew;
-	end = str + size;
-	while (str <= end)
-	{
-		*str++ = '\0';
-	}
-	*str = '\0';
+	ft_bzero(strnew, size + 1);
 	return (strnew);
 }
