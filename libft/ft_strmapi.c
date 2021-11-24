@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:35:36 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 10:37:48 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:22:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		counter;
+	unsigned int		counter;
 	char	*newstr;
 
 	counter = 0;
-	newstr = (char *)malloc(sizeof(newstr) * ft_strlen(s) + 1);
-	if (newstr == 0)
+	if (s == 0)
+		return (NULL);
+	newstr = ft_strnew(ft_strlen(s));
+	if (newstr == NULL)
 		return (NULL);
 	while (s[counter] != '\0')
 	{

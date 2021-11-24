@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 14:54:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 15:23:25 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:31:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	size_t	counter;
 
 	counter = 0;
-	newstr = (char *)malloc(sizeof(newstr) * len + 1);
+	if (s == 0)
+		return (NULL);
+	newstr = ft_strnew(len);
 	if (newstr == 0)
 		return (NULL);
-	while (counter < len)
+	if (start < ft_strlen(s))
 	{
-		newstr[counter] = s[start + counter];
-		counter++;
+		while (counter < len)
+		{
+			newstr[counter] = s[start + counter];
+			counter++;
+		}
 	}
 	newstr[counter] = '\0';
 	return (newstr);

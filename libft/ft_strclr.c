@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:44:39 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 11:22:51 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:10:14 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 void	ft_strclr(char *s)
 {
-	unsigned int	counter;
-
-	counter = 0;
-	while (s[counter] != '\0')
-	{
-		s[counter] = '\0';
-		counter++;
-	}
+	if (s != 0)
+		ft_bzero(s, ft_strlen(s) + 1);
 }

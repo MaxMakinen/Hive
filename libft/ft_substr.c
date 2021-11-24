@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmap.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 16:17:46 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 16:21:03 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/08 14:54:09 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/24 18:25:13 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmap(char const *s, char (*f)(char))
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		counter;
 	char	*newstr;
+	size_t	counter;
 
 	counter = 0;
-	if (s != 0)
+	if (s == 0)
+		return (NULL);
+	newstr = ft_strnew(len);
+	if (newstr == 0)
+		return (NULL);
+	if (start < ft_strlen(s))
 	{
-		newstr = ft_strnew(ft_strlen(s));
-		if (newstr == 0)
-			return (NULL);
-		while (s[counter] != '\0')
+		while (counter < len)
 		{
-			newstr[counter] = f(s[counter]);
+			newstr[counter] = s[start + counter];
 			counter++;
 		}
-		newstr[counter] = '\0';
-		return (newstr);
 	}
-	return (NULL);
+	newstr[counter] = '\0';
+	return (newstr);
 }

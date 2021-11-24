@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:09:10 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/10 13:38:40 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:01:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	ft_memdel(void **ap)
 {
-	free(*ap);
-	*ap = NULL;
+	if (ap != 0)
+	{
+		free(*ap);
+		*ap = NULL;
+	}
 }
