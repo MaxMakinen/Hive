@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 17:11:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/25 17:15:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	wordcount(char const *s, char c)
 			count++;
 			test = 1;
 		}
-		while (s[count] == c || s[count] == '\0')
+		while (s[count] == c || s[count + 1] == '\0')
 		{
 			w_count += test;
 			test = 0;
