@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 12:28:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/25 17:11:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ static int	wordcount(char const *s, char c)
 	test = 0;
 	count = 0;
 	w_count = 0;
-	while (s[count] != c && s[count] != '\0')
+	while (s[count] != '\0')
 	{
-		count++;
-		test = 1;
-	}
-	while (s[count] == c || s[count] == '\0')
-	{
-		w_count += test;
-		test = 0;
-		count++;
+		while (s[count] != c && s[count] != '\0')
+		{
+			count++;
+			test = 1;
+		}
+		while (s[count] == c || s[count] == '\0')
+		{
+			w_count += test;
+			test = 0;
+			count++;
+		}
 	}
 	return (w_count);
 }

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 10:21:42 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 14:56:47 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/25 16:25:09 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/25 17:10:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	ft_lstdelone(t_list **alst, void(*del)(void *, size_t))
 {
-	char		*dstp;
-	const char	*srcp;
-	const char	*end;
+	t_list	*node;
 
-	if (n == 0 || dst == src)
-		return (dst);
-	dstp = (char *)dst;
-	srcp = (const char *)src;
-	end = srcp + n;
-	while (srcp < end)
+	if (*alst != 0)
 	{
-		*dstp++ = *srcp++;
+		node = *alst;
+		del(node->content, node->content_size);
+		free(*alst);
+		*alst = NULL;
 	}
-	return (dst);
 }
