@@ -1,0 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/25 19:13:16 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/25 19:30:08 by mmakinen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_lstadd_front(t_list **alst, t_list *new)
+{
+	t_list	*node;
+
+	node = *alst;
+	new->next = *alst;
+	**alst->next = new;
+//	*alst = node;
+}
