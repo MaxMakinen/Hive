@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 17:15:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/25 18:20:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,16 @@ static char	*writer(char *arr, char const *s, char c, int *pos)
 	return (arr);
 }
 
+static void	*arr_free(char **arr)
+{
+	while (*arr != 0)
+	{
+		free(*arr);
+		*arr = NULL;
+	}
+	return (NULL);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**arr;
@@ -75,7 +85,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	w_count = 0;
 	pos = 0;
-	arr = (char **)malloc(sizeof(arr) * wordcount(s, c) + 1);
+	arr = (char **)ft_strnew(wordcount(s, c));
 	if (arr == 0)
 		return (NULL);
 	while (s[pos] != '\0')
@@ -86,7 +96,7 @@ char	**ft_split(char const *s, char c)
 		{
 			arr[w_count] = (char *)malloc(sizeof(arr) * wordlen(s, c, pos) + 1);
 			if (arr[w_count] == 0)
-				return (NULL);
+				return (arr_free(arr));
 			writer(arr[w_count], s, c, &pos);
 			w_count++;
 		}

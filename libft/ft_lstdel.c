@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 16:25:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 18:42:26 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/25 18:23:34 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/25 18:43:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list **alst, void(*del)(void *, size_t))
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
 	t_list	*node;
 
@@ -21,7 +21,15 @@ void	ft_lstdelone(t_list **alst, void(*del)(void *, size_t))
 		node = *alst;
 		del(node->content, node->content_size);
 		node->content_size = 0;
-		free(*alst);
-		*alst = NULL;
+		if (node->next != NULL)
+		{
+			*alst = node->next;
+			ft_lstdel(alst, del);
+			node->next = NULL;
+		}
+		free(node);
+		node = NULL;
+		alst = NULL;
 	}
 }
+
