@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 18:20:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:39:13 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	*arr_free(char **arr)
 	while (*arr != 0)
 	{
 		free(*arr);
-		*arr = NULL;
+		*arr++ = NULL;
 	}
 	return (NULL);
 }
@@ -97,8 +97,7 @@ char	**ft_split(char const *s, char c)
 			arr[w_count] = (char *)malloc(sizeof(arr) * wordlen(s, c, pos) + 1);
 			if (arr[w_count] == 0)
 				return (arr_free(arr));
-			writer(arr[w_count], s, c, &pos);
-			w_count++;
+			writer(arr[w_count++], s, c, &pos);
 		}
 	}
 	arr[w_count] = 0;

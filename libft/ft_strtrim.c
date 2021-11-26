@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:51:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 12:24:54 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:34:16 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char const	*beginning(char const *s)
 static char const	*ending(char const *s)
 {
 	char const	*pos;
-	int		counter;
+	int			counter;
 
 	pos = s;
 	counter = 0;

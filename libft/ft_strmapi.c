@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:35:36 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 13:22:45 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:36:12 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	unsigned int		counter;
-	char	*newstr;
+	unsigned int	counter;
+	char			*newstr;
 
 	counter = 0;
 	if (s == 0)

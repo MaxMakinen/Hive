@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 10:02:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 19:27:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:32:55 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {
-	t_list		*newnode;
+	t_list			*newnode;
 	unsigned char	*newcont;
 
 	newnode = malloc(sizeof(t_list));
@@ -38,5 +38,5 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 		newnode->content_size = content_size;
 		newnode->next = NULL;
 	}
-	return(newnode);
+	return (newnode);
 }

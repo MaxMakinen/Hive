@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:30:39 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 13:32:31 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:40:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long ln;
+	long	ln;
 
 	ln = n;
 	if (ln < 0)

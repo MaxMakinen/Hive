@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:23:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 11:48:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:55:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,28 @@ static int	hexval(int c)
 	return (c);
 }
 
+static int	hextoi(const char *nptr)
+{
+	long	value;
+
+	value = 0;
+	nptr += 2;
+	while (*nptr != 0 && ft_isxdigit(*nptr) != 0)
+		value = value * 16 + hexval(*nptr++);
+	return ((int)value);
+}
+
 int	ft_atoi(const char *nptr)
 {
-	int	value;
-	int	negative;
+	long	value;
+	int		negative;
 
 	value = 0;
 	negative = 0;
 	while (ft_isspace(*nptr) == 1)
 		nptr++;
 	if (nptr[0] == '0' && (nptr[1] == 'x' || nptr[1] == 'X'))
-	{
-		nptr += 2;
-		while (*nptr != 0 && ft_isxdigit(*nptr) != 0)
-			value = value * 16 + hexval(*nptr++);
-	}
+		value = hextoi(nptr);
 	else
 	{
 		if (nptr[0] == '-' || nptr[0] == '+')
@@ -51,5 +58,5 @@ int	ft_atoi(const char *nptr)
 	}
 	if (negative == 1)
 		value = -value;
-	return (value);
+	return ((int)value);
 }

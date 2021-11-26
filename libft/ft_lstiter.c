@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:39:48 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 19:50:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:41:30 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 		}
 	}
 }
-

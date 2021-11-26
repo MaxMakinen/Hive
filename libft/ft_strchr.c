@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 18:32:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 19:11:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:37:44 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ char	*ft_strchr(const char *s, int c)
 		s++;
 	}
 	if (c == 0)
-		return((char *)s);
+		return ((char *)s);
 	return (NULL);
 }

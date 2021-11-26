@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:43:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 10:31:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:37:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 			*printer++ = *reader++;
 			siz--;
 		}
-	*printer = '\0';
+		*printer = '\0';
 	}
 	return (dstlen + srclen);
 }

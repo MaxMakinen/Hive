@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 15:07:52 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:34:46 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/25 19:53:19 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/26 10:11:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	char	*seeker;
-	char	*last;
+	t_list	*node;
+	t_list	*new;
 
-	seeker = (char *)s;
-	last = NULL;
-	while (*seeker != '\0')
-	{
-		if (*seeker == (char)c)
-			last = seeker;
-		seeker++;
-	}
-	if ((char)c == '\0')
-		return (seeker);
-	return (last);
+	node = lst;
+	node = f(node);
+	new = malloc(sizeof(new));
+	if (new == 0)
+		return (0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:23:34 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 18:43:04 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:43:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,3 @@ void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 		alst = NULL;
 	}
 }
-
