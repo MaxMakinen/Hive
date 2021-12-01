@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:07:52 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:34:46 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:34:25 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*seeker;
-	char	*last;
+	const char	*seeker;
+	const char	*last;
 
-	seeker = (char *)s;
+	seeker = s;
 	last = NULL;
 	while (*seeker != '\0')
 	{
@@ -26,6 +26,6 @@ char	*ft_strrchr(const char *s, int c)
 		seeker++;
 	}
 	if ((char)c == '\0')
-		return (seeker);
-	return (last);
+		return ((char *)seeker);
+	return ((char *)last);
 }

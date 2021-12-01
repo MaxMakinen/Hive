@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 11:08:07 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/29 13:10:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ static int	wordcount(char const *s, char c)
 	test = 0;
 	count = 0;
 	w_count = 0;
-	while (s[count] != c && s[count] != '\0')
+	while (s[count] != '\0')
 	{
-		count++;
-		test = 1;
-	}
-	while (s[count] == c || s[count] == '\0')
-	{
-		w_count += test;
-		test = 0;
-		count++;
+		while (s[count] != c && s[count + 1] != '\0')
+		{
+			count++;
+			test = 1;
+		}
+		while (s[count] == c || s[count + 1] == '\0')
+		{
+			w_count += test;
+			test = 0;
+			count++;
+		}
 	}
 	return (w_count);
 }
@@ -62,15 +65,27 @@ static char	*writer(char *arr, char const *s, char c, int *pos)
 	return (arr);
 }
 
+static void	*arr_free(char **arr)
+{
+	while (*arr != 0)
+	{
+		free(*arr);
+		*arr++ = NULL;
+	}
+	return (NULL);
+}
+
 char	**ft_strsplit(char const *s, char c)
 {
 	char	**arr;
 	int		pos;
 	int		w_count;
 
+	if (s == 0)
+		return (NULL);
 	w_count = 0;
 	pos = 0;
-	arr = (char **)malloc(sizeof(arr) * wordcount(s, c) + 1);
+	arr = (char **)malloc(sizeof(arr) * (wordcount(s, c) + 1));
 	if (arr == 0)
 		return (NULL);
 	while (s[pos] != '\0')
@@ -81,9 +96,8 @@ char	**ft_strsplit(char const *s, char c)
 		{
 			arr[w_count] = (char *)malloc(sizeof(arr) * wordlen(s, c, pos) + 1);
 			if (arr[w_count] == 0)
-				return (NULL);
-			writer(arr[w_count], s, c, &pos);
-			w_count++;
+				return (arr_free(arr));
+			writer(arr[w_count++], s, c, &pos);
 		}
 	}
 	arr[w_count] = 0;

@@ -6,15 +6,15 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 14:54:54 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/10/29 15:38:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:56:02 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_swap(int *a, int *b)
+void	ft_swap(void *a, void *b)
 {
-	int	x;
+	void	*x;
 
-	x = *a;
-	*a = *b;
-	*b = x;
+	x = a;
+	a = b;
+	b = x;
 }

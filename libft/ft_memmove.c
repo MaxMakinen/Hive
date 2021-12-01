@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 11:30:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:41:01 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 10:35:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	dstp = (unsigned char *)dst;
 	if (dst == src)
 		return (0);
-	if (srcp < dstp && dstp < srcp + len)
+	if (srcp < dstp && srcp + len > dstp)
 	{
 		srcp += len;
 		dstp += len;
@@ -32,10 +32,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	}
 	else
 	{
-		while (len-- != 0)
-		{
-			*dstp++ = *srcp++;
-		}
+		ft_memcpy(dst, src, len);
 	}
 	return (dst);
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:39:13 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/29 12:40:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	wordcount(char const *s, char c)
 	w_count = 0;
 	while (s[count] != '\0')
 	{
-		while (s[count] != c && s[count] != '\0')
+		while (s[count] != c && s[count + 1] != '\0')
 		{
 			count++;
 			test = 1;
@@ -85,7 +85,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	w_count = 0;
 	pos = 0;
-	arr = (char **)ft_strnew(wordcount(s, c));
+	arr = (char **)malloc(sizeof(arr) * (wordcount(s, c) + 1));
 	if (arr == 0)
 		return (NULL);
 	while (s[pos] != '\0')

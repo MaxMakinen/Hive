@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 10:02:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:32:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:39:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	t_list			*newnode;
 	unsigned char	*newcont;
 
-	newnode = malloc(sizeof(t_list));
+	newnode = (t_list *)malloc(sizeof(t_list));
 	if (newnode == 0)
 		return (NULL);
 	if (content == 0)
@@ -27,7 +27,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	}
 	else
 	{
-		newcont = malloc(sizeof(*newcont) * (content_size));
+		newcont = (unsigned char *)malloc(sizeof(*newcont) * (content_size));
 		if (newcont == 0)
 		{
 			free(newnode);
@@ -36,7 +36,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 		newcont = ft_memcpy(newcont, content, content_size);
 		newnode->content = newcont;
 		newnode->content_size = content_size;
-		newnode->next = NULL;
 	}
+	newnode->next = NULL;
 	return (newnode);
 }

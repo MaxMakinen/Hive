@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:25:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:43:58 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:15:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 	{
 		node = *alst;
 		del(node->content, node->content_size);
-		node->content_size = 0;
 		free(*alst);
 		*alst = NULL;
 	}

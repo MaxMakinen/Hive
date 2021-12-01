@@ -6,13 +6,13 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:13:16 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/25 19:38:39 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/29 13:11:20 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+void	ft_lstadd(t_list **alst, t_list *new)
 {
 	new->next = *alst;
 	*alst = new;

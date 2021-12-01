@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_display_file.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 19:53:19 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 10:11:29 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/03 14:14:35 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/03 14:35:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_DISPLAY_FILE_H
+# define FT_DISPLAY_FILE_H
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
-{
-	t_list	*node;
-	t_list	*new;
+# define BUF_SIZE 1
+# include <unistd.h>
+# include <fcntl.h>
 
-	node = lst;
-	node = f(node);
-	new = malloc(sizeof(new));
-	if (new == 0)
-		return (0);
-	return (0);
-}
+#endif

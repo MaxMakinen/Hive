@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:56:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:45:08 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*ft_strncpy(char *dst, const char *src, size_t len);
 char	*ft_strcat(char *s1, const char *s2);
 char	*ft_strncat(char *s1, const char *s2, size_t n);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strstr(const char *haystack, const char *needle);
@@ -67,9 +68,9 @@ void	ft_putendl_fd(char const *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_itoa(int n);
 char	**ft_strsplit(char const *s, char c);
-char	**ft_split(char const *s, char c); //delete
 char	*ft_strtrim(char const *s);
 char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 int		ft_strequ(char const *s1, char const *s2);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
@@ -82,10 +83,11 @@ void	ft_strdel(char **as);
 char	*ft_strnew(size_t size);
 void	ft_memdel(void **ap);
 void	*ft_memalloc(size_t size);
+void	*ft_calloc(size_t count, size_t size);
 t_list	*ft_lstnew(void const *content, size_t content_size);
 void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void	ft_lstadd_front(t_list **alst, t_list *new);
+void	ft_lstadd(t_list **alst, t_list *new);
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 

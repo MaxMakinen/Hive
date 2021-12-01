@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:51:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:34:16 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:19:49 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_strtrim(char const *s)
 	start = beginning(s);
 	end = ending(s);
 	len = end - start;
-	newstr = (char *)malloc(sizeof(*newstr) * len + 1);
+	newstr = ft_strnew(len);
 	if (newstr == 0)
 		return (NULL);
 	while (counter < len)
@@ -78,6 +78,5 @@ char	*ft_strtrim(char const *s)
 		newstr[counter] = (char)start[counter];
 		counter++;
 	}
-	newstr[counter] = '\0';
 	return (newstr);
 }

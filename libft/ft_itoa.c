@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:57:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 12:53:13 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:32:54 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ char	*ft_itoa(int n)
 	num = n;
 	neg = 0;
 	len = len_tester(n, &neg);
-	str = (char *)malloc(sizeof(*str) * (len + 1));
+	str = ft_strnew(len);
 	if (str == 0)
 		return (NULL);
-	str[len] = '\0';
 	if (neg == 1)
 	{
 		num = -num;

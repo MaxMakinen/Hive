@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 14:54:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 18:31:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:08:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 			counter++;
 		}
 	}
-	newstr[counter] = '\0';
 	return (newstr);
 }

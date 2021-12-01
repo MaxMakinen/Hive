@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:23:34 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/26 14:43:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/11/29 15:17:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
 	t_list	*node;
+	t_list	*temp;
 
 	if (alst != 0)
 	{
 		node = *alst;
-		del(node->content, node->content_size);
-		node->content_size = 0;
-		if (node->next != NULL)
+		while (node != 0)
 		{
-			*alst = node->next;
-			ft_lstdel(alst, del);
+			temp = node->next;
+			del(node->content, node->content_size);
 			node->next = NULL;
+			free(node);
+			node = temp;
 		}
-		free(node);
 		node = NULL;
-		alst = NULL;
+		*alst = NULL;
 	}
 }

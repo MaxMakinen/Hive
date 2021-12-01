@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:50:40 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/19 11:35:39 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/01 10:48:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 char	*ft_strcpy(char *dst, const char *src)
 {
-	unsigned char	*pointer1;
-	unsigned char	*pointer2;
+	unsigned char	*dstp;
+	unsigned char	*srcp;
 
-	pointer1 = (unsigned char *)dst;
-	pointer2 = (unsigned char *)src;
-	while (*pointer2 != '\0')
+	dstp = (unsigned char *)dst;
+	srcp = (unsigned char *)src;
+	while (*srcp != '\0')
 	{
-		*pointer1++ = *pointer2++;
+		*dstp++ = *srcp++;
 	}
-	*pointer1 = *pointer2;
+	*dstp = *srcp;
 	return (dst);
 }
