@@ -1,4 +1,3 @@
-ft_strnew.c - add errno stuff, check man. not extra!
 ft_isspace.c
 ft_isblank.c
 ft_isupper.c
