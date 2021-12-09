@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 14:54:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/29 12:41:37 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/09 12:24:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
+#include <fcntl.h>
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	main()
 {
-	char	*newstr;
-	size_t	counter;
+	int 	fd;
+	char	*line;
+	int		test;
 
-	counter = 0;
-	if (s == 0)
-		return (NULL);
-	newstr = ft_strnew(len);
-	if (newstr == 0)
-		return (NULL);
-	if (start < ft_strlen(s))
-	{
-		while (counter < len)
-		{
-			newstr[counter] = s[start + counter];
-			counter++;
-		}
-	}
-	newstr[counter] = '\0';
-	return (newstr);
+	fd = open("./lorem", O_RDONLY);
+	test = get_next_line(fd, &line);
+	ft_putnbr(test);
+	ft_putchar('\n');
+	ft_putstr(line);
+	return (0);
 }

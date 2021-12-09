@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:27:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/07 16:15:36 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:25:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,40 @@
 
 int	get_next_line(const int fd, char **line)
 {
-	unsigned const char	*reader;
-	unsigned const char	*counter;
-	unsigned char		*printer;
-	unsigned char		*buffer;
-	size_t				len;
-	size_t				buffer_size;
-	int					newl;
+	char	*mem1;
+	char	*mem2;
+	char	*buffer;
+	size_t			buff_size;
+	size_t			newl;
 
-	newl - '\n';
 	buffer = ft_strnew(BUFF_SIZE);
-	buffer_size = read(fd, buffer, BUFF_SIZE);
-	reader = ft_strdup(buffer);
-	end = ft_strchr(reader, newl);
-	if (end != NULL)
-		found new line and we're finished;
-		return (whatever);
-	bzero(buffer, ft_strlen(buffer));
-	buffer_size = read(fd, buffer, BUFF_SIZE);
-	printer = ft_strnew(ft_strlen(reader) + buffer_size); 
-	printer = ft_strcpy(printer, reader);
-
-
-	printer = ft_strnew(ft_strlen(printer) + buffer_size); 
-
-	if (buffer_size > 0)
-		return (1);
-	else
-		return (buffer_size);
+	buff_size = 1;
+	while (buff_size > 0)
+	{
+		buff_size = read(fd, buffer, BUFF_SIZE);
+		if (mem1 != 0)
+		{
+			mem2 = ft_strdup(mem1);
+			free(mem1);
+		}
+		mem1 = ft_strnew(ft_strlen(mem2) + ft_strlen(buffer));
+		if (mem2 != 0)
+		{
+			mem1 = ft_strcpy(mem1, mem2);
+			free(mem2);
+		}
+		mem1 = ft_strcat(mem1, buffer);
+		newl = ft_strlenc(mem1, '\n');
+		if (newl != 0)
+		{
+			mem2 = ft_strcdup(mem1, '\n');
+//			mem2 = ft_strnew(newl);
+//			mem2 = ft_strncpy(mem2, mem1, newl);
+			if (*line != 0)
+				free(*line);
+			*line = mem2;
+			return (1);
+		}
+	}
+	return (buff_size);
 }
