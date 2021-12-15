@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:27:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/09 13:59:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:21:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,53 @@
 
 int	get_next_line(const int fd, char **line)
 {
-	char	*mem1;
-	char	*mem2;
-	char	*buffer;
-	char	*test;
-	size_t			buff_size;
-//	size_t			newl;
+	static char	*memory[MAX_FD];
+	char			*temp;
+	char			*buffer;
+	char			*reader;
+	size_t					buff_size;
+	size_t					newLine;
 
-	buffer = ft_strnew(BUFF_SIZE);
-	mem1  = ft_strnew(BUFF_SIZE);
-//	mem2  = ft_strnew(BUFF_SIZE);
-//	mem1 = 0;
-//	mem2 = 0;
 	buff_size = 1;
+	buffer = ft_strnew(BUFF_SIZE);
+	newLine = 0;
+	reader = memory[fd];
+	if (reader)
+		newLine = ft_strlenc(reader, '\n');
+	if (newLine != 0)
+	{
+		*line = ft_strcdup(reader, '\n');
+		temp = ft_strdup(&reader[newLine]);
+		free(reader);
+		reader = temp;
+//		ft_putstr("CraP");
+		free(temp);
+		return (1);
+	}
 	while (buff_size > 0)
 	{
 		buff_size = read(fd, buffer, BUFF_SIZE);
 		if (buff_size > 0)
-		{
-			if (mem1)
+		{	
+			if (reader != 0)
 			{
-				mem2 = ft_strdup(mem1);
-				free(mem1);
+				temp = ft_strdup(reader);
+//				free(reader);
+				reader = ft_strnew(ft_strlen(temp) + ft_strlen(buffer));
+				reader = ft_strcpy(reader, temp);
+				reader = ft_strcat(reader, buffer);
+//				free(temp);
 			}
-			mem1 = ft_strnew(ft_strlen(mem2) + ft_strlen(buffer));
-			if (mem2)
+			else 
+				reader = ft_strdup(buffer);
+			ft_bzero(buffer, BUFF_SIZE);
+			newLine = ft_strlenc(reader, '\n');
+			if (newLine != 0)
 			{
-				mem1 = ft_strcpy(mem1, mem2);
-				free(mem2);
-			}
-			mem1 = ft_strcat(mem1, buffer);
-//			newl = ft_strlenc(mem1, '\n');
-			test = ft_strchr(mem1, '\n');
-//			if (newl != 0)
-			if (test != NULL)
-			{
-				mem2 = ft_strcdup(mem1, '\n');
-//				mem2 = ft_strnew(newl);
-//				mem2 = ft_strncpy(mem2, mem1, newl);
-//				if (*line)
-//					free(*line);
-				*line = mem2;
+				*line = ft_strsub(temp, 0, newLine);	
+				reader = ft_strdup(temp + newLine);
+				memory[fd]= reader;
+//				free(reader);
 				return (1);
 			}
 		}
