@@ -6,64 +6,79 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:27:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/15 16:21:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:49:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+static size_t newline(const char *src, char **dst)
+{
+	size_t	finder;
+
+	finder = 0;
+	while (src[finder] != '\n' && src[finder] != '\0')
+		finder++;
+	if (src[finder] == '\n')
+	{
+		*dst = ft_strsub(src, 0, finder);
+		return (finder + 1);
+	}
+	return (0);
+}
+/*
+static void cleanup(void)
+{
+	temp = memory[fd];
+	memory[fd] = ft_strsub(temp, bytes, (ft_strlen(temp) - bytes));
+	free(temp);
+	return (1);
+}
+*/
+
 int	get_next_line(const int fd, char **line)
 {
 	static char	*memory[MAX_FD];
-	char			*temp;
-	char			*buffer;
-	char			*reader;
-	size_t					buff_size;
-	size_t					newLine;
+	char		*buffer[BUFF_SIZE + 1];
+	char		*temp;
+	int			bytes;
+	size_t		test;
 
-	buff_size = 1;
-	buffer = ft_strnew(BUFF_SIZE);
-	newLine = 0;
-	reader = memory[fd];
-	if (reader)
-		newLine = ft_strlenc(reader, '\n');
-	if (newLine != 0)
+	if (fd < 0 || fd > MAX_FD || !line)
+		return (-1);
+	if (memory[fd])
 	{
-		*line = ft_strcdup(reader, '\n');
-		temp = ft_strdup(&reader[newLine]);
-		free(reader);
-		reader = temp;
-//		ft_putstr("CraP");
-		free(temp);
-		return (1);
-	}
-	while (buff_size > 0)
-	{
-		buff_size = read(fd, buffer, BUFF_SIZE);
-		if (buff_size > 0)
-		{	
-			if (reader != 0)
-			{
-				temp = ft_strdup(reader);
-//				free(reader);
-				reader = ft_strnew(ft_strlen(temp) + ft_strlen(buffer));
-				reader = ft_strcpy(reader, temp);
-				reader = ft_strcat(reader, buffer);
-//				free(temp);
-			}
-			else 
-				reader = ft_strdup(buffer);
-			ft_bzero(buffer, BUFF_SIZE);
-			newLine = ft_strlenc(reader, '\n');
-			if (newLine != 0)
-			{
-				*line = ft_strsub(temp, 0, newLine);	
-				reader = ft_strdup(temp + newLine);
-				memory[fd]= reader;
-//				free(reader);
-				return (1);
-			}
+		test = newline(memory[fd], line);
+		if (test > 0)
+		{
+			temp = memory[fd];
+			memory[fd] = ft_strsub(temp, (test), (ft_strlen(temp) - test));
+			free(temp);
+			return (1);
 		}
 	}
-	return (buff_size);
+	ft_bzero(buffer, BUFF_SIZE);
+	bytes = read(fd, buffer, BUFF_SIZE);
+	while (bytes > 0)
+	{
+		temp = memory[fd];
+		memory[fd] = ft_strjoin(temp, (const char *)buffer);
+		free(temp);
+		test = newline(memory[fd], line);
+		if (test > 0)
+		{
+			temp = memory[fd];
+			memory[fd] = ft_strsub(temp, (test), (ft_strlen(temp) - test));
+			free(temp);
+			return (1);
+		}
+		ft_bzero(buffer, BUFF_SIZE);
+		bytes = read(fd, buffer, BUFF_SIZE);
+		if (bytes == 0)
+		{
+			*line = memory[fd];
+			return (1);
+		}
+	}
+	return (bytes);
 }

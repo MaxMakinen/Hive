@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/15 16:20:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:22:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,31 @@ int	main()
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
-		ft_putstr(line);
-		ft_putchar('\n');
-		ft_putchar('\n');
+		if (test > 0)
+		{
+			ft_putstr(line);
+			ft_putchar('\n');
+		}
 	}
 	close(fd);
 	ft_putnbr(test);
 	ft_putchar('\n');
-//	ft_putstr(line);
+	filename = "gnl7_2.txt";
+	fd = open(filename, O_RDONLY);
+	test = 1;
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+		if (test > 0)
+		{
+			ft_putnbr(test);
+			ft_putstr(" - ");
+			ft_putstr(line);
+			ft_putchar('\n');
+		}
+	}
+	close(fd);
+	ft_putnbr(test);
+	ft_putchar('\n');
 	return (0);
 }
