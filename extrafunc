@@ -1,9 +1,0 @@
-ft_isspace.c
-ft_isblank.c
-ft_isupper.c
-ft_islower.c
-ft_isxdigit.c
-ft_swap.c
-ft_strlcpy.c
-ft_calloc.c
-
