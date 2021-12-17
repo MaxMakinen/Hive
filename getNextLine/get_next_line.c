@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:27:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/16 14:49:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/17 12:11:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static size_t newline(const char *src, char **dst)
 	if (src[finder] == '\n')
 	{
 		*dst = ft_strsub(src, 0, finder);
+		if (src[finder] + 1 == '\0')
+			return (finder + 2);
 		return (finder + 1);
 	}
 	return (0);
@@ -39,7 +41,7 @@ static void cleanup(void)
 int	get_next_line(const int fd, char **line)
 {
 	static char	*memory[MAX_FD];
-	char		*buffer[BUFF_SIZE + 1];
+	char		buffer[BUFF_SIZE + 1];
 	char		*temp;
 	int			bytes;
 	size_t		test;
@@ -52,13 +54,19 @@ int	get_next_line(const int fd, char **line)
 		if (test > 0)
 		{
 			temp = memory[fd];
-			memory[fd] = ft_strsub(temp, (test), (ft_strlen(temp) - test));
+			memory[fd] = ft_strsub(temp, test, (ft_strlen(temp) - test));
 			free(temp);
 			return (1);
 		}
 	}
 	ft_bzero(buffer, BUFF_SIZE);
 	bytes = read(fd, buffer, BUFF_SIZE);
+	if (bytes == 0 && memory[fd] && memory[fd][0] != '\n' && memory[fd][0])
+	{
+		*line = ft_strdup(memory[fd]);
+		ft_memdel((void **)&memory[fd]);
+		return (1);
+	}
 	while (bytes > 0)
 	{
 		temp = memory[fd];
@@ -68,7 +76,7 @@ int	get_next_line(const int fd, char **line)
 		if (test > 0)
 		{
 			temp = memory[fd];
-			memory[fd] = ft_strsub(temp, (test), (ft_strlen(temp) - test));
+			memory[fd] = ft_strsub(temp, test, (ft_strlen(temp) - test));
 			free(temp);
 			return (1);
 		}
@@ -76,7 +84,8 @@ int	get_next_line(const int fd, char **line)
 		bytes = read(fd, buffer, BUFF_SIZE);
 		if (bytes == 0)
 		{
-			*line = memory[fd];
+			*line = ft_strdup(memory[fd]);
+			ft_memdel((void **)&memory[fd]);
 			return (1);
 		}
 	}

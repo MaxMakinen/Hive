@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/16 14:22:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/17 11:43:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main()
 	char	*filename;
 	int		test;
 
-	filename = "lorem.txt";
+	filename = "gnl1_1.txt";
 	fd = open(filename, O_RDONLY);
 	test = 1;
 	while (test > 0)
