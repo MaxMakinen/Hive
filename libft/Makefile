@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2021/12/08 11:21:47 by mmakinen         ###   ########.fr        #
+#    Updated: 2021/12/20 15:45:00 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,3 +46,6 @@ fclean: clean
 
 re: fclean all
 
+so:
+
+.PHONY: all clean fclean re so
