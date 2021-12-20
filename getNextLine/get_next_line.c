@@ -6,13 +6,13 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:27:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/17 12:11:45 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/20 15:00:10 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t newline(const char *src, char **dst)
+static size_t	newline(const char *src, char **dst)
 {
 	size_t	finder;
 
@@ -28,15 +28,16 @@ static size_t newline(const char *src, char **dst)
 	}
 	return (0);
 }
-/*
-static void cleanup(void)
+
+static int	cleanup(char **target, int bytes)
 {
-	temp = memory[fd];
-	memory[fd] = ft_strsub(temp, bytes, (ft_strlen(temp) - bytes));
+	char	*temp;
+
+	temp = *target;
+	*target = ft_strsub(temp, bytes, (ft_strlen(temp) - bytes));
 	free(temp);
 	return (1);
 }
-*/
 
 int	get_next_line(const int fd, char **line)
 {
@@ -52,12 +53,7 @@ int	get_next_line(const int fd, char **line)
 	{
 		test = newline(memory[fd], line);
 		if (test > 0)
-		{
-			temp = memory[fd];
-			memory[fd] = ft_strsub(temp, test, (ft_strlen(temp) - test));
-			free(temp);
-			return (1);
-		}
+			return (cleanup(&memory[fd], test));
 	}
 	ft_bzero(buffer, BUFF_SIZE);
 	bytes = read(fd, buffer, BUFF_SIZE);
@@ -74,12 +70,7 @@ int	get_next_line(const int fd, char **line)
 		free(temp);
 		test = newline(memory[fd], line);
 		if (test > 0)
-		{
-			temp = memory[fd];
-			memory[fd] = ft_strsub(temp, test, (ft_strlen(temp) - test));
-			free(temp);
-			return (1);
-		}
+			return (cleanup(&memory[fd], test));
 		ft_bzero(buffer, BUFF_SIZE);
 		bytes = read(fd, buffer, BUFF_SIZE);
 		if (bytes == 0)
