@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/21 14:47:41 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/10 10:44:39 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/24 16:10:14 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-
-# define BUFF_SIZE 11000
-
-# define MAX_FD 1024
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+void	ft_strclr(char *s)
+{
+	if (s != 0)
+		ft_bzero(s, ft_strlen(s) + 1);
+}

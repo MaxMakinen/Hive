@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/21 14:47:41 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/15 15:33:12 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/09 11:17:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
+char	*ft_strdup(const char *s1)
+{
+	char	*str;
+	size_t	size;
 
-# define BUFF_SIZE 11000
-
-# define MAX_FD 1024
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	if (s1 != 0)
+	{
+		size = ft_strlen(s1);
+		str = ft_strnew(size);
+		if (str == NULL)
+			return (NULL);
+		ft_memcpy(str, s1, size);
+		return (str);
+	}
+	return (NULL);
+}

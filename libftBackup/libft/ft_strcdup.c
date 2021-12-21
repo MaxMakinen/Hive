@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strcdup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/21 14:47:41 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/12/09 11:06:10 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/09 11:44:44 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
+char	*ft_strcdup(const char *s1, const int c)
+{
+	char	*str;
+	size_t	size;
 
-# define BUFF_SIZE 11000
-
-# define MAX_FD 1024
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	if (s1 != 0)
+	{
+		size = ft_strlenc(s1, c);
+		if (size != 0)
+		{
+			str = ft_strnew(size);
+			if (str == NULL)
+				return (NULL);
+			ft_memcpy(str, s1, size);
+			return (str);
+		}
+		return (0);
+	}
+	return (NULL);
+}

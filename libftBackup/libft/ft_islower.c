@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/21 14:47:41 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/18 13:46:15 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/23 20:52:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-
-# define BUFF_SIZE 11000
-
-# define MAX_FD 1024
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+int	ft_islower(int c)
+{
+	return ((c >= 'a') && (c <= 'z'));
+}

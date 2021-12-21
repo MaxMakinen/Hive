@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/21 14:47:41 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/04 11:04:03 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/23 15:35:01 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
+void	ft_putchar(char c)
+{
+	unsigned char	uc;
 
-# define BUFF_SIZE 11000
-
-# define MAX_FD 1024
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	uc = (unsigned char)c;
+	write(1, &uc, 1);
+}
