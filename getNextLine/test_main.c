@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/21 12:50:10 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:10:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	main(void)
 	}
 	ft_putchar('\n');
 	ft_putstr("\n -*- \n\n");
-	filename = "gnl7_3.txt";
+	filename = "gnl7_2.txt";
 	fd = open(filename, O_RDONLY);
 	ft_putnbr(fd);
 	ft_putchar('\n');
@@ -156,7 +156,7 @@ int	main(void)
 			free(line);
 		}
 	}
-//	close(fd);
+	close(fd);
 	ft_putchar('\n');
 	ft_putnbr(MAX_FD);
 	ft_putchar('\n');

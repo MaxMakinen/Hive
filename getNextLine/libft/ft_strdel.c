@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:23:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 16:11:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:11:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_strdel(char **as)
 {	
-	if (as != 0)
+	if (as)
 		ft_memdel((void **)as);
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:44:39 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 16:10:14 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:12:46 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_strclr(char *s)
 {
-	if (s != 0)
+	if (s)
 		ft_bzero(s, ft_strlen(s) + 1);
 }
