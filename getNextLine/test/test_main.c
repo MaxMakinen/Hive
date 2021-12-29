@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/29 16:49:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:10:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,25 +175,6 @@ int	main(void)
 	bin = fopen(filename, "wb");
 	fwrite (data , 1, sizeof(data), bin);
 	fclose(bin);
-	fd = open(filename, O_RDONLY);
-	test = 1;
-	while (test > 0)
-	{
-		test = get_next_line(fd, &line);
-		if (test > 0)
-		{
-			ft_putnbr(test);
-			ft_putstr(" - ");
-			ft_putstr(line);
-			ft_putchar('\n');
-			free(line);
-		}
-	}
-	close(fd);
-	ft_putchar('\n');
-	ft_putstr("\n - Binary test - \n");
-
-	filename = "GNL";
 	fd = open(filename, O_RDONLY);
 	test = 1;
 	while (test > 0)

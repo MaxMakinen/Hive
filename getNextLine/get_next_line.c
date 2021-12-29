@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:27:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/22 16:23:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/29 14:13:56 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,32 @@ static size_t	newline(const char *memory, char **line)
 	return (0);
 }
 
-static int	cleanup(char **target, int bytes, char **buffer)
+static int	cleanup(char **memory, int bytes, char **buffer)
 {
 	char	*temp;
 
-	temp = *target;
-	*target = ft_strsub(temp, bytes, (ft_strlen(temp) - bytes));
+	temp = *memory;
+	*memory = ft_strsub(temp, bytes, (ft_strlen(temp) - bytes));
 	free(temp);
 	ft_strdel(buffer);
 	return (1);
 }
 
-static int	last_line(char **line, char **memory, char **buffer)
+static int	last_line(char **line, char **memory, char **buffer, int bytes)
 {
-	*line = ft_strdup(*memory);
-	ft_strclr(*memory);
+	int	check;
+
+	if (bytes < 0)
+		return (bytes);
+	check = 0;
+	if (bytes == 0 && *memory && *memory[0] != '\n' && *memory[0])
+	{
+		*line = ft_strdup(*memory);
+		check = 1;
+	}
+	ft_strdel(memory);
 	ft_strdel(buffer);
-	return (1);
+	return (check);
 }
 
 static int	read_file(char **memory, char **line, char *buffer)
@@ -80,8 +89,5 @@ int	get_next_line(const int fd, char **line)
 			return (cleanup(&memory[fd], bytes, &buffer));
 		bytes = read(fd, buffer, BUFF_SIZE);
 	}
-	if (bytes == 0 && memory[fd] && memory[fd][0] != '\n' && memory[fd][0])
-		return (last_line (line, &memory[fd], &buffer));
-	ft_strdel(&buffer);
-	return (bytes);
+	return (last_line (line, &memory[fd], &buffer, bytes));
 }

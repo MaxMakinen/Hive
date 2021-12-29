@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/22 16:39:31 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/29 14:27:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 # include "./libft/libft.h"
 
-# define BUFF_SIZE 100000
-
+# define BUFF_SIZE 80
 # define MAX_FD 256
 
 int	get_next_line(const int fd, char **line);
