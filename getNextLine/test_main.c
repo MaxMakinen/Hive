@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/29 16:49:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/30 16:08:36 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,9 +191,9 @@ int	main(void)
 	}
 	close(fd);
 	ft_putchar('\n');
-	ft_putstr("\n - Binary test - \n");
+	ft_putstr("\n - just newline test - \n");
 
-	filename = "GNL";
+	filename = "nl.txt";
 	fd = open(filename, O_RDONLY);
 	test = 1;
 	while (test > 0)
@@ -209,6 +209,5 @@ int	main(void)
 		}
 	}
 	close(fd);
-	ft_putchar('\n');
 	return (0);
 }
