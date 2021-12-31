@@ -1,0 +1,75 @@
+3
+Bacon ipsum dolor amet short ribs brisket t-bone pork.
+Meatloaf picanha pork belly rump leberkas ham filet mignon corned beef sirloin meatball chuck.
+
+
+ -*- 
+
+4
+Bacon ipsum dolor amet short ribs brisket t-bone pork.
+Meatloaf picanha pork belly rump leberkas ham filet mignon corned beef sirloin meatball chuck. Chislic prosciutto chuck jowl ball tip. Picanha drumstick salami jerky shoulder, prosciutto corned beef bresaola kevin venison porchetta.
+
+Tongue beef meatball ground round strip steak. Bacon ham hock tri-tip alcatra ribeye ball tip salami andouille kielbasa short ribs rump chislic. Picanha brisket boudin bacon tri-tip tongue. Short ribs pork chop beef shoulder tenderloin kevin.
+
+Pastrami pork belly ham, pork chop sirloin porchetta pancetta. Picanha ham corned beef pig. Drumstick boudin sausage tri-tip, rump venison shankle. Salami ground round ribeye, ham hock shoulder t-bone tri-tip brisket. Chislic ball tip salami, turducken tri-tip sirloin bresaola brisket flank prosciutto beef ribs venison buffalo kielbasa. Shankle chuck chislic frankfurter doner drumstick filet mignon, ribeye short loin rump. Pastrami sausage kevin brisket pork ham hock.
+
+Kielbasa t-bone burgdoggen buffalo brisket capicola biltong shoulder ribeye tenderloin venison pork chop pastrami. Hamburger pork belly meatloaf cow ribeye drumstick chislic jowl. Frankfurter beef ribs cupim meatball jerky filet mignon tail kielbasa burgdoggen porchetta ground round ham pastrami. Swine kevin rump, turkey pork pig drumstick alcatra ball tip ribeye shankle. Ground round spare ribs kielbasa sausage burgdoggen pork chop. Kevin shank bacon jowl chicken short loin short ribs, pig turducken picanha ribeye.
+
+Ham hock rump sausage, frankfurter turducken pork chop filet mignon tri-tip shankle salami meatball kevin. Meatball spare ribs brisket chicken short ribs biltong ham hock kevin pork tail shankle beef ham doner strip steak. Cupim picanha shoulder corned beef doner, pig fatback drumstick tenderloin andouille sirloin pork chop. Pancetta picanha tongue swine chuck frankfurter.
+
+
+ -*- 
+
+5
+1 - 1234567
+
+
+ -*- 
+
+3
+Chislic prosciutto chuck jowl ball tip. 
+Picanha drumstick salami jerky shoulder, prosciutto corned beef bresaola kevin venison porchetta.
+
+
+ -*- 
+
+6
+1 - 1234567
+1 - abcdefg
+1 - 4567890
+1 - 
+1 - defghijk
+1 - 
+1 - 
+1 - 
+1 - k
+
+
+ -*- 
+
+7
+1 - 1234567
+1 - abcdefgh
+
+
+ -*- 
+
+8
+1 - 1234567
+1 - abcdefgh
+
+8192
+
+ - Binary test - 
+1 - Temporary string to be written to file
+
+
+ -*- 
+
+3
+
+
+
+ - just newline test - 
+1 - 
+0

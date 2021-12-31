@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2021/12/08 11:21:47 by mmakinen         ###   ########.fr        #
+#    Updated: 2021/12/31 10:26:08 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,3 +46,8 @@ fclean: clean
 
 re: fclean all
 
+so:
+	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
+	gcc -nostartfiles -shared -o libft.so $(OBJECTS)
+
+.PHONY: all clean fclean re so

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/30 16:08:36 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/31 18:49:13 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,30 @@ int	main(void)
 	}
 	close(fd);
 	ft_putchar('\n');
+	ft_putstr("\n -*- \n\n");
+	filename = "bigass.txt";
+	fd = open(filename, O_RDONLY);
+	ft_putnbr(fd);
+	ft_putchar('\n');
+	test = 1;
+	count = 1;
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+//		ft_putnbr(test);
+//		ft_putstr(" | ");
+		if (test > 0)
+		{
+//			ft_putnbr(count++);
+//			ft_putstr(" - ");
+//			ft_putstr(line);
+//			ft_putchar('\n');
+			free(line);
+		}
+	}
+	close(fd);
+	ft_putchar('\n');
+	ft_putchar('\n');
 	ft_putstr("\n - just newline test - \n");
 
 	filename = "nl.txt";
@@ -199,9 +223,9 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
-			ft_putnbr(test);
 			ft_putstr(" - ");
 			ft_putstr(line);
 			ft_putchar('\n');
@@ -209,5 +233,8 @@ int	main(void)
 		}
 	}
 	close(fd);
+	ft_putchar('\n');
+	system("leaks a.out");
+	ft_putchar('\n');
 	return (0);
 }
