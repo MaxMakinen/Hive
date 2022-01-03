@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 09:03:27 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/11 11:30:37 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/01 10:35:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	unsigned char	*srcp;
+	unsigned char	*dstp;
 
-# define BUFF_SIZE 4000
-# define MAX_FD 8192
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	srcp = (unsigned char *)src;
+	dstp = (unsigned char *)dst;
+	if (dst == src)
+		return (0);
+	if (srcp < dstp && srcp + len > dstp)
+	{
+		srcp += len;
+		dstp += len;
+		while (len-- != 0)
+		{
+			*--dstp = *--srcp;
+		}
+	}
+	else
+	{
+		ft_memcpy(dst, src, len);
+	}
+	return (dst);
+}

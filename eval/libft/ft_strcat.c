@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 09:03:27 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/15 16:28:33 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/19 11:18:49 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
+char	*ft_strcat(char *s1, const char *s2)
+{
+	char		*printer;
+	const char	*reader;
 
-# define BUFF_SIZE 4000
-# define MAX_FD 8192
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	printer = s1;
+	reader = s2;
+	while (*printer != '\0')
+		printer++;
+	while (*reader != '\0')
+		*printer++ = *reader++;
+	*printer = '\0';
+	return (s1);
+}

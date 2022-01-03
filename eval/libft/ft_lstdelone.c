@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 09:03:27 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/25 16:25:09 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/07 14:13:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
+void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
+{
+	t_list	*node;
 
-# define BUFF_SIZE 4000
-# define MAX_FD 8192
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	if (alst != 0)
+	{
+		node = *alst;
+		del(node->content, node->content_size);
+		free(*alst);
+		*alst = NULL;
+	}
+}

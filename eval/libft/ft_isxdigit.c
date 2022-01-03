@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_isxdigit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 09:03:27 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/18 10:47:01 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/11/19 11:30:56 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-
-# define BUFF_SIZE 4000
-# define MAX_FD 8192
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+int	ft_isxdigit(int c)
+{
+	if (ft_isdigit(c))
+		return (1);
+	else if ((c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))
+		return (1);
+	return (0);
+}

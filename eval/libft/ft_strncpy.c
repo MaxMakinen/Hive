@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 09:03:27 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/15 15:59:16 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/01 10:49:50 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
+char	*ft_strncpy(char *dst, const char *src, size_t len)
+{
+	unsigned char	*dstp;
+	unsigned char	*srcp;
+	unsigned char	*end;
 
-# define BUFF_SIZE 4000
-# define MAX_FD 8192
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	if (len != 0)
+	{
+		dstp = (unsigned char *)dst;
+		srcp = (unsigned char *)src;
+		end = dstp + len;
+		while (*srcp != '\0' && dstp < end)
+			*dstp++ = *srcp++;
+		while (dstp < end)
+			*dstp++ = '\0';
+	}
+	return (dst);
+}

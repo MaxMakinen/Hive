@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 09:03:27 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/16 15:07:52 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/01 13:34:25 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
+char	*ft_strrchr(const char *s, int c)
+{
+	const char	*seeker;
+	const char	*last;
 
-# define BUFF_SIZE 4000
-# define MAX_FD 8192
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	seeker = s;
+	last = NULL;
+	while (*seeker != '\0')
+	{
+		if (*seeker == (char)c)
+			last = seeker;
+		seeker++;
+	}
+	if ((char)c == '\0')
+		return ((char *)seeker);
+	return ((char *)last);
+}

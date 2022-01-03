@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 10:33:38 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 09:03:27 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/08 14:54:09 by mmakinen          #+#    #+#             */
+/*   Updated: 2021/12/01 14:08:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "./libft/libft.h"
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
+{
+	char	*newstr;
+	size_t	counter;
 
-# define BUFF_SIZE 4000
-# define MAX_FD 8192
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	counter = 0;
+	if (s == 0)
+		return (NULL);
+	newstr = ft_strnew(len);
+	if (newstr == 0)
+		return (NULL);
+	if (start < ft_strlen(s))
+	{
+		while (counter < len)
+		{
+			newstr[counter] = s[start + counter];
+			counter++;
+		}
+	}
+	return (newstr);
+}
