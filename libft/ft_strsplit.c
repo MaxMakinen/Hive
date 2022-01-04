@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:13:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/29 13:10:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/04 10:14:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	wordcount(char const *s, char c)
+static size_t	wordcount(char const *s, unsigned char c)
 {
 	int	count;
 	int	test;
@@ -38,68 +38,43 @@ static int	wordcount(char const *s, char c)
 	return (w_count);
 }
 
-static int	wordlen(char const *s, char c, int p)
+static int	wordlen(char const *s, char c)
 {
 	int	count;
 
 	count = 0;
-	while (s[p] != c && s[p] != '\0')
+	while (*s != c && *s)
 	{
 		count++;
-		p++;
+		s++;
 	}
 	return (count);
-}
-
-static char	*writer(char *arr, char const *s, char c, int *pos)
-{
-	int		symbol;
-	int		position;
-
-	position = *pos;
-	symbol = 0;
-	while (s[position] != c && s[position] != '\0')
-		arr[symbol++] = s[position++];
-	arr[symbol] = '\0';
-	*pos = position;
-	return (arr);
-}
-
-static void	*arr_free(char **arr)
-{
-	while (*arr != 0)
-	{
-		free(*arr);
-		*arr++ = NULL;
-	}
-	return (NULL);
 }
 
 char	**ft_strsplit(char const *s, char c)
 {
 	char	**arr;
-	int		pos;
-	int		w_count;
+	char	**temp;
+	size_t	w_count;
 
-	if (s == 0)
+	if (!s)
 		return (NULL);
-	w_count = 0;
-	pos = 0;
-	arr = (char **)malloc(sizeof(arr) * (wordcount(s, c) + 1));
-	if (arr == 0)
+	w_count = wordcount(s, (unsigned char)c);
+	arr = (char **)ft_memalloc(sizeof(arr) * (w_count + 1));
+	if (!arr)
 		return (NULL);
-	while (s[pos] != '\0')
+	temp = arr;
+	while (*s && w_count--)
 	{
-		while (s[pos] == c)
-			pos++;
-		if (s[pos] != '\0')
+		while (*s == c)
+			s++;
+		if (*s)
 		{
-			arr[w_count] = (char *)malloc(sizeof(arr) * wordlen(s, c, pos) + 1);
-			if (arr[w_count] == 0)
-				return (arr_free(arr));
-			writer(arr[w_count++], s, c, &pos);
+			*temp = ft_strsub(s, 0, wordlen(s, c));
+			if (!*temp++)
+				return (ft_arrfree(arr));
+			s += wordlen(s, c);
 		}
 	}
-	arr[w_count] = 0;
 	return (arr);
 }

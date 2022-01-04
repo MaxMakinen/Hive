@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memdel.c                                        :+:      :+:    :+:   */
+/*   ft_arrfree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 13:09:10 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/22 16:12:25 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/01/04 10:04:49 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/01/04 10:10:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_memdel(void **ap)
+void	*ft_arrfree(char **arr)
 {
-	if (ap)
+	char	*temp;
+
+	while (*arr)
 	{
-		free(*ap);
-		*ap = NULL;
+		temp = *arr++;
+		ft_strdel(&temp);
 	}
+	ft_strdel(arr);
+	return (NULL);
 }

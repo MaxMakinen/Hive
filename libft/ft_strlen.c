@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 14:02:56 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/08 15:26:13 by mmakinen         ###   ########.fr       */
+/*   Updated: 2021/12/17 09:29:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ size_t	ft_strlen(const char *s)
 	size_t	count;
 
 	count = 0;
-	while (s[count] != '\0')
-		count++;
+	if (s)
+	{
+		while (s[count] != '\0')
+			count++;
+	}
 	return (count);
 }

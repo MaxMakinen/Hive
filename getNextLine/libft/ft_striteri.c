@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:17:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/11/24 16:13:11 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:04:17 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 	int	index;
 
 	index = 0;
-	if (s != 0)
+	if (s && f)
 	{
-		while (*s != '\0')
+		while (*s)
 		{
 			f(index++, s++);
 		}
