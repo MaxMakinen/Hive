@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2021/12/22 16:10:58 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/03 12:50:28 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	main(void)
 	while (test > 0 && count < 2)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
+			ft_putstr(" - ");
 			ft_putstr(line);
 			free(line);
 			ft_putchar('\n');
@@ -54,8 +56,10 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
+			ft_putstr(" - ");
 			ft_putstr(line);
 			free(line);
 			ft_putchar('\n');
@@ -72,9 +76,9 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
-			ft_putnbr(test);
 			ft_putstr(" - ");
 			ft_putstr(line);
 			ft_putchar('\n');
@@ -90,8 +94,10 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line((3), &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
+			ft_putstr(" - ");
 			ft_putstr(line);
 			free(line);
 			ft_putchar('\n');
@@ -108,9 +114,9 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
-			ft_putnbr(test);
 			ft_putstr(" - ");
 			ft_putstr(line);
 			ft_putchar('\n');
@@ -128,9 +134,9 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
-			ft_putnbr(test);
 			ft_putstr(" - ");
 			ft_putstr(line);
 			ft_putchar('\n');
@@ -147,9 +153,9 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
-			ft_putnbr(test);
 			ft_putstr(" - ");
 			ft_putstr(line);
 			ft_putchar('\n');
@@ -180,9 +186,9 @@ int	main(void)
 	while (test > 0)
 	{
 		test = get_next_line(fd, &line);
+		ft_putnbr(test);
 		if (test > 0)
 		{
-			ft_putnbr(test);
 			ft_putstr(" - ");
 			ft_putstr(line);
 			ft_putchar('\n');
@@ -190,6 +196,116 @@ int	main(void)
 		}
 	}
 	close(fd);
+	ft_putchar('\n');
+/*	ft_putstr("\n - Binary test 2 - \n");
+	filename = "bin_test2.txt";
+
+    FILE* output_file = fopen(filename, "wb+");
+    if (!output_file) {
+        perror("fopen");
+        exit(EXIT_FAILURE);
+    }
+
+    fwrite(data, 1, sizeof(data), output_file);
+//  printf("Done Writing!\n");
+    fclose(output_file);
+
+    FILE* in_file = fopen(filename, "rb");
+    if (!in_file) {
+        perror("fopen");
+        exit(EXIT_FAILURE);
+    }
+
+    struct stat sb;
+    if (stat(filename, &sb) == -1) {
+        perror("stat");
+        exit(EXIT_FAILURE);
+    }
+
+    char* file_contents = malloc(sb.st_size);
+    fread(file_contents, sb.st_size, 1, in_file);
+
+    printf("read data: %s\n", file_contents);
+    fclose(in_file);
+
+    free(file_contents);
+*/
+	ft_putstr("\n -*- \n\n");
+	filename = "bigass.txt";
+	fd = open(filename, O_RDONLY);
+	ft_putnbr(fd);
+	ft_putchar('\n');
+	test = 1;
+	count = 1;
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+//		ft_putnbr(test);
+//		ft_putstr(" | ");
+		if (test > 0)
+		{
+//			ft_putnbr(count++);
+//			ft_putstr(" - ");
+//			ft_putstr(line);
+//			ft_putchar('\n');
+			free(line);
+		}
+	}
+	close(fd);
+	ft_putchar('\n');
+	ft_putchar('\n');
+	ft_putstr("\n - just newline test - \n");
+	filename = "nl.txt";
+	fd = open(filename, O_RDONLY);
+	test = 1;
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+		ft_putnbr(test);
+		if (test > 0)
+		{
+			ft_putstr(" - ");
+			ft_putstr(line);
+			ft_putchar('\n');
+			free(line);
+		}
+	}
+	close(fd);
+	ft_putchar('\n');
+	ft_putstr("\n - bad filename test - \n");
+	filename = "carp.txt";
+	fd = open(filename, O_RDONLY);
+	test = 1;
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+		ft_putnbr(test);
+		if (test > 0)
+		{
+			ft_putstr(" - ");
+			ft_putstr(line);
+			ft_putchar('\n');
+			free(line);
+		}
+	}
+	ft_putchar('\n');
+	ft_putstr("\n - bad fd test - \n");
+	fd = 42;
+	test = 1;
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+		ft_putnbr(test);
+		if (test > 0)
+		{
+			ft_putstr(" - ");
+			ft_putstr(line);
+			ft_putchar('\n');
+			free(line);
+		}
+	}
+	ft_putchar('\n');
+	system("leaks a.out");
 	ft_putchar('\n');
 	return (0);
 }

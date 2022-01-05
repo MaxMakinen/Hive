@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 10:30:11 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/04 10:52:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/05 12:55:10 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 	unsigned char	*dstp;
 	unsigned char	*end;
 
-	if (!dst || !src)
+	if (!dst || !src || dst == src)
 		return (NULL);
 	srcp = (unsigned char *)src;
 	dstp = (unsigned char *)dst;
