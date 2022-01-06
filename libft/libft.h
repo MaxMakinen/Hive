@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/04 10:11:12 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/06 20:14:56 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_isblank(int c);
 int		ft_isspace(int c);
+int		ft_ispunct(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 void	ft_putchar(char c);
