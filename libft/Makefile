@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/01/06 20:15:59 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/01/07 16:25:54 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,13 @@ $(NAME): $(OBJECTS)
 
 $(OBJECTS):
 	$(CC) $(FLAGS) $(SRCS) $(HEADER)
+
+debug: DOBJECTS
+	@ar rc $(NAME) $(OBJECTS)
+
+DOBJECTS:
+	@$(CC) $(FLAGS) -g $(SRCS) $(HEADER)
+	
 
 clean:
 	rm -f $(OBJECTS)

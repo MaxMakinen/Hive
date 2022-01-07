@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/03 12:50:28 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/07 13:38:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,7 +305,29 @@ int	main(void)
 		}
 	}
 	ft_putchar('\n');
-	system("leaks a.out");
+	ft_putstr("\n -*- \n\n");
+	filename = "test_long.txt";
+	fd = open(filename, O_RDONLY);
+	test = 1;
+	int mlem = 0;
+	printf("file : %s\n",filename);
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+//		ft_putnbr(test);
+		if (test > 0)
+		{
+//			ft_putstr(" - ");
+//			ft_putstr(line);
+//			ft_putchar('\n');
+			free(line);
+			mlem++;
+		}
+	}
+	printf("lines : %i | should be : 32594\n", mlem);
+	close(fd);
+	ft_putchar('\n');
+	system("leaks GNL_test");
 	ft_putchar('\n');
 	return (0);
 }
