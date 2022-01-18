@@ -6,11 +6,11 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/01/07 16:25:54 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/01/10 10:43:14 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		gcc
+CC =		clang
 FLAGS = 	-Wall -Wextra -Werror -c
 NAME =		libft.a
 SRC_PATH =	./
@@ -27,23 +27,16 @@ ft_putendl_fd.c ft_strdup.c ft_strncmp.c ft_swap.c ft_isblank.c ft_memchr.c	\
 ft_putnbr.c ft_strequ.c ft_strncpy.c ft_tolower.c ft_isdigit.c ft_memcmp.c	\
 ft_putnbr_fd.c ft_striter.c ft_strnequ.c ft_toupper.c ft_islower.c			\
 ft_memcpy.c ft_putstr.c ft_striteri.c ft_strnew.c ft_arrfree.c ft_ispunct.c
-OBJECTS = $(SRCS:.c=.o)
-HEADER =	-c -I $(INCLUDE)
+OBJECTS =	$(SRCS:.c=.o)
+HEADER =	-I $(INCLUDE)
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	ar rc $(NAME) $(OBJECTS)
+	ar rc $@ $^
 
 $(OBJECTS):
 	$(CC) $(FLAGS) $(SRCS) $(HEADER)
-
-debug: DOBJECTS
-	@ar rc $(NAME) $(OBJECTS)
-
-DOBJECTS:
-	@$(CC) $(FLAGS) -g $(SRCS) $(HEADER)
-	
 
 clean:
 	rm -f $(OBJECTS)
@@ -53,6 +46,9 @@ fclean: clean
 
 re: fclean all
 
+tidy: all clean
+
+# only here for libft-unit-test
 so:
 	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
 	gcc -nostartfiles -shared -o libft.so $(OBJECTS)

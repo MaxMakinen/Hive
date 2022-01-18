@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:35:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/07 13:38:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:25:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,10 @@ int	main(void)
 		if (test > 0)
 		{
 			ft_putstr(" - ");
+			if (!*line)
+				ft_putstr("!*line\n");
+			if (!line)
+				ft_putstr("!line\n");
 			ft_putstr(line);
 			ft_putchar('\n');
 			free(line);
@@ -326,6 +330,25 @@ int	main(void)
 	}
 	printf("lines : %i | should be : 32594\n", mlem);
 	close(fd);
+	ft_putstr("\n -*- \n\n");
+	filename = "fillit.txt";
+	fd = open(filename, O_RDONLY);
+	test = 1;
+	printf("file : %s\n",filename);
+	while (test > 0)
+	{
+		test = get_next_line(fd, &line);
+		ft_putnbr(test);
+		if (test > 0)
+		{
+			ft_putstr(" - ");
+			ft_putstr(line);
+			ft_putchar('\n');
+			free(line);
+		}
+	}
+	close(fd);
+	ft_putchar('\n');
 	ft_putchar('\n');
 	system("leaks GNL_test");
 	ft_putchar('\n');

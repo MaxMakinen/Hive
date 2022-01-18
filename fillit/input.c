@@ -5,217 +5,260 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 14:31:48 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/12 14:32:36 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/01/14 10:49:00 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/01/18 15:06:16 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft/libft.h"
+
 /*
-move following includes and struct into libft.h
+function to append target to queue.
+
+Example tetro : ##
+				 #
+				 #																  |		|
+																		    ->	  v		v
+If we assign shape_id in Position A, the shape_id for example tetro will be 0100 1000 1000 0000.
+They only point forward to next square, never to already visited ones.
+																			 >	 v <  v  ^    ^
+If we assign shape_id in Position B, the shape_id for example tero will be  0100 1010 1001 0001
+They point to all neighbours, including already visited ones.
+
+				 v>          <
+ ## position A = 1100 0000 0010 0000
+##				 v>     <    <^  >
+    position B = 1100 0010 0011 0100
+
+				  >   v>
+### position A = 0100 1100 0000 0000
+ #				  >   v><    <     ^
+	position B = 0100 1110 0010 0001
 */
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-
-/*
-DELETE THESE! FOR TESTING ONLY!
-*/
-#include <stdio.h>
-
-/*
-struct to contain amount and formula of all 19 fixed tetrominos.
-we need an int string with total sum, sum of n1, sum n2, sum n3, sum n4.
-Or do we just always calculate it? so total sum + formulas?
-
-typedef struct	s_tetrominos
+void	append_queue(t_tetro *temp, short direction, short index)
 {
-	int		tetrominos[19];
-	int		t0 = x+(x+1)+(x+w+1)+(x+w+w+1)
-//should we use these per tetromino after all? every one found in input gets its own linked list node?
-//same nodes could be used to store their positions in solution.
-}				t_tetrominos
-*/
+	short	count;
+	char	found;
 
-/*
-Function to return information about tetromino fir identification purposes. Inverted L.
-	##
-	 #
-	 #
-*/
-int	*tetromino(int topleft, int width)
-{
-	int	*tet_data;
-	int	i;
-
-	tet_data = (int	*)malloc(sizeof(int) * 5);
-	i = 1;
-	tet_data[0] = 0;
-	tet_data[1] = topleft;
-	tet_data[2] = topleft + 1;
-	tet_data[3] = topleft + width + 1;
-	tet_data[4] = topleft + width + width + 1;
-	while (i < 5)
-		tet_data[0] += tet_data[i++];
-	return (tet_data);
-}
-
-/*
-Identify tetromino by comparing total sum of "full" squares.
-*/
-
-int identify(int total, int topleft, int **tet_pieces)
-{
-	int	*compare;
-	int width = 5;
-
-	compare = tetromino(topleft, width);
-	if (total == *compare)
+	count = 1;
+	found = 0;
+	while (count < 5)
 	{
-		*tet_pieces = compare;
-		return (1);
+		if (temp->queue[count++] == index)
+			found = 1;
 	}
-
-/*	if (total == t0(topleft, width)
-		return (*tet_pieces[0] += 1); // need a function for assigning value to array and return 1 on success. 
-*/	return (-1);
+	if (found == 0)
+	{
+		temp->queue[++temp->queue[0]] = index;
+		temp->shape_id = temp->shape_id | direction;/*	- Postition A */
+	}
+/*	temp->shape_id = temp->shape_id | direction;	- Position B */
 }
 
-//What if topleft is always 1? ignore it's actual value. then to compare we'd have all known sums of tetros.
-
 /*
-Function to count hashes from input to find tetrominos
+How thew temp->queue works
+how many targets have been found
+ |
+ v
+[4][12][13][18][19]
+    ^   ^   ^   ^
+	index positions of targets 1, 2,3 and 4
+##
+ ##
 */
 
-int counthashes(char *line, int *topleft, int rows)
+/*
+function for identifying tetromino and traversing grid after finding first '#' in grid
+*/
+
+t_tetro	*recursive_finder(char *grid, t_tetro *temp, short index)
 {
-	int	index;
-	int	total;
-	int width =  5;
-	
+	if (temp->queue[0] == 0)
+	{
+		temp->queue[1] = index;
+		temp->queue[0] += 1;
+	}
+	if (temp->shape_id > 0)
+		temp->shape_id = temp->shape_id << 4; 
+	if (index > 5 && grid[index - 5] == '#')
+		append_queue(temp, 1, index - 5);
+	if (index - 1 > 0 && grid[index - 1] == '#')
+		append_queue(temp, 2, index - 1);
+	if ((index + 1) < 21 && grid[index + 1] == '#')
+		append_queue(temp, 4, index + 1);
+	if ((index + 5) < 21 && grid[index + 5] == '#')
+		append_queue(temp, 8, index + 5);
+	if (temp->shape_id == 0)
+		return (NULL);
+	temp->blocks++; 
+	if (temp->blocks < 4 && temp->queue[temp->blocks + 1])
+		recursive_finder(grid, temp, temp->queue[temp->blocks + 1]);
+	return (temp);
+}
+
+/*
+Function to identify tetromino in grid and create a node in the linked list, or return NULL in vase of error.
+*/
+
+t_tetro	*find_tetro(char *grid, t_tetro *head)
+{
+	short index;
+	t_tetro *temp;
+
+	temp = head;
+	while (temp->next)
+		temp = temp->next;
 	index = 0;
-	total = 0;
-	while (line[index])
-	{
-		if (line[index] == '#')
-		{
-			if (*topleft == 0)
-				*topleft = (index + 1 + ((rows - 1) * width));
-			total += (index + 1 + ((rows -1) * width));
-		}
+	while (grid[index] && grid[index] != '#')
 		index++;
+	if (index > 16)
+		return (NULL);
+	recursive_finder(grid, temp, index);
+	if (!temp || temp->blocks != 4)
+	{
+		ft_putendl("blocks error");
+		return(NULL);
 	}
-	return (total);
+	return (head);
 }
 
 /*
-Opens file and uses get_next_line to read lines from input file while checking that input is in correct format.
-Sends input over to identifier to identify tetromino.
+function to make new t_tetro node.
 */
 
-int	input(int fd, int **tet_pieces)
+t_tetro	*new_tetro(char letter)
 {
-	int		check;
-	int		topleft;
-	int		test;
-	size_t	rows;
-	int		total;
-	char	*line;
-	
-	check = 1;
-	topleft = 0;
-	total = 0;
-	check = get_next_line(fd, &line);
-	rows = 1;
-//	printf("check = %i\n	line = %s\nrow = %li\n", check, line, rows);
-	while (check > 0)
+	t_tetro	*newnode;
+
+	newnode = (t_tetro *)malloc(sizeof(t_tetro));
+	if (!newnode)
+		return (NULL);
+	newnode->shape_id = 0;
+	newnode->blocks = 0;
+	while (newnode->blocks < 5)
+		newnode->queue[newnode->blocks++] = 0;
+	newnode->blocks = 0;
+	newnode->letter = letter;
+	newnode->next = NULL;
+	return (newnode);
+}
+
+/*
+function to add new t_tetro node to end of list
+*/
+
+t_tetro	*append_tetro(t_tetro *head)
+{
+	t_tetro	*temp;
+	t_tetro *new;
+	short	letter;
+
+	letter = 1;
+	temp = head;
+	while (temp->next)
 	{
-		if (ft_strlen(line) != 5 && rows != 5)
-		{
-			printf("ft_strlen check failed\nft_strlen = %li\nrow = %li\n", ft_strlen(line), rows);
-			return (-1);
-		}
-		if (!ft_strlen(line))
-		{
-			if(rows > 5)
-			{
-				printf("too many rows\n");
-				return (-1);
-			}
-			if (rows == 5)
-			{
-				test = identify(total, topleft, tet_pieces);
-				if (test == -1)
-				{
-					printf("identify failed\n");
-					return (-1);
-				}
-				rows = 0;
-				total = 0;
-				topleft = 0;
-			}
-		}
-		if (rows > 5)
-			return (-1);
-		total += counthashes(line, &topleft, rows);
-		check = get_next_line(fd, &line);
-		rows++;
-//		printf("\t\ttotal = %i\n", total);
-//		printf("check = %i\n	line = %s\nrow = %li\n", check, line, rows);
+		temp = temp->next;
+		letter++;
+	}
+	new = new_tetro('A' + letter);
+	if (!new)
+		return (NULL);
+	temp->next = new;
+	return (head);
+}
+
+/*
+function checks to see if there are any other characters in line other than '.', '#' or '\n'
+*/
+
+int	check_line(char *line)
+{
+	char	*temp;
+
+	temp = line;
+	while (*temp)
+	{
+		if (*temp != '.' && *temp != '#' && *temp != '\n')
+			return (0);
+		temp++;
 	}
 	return (1);
 }
 
 /*
-Temp main for testing purposes. And to help me visualise how the input function will interact with the main.
+Function that takes the filename as input and opens and reads through the file, identifying tetrominos and placing them into a linked list.
+Returns pointer to head of linked list.
+In case of error, return NULL pointer.
 */
 
-int main(int argc, char **argv)
+t_tetro *input(int fd)
 {
-	int	fd;
-	int	*tet_pieces;
-	int list[19];
+	int			row;
+	char		*line;
+	char		grid[21];
+	t_tetro		*head;
+	int			hash = 0;
 
-	if (argc != 2)
+	head = new_tetro('A'); 
+	if (!head)
+		return (NULL);
+	ft_bzero(grid, 21);
+	row = 1;
+	while (get_next_line(fd, &line))
 	{
-		ft_putstr("Feed me a file! a tetromino file!\n");
-		return (0);
+		if (row > 129)
+		{
+			ft_putendl("row error");
+			return (NULL);
+		}
+		if(ft_strlen(line) != 4 && (row % 5))
+		{
+			ft_putendl("strlen error");
+			return (NULL);
+		}
+		if((row % 5) == 0 && *line)
+		{
+			ft_putendl("row % 5 not empty error");
+			return (NULL);
+		}
+		if (row % 5) 
+		{
+			if (!check_line(line))
+			{
+				ft_putendl("check_line error");
+				return (NULL);
+			}
+			hash += ft_strccount(line, '#');
+			if (hash > 4)
+			{
+				ft_putendl("too many hash error");
+				return (NULL);
+			}
+			ft_strlcat(grid, line, 21);
+			ft_strlcat(grid, "\n", 21);
+		}
+		else if ((row % 5) == 0) 
+		{
+			if (!find_tetro(grid, head)) 
+			{
+				ft_putendl("find_tetro error");
+				return (NULL);
+			}
+			if (!append_tetro(head))
+			{
+				ft_putendl("append tetro error");
+				return (NULL);
+			}
+			ft_bzero(grid, 21); 
+			hash = 0;
+		}
+		row++;
 	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
+	if (!find_tetro(grid, head)) 
 	{
-		printf("Open failed\n");
-		return (-1);
+		ft_putendl("last line error");
+		return (NULL);
 	}
-	input(fd, &tet_pieces);
-	if (close(fd) == -1)
-		printf("Close failed\n");
-	int i = 0;
-	while (i < 5)
-	{
-		printf("i = %i	content = %i\n", i, tet_pieces[i]);
-		i++;
-	}
-	printf("total 0 =	%i\n", tet0(1,5));
-	printf("total 1 =	%i\n", tet1(1,5));
-	printf("total 2 =	%i\n", tet2(1,5));
-	printf("total 3 =	%i\n", tet3(1,5));
-	printf("total 4 =	%i\n", tet4(1,5));
-	printf("total 5 =	%i\n", tet5(1,5));
-	printf("total 6 =	%i\n", tet6(1,5));
-	printf("total 7 =	%i\n", tet7(1,5));
-	printf("total 8 =	%i\n", tet8(1,5));
-	printf("total 9 =	%i\n", tet9(1,5));
-	printf("total 10 =	%i\n", tet10(1,5));
-	printf("total 11 =	%i\n", tet11(1,5));
-	printf("total 12 =	%i\n", tet12(1,5));
-	printf("total 13 =	%i\n", tet13(1,5));
-	printf("total 14 =	%i\n", tet14(1,5));
-	printf("total 15 =	%i\n", tet15(1,5));
-	printf("total 16 =	%i\n", tet16(1,5));
-	printf("total 17 =	%i\n", tet17(1,5));
-	printf("total 18 =	%i\n", tet18(1,5));
-	
-	return (0);
+	return (head);
 }
+
