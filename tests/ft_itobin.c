@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strccount.c                                     :+:      :+:    :+:   */
+/*   ft_itobin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 18:22:40 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/19 19:42:25 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/01/19 13:05:29 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/01/19 13:07:50 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
-function to count amount of c characters in str
+function to turn unsigned int to binary for printing.
 */
 
-int	ft_strccount(char *str, int c)
+unsigned long long	ft_itobin(unsigned int num)
 {
-	int				count;
-	int				index;
-	unsigned char	uc;
-
-	uc = (unsigned char)c;
-	count = 0;
-	index = 0;
-	if (!str)
-		return (-1);
-	while (str[index])
-	{
-		if (str[index] == uc)
-			count++;
-		index++;
-	}
-	if (c == 0)
-		count++;
-	return (count);
+	if (num == 0)
+		return (0);
+	if (num == 1)
+		return (1);
+	return ((num % 2) + 10 * binary(num / 2));
 }

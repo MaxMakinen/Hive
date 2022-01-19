@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 13:06:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/19 12:14:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:40:36 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,11 @@ int		open_fd(char *filename, int *fd);
 int		close_fd(int fd);
 int		print_usage(void);
 int		error(int err);
+int		clean_grid(char *grid, t_tetro *head);
+int		open_fd(char *filename, int *fd);
+int		close_fd(int fd);
+int		print_usage(void);
+int		line_check(char *line, int row);
+int		grow_grid(char *grid, char *line);
 
 #endif
