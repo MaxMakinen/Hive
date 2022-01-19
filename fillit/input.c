@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 10:49:00 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/18 15:06:16 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/19 10:24:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,10 @@ function to append target to queue.
 
 Example tetro : ##
 				 #
-				 #																  |		|
-																		    ->	  v		v
-If we assign shape_id in Position A, the shape_id for example tetro will be 0100 1000 1000 0000.
+				 #						    |	 |
+								        ->	v	 v
+The shape_id for example tetro will be 0100 1000 1000 0000.
 They only point forward to next square, never to already visited ones.
-																			 >	 v <  v  ^    ^
-If we assign shape_id in Position B, the shape_id for example tero will be  0100 1010 1001 0001
-They point to all neighbours, including already visited ones.
-
-				 v>          <
- ## position A = 1100 0000 0010 0000
-##				 v>     <    <^  >
-    position B = 1100 0010 0011 0100
-
-				  >   v>
-### position A = 0100 1100 0000 0000
- #				  >   v><    <     ^
-	position B = 0100 1110 0010 0001
 */
 void	append_queue(t_tetro *temp, short direction, short index)
 {
@@ -50,9 +37,8 @@ void	append_queue(t_tetro *temp, short direction, short index)
 	if (found == 0)
 	{
 		temp->queue[++temp->queue[0]] = index;
-		temp->shape_id = temp->shape_id | direction;/*	- Postition A */
+		temp->shape_id = temp->shape_id | direction;
 	}
-/*	temp->shape_id = temp->shape_id | direction;	- Position B */
 }
 
 /*
@@ -207,58 +193,34 @@ t_tetro *input(int fd)
 	while (get_next_line(fd, &line))
 	{
 		if (row > 129)
-		{
-			ft_putendl("row error");
 			return (NULL);
-		}
 		if(ft_strlen(line) != 4 && (row % 5))
-		{
-			ft_putendl("strlen error");
 			return (NULL);
-		}
 		if((row % 5) == 0 && *line)
-		{
-			ft_putendl("row % 5 not empty error");
 			return (NULL);
-		}
 		if (row % 5) 
 		{
 			if (!check_line(line))
-			{
-				ft_putendl("check_line error");
 				return (NULL);
-			}
 			hash += ft_strccount(line, '#');
 			if (hash > 4)
-			{
-				ft_putendl("too many hash error");
 				return (NULL);
-			}
 			ft_strlcat(grid, line, 21);
 			ft_strlcat(grid, "\n", 21);
 		}
 		else if ((row % 5) == 0) 
 		{
 			if (!find_tetro(grid, head)) 
-			{
-				ft_putendl("find_tetro error");
 				return (NULL);
-			}
 			if (!append_tetro(head))
-			{
-				ft_putendl("append tetro error");
 				return (NULL);
-			}
 			ft_bzero(grid, 21); 
 			hash = 0;
 		}
 		row++;
 	}
 	if (!find_tetro(grid, head)) 
-	{
-		ft_putendl("last line error");
 		return (NULL);
-	}
 	return (head);
 }
 

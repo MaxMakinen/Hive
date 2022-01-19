@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 12:55:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/18 15:11:16 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/19 12:16:41 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,69 +21,76 @@ unsigned long long	binary(unsigned short num)
 		return (0);
 	if (num == 1)
 		return (1);
-	return (num % 2) + 10 * binary(num/2);
+	return ((num % 2) + 10 * binary(num / 2));
 }
 
 /*
-Function to check for errors in file. Closes file at end to reset file offset, to be opened again in later.
+Function to open a file and return the fd.
+In case of error it will print "error\n" into stdout and exit with 0.
 */
 
-int check_file(int fd)
+int	open_fd(char *filename, int *fd)
 {
-	int		ret;
-	char	str[27];
+	*fd = open(filename, O_RDONLY);
+	if (*fd == -1)
+		ft_putendl("error");
+	return (*fd);
+}
 
-	ret = read(fd, str, 26);
-	while (ret >= 26)
-		ret = read(fd, str, 26);
-	str[ret] = 0;
-	if (str[ret - 1] == '\n' && str[ret - 2] == '\n')
-		return (-1);
+/*
+Function to close an open fd.
+In case of error it will print "error\n" into stdout and exit with 0.
+*/
+
+int	close_fd(int fd)
+{
 	if (close(fd) == -1)
-		return (-1);
+	{
+		ft_putendl("error");
+		return (0);
+	}
 	return (1);
 }
 
+/*
+function to print out the usage of program in case of incorrect amount of input.
+*/
+
+int	print_usage(void)
+{
+	ft_putendl("usage: ./fillit filename");
+	return (0);
+}
+
+/*
+function that prints out "error\n" into stdout. Returns number to exit main with.
+*/
+
+int	error(int err)
+{
+	ft_putendl("error");
+	return (err);
+}
+
+/*
+Example for building and testing main.
+*/
 
 int	main(int argc, char **argv)
 {
-	int	 	fd;
-	t_tetro *head;
+	int		fd;
+	t_tetro	*head;
 
 	if (argc != 2)
-	{
-		ft_putendl("usage: ./fillit filename");
-		return (0);
-	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		ft_putendl("error");
+		return (print_usage());
+	if (open_fd(argv[1], &fd) == -1)
 		return (1);
-	}
-/*	if (check_file(fd) == -1){
-	ft_putendl("Check_file error");
-		return (1);
-	}
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (1);
-*/	head = input(fd);
+	head = input(fd);
+	if (close_fd(fd) == -1)
+		return (2);
 	if (!head)
-	{
-		if (close(fd) == -1)
-		{
-			ft_putendl("error");
-			return (1);
-		}
-		ft_putendl("error");
-		return (1);
-	}
-	if (close(fd) == -1)
-	{
-		ft_putendl("error");
-		return (1);
-	}
+		return (error(3));
+/*mmakinen tests. Prints out content of struct list*/
 	while (head->next)
 	{
 		ft_putnbr(head->shape_id);
@@ -98,4 +105,3 @@ int	main(int argc, char **argv)
 	ft_putchar('\n');
 	return (0);
 }
-

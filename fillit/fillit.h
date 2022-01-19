@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 13:06:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/18 14:05:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/19 12:14:37 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define FILLIT_H
 
 # include "libft/libft.h"
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
-typedef struct	s_tetro
+typedef struct s_tetro
 {
 	unsigned short	shape_id;
 	unsigned short	queue[5];
@@ -27,12 +27,15 @@ typedef struct	s_tetro
 	struct s_tetro	*next;
 }					t_tetro;
 
-t_tetro *recursive_finder(char *grid, t_tetro *head, short index);
-t_tetro *find_tetro(char *grid, t_tetro *head);
-t_tetro *new_tetro(char letter);
+t_tetro	*recursive_finder(char *grid, t_tetro *head, short index);
+t_tetro	*find_tetro(char *grid, t_tetro *head);
+t_tetro	*new_tetro(char letter);
 t_tetro	*append_tetro(t_tetro *head);
-t_tetro *input(int fd);
-int		check_file(int fd);
+t_tetro	*input(int fd);
 void	append_queue(t_tetro *temp, short direction, short index);
+int		open_fd(char *filename, int *fd);
+int		close_fd(int fd);
+int		print_usage(void);
+int		error(int err);
 
 #endif
