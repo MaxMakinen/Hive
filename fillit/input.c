@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 10:49:00 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/19 19:40:16 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:39:13 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ function checks to see if there are any other characters in *line
 other than '.', '#' or '\n'
 */
 
-int	check_line(char *line)
+int	check_chars(const char *line)
 {
-	char	*temp;
+	const char	*temp;
 
 	temp = line;
 	while (*temp)
@@ -66,7 +66,7 @@ function to add content of line and a newline to grid
 
 int	grow_grid(char *grid, char *line)
 {
-	if (!check_line(line))
+	if (!check_chars(line))
 		return (0);
 	ft_strlcat(grid, line, 21);
 	ft_strlcat(grid, "\n", 21);
@@ -74,35 +74,37 @@ int	grow_grid(char *grid, char *line)
 }
 
 /*
-Function that takes the filename as input and opens and reads through the file,
+Function that takes pointer to pointer to head and filename as input.
+Then opens and reads through the file,
 identifying tetrominos and placing them into a linked list.
 Returns pointer to head of linked list.
 In case of error, return NULL pointer.
 */
 
-t_tetro	*input(int fd)
+t_tetro	*input(int fd, t_tetro **head)
 {
 	int			row;
 	char		*line;
 	char		grid[21];
-	t_tetro		*head;
 
-	head = new_tetro('A');
-	if (!head)
+	*head = new_tetro('A');
+	if (!*head)
 		return (NULL);
 	ft_bzero(grid, 21);
 	row = 1;
+	line = NULL;
 	while (get_next_line(fd, &line))
 	{
 		if (!line_check(line, row))
-			return (NULL);
+			return (free_all(*head, line));
 		if (row % 5 && !grow_grid(grid, line))
-			return (NULL);
-		if (row % 5 == 0 && !clean_grid(grid, head))
-			return (NULL);
+			return (free_all(*head, line));
+		if (row % 5 == 0 && !clean_grid(grid, *head))
+			return (free_all(*head, line));
+		free(line);
 		row++;
 	}
-	if (!find_tetro(grid, head))
-		return (NULL);
-	return (head);
+	if (!find_tetro(grid, *head))
+		return (free_all(*head, line));
+	return (*head);
 }

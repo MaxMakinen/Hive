@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 19:06:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/19 19:17:12 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:22:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ t_tetro	*recursive_finder(char *grid, t_tetro *temp, short index)
 	if (temp->shape_id > 0)
 		temp->shape_id = temp->shape_id << 4;
 	if (index > 5 && grid[index - 5] == '#')
-		append_queue(temp, 1, index - 5);
+		append_queue(temp, 8, index - 5);
 	if (index - 1 > 0 && grid[index - 1] == '#')
-		append_queue(temp, 2, index - 1);
+		append_queue(temp, 4, index - 1);
 	if ((index + 1) < 21 && grid[index + 1] == '#')
-		append_queue(temp, 4, index + 1);
+		append_queue(temp, 2, index + 1);
 	if ((index + 5) < 21 && grid[index + 5] == '#')
-		append_queue(temp, 8, index + 5);
+		append_queue(temp, 1, index + 5);
 	if (temp->shape_id == 0)
 		return (NULL);
 	temp->blocks++;

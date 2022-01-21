@@ -6,12 +6,13 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/01/17 18:27:01 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/01/20 10:25:21 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =		gcc
 FLAGS = 	-Wall -Wextra -Werror -c
+DEBFLAGS = 	-Wall -Wextra -Werror -g -c
 NAME =		libft.a
 SRC_PATH =	./
 INCLUDE =	./
@@ -38,6 +39,12 @@ $(NAME): $(OBJECTS)
 
 $(OBJECTS):
 	$(CC) $(FLAGS) $(SRCS) $(HEADER)
+
+objects_debug:
+	$(CC) $(DEBFLAGS) $(SRCS) $(HEADER)
+
+debug: objects_debug
+	ar rc $(NAME) $(OBJECTS)
 
 clean:
 	rm -f $(OBJECTS)

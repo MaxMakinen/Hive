@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 12:55:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/19 13:20:22 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:46:55 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,26 @@ int	main(int argc, char **argv)
 		return (print_usage());
 	if (open_fd(argv[1], &fd) == -1)
 		return (1);
-	head = input(fd);
+	head = input(fd, &head);
 	if (close_fd(fd) == -1)
 		return (2);
 	if (!head)
 		return (error(3));
 /*mmakinen tests. Prints out content of struct list*/
-	while (head->next)
+	t_tetro	*temp = head;
+	while (temp->next)
 	{
-		ft_putnbr(head->shape_id);
+		ft_putnbr(temp->shape_id);
 		ft_putstr("\n");
-		ft_putchar(head->letter);
+		ft_putchar(temp->letter);
 		ft_putchar('\n');
-		head = head->next;
+		temp = temp->next;
 	}
-	ft_putnbr(head->shape_id);
+	ft_putnbr(temp->shape_id);
 	ft_putstr("\n");
-	ft_putchar(head->letter);
+	ft_putchar(temp->letter);
 	ft_putchar('\n');
+	if (head)
+		free_list(head);
 	return (0);
 }

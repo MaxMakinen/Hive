@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:52:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/19 18:55:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:45:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ function to add new t_tetro node to end of list
 t_tetro	*append_tetro(t_tetro *head)
 {
 	t_tetro	*temp;
-	t_tetro	*new;
 	short	letter;
 
 	letter = 1;
@@ -50,9 +49,40 @@ t_tetro	*append_tetro(t_tetro *head)
 		temp = temp->next;
 		letter++;
 	}
-	new = new_tetro('A' + letter);
-	if (!new)
+	temp->next = new_tetro('A' + letter);
+	if (!temp->next)
 		return (NULL);
-	temp->next = new;
 	return (head);
+}
+
+/*
+function to free *line and call function to free linked list.
+*/
+
+void	*free_all(t_tetro *head, char *line)
+{	
+	if (line)
+		free(line);
+	return (free_list(head));
+}
+
+/*
+function to free struct linked list.
+*/
+
+void	*free_list(t_tetro *head)
+{	
+	t_tetro	*temp;
+
+	temp = head->next;
+	while (temp)
+	{	
+		head->next = NULL;
+		free(head);
+		head = temp;
+		temp = head->next;
+	}
+	free(head);
+	head = NULL;
+	return (NULL);
 }
