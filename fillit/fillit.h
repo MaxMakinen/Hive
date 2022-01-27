@@ -6,6 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 13:06:58 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/01/26 19:08:16 by mmakinen         ###   ########.fr       */
 /*   Updated: 2022/01/21 15:43:15 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -21,16 +22,24 @@
 typedef struct s_tetro
 {
 	unsigned short	shape_id;
-	unsigned short	queue[5];
+	int				queue[5];
+	int				nl[5];
 	int				blocks;
+	int				placed;
 	char			letter;
 	struct s_tetro	*next;
 }					t_tetro;
 
+typedef struct s_utils
+{
+	char	*grid;
+	size_t	g_size;
+	size_t	empty;
+	int		pos;
+}			t_utils;
+
 /*function to read input and return linked list of found tetrominos*/
 t_tetro	*input(int fd, t_tetro **head);
-/*function to build grid for checking tetromino from lines from input file*/
-int		grow_grid(char *grid, char *line);
 /*functions to check that input follows the tasks conditions*/
 int		check_chars(const char *line);
 int		line_check(char *line, int row);
@@ -47,7 +56,12 @@ int		clean_grid(char *grid, t_tetro *head);
 int		error(int err);
 int		open_fd(char *filename, int *fd);
 int		close_fd(int fd);
+void	file_check(char *filename);
 int		print_usage(void);
+int		line_check(char *line, int row);
+int		grow_grid(char *grid, char *line);
+t_utils	solver(t_tetro *tetro);
+t_utils	solver_iterative(t_tetro *tetro);
 /*functions to free malloce'd pointers*/
 void	*free_list(t_tetro *head);
 void	*free_all(t_tetro *head, char *line);

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/19 19:55:01 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/26 16:26:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-# include "gnl/get_next_line.h"
+# include "get_next_line.h"
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+
 
 typedef struct s_list
 {

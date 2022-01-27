@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/01/20 10:25:21 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/01/25 14:23:16 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ $(OBJECTS):
 objects_debug:
 	$(CC) $(DEBFLAGS) $(SRCS) $(HEADER)
 
-debug: objects_debug
+debug: objects_debug clean
 	ar rc $(NAME) $(OBJECTS)
 
 clean:
@@ -57,8 +57,8 @@ re: fclean all
 tidy: all clean
 
 # only here for libft-unit-test
-so:
-	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
-	gcc -nostartfiles -shared -o libft.so $(OBJECTS)
+#so:
+#	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
+#	gcc -nostartfiles -shared -o libft.so $(OBJECTS)
 
 .PHONY: all clean fclean re so

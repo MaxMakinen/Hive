@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 10:49:00 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/21 15:39:13 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:26:12 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ t_tetro	*input(int fd, t_tetro **head)
 		free(line);
 		row++;
 	}
+	if (row % 5)
+		return (NULL);
 	if (!find_tetro(grid, *head))
 		return (free_all(*head, line));
 	return (*head);

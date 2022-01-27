@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:52:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/21 15:45:45 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:19:53 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ t_tetro	*new_tetro(char letter)
 	while (newnode->blocks < 5)
 		newnode->queue[newnode->blocks++] = 0;
 	newnode->blocks = 0;
+	while (newnode->blocks < 5)
+		newnode->nl[newnode->blocks++] = 0;
+	newnode->blocks = 0;
+	newnode->placed = 0;
 	newnode->letter = letter;
 	newnode->next = NULL;
 	return (newnode);
@@ -61,7 +65,7 @@ function to free *line and call function to free linked list.
 
 void	*free_all(t_tetro *head, char *line)
 {	
-	if (line)
+	if (*line != '\0')
 		free(line);
 	return (free_list(head));
 }

@@ -1,0 +1,1 @@
+gcc -Wall -Wextra -Werror -g recu_main.c file_support.c find_tetro.c input.c put_tetro.c t_tetro.c libft/libft.a
