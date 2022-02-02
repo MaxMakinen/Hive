@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:52:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/26 15:19:53 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:15:44 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,23 @@ t_tetro	*append_tetro(t_tetro *head)
 }
 
 /*
+function to free *line and point it towrds NULL
+*/
+
+void	free_line(char **line)
+{
+	if (*line)
+		free(*line);
+	*line = NULL;
+}
+
+/*
 function to free *line and call function to free linked list.
 */
 
-void	*free_all(t_tetro *head, char *line)
+void	*free_all(t_tetro *head, char **line)
 {	
-	if (*line != '\0')
-		free(line);
+	free_line(line);
 	return (free_list(head));
 }
 

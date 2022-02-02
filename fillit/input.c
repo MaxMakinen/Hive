@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 10:49:00 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/26 15:26:12 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:40:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ t_tetro	*input(int fd, t_tetro **head)
 	char		*line;
 	char		grid[21];
 
-	*head = new_tetro('A');
 	if (!*head)
 		return (NULL);
 	ft_bzero(grid, 21);
@@ -96,17 +95,17 @@ t_tetro	*input(int fd, t_tetro **head)
 	while (get_next_line(fd, &line))
 	{
 		if (!line_check(line, row))
-			return (free_all(*head, line));
+			return (free_all(*head, &line));
 		if (row % 5 && !grow_grid(grid, line))
-			return (free_all(*head, line));
+			return (free_all(*head, &line));
 		if (row % 5 == 0 && !clean_grid(grid, *head))
-			return (free_all(*head, line));
-		free(line);
+			return (free_all(*head, &line));
+		free_line(&line);
 		row++;
 	}
 	if (row % 5)
 		return (NULL);
 	if (!find_tetro(grid, *head))
-		return (free_all(*head, line));
+		return (free_all(*head, &line));
 	return (*head);
 }

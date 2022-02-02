@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 12:58:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/26 16:46:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:41:50 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ In case of error it will print "error\n" into stdout and exit with 0.
 
 int	open_fd(char *filename, int *fd)
 {
-	file_check(filename);
+	if (!file_check(filename))
+		error(3);
 	*fd = open(filename, O_RDONLY);
 	if (*fd == -1)
-		ft_putendl("error");
+		error(3);
 	return (*fd);
 }
 
@@ -34,10 +35,7 @@ In case of error it will print "error\n" into stdout and exit with 0.
 int	close_fd(int fd)
 {
 	if (close(fd) == -1)
-	{
-		ft_putendl("error");
 		error(2);
-	}
 	return (1);
 }
 
@@ -65,18 +63,19 @@ int	error(int err)
 function to check file length and last characters
 */
 
-void	file_check(char *filename)
+int	file_check(char *filename)
 {
 	int		fd;
 	int		file_len;
-	char	buffer[600];
+	char	buffer[576];
 
 	fd = open(filename, O_RDONLY);
-	file_len = read(fd, buffer, 600);
+	file_len = read(fd, buffer, 576);
 	close_fd(fd);
 	buffer[file_len] = 0;
 	if (file_len > 545)
-		error(3);
+		return (0);
 	if (buffer[file_len - 1] != '\n' || buffer[file_len - 2] == '\n')
-		error(3);
+		return (0);
+	return (1);
 }

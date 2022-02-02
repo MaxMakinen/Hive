@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/01/25 14:23:16 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/01/31 13:50:40 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,13 @@ $(NAME): $(OBJECTS)
 $(OBJECTS):
 	$(CC) $(FLAGS) $(SRCS) $(HEADER)
 
-objects_debug:
-	$(CC) $(DEBFLAGS) $(SRCS) $(HEADER)
+debug_objects:
+	@$(CC) $(DEBFLAGS) $(SRCS) $(HEADER)
 
-debug: objects_debug clean
-	ar rc $(NAME) $(OBJECTS)
+debug_lib: debug_objects
+	@ar rc $(NAME) $(OBJECTS)
+
+debug: fclean debug_lib clean
 
 clean:
 	rm -f $(OBJECTS)

@@ -6,8 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 13:06:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/26 19:08:16 by mmakinen         ###   ########.fr       */
-/*   Updated: 2022/01/21 15:43:15 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/01 16:13:13 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +55,29 @@ int		clean_grid(char *grid, t_tetro *head);
 int		error(int err);
 int		open_fd(char *filename, int *fd);
 int		close_fd(int fd);
-void	file_check(char *filename);
+int		file_check(char *filename);
 int		print_usage(void);
 int		line_check(char *line, int row);
 int		grow_grid(char *grid, char *line);
 t_utils	solver(t_tetro *tetro);
 t_utils	solver_iterative(t_tetro *tetro);
-/*functions to free malloce'd pointers*/
+/*functions to free malloc'd pointers*/
 void	*free_list(t_tetro *head);
-void	*free_all(t_tetro *head, char *line);
+void	*free_all(t_tetro *head, char **line);
+void	free_line(char **line);
+void	nl_mem(t_tetro *tetro);
+/*Functions to solve the grid*/
+t_utils	solver(t_tetro *tetro);
+int		recursive_tree(t_tetro *tetro, t_utils utils, t_tetro *read);
+/*functions to solve grid iteratively*/
+int		iterative_tree(t_tetro *tetro, t_utils utils, t_tetro *read);
+t_utils	solver_iterative(t_tetro *tetro);
+char	*make_grid(size_t size);
+void	nl_mem(t_tetro *tetro);
+int		put_tetro(t_tetro *t, t_utils u, size_t g);
+int		lst_size(t_tetro *lst);
+t_tetro	*next_free(t_tetro *head);
+int		del_tetro(t_tetro *t, t_utils u);
+int		rec_del_tetro(t_tetro *t, t_utils u);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:37:12 by dmalesev          #+#    #+#             */
-/*   Updated: 2022/01/26 20:39:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/01 16:05:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,45 +30,7 @@ char	*make_grid(size_t size)
 	return (grid);
 }
 
-void	nl_mem_old(t_tetro *tetro)
-{
-	int		piece;
-	int		pos;
-	char	*grid;
-
-	piece = 4;
-	//FREE THIS GRID
-	grid = make_grid(4);
-	while (piece > 1)
-	{
-		pos = tetro->queue[1];
-		while (tetro->queue[piece] > pos)
-		{
-			if (grid[pos] == '\n')
-				(tetro->nl[piece])++;
-			pos++;
-		}
-		tetro->queue[piece] -= tetro->queue[1];
-		tetro->queue[piece] -= 5 * (tetro->nl[piece]);
-		piece--;
-	}
-	tetro->queue[1] -= tetro->queue[1];
-/*
-	printf("******************\n");
-	printf("NL: [%d]\n", tetro->nl[1]);
-	printf("NL: [%d]\n", tetro->nl[2]);
-	printf("NL: [%d]\n", tetro->nl[3]);
-	printf("NL: [%d]\n", tetro->nl[4]);
-	printf("PIECE: %d\n", tetro->queue[1]);
-	printf("PIECE: %d\n", tetro->queue[2]);
-	printf("PIECE: %d\n", tetro->queue[3]);
-	printf("PIECE: %d\n", tetro->queue[4]);
-	printf("******************\n\n");
-*/
-	free(grid);
-}
-
-void	nl_mem(t_tetro *tetro)
+void	nl_mem_2(t_tetro *tetro)
 {
 	int		piece;
 	int		pos;
@@ -77,13 +39,17 @@ void	nl_mem(t_tetro *tetro)
 	while (pos > 1)
 	{
 		piece = tetro->queue[pos] - tetro->queue[1];
-		while (piece > 3)
+		if (tetro->queue[pos] - 1 == tetro->queue[pos - 1])
+			piece--;
+		if (tetro->queue[pos] + 1 == tetro->queue[pos - 1])
+			piece++;
+		while (piece > 2)
 		{
 			tetro->nl[pos] += 1;
 			piece -= 5;
 		}
 		tetro->queue[pos] -= tetro->queue[1];
-		tetro->queue[pos] -= 5 * (tetro->nl[pos]);
+		tetro->queue[pos] -= 5 * (tetro->nl[pos]); 
 		pos--;
 	}
 	tetro->queue[1] -= tetro->queue[1];
@@ -93,13 +59,7 @@ int	put_tetro(t_tetro *tetro, t_utils utils, size_t g_size)
 {
 	int	piece;
 
-	piece = 4;
-	while (piece > 1)
-	{
-		if (utils.pos + (tetro->queue[piece] + (g_size * (tetro->nl[piece]))) > (g_size * (g_size - 1)))
-			return (-1);
-		piece--;
-	}
+	piece = 1;
 	while (utils.grid && piece > 0 && piece < 5)
 	{
 		if (utils.grid[utils.pos + tetro->queue[piece] + (g_size * (tetro->nl[piece]))] == '.')
@@ -238,12 +198,13 @@ int	rec_del_tetro(t_tetro *tetro, t_utils utils)
 /*
 Crazy ideas that will propably not work.
  */
-
+/*
 int	iterative_tree(t_tetro *tetro, t_utils utils, t_tetro *read)
 {
 	t_tetro *solution[tetro->blocks];
 	t_tetro *temp;
 	int		list;
+	size_t	counter;
 //	size_t	maxlen;
 
 //	maxlen = (utils.g_size * utils.g_size) + utils.g_size - 3;
@@ -255,10 +216,12 @@ int	iterative_tree(t_tetro *tetro, t_utils utils, t_tetro *read)
 		temp = temp->next;
 	}
 	list = 0;
-	//printf("list_len = %d",tetro->blocks);
+	//printf("list_len = %d\n",tetro->blocks);
+	//printf("empty = %ld\n", utils.empty);
 	while (list < tetro->blocks)
 	{
-		//printf("list = %d", list);
+		counter = 0;
+		utils.pos = 0;
 		while (utils.grid[utils.pos] != '\0')
 		{
 			if (read && put_tetro(read, utils, utils.g_size + 1) == 1)
@@ -274,11 +237,32 @@ int	iterative_tree(t_tetro *tetro, t_utils utils, t_tetro *read)
 				//printf("	Placed\nlist = %d\n%s\n", list, utils.grid);
 				break;
 			}
+			if (utils.grid[utils.pos] == '.')
+				counter++;
 			utils.pos++;
+			if (counter > utils.empty)
+			{
+				//printf("Backtrack empty\ntetro shape =%d\nlist = %d\n%s\n", read->shape_id, list , utils.grid);
+				read = next_free(read->next);
+				if (!read)
+				{
+					//printf("	Blem\n");
+					list--;
+					if (list < 0)
+						return(0);
+					read = solution[list];
+					solution[list] = tetro;
+					del_tetro(read, utils);
+					read = next_free(read->next);
+					break;
+				}
+				counter = 0;
+				utils.pos = 0;
+			}
 		}
 		if (solution[0]->next == NULL)
 			return (0);
-		while (utils.grid[utils.pos] == '\0')
+		while (utils.grid[utils.pos] == '\0' || !read)
 		{
 			list--;
 			read = solution[list];
@@ -293,7 +277,7 @@ int	iterative_tree(t_tetro *tetro, t_utils utils, t_tetro *read)
 	}
 	return (1);
 }
-
+*/
 
 int	recursive_tree(t_tetro *tetro, t_utils utils, t_tetro *read)
 {
@@ -352,7 +336,12 @@ t_utils	solver(t_tetro *tetro)
 	utils.empty = (utils.g_size * utils.g_size) - tetro_size;
 	while (read)
 	{
-		nl_mem(read);
+		nl_mem_2(read);
+		read = read->next;
+	}
+	while (read)
+	{
+		read->placed = 0;
 		read = read->next;
 	}
 	while (recursive_tree(tetro, utils, tetro) == 0)
@@ -365,7 +354,7 @@ t_utils	solver(t_tetro *tetro)
 			read = read->next;
 		}
 		utils.g_size++;
-		free(utils.grid);
+		//free(utils.grid);
 		utils.grid = make_grid(utils.g_size);
 		utils.empty = (utils.g_size * utils.g_size) - tetro_size;
 	}
@@ -389,7 +378,7 @@ t_utils	solver_iterative(t_tetro *tetro)
 	utils.empty = (utils.g_size * utils.g_size) - tetro_size;
 	while (read)
 	{
-		nl_mem(read);
+		nl_mem_2(read);
 		read = read->next;
 	}
 //	while (recursive_tree(tetro, utils, tetro) == 0)
@@ -408,26 +397,3 @@ t_utils	solver_iterative(t_tetro *tetro)
 	}
 	return (utils);
 }
-/*
-int	main(void)
-{
-	t_tetro		*tetro;
-	t_tetro		*tetro2;
-
-	tetro = (t_tetro *)malloc(sizeof(*tetro));
-	tetro->letter = 'A';
-	tetro->queue[1] = 10;
-	tetro->queue[2] = 11;
-	tetro->queue[3] = 15;
-	tetro->queue[4] = 20;
-
-	tetro2 = (t_tetro *)malloc(sizeof(*tetro2));
-	tetro2->letter = 'B';
-	tetro2->queue[1] = 10;
-	tetro2->queue[2] = 11;
-	tetro2->queue[3] = 15;
-	tetro2->queue[4] = 20;
-	tetro->next = tetro2;
-	printf("FINAL GRID:\n%s\n", solver(tetro));
-	return (0);
-}*/
