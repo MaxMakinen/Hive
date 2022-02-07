@@ -1,0 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/25 09:47:50 by dmalesev          #+#    #+#             */
+/*   Updated: 2022/01/25 09:56:07 by dmalesev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "fillit.h"
+#include "libft/libft.h"
+#include <stdio.h>
+
+void	modify_utils(t_utils utils)
+{
+	utils.g_size++;
+	utils.pos++;
+	utils.grid = ft_strnew(5);
+	ft_memset(utils.grid, 'a', 3);
+	printf("G_SIZE: %ld\nPOS: %ld\nGRID: %s\n", utils.g_size, utils.pos, utils.grid);
+}
+
+int	main(void)
+{
+	t_utils utils;
+
+	utils.g_size = 3;
+	utils.pos = 5;
+	utils.grid = ft_strnew(5);
+	ft_memset(utils.grid, 'b', 3);
+	modify_utils(utils);
+	printf("G_SIZE: %ld\nPOS: %ld\nGRID: %s\n", utils.g_size, utils.pos, utils.grid);
+	return (0);
+}
