@@ -6,16 +6,16 @@
 /*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:37:12 by dmalesev          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/09 12:57:16 by dmalesev         ###   ########.fr       */
-=======
-/*   Updated: 2022/02/10 12:11:05 by mmakinen         ###   ########.fr       */
->>>>>>> mmakinen
+/*   Updated: 2022/02/11 09:28:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
+
+/*
+function to reset navigation values in utils
+*/
 
 char	*make_grid(size_t size)
 {
@@ -30,9 +30,14 @@ char	*make_grid(size_t size)
 		write = write + size;
 		ft_memset(write, '\n', 1);
 		write++;
-	}	
+	}
 	return (grid);
 }
+
+/*
+function to reset placement information in tetro and move utils.pos to correct
+starting position for new attempt
+*/
 
 int	put_tetro(t_tetro *t, t_utils u, size_t g)
 {
@@ -61,6 +66,11 @@ int	put_tetro(t_tetro *t, t_utils u, size_t g)
 	return (-1);
 }
 
+/*
+function to mark tetro as placed and remember position of first,
+most top left, part of tetromino
+*/
+
 int	lst_size(t_tetro *lst)
 {
 	int	size;
@@ -74,8 +84,11 @@ int	lst_size(t_tetro *lst)
 	return (size);
 }
 
-t_tetro	*next_free(t_tetro *temp)
+t_tetro	*next_free(t_tetro *head)
 {
+	t_tetro	*temp;
+
+	temp = head;
 	while (temp)
 	{
 		if (temp->placed == 0)
@@ -84,6 +97,11 @@ t_tetro	*next_free(t_tetro *temp)
 	}
 	return (NULL);
 }
+
+/*
+function to mark a section of the grid as skipped,
+and restore it if backtracked to.
+*/
 
 int	del_tetro(t_tetro *t, t_utils u)
 {

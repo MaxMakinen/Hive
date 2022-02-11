@@ -6,16 +6,12 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:39:45 by mmakinen          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/09 18:23:10 by dmalesev         ###   ########.fr       */
-=======
-/*   Updated: 2022/02/10 13:38:15 by mmakinen         ###   ########.fr       */
->>>>>>> mmakinen
+/*   Updated: 2022/02/11 10:10:31 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
+
 /*
 function to reset navigation values in utils
 */
@@ -37,34 +33,13 @@ function to reset placement information in tetro and move utils.pos to correct
 starting position for new attempt
 */
 
-<<<<<<< HEAD
-void	del_empty(t_utils utils)
-{
-	while (utils.grid[utils.pos] != '\0')
-	{
-		if (utils.grid[utils.pos] == '+')
-			utils.grid[utils.pos] = '.';
-		utils.pos++;
-	}
-}
-
-t_utils	backtrack(t_tetro *read, t_utils utils)
-{
-	read->placed = 0;
-	utils.pos = read->nl[0];
-	del_tetro(read, utils);
-	del_empty(utils);
-	utils.pos = 0;
-	if (utils.counter)
-		utils.counter--;
-=======
 t_utils	backtrack(t_tetro **read, t_utils utils)
 {
 	(*read)->placed = 0;
 	utils.pos = (*read)->nl[0];
+	utils.counter = (*read)->queue[0];
 	del_tetro(*read, utils);
 	*read = next_free((*read)->next);
->>>>>>> mmakinen
 	return (utils);
 }
 
@@ -77,12 +52,14 @@ void	place(t_tetro *read, t_utils utils)
 {
 	read->placed = 1;
 	read->nl[0] = utils.pos;
+	read->queue[0] = utils.counter;
 }
 
 /*
 function to mark a section of the grid as skipped, 
 and restore it if backtracked to.
 */
+
 int	mark_skip(t_utils utils, t_tetro *tetro)
 {
 	int	memory;
@@ -98,29 +75,11 @@ int	mark_skip(t_utils utils, t_tetro *tetro)
 }
 
 /*
-Recursive solver for the fillit assignment. Finds dmallest possible square that
+Recursive solver for the fillit assignment. Finds smallest possible square that
 fits given set of fixed tetrominos.
 */
 
-<<<<<<< HEAD
-t_utils	put_empty(t_utils utils)
-{
-	while (utils.grid[utils.pos] != '\0')
-	{
-		if (utils.grid[utils.pos] == '.')
-		{
-			utils.grid[utils.pos] = '+';
-			return (utils);
-		}
-		utils.pos++;
-	}
-	return (utils);
-}
-
-int	recursive_tree(t_tetro *tetro, t_utils utils, t_tetro *read)
-=======
 int	recursive_tree(t_tetro *tetro, t_utils u, t_tetro *read)
->>>>>>> mmakinen
 {
 	read = next_free(tetro);
 	if (!read)
@@ -130,39 +89,7 @@ int	recursive_tree(t_tetro *tetro, t_utils u, t_tetro *read)
 	{
 		while (read && put_tetro(read, u, u.g_size + 1) == 1)
 		{
-<<<<<<< HEAD
-			printf("POS: [%d]\n", utils.pos);
-			printf("COUNTER: %ld\n", utils.counter);
-			printf("GRID:\n%s\n\n", utils.grid);
-			place(read, utils);
-			if (recursive_tree(tetro, utils, tetro) == 1)
-				return (1);
-			utils = backtrack(read, utils);
-			read = next_free(read->next);
-			printf("POS: [%d]\n", utils.pos);
-			printf("COUNTER: %ld\n", utils.counter);
-			printf("BACKTRACK:\n%s\n\n", utils.grid);
-			if (!read && utils.counter < utils.empty)
-			{
-				utils = reset(utils);
-				utils = put_empty(utils);
-				utils.counter++;
-				printf("POS: [%d]\n", utils.pos);
-				printf("COUNTER: %ld\n", utils.counter);
-				printf("*** READ IS NULL ***\n");
-				printf("*** PLACE EMPTY ***:\n%s\n\n", utils.grid);
-				if (recursive_tree(tetro, utils, read) == 1)
-					return (1);
-			}
-		}
-		if (utils.grid[utils.pos] == '.' || utils.grid[utils.pos] == '+')
-		{
-			utils.counter++;
-		}
-		utils.pos++;
-		if (read && utils.counter > utils.empty)
-=======
-			if (recursive_tree(tetro, u, read->next) == 1)
+			if (recursive_tree(tetro, u, tetro) == 1)
 				return (1);
 			u = backtrack(&read, u);
 			if (!read && (u.skips + u.counter) < u.empty)
@@ -170,9 +97,9 @@ int	recursive_tree(t_tetro *tetro, t_utils u, t_tetro *read)
 			u = reset(u, 0);
 		}
 		if (u.grid[u.pos] == '.' && read && (u.skips + ++u.counter) > u.empty)
->>>>>>> mmakinen
 		{
 			read = next_free(read->next);
+			u = reset(u, 0);
 			continue ;
 		}
 		u.pos++;
