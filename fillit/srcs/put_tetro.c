@@ -6,7 +6,11 @@
 /*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:37:12 by dmalesev          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/02/09 12:57:16 by dmalesev         ###   ########.fr       */
+=======
 /*   Updated: 2022/02/10 12:11:05 by mmakinen         ###   ########.fr       */
+>>>>>>> mmakinen
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +74,8 @@ int	lst_size(t_tetro *lst)
 	return (size);
 }
 
-t_tetro	*next_free(t_tetro *head)
+t_tetro	*next_free(t_tetro *temp)
 {
-	t_tetro	*temp;
-
-	temp = head;
 	while (temp)
 	{
 		if (temp->placed == 0)
