@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 12:55:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/02/07 17:23:09 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/08 10:03:54 by mmakinen         ###   ########.fr       */
 /*   Updated: 2022/01/21 15:46:55 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -34,7 +34,6 @@ int	main(int argc, char **argv)
 	if (!head)
 		return (error(3));
 	utils = solver(head);
-	ft_putendl("\n\n***RECURSIVE ANSWER***");
 	ft_putendl(utils.grid);
 	free(utils.grid);
 	if (head)

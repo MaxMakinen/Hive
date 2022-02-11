@@ -6,7 +6,7 @@
 /*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:37:12 by dmalesev          #+#    #+#             */
-/*   Updated: 2022/02/07 16:59:58 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:11:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	put_tetro(t_tetro *t, t_utils u, size_t g)
 	p = 1;
 	while (u.grid && p > 0 && p < 5)
 	{
-		if (u.pos + t->queue[p] + (g * (t->nl[p])) >= u.maxlen)
-			return (-1);
 		if (u.grid[u.pos + t->queue[p] + (g * (t->nl[p]))] == '.')
 		{
 			u.grid[u.pos + t->queue[p] + (g * (t->nl[p]))] = t->letter;
@@ -52,7 +50,10 @@ int	put_tetro(t_tetro *t, t_utils u, size_t g)
 		}
 	}
 	if (p == 5)
+	{
+		place(t, u);
 		return (1);
+	}
 	return (-1);
 }
 

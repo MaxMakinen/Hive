@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/02/07 11:22:58 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/02/08 09:50:40 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ $(NAME): $(OBJECTS)
 	@ar rc $@ $^
 
 $(OBJECTS):
-	$(CC) $(FLAGS) $(SRCS) $(HEADER)
+	@$(CC) $(FLAGS) $(SRCS) $(HEADER)
 
 debug_objects:
 	@$(CC) $(DEBFLAGS) $(SRCS) $(HEADER)

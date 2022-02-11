@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 13:06:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/02/07 17:26:25 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:27:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_utils
 	int		pos;
 	size_t	counter;
 	size_t	maxlen;
+	size_t	skips;
 }			t_utils;
 
 /*function to read input and return linked list of found tetrominos*/
@@ -74,8 +75,7 @@ int		recursive_tree(t_tetro *tetro, t_utils utils, t_tetro *read);
 int		put_tetro(t_tetro *t, t_utils u, size_t g);
 int		del_tetro(t_tetro *t, t_utils u);
 t_tetro	*next_free(t_tetro *head);
-t_utils	reset(t_utils utils);
-t_utils	backtrack(t_tetro *read, t_utils utils);
+t_utils	backtrack(t_tetro **read, t_utils utils);
 void	place(t_tetro *read, t_utils utils);
 /*functions to assist solver*/
 int		lst_size(t_tetro *lst);
@@ -84,5 +84,8 @@ char	*make_grid(size_t size);
 void	prep_tetros(t_tetro *tetro);
 void	unplace(t_tetro *tetro);
 t_utils	initialise(t_utils utils, size_t tetro_size);
+t_utils	finalise(t_utils utils);
+t_utils	reset(t_utils utils, int check);
+t_utils	next_empty(t_utils utils);
 
 #endif
