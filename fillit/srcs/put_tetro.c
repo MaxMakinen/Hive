@@ -6,7 +6,7 @@
 /*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:37:12 by dmalesev          #+#    #+#             */
-/*   Updated: 2022/02/11 09:28:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/15 09:30:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 /*
-function to reset navigation values in utils
+function to make grid in required size to place tetros
 */
 
 char	*make_grid(size_t size)
@@ -35,40 +35,40 @@ char	*make_grid(size_t size)
 }
 
 /*
-function to reset placement information in tetro and move utils.pos to correct
-starting position for new attempt
+function to attempt to place tetro in grid, and delete any changes if it
+encounters an issue
 */
 
-int	put_tetro(t_tetro *t, t_utils u, size_t g)
+int	put_tetro(t_tetro *t, t_utils u)
 {
-	int	p;
+	int		p;
+	size_t	check;
 
 	p = 1;
 	while (u.grid && p > 0 && p < 5)
 	{
-		if (u.grid[u.pos + t->queue[p] + (g * (t->nl[p]))] == '.')
+		check = u.pos + t->queue[p] + ((u.g_size + 1) * (t->nl[p]));
+		if (check < u.maxlen && u.grid[check] == '.' && u.grid[check] != '\0')
 		{
-			u.grid[u.pos + t->queue[p] + (g * (t->nl[p]))] = t->letter;
+			u.grid[check] = t->letter;
 			p++;
 		}
-		else if (u.grid[u.pos + t->queue[p] + (g * (t->nl[p]))] != '.')
+		else if (check >= u.maxlen)
+			p--;
+		else if (u.grid[check] != '.' || u.grid[check] == '\0')
 		{
-			if (u.grid[u.pos + t->queue[p] + (g * (t->nl[p]))] == t->letter)
-				u.grid[u.pos + t->queue[p] + (g * (t->nl[p]))] = '.';
+			if (u.grid[check] == t->letter)
+				u.grid[check] = '.';
 			p--;
 		}
 	}
 	if (p == 5)
-	{
-		place(t, u);
-		return (1);
-	}
-	return (-1);
+		return (place(t, u));
+	return (0);
 }
 
 /*
-function to mark tetro as placed and remember position of first,
-most top left, part of tetromino
+function to count elements in list of tetros
 */
 
 int	lst_size(t_tetro *lst)
@@ -84,11 +84,12 @@ int	lst_size(t_tetro *lst)
 	return (size);
 }
 
-t_tetro	*next_free(t_tetro *head)
-{
-	t_tetro	*temp;
+/*
+function to find next unplaced tetro in list
+*/
 
-	temp = head;
+t_tetro	*next_free(t_tetro *temp)
+{
 	while (temp)
 	{
 		if (temp->placed == 0)
@@ -99,8 +100,8 @@ t_tetro	*next_free(t_tetro *head)
 }
 
 /*
-function to mark a section of the grid as skipped,
-and restore it if backtracked to.
+function to remove a placed tetro from grid and reset nevigation values of
+tetro
 */
 
 int	del_tetro(t_tetro *t, t_utils u)

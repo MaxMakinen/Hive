@@ -6,21 +6,21 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/02/10 13:28:48 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/02/15 09:40:35 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =		gcc
 FLAGS = 	-Wall -Wextra -Werror -o
-CFLAGS =	-Wall -Wextra -Werror $(HEADER)
+CFLAGS =	-Wall -Wextra -Werror -g $(HEADER)
 NAME =		fillit
 SRC_PATH =	./srcs/
-VPATH =		$(SRC_PATH)
-INCLUDE =	./include/
+VPATH +=	$(SRC_PATH)
+INCLUDE =	$(SRC_PATH)
 SRCS =		recu_main.c file_support.c find_tetro.c input.c t_tetro.c \
 			put_tetro.c solver.c solver_support.c recursive.c
 LIB =		$(SRC_PATH)libft/libft.a
-OBJECTS =	$(SRCS:.c=.o)
+OBJECTS =	$(SRCS:%.c=%.o)
 HEADER =	-I $(INCLUDE)
 
 all: $(NAME)
@@ -56,5 +56,4 @@ re: fclean all
 
 tidy: all clean
 
-.PHONY: all NAME LIB makelib debug debug_libft libclean libfclean clean fclean re \
-		tidy
+.PHONY: all libclean libfclean clean fclean re tidy

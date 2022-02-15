@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/02/08 09:50:40 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/02/15 09:41:45 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FLAGS = 	-Wall -Wextra -Werror -c
 DEBFLAGS = 	-Wall -Wextra -Werror -g -c
 NAME =		libft.a
 SRC_PATH =	./
-INCLUDE =	../../include/
+INCLUDE =	../
 SRCS =		ft_calloc.c ft_strsub.c ft_lstadd.c ft_lstiter.c ft_lstmap.c	\
 ft_strchr.c ft_lstnew.c ft_lstdel.c ft_lstdelone.c ft_strlcpy.c	ft_isprint.c\
 ft_memdel.c ft_putstr_fd.c ft_strjoin.c ft_strnstr.c ft_isspace.c			\
