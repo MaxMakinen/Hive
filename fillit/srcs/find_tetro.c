@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 19:06:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/21 15:22:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/15 10:11:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ function to append target to queue.
 
 Example tetro : ##
 				 #
-				 #						  |	|
-										->  v	v
+				 #							|	 |
+										->  v	 v
 The shape_id for example tetro will be 0100 1000 1000 0000.
 They only point forward to next square, never to already visited ones.
 */
@@ -65,8 +65,10 @@ t_tetro	*recursive_finder(char *grid, t_tetro *temp, short index)
 	if (temp->shape_id == 0)
 		return (NULL);
 	temp->blocks++;
-	if (temp->blocks < 4 && temp->queue[temp->blocks + 1])
+	if (temp->blocks < 5 && temp->queue[temp->blocks + 1])
 		recursive_finder(grid, temp, temp->queue[temp->blocks + 1]);
+	else if (temp->queue[0] > 4)
+		return (NULL);
 	return (temp);
 }
 

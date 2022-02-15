@@ -6,12 +6,11 @@
 /*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:37:12 by dmalesev          #+#    #+#             */
-/*   Updated: 2022/02/15 09:30:59 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/15 09:58:54 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 /*
 function to make grid in required size to place tetros
