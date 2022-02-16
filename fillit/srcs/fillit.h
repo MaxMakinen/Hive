@@ -6,14 +6,14 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 13:06:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/02/14 12:12:51 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:45:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-# include "libft.h"
+# include "./libft/libft.h"
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>

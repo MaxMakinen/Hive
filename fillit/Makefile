@@ -6,32 +6,28 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/02/15 10:14:31 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/02/16 12:02:34 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =		gcc
 FLAGS = 	-Wall -Wextra -Werror -o
-CFLAGS =	-Wall -Wextra -Werror -g $(HEADER)
+CFLAGS =	-Wall -Wextra -Werror $(HEADER)
 NAME =		fillit
 SRC_PATH =	./srcs/
 VPATH +=	$(SRC_PATH)
-INCLUDE =	$(SRC_PATH)
 SRCS =		recu_main.c file_support.c find_tetro.c input.c t_tetro.c \
 			put_tetro.c solver.c solver_support.c recursive.c
 LIB =		$(SRC_PATH)libft/libft.a
 OBJECTS =	$(SRCS:%.c=%.o)
-HEADER =	-I $(INCLUDE)
+HEADER =	-I $(SRC_PATH)
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(LIB)
 	@$(CC) $(FLAGS) $@ $^ $(HEADER)
 
-$(LIB): 
-	make makelib
-
-makelib:
+$(LIB):
 	@make -C $(SRC_PATH)libft/
 
 debug: $(OBJECTS) debug_libft
@@ -44,12 +40,12 @@ libclean:
 	@make -C $(SRC_PATH)libft/ clean
 
 libfclean:
-	@make -C $(SRC_PATH)libft/ fclean
+	rm -f $(LIB)
 
 clean: libclean
 	rm -f $(OBJECTS) 
 
-fclean: libfclean clean
+fclean: clean libfclean
 	rm -f $(NAME)
 
 re: fclean all
