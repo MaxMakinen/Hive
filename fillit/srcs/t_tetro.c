@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:52:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/31 15:15:44 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:25:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_tetro	*new_tetro(char letter)
 	newnode = (t_tetro *)malloc(sizeof(t_tetro));
 	if (!newnode)
 		return (NULL);
-	newnode->shape_id = 0;
 	newnode->blocks = 0;
 	while (newnode->blocks < 5)
 		newnode->queue[newnode->blocks++] = 0;

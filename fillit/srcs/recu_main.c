@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 12:55:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/02/08 10:03:54 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:43:28 by mmakinen         ###   ########.fr       */
 /*   Updated: 2022/01/21 15:46:55 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -14,7 +14,10 @@
 #include "fillit.h"
 
 /*
-Example for building and testing main.
+Our main, after error checks and opening FD i creates a head for our
+linked list and then calls input to find all tetros in input file.
+It solves for smallest possible square by calling solver.
+Once everything is done it frees all pointers.
 */
 
 int	main(int argc, char **argv)
@@ -34,7 +37,7 @@ int	main(int argc, char **argv)
 	if (!head)
 		return (error(3));
 	utils = solver(head);
-	ft_putendl(utils.grid);
+	ft_putstr(utils.grid);
 	free(utils.grid);
 	if (head)
 		free_list(head);

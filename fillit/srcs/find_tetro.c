@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 19:06:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/02/15 10:11:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:25:15 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Example tetro : ##
 The shape_id for example tetro will be 0100 1000 1000 0000.
 They only point forward to next square, never to already visited ones.
 */
-void	append_queue(t_tetro *temp, short direction, short index)
+void	append_queue(t_tetro *temp, short index)
 {
 	short	count;
 	char	found;
@@ -35,10 +35,7 @@ void	append_queue(t_tetro *temp, short direction, short index)
 			found = 1;
 	}
 	if (found == 0)
-	{
 		temp->queue[++temp->queue[0]] = index;
-		temp->shape_id = temp->shape_id | direction;
-	}
 }
 
 /*
@@ -52,18 +49,14 @@ t_tetro	*recursive_finder(char *grid, t_tetro *temp, short index)
 		temp->queue[1] = index;
 		temp->queue[0] += 1;
 	}
-	if (temp->shape_id > 0)
-		temp->shape_id = temp->shape_id << 4;
 	if (index > 5 && grid[index - 5] == '#')
-		append_queue(temp, 8, index - 5);
+		append_queue(temp, index - 5);
 	if (index - 1 > 0 && grid[index - 1] == '#')
-		append_queue(temp, 4, index - 1);
+		append_queue(temp, index - 1);
 	if ((index + 1) < 21 && grid[index + 1] == '#')
-		append_queue(temp, 2, index + 1);
+		append_queue(temp, index + 1);
 	if ((index + 5) < 21 && grid[index + 5] == '#')
-		append_queue(temp, 1, index + 5);
-	if (temp->shape_id == 0)
-		return (NULL);
+		append_queue(temp, index + 5);
 	temp->blocks++;
 	if (temp->blocks < 5 && temp->queue[temp->blocks + 1])
 		recursive_finder(grid, temp, temp->queue[temp->blocks + 1]);
@@ -82,6 +75,8 @@ t_tetro	*find_tetro(char *grid, t_tetro *head)
 	short	index;
 	t_tetro	*temp;
 
+	if (!count_hash(grid))
+		return (NULL);
 	temp = head;
 	while (temp->next)
 		temp = temp->next;

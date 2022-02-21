@@ -6,7 +6,7 @@
 /*   By: dmalesev <dmalesev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:37:12 by dmalesev          #+#    #+#             */
-/*   Updated: 2022/02/15 09:58:54 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:31:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,49 +38,32 @@ function to attempt to place tetro in grid, and delete any changes if it
 encounters an issue
 */
 
-int	put_tetro(t_tetro *t, t_utils u)
+int	put_tetro(t_tetro *t, t_utils *u)
 {
-	int		p;
+	int		piece;
 	size_t	check;
 
-	p = 1;
-	while (u.grid && p > 0 && p < 5)
+	piece = 1;
+	while (piece > 0 && piece < 5)
 	{
-		check = u.pos + t->queue[p] + ((u.g_size + 1) * (t->nl[p]));
-		if (check < u.maxlen && u.grid[check] == '.' && u.grid[check] != '\0')
+		check = u->pos + t->queue[piece] + ((u->g_size + 1) * (t->nl[piece]));
+		if (check < u->maxlen && u->grid[check] == '.')
 		{
-			u.grid[check] = t->letter;
-			p++;
+			u->grid[check] = t->letter;
+			piece++;
 		}
-		else if (check >= u.maxlen)
-			p--;
-		else if (u.grid[check] != '.' || u.grid[check] == '\0')
+		else if (check >= u->maxlen)
+			piece--;
+		else if (u->grid[check] != '.')
 		{
-			if (u.grid[check] == t->letter)
-				u.grid[check] = '.';
-			p--;
+			if (u->grid[check] == t->letter)
+				u->grid[check] = '.';
+			piece--;
 		}
 	}
-	if (p == 5)
+	if (piece == 5)
 		return (place(t, u));
 	return (0);
-}
-
-/*
-function to count elements in list of tetros
-*/
-
-int	lst_size(t_tetro *lst)
-{
-	int	size;
-
-	size = 0;
-	while (lst)
-	{
-	lst = lst->next;
-		size++;
-	}
-	return (size);
 }
 
 /*
@@ -103,20 +86,20 @@ function to remove a placed tetro from grid and reset nevigation values of
 tetro
 */
 
-int	del_tetro(t_tetro *t, t_utils u)
+int	del_tetro(t_tetro *t, t_utils *u)
 {
 	int	piece;
 	int	g;
 	int	pos;
 
-	g = u.g_size + 1;
+	g = u->g_size + 1;
 	piece = 4;
 	t->placed = 0;
 	pos = t->nl[0];
-	while (u.grid && piece > 0)
+	while (u->grid && piece > 0)
 	{
-		if (u.grid[pos + t->queue[piece] + (g * (t->nl[piece]))] == t->letter)
-			u.grid[pos + t->queue[piece] + (g * (t->nl[piece]))] = '.';
+		if (u->grid[pos + t->queue[piece] + (g * (t->nl[piece]))] == t->letter)
+			u->grid[pos + t->queue[piece] + (g * (t->nl[piece]))] = '.';
 		piece--;
 	}
 	t->nl[0] = 0;

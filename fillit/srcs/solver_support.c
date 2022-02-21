@@ -6,18 +6,16 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 13:20:01 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/02/10 13:30:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:19:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-t_utils	initialise(t_utils utils, size_t tetro_size)
+t_utils	initialise(t_utils utils)
 {
 	utils.pos = 0;
-	utils.skips = 0;
 	utils.grid = make_grid(utils.g_size);
-	utils.empty = (utils.g_size * utils.g_size) - tetro_size;
 	utils.maxlen = (utils.g_size * utils.g_size) + utils.g_size;
 	return (utils);
 }
@@ -33,24 +31,30 @@ void	unplace(t_tetro *tetro)
 
 void	prep_tetros(t_tetro *tetro)
 {
-	unplace(tetro);
+	t_tetro	*temp;
+
+	temp = tetro;
+	temp->blocks = 0;
 	while (tetro)
 	{
-		nl_mem(tetro);
+		newlines(tetro);
+		temp->blocks++;
 		tetro = tetro->next;
 	}
 }
 
-t_utils	finalise(t_utils utils)
+int	count_hash(char *grid)
 {
 	int	count;
 
 	count = 0;
-	while (utils.grid[count] != '\0')
+	while (*grid)
 	{
-		if (utils.grid[count] == 'e' || utils.grid[count] == 's')
-			utils.grid[count] = '.';
-		count++;
+		if (*grid == '#')
+			count++;
+		grid++;
 	}
-	return (utils);
+	if (count != 4)
+		return (0);
+	return (1);
 }
