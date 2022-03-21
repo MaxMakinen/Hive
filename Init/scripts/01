@@ -1,0 +1,5 @@
+#!/bin/bash
+#Script to display only the login, UID and Path of each entry of 
+#the /etc/passwd file.
+
+getent passwd | awk -F : '{print $1, $3, $6}'

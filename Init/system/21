@@ -1,0 +1,3 @@
+ls /home
+	or
+getent passwd {1000..6000}
