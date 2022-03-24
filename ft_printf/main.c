@@ -201,6 +201,11 @@ int	main(void)
 	ft_printf("{%.10f}\n", 1.0f);
 	printf("{%.10f}\n", 1.0f);
 
-	ft_printf("{%Lf}\n", -1.42l);
-	printf("{%Lf}\n", -1.42l);
+	ft_printf("{%Lf}\n", -1.84l);
+	printf("{%Lf}\n", -1.84l);
+
+	test = ft_printf("{%f}{%lf}{%Lf}\n", -1.42, -1.42, -1.42l);
+	printf("test = %d\n", test);
+	test = ("{%f}{%lf}{%Lf}\n", -1.42, -1.42, -1.42l);
+	printf("test = %d\n", test);
 }
