@@ -1,0 +1,5 @@
+kill %+
+	or
+kill -9 %+
+	or
+pkill 'tail'

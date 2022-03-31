@@ -1,0 +1,3 @@
+To connect via a graphical session, you log in via the graphical user interface 
+using your username and password.
+To connect via ssh you need the command: "ssh username@host_ip_adress" and then you give your password when prompted.
