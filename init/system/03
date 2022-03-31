@@ -1,0 +1,2 @@
+Inside the directory with the system configuration files you'll have to modify
+/etc/hostname and etc/hosts with the new name.

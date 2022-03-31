@@ -1,0 +1,5 @@
+compgen -u
+	or
+getent passwd
+	or
+cat /etc/passwd
