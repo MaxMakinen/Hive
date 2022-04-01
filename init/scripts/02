@@ -13,7 +13,7 @@ TARGET=""
 
 echo -e "${RED}Delete active user.${NORM}"
 echo "Cannot delete: $ME or root."
-while True ; do
+while [ True ] ; do
 	echo -e "Currently logged in: ${PRPL}$USERS${NORM}"
 	echo -e "Write ${PRPL}exit${NORM} to exit."
 	echo -n "Which user do you want to delete?: "
