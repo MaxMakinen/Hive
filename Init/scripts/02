@@ -1,7 +1,0 @@
-#!/bin/bash
-#Script to delete an ACTIVE user in Debian. Requires Sudo priviledges.
-
-username=$(whoami)
-echo "$username shall be deleted"
-sudo userdel -rf $username
-echo "$username has been deleted, good riddance."

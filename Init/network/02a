@@ -1,4 +1,0 @@
-#02 Identify and diplay the Ethernet interface charactreristics
-#(a) Identify broadcast address
-
-ifconfig en0 | awk '/broadcast/{print $6}'

@@ -1,1 +1,0 @@
-sudo du -sh /var/*

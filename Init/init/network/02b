@@ -1,4 +1,0 @@
-#Identify and display the Ethernet interface characteristics:
-#(b) Identify all IP adresses which are part of the same subnet
-
-arp -a | awk '{print $2}'

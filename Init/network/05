@@ -1,2 +1,0 @@
-#Identify the IP address of the DNS that responds to the url who.int
-nslookup who.int

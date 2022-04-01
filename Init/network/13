@@ -1,5 +1,0 @@
-#Thanks to the previous question and the reverse DNS find the name of your host.
-#
-#ipconfig getifaddr en0 | nslookup
-#an example of output in school, for position c1r1p4:
-4.1.11.10.in-addr.arpa  name = c1r1p4.hive.fi
