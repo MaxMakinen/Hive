@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:05:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/08 12:35:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:28:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,24 @@ function to turn unsigned int to binary for printing.
 
 char	*ft_itobin(unsigned int num)
 {
-	unsigned int	len;
-	unsigned int	count;
+	int				len;
 	char			*answer;
 
 	len = (sizeof(num) * 8);
-	count = 0;
-	answer = ft_strnew(len);
-
-	while (count < len)
+	answer = ft_strnew(len--);
+	while (len > 0)
 	{
-		if ((num >> count) & 1)
-			answer = ft_strcat(answer, "1");
+		if ((num >> len) & 1)
+			break ;
+		len--;
+	}
+	while (len >= 0)
+	{
+		if ((num >> len) & 1)
+			ft_strcat(answer, "1");
 		else
-			answer = ft_strcat(answer, "0");
-		count++;
-	}	
+			ft_strcat(answer, "0");
+		len--;
+	}
 	return (answer);
-}
-
-int main(void)
-{
-	unsigned int	x;
-	char			*bin;
-
-	x = 12;
-	bin = ft_itobin(x);
-	printf("%s",bin);
-	return (0);
 }

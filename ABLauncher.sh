@@ -10,11 +10,18 @@ PRPL='\033[0;35m'
 GRN='\033[0;32m'
 NORM='\033[0m'
 
+if [ -z $1 ]; then
+	TASK=AutoBackup6h.sh
+else
+	TASK=$1
+	TASK=${TASK}.sh
+fi
+echo "Attempting to schedule job: ${TASK}"
+
 #Script to to automate backup in cron.
 #If job is already scheduled in cron, skip to script. 
 
 crontab -l > cron_temp
-TASK=AutoBackup6h.sh
 FIND=$(grep ${TASK} cron_temp | wc -l)
 if (($FIND > 0)); then
 	echo -e "${PRPL}Job already scheduled in cron.${NORM}"

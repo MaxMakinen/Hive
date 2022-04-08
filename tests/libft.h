@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/08 18:19:40 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/01/10 15:27:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ void	ft_memdel(void **ap);
 void	*ft_memalloc(size_t size);
 void	*ft_calloc(size_t count, size_t size);
 /*
-swap functions
-*/
-void	ft_swap(void *a, void *b);
-void	ft_chswap(char *a, char *b);
-/*
 ctype functions
 */
 int		ft_isupper(int c);
@@ -66,7 +61,6 @@ atoi & itoa
 */
 int		ft_atoi(const char *nptr);
 char	*ft_itoa(int n);
-char	*ft_itobin(unsigned int num);
 /*
 put type functions
 */

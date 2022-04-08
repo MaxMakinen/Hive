@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/01/10 10:43:14 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/04/08 15:35:17 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ ft_putendl.c ft_strdel.c ft_strncat.c ft_strtrim.c ft_isascii.c ft_memccpy.c\
 ft_putendl_fd.c ft_strdup.c ft_strncmp.c ft_swap.c ft_isblank.c ft_memchr.c	\
 ft_putnbr.c ft_strequ.c ft_strncpy.c ft_tolower.c ft_isdigit.c ft_memcmp.c	\
 ft_putnbr_fd.c ft_striter.c ft_strnequ.c ft_toupper.c ft_islower.c			\
-ft_memcpy.c ft_putstr.c ft_striteri.c ft_strnew.c ft_arrfree.c ft_ispunct.c
+ft_memcpy.c ft_putstr.c ft_striteri.c ft_strnew.c ft_arrfree.c ft_ispunct.c \
+ft_swap.c ft_chswap.c
 OBJECTS =	$(SRCS:.c=.o)
 HEADER =	-I $(INCLUDE)
 
