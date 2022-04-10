@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_chswap.c                                        :+:      :+:    :+:   */
+/*   ft_swapptr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 15:33:30 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/08 15:34:56 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/10/29 14:54:54 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/04/08 15:53:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_chswap(char *a, char *b)
+void	ft_swapptr(void **a, void **b)
 {
-	char	temp;
+	void	*temp;
 
 	temp = *a;
 	*a = *b;

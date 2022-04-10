@@ -43,8 +43,9 @@ void	*ft_calloc(size_t count, size_t size);
 /*
 swap functions
 */
-void	ft_swap(void *a, void *b);
-void	ft_chswap(char *a, char *b);
+void	ft_swapchr(char *a, char *b);
+void	ft_swapint(int *a, int *b);
+void	ft_swapptr(void **a, void **b);
 /*
 ctype functions
 */

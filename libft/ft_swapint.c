@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   ft_swapint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 14:54:54 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/08 15:53:23 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/04/08 15:33:30 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/04/08 15:34:56 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_swap(void **a, void **b)
+#include "libft.h"
+
+void	ft_swapint(int *a, int *b)
 {
-	void	*temp;
+	int	temp;
 
 	temp = *a;
 	*a = *b;
