@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/11 16:11:27 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:42:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	count_elems(char *filename, int *fd, t_map *map)
 	*fd = openfd(filename, fd);
 	while (read(*fd, &check, 1))
 	{
-		if (check == ' ' && previous != ' ' && rows == 0)
+		if ((check == ' ' || check == '\n') && previous != ' ' && rows == 0)
 			len++;
 		if (check == '\n')
 			rows++;
@@ -91,11 +91,13 @@ t_map	input (char *filename, t_map *map)
 	{
 		x = 0;
 		temp = ft_strsplit(line, ' ');
-		while (x < map->x_max)
+		while (temp[x])
 		{
 			if (temp[x][0] == 'e')
 				map->coords[y][x].invisible = 1;
 			map->coords[y][x].height = ft_atoi(temp[x]);
+			map->coords[y][x].x = x * 38;
+			map->coords[y][x].y = y * 38;
 			x++;
 		}
 		y++;

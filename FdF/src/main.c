@@ -6,12 +6,15 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:35:51 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/12 12:17:27 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/09 17:11:56 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <mlx.h>
+
+#include <X11/X.h>
+#include <X11/keysym.h>
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/12 10:47:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:47:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@
 # include <stdlib.h>
 # include <mlx.h>
 
+# include <stdio.h>
+
+# define ZOOM 40
+
 typedef struct s_coord
 {
-    int invisible;
-    int height;
+	int invisible;
+	int height;
+	int	x;
+	int	y;
 }   t_coord;
 
 typedef struct s_map
@@ -31,6 +37,32 @@ typedef struct s_map
 	t_coord	**coords;
 	t_coord	*pool;
 }	t_map;
+
+typedef struct s_img															
+{																			   
+	void	*mlx_img;														   
+	char	*addr;															  
+	int		 bpp; /* bits per pixel */										   
+	int		 line_len;														   
+	int		 endian;															 
+}   t_img;																	  
+																				
+typedef struct s_data														   
+{																			   
+	void	*mlx_ptr;														   
+	void	*win_ptr;														   
+	t_img	img; /* added for image rendering */								
+	t_map	map;																
+}   t_data;																	 
+																				
+typedef struct s_rect														   
+{																			   
+	int	x;																	  
+	int	y;																	  
+	int	width;																  
+	int	height;																 
+	int	color;																  
+}   t_rect;  
 
 t_map	input(char *filename, t_map *map);
 void	prep_map(t_map *map);

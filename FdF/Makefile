@@ -6,19 +6,20 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/04/12 12:02:45 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/04/13 10:12:01 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		gcc
-FLAGS = 	-Wall -Wextra -Werror -g -lmlx -framework OpenGL -framework AppKit
+CC =		clang
+#FLAGS = 	-Wall -Wextra -Werror -g -lmlx -framework OpenGL -framework AppKit
+FLAGS = 	-Wall -Wextra -Werror -g -lX11 -lXext -lmlx
 CFLAGS =	-Wall -Wextra -Werror -g $(HEADER)
 NAME =		fdf
 SRC_PATH =	./src/
 INCLUDE_PATH = ./include/ 
 VPATH +=	$(SRC_PATH)
 VPATH +=	$(INCLUDE_PATH)
-SRCS =		main.c input.c
+SRCS =		test.c input.c
 LIB =		libft/libft.a
 OBJECTS =	$(SRCS:%.c=%.o)
 HEADER =	-I $(INCLUDE_PATH)
