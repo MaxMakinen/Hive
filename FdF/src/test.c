@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "fdf.h"
 #include "libft.h"
@@ -99,45 +100,68 @@ int render_rect(t_img *img, t_rect rect)
 		return (0);
 }
 
-t_coord matmul(t_coord)
+int	*matmul(t_coord coords)
 {
 	int		rows;
 	int		cols;
 	int		index;
 	int		len;
-	t_coord result;
+	int		sum;
+	int		angle = 1;
+	int		matrix[4][3] = {{0,0,0},{cos(angle), -sin(angle), 0},{sin(angle), cos(angle), 0},{0, 0, 1}};
+	int		*result;
+	int		*coord;
 
 	rows = 1;
 	index = 1;
 	len = 4;
+	coord = (int *)malloc(sizeof(int) * 4);
+	result = (int *)malloc(sizeof(int) * 4);
+	coord[0] = 0;
+	coord[1] = coords.x;
+	coord[2] = coords.y;
+	coord[3] = coords.height;
 	while (rows < len)
 	{
 		cols = 1;
-
-
+		while (cols < len)
+		{
+			sum = 0;
+			while (index < len)
+			{
+				sum += matrix[rows][index] * coord[index];
+				index++;
+			}
+			result[rows] += sum;
+			cols++;
+		}
+		rows++;
+	}
+	return (result);
 }
-
+/*
 t_coord	rotate_z(t_coord coord)
 {
+	return ((t_coord){{0},
 	{cos(angle), -sin(angle), 0}
 	{sin(angle), cos(angle), 0}
-	{0, 0, 1};
+	{0, 0, 1}});
 }
 
 t_coord	rotate_x(t_coord coord)
 {
-	{1, 0, 0};
+	return ((t_coord)({0}, {1, 0, 0};
 	{0, cos(angle), -sin(angle)}
-	{0, sin(angle), cos(angle)}
+	{0, sin(angle), cos(angle)});
 }
 
 t_coord	rotate_y(t_coord coord)
 {
-	{cos(angle), 0, sin(angle)};
+	return ((t_coord)({0}, {cos(angle), 0, sin(angle)};
 	{0, 1, 0};
 	{-sin(angle), 0, cos(angle)};
 }
-
+*/
 int	check_color(t_coord coord)
 {
 	if (coord.height > 0)

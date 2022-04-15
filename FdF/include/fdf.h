@@ -23,6 +23,11 @@
 
 # define ZOOM 40
 
+typedef struct s_vector
+{
+	int	*pvec;
+}		t_vector;
+
 typedef struct s_coord
 {
 	int invisible;
