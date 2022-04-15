@@ -1,0 +1,1 @@
+clang src/test.c src/input.c libft/libft.a -I include/ -lX11 -lXext -lmlx

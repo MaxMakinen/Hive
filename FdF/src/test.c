@@ -99,55 +99,89 @@ int render_rect(t_img *img, t_rect rect)
 		return (0);
 }
 
+int	check_color(t_coord coord)
+{
+	if (coord.height > 0)
+		return (GREEN_PIXEL);
+	return (RED_PIXEL);
+}
+
 int	render_line(t_img *img, t_coord start, t_coord end)
 {
-	int	a;
-	int	b;
-	int d_a;
-	int	d_b;
-	int p;
-	int	color;
-	int ender;
+	int	x;
+	int	y;
+	int	m;
+	int	delta_x;
+	int	delta_y;
+	int delta;
+	int	adjust;
+	int	offset;
+	int	threshold;
+	int	threshold_inc;
+	int color;
 
-	if ((end.x - start.x) > (end.y - start.y))
+	delta_x = start.x - end.x;
+	delta_y = start.y - end.y;
+	color = RED_PIXEL;
+	if (delta_x == 0)
 	{
-		a = start.x;
-		b = start.y;
-		d_a = ft_abs(end.x - start.x);
-		d_b = ft_abs(end.y - start.y);
-		ender = end.x;
+		if (end.y < start.y)
+			ft_swapint(&start.y, &end.y);
+		while (start.y <= end.y)
+			img_pix_put(img, start.x, start.y++, check_color(start));
 	}
 	else
 	{
-		a = start.y;
-		b = start.x;
-		d_b = end.x - start.x;
-		d_a = end.y - start.y;
-		ender = end.y;
-	}
-	color = RED_PIXEL;
-	if (start.height > 5)
-		color = GREEN_PIXEL;
-
-	p = 2 * d_b - d_a;
-	while (a <= ender)
-	{
-		if (ender == end.x)
-			img_pix_put(img, a, b, color);
-		else
-			img_pix_put(img, b, a, color);
-		a++;
-		if ( p < 0)
+		m = (float)delta_y / delta_x;
+		offset = 0;
+		adjust = 1;
+		if (m < 0)
+			adjust = -1;
+		if (m <= 1 && m >= -1)
 		{
-			p = p + 2 * d_b;
+			delta = ft_abs(delta_y) * 2;
+			threshold = ft_abs(delta_x);
+			threshold_inc = ft_abs(delta_x) * 2;
+			y = start.y;
+			if (end.x < start.x)
+			{
+				ft_swapint(&start.x, &end.x);
+				y = end.y;
+			}
+			while (start.x <= end.x)
+			{
+				img_pix_put(img, start.x++, y, check_color(start));
+				offset += delta;
+				if (offset >= threshold)
+				{
+					y += adjust;
+					threshold +=threshold_inc;
+				}
+			}
 		}
 		else
 		{
-			p = p + 2 * d_b - 2 * d_a;
-			b++;
+			delta= ft_abs(delta_x) * 2;
+			threshold = ft_abs(delta_y);
+			threshold_inc = ft_abs(delta_y) * 2;
+			x = start.x;
+			if (end.y < start.y)
+			{
+				ft_swapint(&start.y, &end.y);
+				x = end.x;
+			}
+			while (start.y < end.y)
+			{
+				img_pix_put(img, x, start.y++, check_color(start));
+				offset += delta;
+				if (offset >= threshold)
+				{
+					x += adjust;
+					threshold += threshold_inc;
+				}
+			}
 		}
 	}
-	img_pix_put(img, end.x, end.y, color);
 	return (0);
 }
 
