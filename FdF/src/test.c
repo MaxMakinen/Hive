@@ -99,6 +99,45 @@ int render_rect(t_img *img, t_rect rect)
 		return (0);
 }
 
+t_coord matmul(t_coord)
+{
+	int		rows;
+	int		cols;
+	int		index;
+	int		len;
+	t_coord result;
+
+	rows = 1;
+	index = 1;
+	len = 4;
+	while (rows < len)
+	{
+		cols = 1;
+
+
+}
+
+t_coord	rotate_z(t_coord coord)
+{
+	{cos(angle), -sin(angle), 0}
+	{sin(angle), cos(angle), 0}
+	{0, 0, 1};
+}
+
+t_coord	rotate_x(t_coord coord)
+{
+	{1, 0, 0};
+	{0, cos(angle), -sin(angle)}
+	{0, sin(angle), cos(angle)}
+}
+
+t_coord	rotate_y(t_coord coord)
+{
+	{cos(angle), 0, sin(angle)};
+	{0, 1, 0};
+	{-sin(angle), 0, cos(angle)};
+}
+
 int	check_color(t_coord coord)
 {
 	if (coord.height > 0)
