@@ -25,15 +25,15 @@
 
 typedef struct s_vector
 {
-	int	*pvec;
+	int	x;
+	int	y;
+	int	z;
 }		t_vector;
 
 typedef struct s_coord
 {
 	int invisible;
-	int height;
-	int	x;
-	int	y;
+	t_vector vect;
 }   t_coord;
 
 typedef struct s_map

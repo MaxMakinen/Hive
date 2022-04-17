@@ -33,6 +33,11 @@
 #define WHITE_PIXEL 0xFFFFFF
 #define BLACK_PIXEL 0x000000
 
+typedef struct s_matrix
+{
+	int	**matrix;
+}	t_matrix;
+
 int	ft_abs(int num)
 {
 	if (num < 0)
@@ -100,76 +105,115 @@ int render_rect(t_img *img, t_rect rect)
 		return (0);
 }
 
-int	*matmul(t_coord coords)
+t_matrix	*prep_matrix(t_matrix *matrix)
+{
+	matrix->matrix = ft_calloc(sizeof(int[3][3]), 1);
+	return (matrix);
+}
+
+t_matrix vec_to_matrix(t_vector *vector)
+{
+	t_matrix	matrix;
+
+	prep_matrix(&matrix);
+	matrix.matrix[0][0] = vector->x;
+	matrix.matrix[1][0] = vector->y;
+	matrix.matrix[2][0] = vector->z;
+	return (matrix);
+}
+
+t_vector	matrix_to_vec(t_matrix *matrix)
+{
+	t_vector	vector;
+
+	vector.x = matrix->matrix[0][0];
+	vector.y = matrix->matrix[1][0];
+	vector.z = matrix->matrix[2][0];
+	return (vector);
+}
+
+t_matrix	rotate_z(int angle)
+{
+	t_matrix	matrix;
+	int x[3] = {cos(angle), -sin(angle), 0};
+	int y[3] = {sin(angle), cos(angle), 0};
+	int z[3] = {0, 0, 1};
+
+	prep_matrix(&matrix);
+	matrix.matrix[0] = x;
+	matrix.matrix[1] = y;
+	matrix.matrix[2] = z;
+	return (matrix);
+}
+
+t_matrix	rotate_x(int angle)
+{
+	t_matrix	matrix;
+	int x[3] = {1,0,0};
+	int y[3] = {0, cos(angle), -sin(angle)};
+	int z[3] = {0, sin(angle), cos(angle)};
+
+	prep_matrix(&matrix);
+	matrix.matrix[0] = x;
+	matrix.matrix[1] = y;
+	matrix.matrix[2] = z;
+	return (matrix);
+}
+
+t_matrix	rotate_y(int angle)
+{
+	t_matrix	matrix;
+	int	x[3] = {cos(angle), 0, sin(angle)};
+	int	y[3] = {0, 1, 0};
+	int	z[3] = {-sin(angle), 0, cos(angle)};
+
+	prep_matrix(&matrix);
+	matrix.matrix[0] = x;
+	matrix.matrix[1] = y;
+	matrix.matrix[2] = z;
+	return (matrix);
+}
+
+t_matrix	*matmul(t_matrix matrix, t_matrix vector)
 {
 	int		rows;
 	int		cols;
 	int		index;
 	int		len;
 	int		sum;
-	int		angle = 1;
-	int		matrix[4][3] = {{0,0,0},{cos(angle), -sin(angle), 0},{sin(angle), cos(angle), 0},{0, 0, 1}};
-	int		*result;
-	int		*coord;
+	t_matrix	*result;
 
-	rows = 1;
-	index = 1;
-	len = 4;
-	coord = (int *)malloc(sizeof(int) * 4);
-	result = (int *)malloc(sizeof(int) * 4);
-	coord[0] = 0;
-	coord[1] = coords.x;
-	coord[2] = coords.y;
-	coord[3] = coords.height;
+	rows = 0;
+	len = 3;
+	prep_matrix(result);
 	while (rows < len)
 	{
-		cols = 1;
+		cols = 0;
 		while (cols < len)
 		{
+			index = 0;
 			sum = 0;
 			while (index < len)
 			{
-				sum += matrix[rows][index] * coord[index];
+				sum += matrix.matrix[rows][index] * vector.matrix[index][cols];
 				index++;
 			}
-			result[rows] += sum;
+			result->matrix[rows][cols] += sum;
 			cols++;
 		}
 		rows++;
 	}
 	return (result);
 }
-/*
-t_coord	rotate_z(t_coord coord)
-{
-	return ((t_coord){{0},
-	{cos(angle), -sin(angle), 0}
-	{sin(angle), cos(angle), 0}
-	{0, 0, 1}});
-}
 
-t_coord	rotate_x(t_coord coord)
+int	check_color(t_vector coord)
 {
-	return ((t_coord)({0}, {1, 0, 0};
-	{0, cos(angle), -sin(angle)}
-	{0, sin(angle), cos(angle)});
-}
-
-t_coord	rotate_y(t_coord coord)
-{
-	return ((t_coord)({0}, {cos(angle), 0, sin(angle)};
-	{0, 1, 0};
-	{-sin(angle), 0, cos(angle)};
-}
-*/
-int	check_color(t_coord coord)
-{
-	if (coord.height > 0)
+	if (coord.z > 0)
 		return (GREEN_PIXEL);
 	return (RED_PIXEL);
 }
 
-int	render_line(t_img *img, t_coord start, t_coord end)
+int	render_line(t_img *img, t_vector start, t_vector end)
 {
 	int	x;
 	int	y;
@@ -263,9 +307,10 @@ int render(t_data *data)
 		while (x < data->map.x_max)
 		{
 			if((x + 1) < data->map.x_max)
-				render_line(&data->img, data->map.coords[y][x], data->map.coords[y][x + 1]);
+				render_line(&data->img, data->map.coords[y][x].vect, data->map.coords[y][x + 1].vect);
 			if((y + 1) < data->map.y_max)
-				render_line(&data->img, data->map.coords[y][x], data->map.coords[y + 1][x]);
+				render_line(&data->img, data->map.coords[y][x].vect, data->map.coords[y + 1][x].vect);
+			//data->map.coords[y][x].vect = matrix_to_vec(matmul(rotate_x(1),vec_to_matrix(&data->map.coords[x][y].vect)));
 			x++;
 		}
 		y++;
@@ -296,6 +341,10 @@ int main(int argc, char **argv)
 		free(data.win_ptr)	;
 		return (MLX_ERROR);
 	}
+
+	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
+	data.map.coords[1][1].vect = matrix_to_vec(matmul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
+	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
 
 	/* setup hooks */
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);

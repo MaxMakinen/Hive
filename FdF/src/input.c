@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 #include "../libft/libft.h"
-
+#define DISTANCE 38
 /*
  * Code realloc for easier array shape changes?
  * Need new version of splitstr in order to extract info like wordcount?
@@ -95,9 +95,9 @@ t_map	input (char *filename, t_map *map)
 		{
 			if (temp[x][0] == 'e')
 				map->coords[y][x].invisible = 1;
-			map->coords[y][x].height = ft_atoi(temp[x]);
-			map->coords[y][x].x = x * 38;
-			map->coords[y][x].y = y * 38;
+			map->coords[y][x].vect.z = ft_atoi(temp[x]);
+			map->coords[y][x].vect.x = x * DISTANCE;
+			map->coords[y][x].vect.y = y * DISTANCE;
 			x++;
 		}
 		y++;
