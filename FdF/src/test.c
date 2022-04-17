@@ -107,74 +107,85 @@ int render_rect(t_img *img, t_rect rect)
 
 t_matrix	*prep_matrix(t_matrix *matrix)
 {
+	matrix = malloc(sizeof(t_matrix));
 	matrix->matrix = ft_calloc(sizeof(int[3][3]), 1);
 	return (matrix);
 }
 
-t_matrix vec_to_matrix(t_vector *vector)
+t_vector	*prep_vector(t_vector *vector)
 {
-	t_matrix	matrix;
-
-	prep_matrix(&matrix);
-	matrix.matrix[0][0] = vector->x;
-	matrix.matrix[1][0] = vector->y;
-	matrix.matrix[2][0] = vector->z;
-	return (matrix);
-}
-
-t_vector	matrix_to_vec(t_matrix *matrix)
-{
-	t_vector	vector;
-
-	vector.x = matrix->matrix[0][0];
-	vector.y = matrix->matrix[1][0];
-	vector.z = matrix->matrix[2][0];
+	vector->x = 0;
+	vector->y = 0;
+	vector->z = 0;
 	return (vector);
 }
 
-t_matrix	rotate_z(int angle)
+t_matrix *vec_to_matrix(t_vector *vector)
 {
-	t_matrix	matrix;
+	t_matrix	*matrix;
+
+	matrix = prep_matrix(matrix);
+	matrix->matrix[0][0] = vector->x;
+	matrix->matrix[1][0] = vector->y;
+	matrix->matrix[2][0] = vector->z;
+	return (matrix);
+}
+
+t_vector	*matrix_to_vec(t_matrix *matrix)
+{
+	t_vector	*vector;
+
+	vector = malloc(sizeof(t_vector));
+	prep_vector(vector);
+	vector->x = matrix->matrix[0][0];
+	vector->y = matrix->matrix[1][0];
+	vector->z = matrix->matrix[2][0];
+	return (vector);
+}
+
+t_matrix	*rotate_z(int angle)
+{
+	t_matrix	*matrix;
 	int x[3] = {cos(angle), -sin(angle), 0};
 	int y[3] = {sin(angle), cos(angle), 0};
 	int z[3] = {0, 0, 1};
 
-	prep_matrix(&matrix);
-	matrix.matrix[0] = x;
-	matrix.matrix[1] = y;
-	matrix.matrix[2] = z;
+	prep_matrix(matrix);
+	matrix->matrix[0] = x;
+	matrix->matrix[1] = y;
+	matrix->matrix[2] = z;
 	return (matrix);
 }
 
-t_matrix	rotate_x(int angle)
+t_matrix	*rotate_x(int angle)
 {
-	t_matrix	matrix;
+	t_matrix	*matrix;
 	int x[3] = {1,0,0};
 	int y[3] = {0, cos(angle), -sin(angle)};
 	int z[3] = {0, sin(angle), cos(angle)};
 
-	prep_matrix(&matrix);
-	matrix.matrix[0] = x;
-	matrix.matrix[1] = y;
-	matrix.matrix[2] = z;
+	matrix = prep_matrix(matrix);
+	matrix->matrix[0] = x;
+	matrix->matrix[1] = y;
+	matrix->matrix[2] = z;
 	return (matrix);
 }
 
-t_matrix	rotate_y(int angle)
+t_matrix	*rotate_y(int angle)
 {
-	t_matrix	matrix;
+	t_matrix	*matrix;
 	int	x[3] = {cos(angle), 0, sin(angle)};
 	int	y[3] = {0, 1, 0};
 	int	z[3] = {-sin(angle), 0, cos(angle)};
 
-	prep_matrix(&matrix);
-	matrix.matrix[0] = x;
-	matrix.matrix[1] = y;
-	matrix.matrix[2] = z;
+	prep_matrix(matrix);
+	matrix->matrix[0] = x;
+	matrix->matrix[1] = y;
+	matrix->matrix[2] = z;
 	return (matrix);
 }
 
-t_matrix	*matmul(t_matrix matrix, t_matrix vector)
+t_matrix	*matmul(t_matrix *matrix, t_matrix *vector)
 {
 	int		rows;
 	int		cols;
@@ -195,7 +206,7 @@ t_matrix	*matmul(t_matrix matrix, t_matrix vector)
 			sum = 0;
 			while (index < len)
 			{
-				sum += matrix.matrix[rows][index] * vector.matrix[index][cols];
+				sum += matrix->matrix[rows][index] * vector->matrix[index][cols];
 				index++;
 			}
 			result->matrix[rows][cols] += sum;
@@ -343,7 +354,7 @@ int main(int argc, char **argv)
 	}
 
 	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
-	data.map.coords[1][1].vect = matrix_to_vec(matmul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
+	data.map.coords[1][1].vect = *matrix_to_vec(matmul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
 	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
 
 	/* setup hooks */
