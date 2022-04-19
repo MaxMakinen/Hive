@@ -29,8 +29,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-#define MIDPOINT WINDOW_HEIGHT/WINDOW_WIDTH
-#define OFFSET 38
+#define OFFSET 18
 #define RED_PIXEL 0xFF0000
 #define GREEN_PIXEL 0xFF00
 #define BLUE_PIXEL 0xFF
@@ -69,8 +68,9 @@ int handle_keyrelease(int keysym, t_data *data)
 void img_pix_put(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
+	float	temp;
 
-	pixel = img->addr + (y * img->line_len +x * (img->bpp / 8));
+	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(int *)pixel = color;
 }
 
@@ -243,7 +243,7 @@ t_vector *vect_add(t_vector *vect, int num)
 {
 	vect->x += num;
 	vect->y += num;
-	vect->z += num;
+	//vect->z += num;
 	return (vect);
 }
 
@@ -353,6 +353,7 @@ int render(t_data *data)
 {
 	int	x;
 	int	y;
+	int	placement;
 
 	y = 0;
 	if (data->win_ptr == NULL)
@@ -377,6 +378,8 @@ int render(t_data *data)
 	return (0);
 }
 
+
+
 int main(int argc, char **argv)
 {
 	t_data	data;
@@ -399,9 +402,22 @@ int main(int argc, char **argv)
 		return (MLX_ERROR);
 	}
 
-	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
-	data.map.coords[1][1].vect = *matrix_to_vec(mat_mul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
-	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
+	int y = 0;
+	int x;
+	while (y < data.map.y_max)
+	{
+		x = 0;
+		while (x < data.map.x_max)
+		{
+			data.map.coords[y][x].vect.x += data.map.x_max / 2;
+			data.map.coords[y][x].vect.y += data.map.y_max / 2;
+			x++;
+		}
+		y++;
+	}
+//	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
+//	data.map.coords[1][1].vect = *matrix_to_vec(mat_mul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
+//	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
 
 	/* setup hooks */
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -409,7 +425,8 @@ int main(int argc, char **argv)
 
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	//CHANGE INTO MLX_KEY_HOOK OR WHATEVER
-	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
+	mlx_key_hook(data.win_ptr, &handle_keypress, &data);
+//	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
 //	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
 
 	mlx_loop(data.mlx_ptr);

@@ -56,9 +56,10 @@ typedef struct s_img
 {																			   
 	void	*mlx_img;														   
 	char	*addr;															  
-	int		 bpp; /* bits per pixel */										   
-	int		 line_len;														   
-	int		 endian;															 
+	int		bpp; /* bits per pixel */										   
+	int		line_len;														   
+	int		endian;															 
+	int		origin;
 }   t_img;																	  
 																				
 typedef struct s_data														   
