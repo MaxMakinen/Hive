@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/13 17:42:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:09:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ t_map	input (char *filename, t_map *map)
 			if (temp[x][0] == 'e')
 				map->coords[y][x].invisible = 1;
 			map->coords[y][x].vect.z = ft_atoi(temp[x]);
-			map->coords[y][x].vect.x = x * DISTANCE;
-			map->coords[y][x].vect.y = y * DISTANCE;
+			map->coords[y][x].vect.x = x;
+			map->coords[y][x].vect.y = y;
 			x++;
 		}
 		y++;

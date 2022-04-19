@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/13 15:47:59 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:41:22 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,20 @@ typedef struct s_vector
 	int	x;
 	int	y;
 	int	z;
-}		t_vector;
+	int	w;
+}	t_vector;
+
+typedef struct s_matrix
+{
+	int **matrix;
+	int	*pool;
+}	t_matrix;
 
 typedef struct s_coord
 {
-	int invisible;
-	t_vector vect;
+	int			invisible;
+	int			color;
+	t_vector	vect;
 }   t_coord;
 
 typedef struct s_map

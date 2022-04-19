@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/13 18:05:57 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:54:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,23 @@
 #include "libft.h"
 
 #include <mlx.h>
-#include <X11/keysym.h>
-#include <X11/X.h>
+#ifdef LINUX
+	#include <X11/keysym.h>
+	#include <X11/X.h>
+#endif
 
 #define MLX_ERROR 1
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
+#define MIDPOINT WINDOW_HEIGHT/WINDOW_WIDTH
+#define OFFSET 38
 #define RED_PIXEL 0xFF0000
 #define GREEN_PIXEL 0xFF00
 #define BLUE_PIXEL 0xFF
 #define WHITE_PIXEL 0xFFFFFF
 #define BLACK_PIXEL 0x000000
-
-typedef struct s_matrix
-{
-	int	**matrix;
-}	t_matrix;
 
 int	ft_abs(int num)
 {
@@ -47,13 +46,16 @@ int	ft_abs(int num)
 
 int handle_keypress(int keysym, t_data *data)
 {
+	/*
 	if (keysym == XK_Escape)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
 	}
-
+	*/
 	printf("Keypress: %d\n", keysym);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	data->win_ptr = NULL;
 	return (0);
 }
 /*
@@ -107,8 +109,19 @@ int render_rect(t_img *img, t_rect rect)
 
 t_matrix	*prep_matrix(t_matrix *matrix)
 {
-	matrix = malloc(sizeof(t_matrix));
-	matrix->matrix = ft_calloc(sizeof(int[3][3]), 1);
+	int	x;
+	int *temp;
+
+	matrix->matrix = (int **)ft_calloc(4, sizeof(int *));
+	matrix->pool = (int *)ft_calloc(16, sizeof(int));
+	temp = matrix->pool;
+	x = 0;
+	while (x < 4)
+	{
+		*(matrix->matrix + x) = temp;
+		temp += 4;
+		x++;
+	}
 	return (matrix);
 }
 
@@ -117,6 +130,7 @@ t_vector	*prep_vector(t_vector *vector)
 	vector->x = 0;
 	vector->y = 0;
 	vector->z = 0;
+	vector->w = 1;
 	return (vector);
 }
 
@@ -185,7 +199,7 @@ t_matrix	*rotate_y(int angle)
 	return (matrix);
 }
 
-t_matrix	*matmul(t_matrix *matrix, t_matrix *vector)
+t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector)
 {
 	int		rows;
 	int		cols;
@@ -215,6 +229,38 @@ t_matrix	*matmul(t_matrix *matrix, t_matrix *vector)
 		rows++;
 	}
 	return (result);
+}
+
+t_vector vect_mult(t_vector vect, int num)
+{
+	vect.x *= num;
+	vect.y *= num;
+	vect.z *= num;
+	return (vect);
+}
+
+t_vector *vect_add(t_vector *vect, int num)
+{
+	vect->x += num;
+	vect->y += num;
+	vect->z += num;
+	return (vect);
+}
+
+t_vector *vect_subt(t_vector *vect, int num)
+{
+	vect->x -= num;
+	vect->y -= num;
+	vect->z -= num;
+	return (vect);
+}
+
+t_vector *vect_div(t_vector *vect, int num)
+{
+	vect->x /= num;
+	vect->y /= num;
+	vect->z /= num;
+	return (vect);
 }
 
 int	check_color(t_vector coord)
@@ -318,9 +364,9 @@ int render(t_data *data)
 		while (x < data->map.x_max)
 		{
 			if((x + 1) < data->map.x_max)
-				render_line(&data->img, data->map.coords[y][x].vect, data->map.coords[y][x + 1].vect);
+				render_line(&data->img, vect_mult(data->map.coords[y][x].vect, OFFSET), vect_mult(data->map.coords[y][x + 1].vect, OFFSET));
 			if((y + 1) < data->map.y_max)
-				render_line(&data->img, data->map.coords[y][x].vect, data->map.coords[y + 1][x].vect);
+				render_line(&data->img, vect_mult(data->map.coords[y][x].vect, OFFSET), vect_mult(data->map.coords[y + 1][x].vect, OFFSET));
 			//data->map.coords[y][x].vect = matrix_to_vec(matmul(rotate_x(1),vec_to_matrix(&data->map.coords[x][y].vect)));
 			x++;
 		}
@@ -354,7 +400,7 @@ int main(int argc, char **argv)
 	}
 
 	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
-	data.map.coords[1][1].vect = *matrix_to_vec(matmul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
+	data.map.coords[1][1].vect = *matrix_to_vec(mat_mul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
 	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
 
 	/* setup hooks */
@@ -362,6 +408,7 @@ int main(int argc, char **argv)
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
 
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
+	//CHANGE INTO MLX_KEY_HOOK OR WHATEVER
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
 //	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
 
