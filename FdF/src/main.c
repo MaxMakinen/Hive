@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 13:31:02 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:50:36 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ int main(int argc, char **argv)
 		return (MLX_ERROR);
 	}
 
+	t_matrix	*proj;
+	proj = projection_matrix();
+	int x = 0;
+	int y;
+	while (x < 4)
+	{
+		y = 0;
+		while(y < 4)
+		{
+			printf("[%f],", proj->matrix[x][y]);
+			y++;
+		}
+		printf("\n");
+		x++;
+	}
+
+
+/*
 	int y = 0;
 	int x;
 	while (y < data.map.y_max)
@@ -48,6 +66,8 @@ int main(int argc, char **argv)
 		}
 		y++;
 	}
+*/
+
 //	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
 //	data.map.coords[1][1].vect = *matrix_to_vec(mat_mul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
 //	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
@@ -57,7 +77,7 @@ int main(int argc, char **argv)
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
 
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	//CHANGE INTO MLX_KEY_HOOK OR WHATEVER
+
 	mlx_key_hook(data.win_ptr, &handle_keypress, &data);
 //	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
 //	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);

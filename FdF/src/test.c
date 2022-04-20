@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 14:41:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:36:49 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,12 @@ int	ft_abs(int num)
 
 int handle_keypress(int keysym, t_data *data)
 {
-	/*
-	if (keysym == XK_Escape)
+	if (keysym == 113)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
 	}
-	*/
 	printf("Keypress: %d\n", keysym);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	data->win_ptr = NULL;
 	return (0);
 }
 /*
@@ -96,7 +92,7 @@ t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector)
 
 	rows = 0;
 	len = 3;
-	prep_matrix(result);
+	result = prep_matrix();
 	while (rows < len)
 	{
 		cols = 0;
@@ -130,28 +126,16 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 	int	x;
 	int	y;
 	int	m;
-	int	delta_x;
-	int	delta_y;
 	int delta;
 	int	adjust;
 	int	offset;
 	int	threshold;
 	int	threshold_inc;
-	int color;
+	t_vector dist;
 
-	offset = WINDOW_WIDTH;
-	offset /= 2;
-	adjust = WINDOW_HEIGHT;
-	adjust /= 2;
-	start.x += offset;
-	start.y += adjust;
-	end.x += offset;
-	end.y += adjust;
-
-	delta_x = start.x - end.x;
-	delta_y = start.y - end.y;
-	color = RED_PIXEL;
-	if (delta_x == 0)
+	dist.x = start.x - end.x;
+	dist.y = start.y - end.y;
+	if (dist.x == 0)
 	{
 		if (end.y < start.y)
 			ft_swapint(&start.y, &end.y);
@@ -160,16 +144,16 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 	}
 	else
 	{
-		m = (float)delta_y / delta_x;
+		m = (float)dist.y / dist.x;
 		offset = 0;
 		adjust = 1;
 		if (m < 0)
 			adjust = -1;
 		if (m <= 1 && m >= -1)
 		{
-			delta = ft_abs(delta_y) * 2;
-			threshold = ft_abs(delta_x);
-			threshold_inc = ft_abs(delta_x) * 2;
+			delta = ft_abs(dist.y) * 2;
+			threshold = ft_abs(dist.x);
+			threshold_inc = ft_abs(dist.x) * 2;
 			y = start.y;
 			if (end.x < start.x)
 			{
@@ -189,9 +173,9 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 		}
 		else
 		{
-			delta= ft_abs(delta_x) * 2;
-			threshold = ft_abs(delta_y);
-			threshold_inc = ft_abs(delta_y) * 2;
+			delta= ft_abs(dist.x) * 2;
+			threshold = ft_abs(dist.y);
+			threshold_inc = ft_abs(dist.y) * 2;
 			x = start.x;
 			if (end.y < start.y)
 			{
@@ -213,6 +197,28 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 	return (0);
 }
 
+t_map *project(t_map *map, t_matrix *matrix)
+{
+    int x;
+    int y;
+    t_matrix    *temp;
+
+    y = 0;
+    while (y < map->y_max)
+    {
+        x = 0;
+        while (x < map->x_max)
+        {
+            temp = vec_to_matrix(&map->coords[y][x].vect);
+            mat_mul(matrix, temp);
+            map->coords[y][x].vect = *matrix_to_vec(temp);
+            x++;
+        }
+        y++;
+    }
+    return (map);
+}
+
 int render(t_data *data)
 {
 	int	x;
@@ -223,6 +229,7 @@ int render(t_data *data)
 	if (data->win_ptr == NULL)
 		return (1);
 	render_background(&data->img, BLACK_PIXEL);
+	data->map = *project(&data->map, projection_matrix());
 	while (y < data->map.y_max)
 	{
 		x = 0;
@@ -232,7 +239,6 @@ int render(t_data *data)
 				render_line(&data->img, vect_mult(data->map.coords[y][x].vect, OFFSET), vect_mult(data->map.coords[y][x + 1].vect, OFFSET));
 			if((y + 1) < data->map.y_max)
 				render_line(&data->img, vect_mult(data->map.coords[y][x].vect, OFFSET), vect_mult(data->map.coords[y + 1][x].vect, OFFSET));
-			//data->map.coords[y][x].vect = matrix_to_vec(matmul(rotate_x(1),vec_to_matrix(&data->map.coords[x][y].vect)));
 			x++;
 		}
 		y++;
