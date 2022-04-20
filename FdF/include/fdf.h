@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 14:26:11 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:38:49 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 
 # define MLX_ERROR 1
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 1000
+# define WINDOW_HEIGHT 800
 
 # define OFFSET 23
 # define RED_PIXEL 0xFF0000

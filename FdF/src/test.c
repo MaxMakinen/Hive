@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 13:50:59 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:41:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_abs(int num)
 {
+	if (num < -2147483648)
+		return (2147483647);
 	if (num < 0)
 		num = -num;
 	return (num);
