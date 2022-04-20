@@ -6,35 +6,11 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 11:58:04 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/20 13:50:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
 #include "fdf.h"
-#include "libft.h"
-
-#include <mlx.h>
-#ifdef LINUX
-	#include <X11/keysym.h>
-	#include <X11/X.h>
-#endif
-
-#define MLX_ERROR 1
-
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
-#define OFFSET 23
-#define RED_PIXEL 0xFF0000
-#define GREEN_PIXEL 0xFF00
-#define BLUE_PIXEL 0xFF
-#define WHITE_PIXEL 0xFFFFFF
-#define BLACK_PIXEL 0x000000
 
 int	ft_abs(int num)
 {
@@ -107,98 +83,6 @@ int render_rect(t_img *img, t_rect rect)
 		return (0);
 }
 
-t_matrix	*prep_matrix(t_matrix *matrix)
-{
-	int	x;
-	int *temp;
-
-	matrix->matrix = (int **)ft_calloc(4, sizeof(int *));
-	matrix->pool = (int *)ft_calloc(16, sizeof(int));
-	temp = matrix->pool;
-	x = 0;
-	while (x < 4)
-	{
-		*(matrix->matrix + x) = temp;
-		temp += 4;
-		x++;
-	}
-	return (matrix);
-}
-
-t_vector	*prep_vector(t_vector *vector)
-{
-	vector->x = 0;
-	vector->y = 0;
-	vector->z = 0;
-	vector->w = 1;
-	return (vector);
-}
-
-t_matrix *vec_to_matrix(t_vector *vector)
-{
-	t_matrix	*matrix;
-
-	matrix = prep_matrix(matrix);
-	matrix->matrix[0][0] = vector->x;
-	matrix->matrix[1][0] = vector->y;
-	matrix->matrix[2][0] = vector->z;
-	return (matrix);
-}
-
-t_vector	*matrix_to_vec(t_matrix *matrix)
-{
-	t_vector	*vector;
-
-	vector = malloc(sizeof(t_vector));
-	prep_vector(vector);
-	vector->x = matrix->matrix[0][0];
-	vector->y = matrix->matrix[1][0];
-	vector->z = matrix->matrix[2][0];
-	return (vector);
-}
-
-t_matrix	*rotate_z(int angle)
-{
-	t_matrix	*matrix;
-	int x[3] = {cos(angle), -sin(angle), 0};
-	int y[3] = {sin(angle), cos(angle), 0};
-	int z[3] = {0, 0, 1};
-
-	prep_matrix(matrix);
-	matrix->matrix[0] = x;
-	matrix->matrix[1] = y;
-	matrix->matrix[2] = z;
-	return (matrix);
-}
-
-t_matrix	*rotate_x(int angle)
-{
-	t_matrix	*matrix;
-	int x[3] = {1,0,0};
-	int y[3] = {0, cos(angle), -sin(angle)};
-	int z[3] = {0, sin(angle), cos(angle)};
-
-	matrix = prep_matrix(matrix);
-	matrix->matrix[0] = x;
-	matrix->matrix[1] = y;
-	matrix->matrix[2] = z;
-	return (matrix);
-}
-
-t_matrix	*rotate_y(int angle)
-{
-	t_matrix	*matrix;
-	int	x[3] = {cos(angle), 0, sin(angle)};
-	int	y[3] = {0, 1, 0};
-	int	z[3] = {-sin(angle), 0, cos(angle)};
-
-	prep_matrix(matrix);
-	matrix->matrix[0] = x;
-	matrix->matrix[1] = y;
-	matrix->matrix[2] = z;
-	return (matrix);
-}
-
 t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector)
 {
 	int		rows;
@@ -231,37 +115,6 @@ t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector)
 	return (result);
 }
 
-t_vector vect_mult(t_vector vect, int num)
-{
-	vect.x *= num;
-	vect.y *= num;
-	vect.z *= num;
-	return (vect);
-}
-
-t_vector *vect_add(t_vector *vect, int num)
-{
-	vect->x += num;
-	vect->y += num;
-	//vect->z += num;
-	return (vect);
-}
-
-t_vector *vect_subt(t_vector *vect, int num)
-{
-	vect->x -= num;
-	vect->y -= num;
-	vect->z -= num;
-	return (vect);
-}
-
-t_vector *vect_div(t_vector *vect, int num)
-{
-	vect->x /= num;
-	vect->y /= num;
-	vect->z /= num;
-	return (vect);
-}
 
 int	check_color(t_vector coord)
 {
@@ -387,63 +240,4 @@ int render(t_data *data)
 	return (0);
 }
 
-
-
-int main(int argc, char **argv)
-{
-	t_data	data;
-
-	if (argc != 2)
-	{
-		ft_putendl("Usage: fdf <input file>");
-		return(1);
-	}
-	data.map = input(argv[1], &data.map);
-
-	data.mlx_ptr = mlx_init();
-	/* Create the image */
-	if (data.mlx_ptr == NULL)
-		return(MLX_ERROR);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "My window");
-	if (data.win_ptr == NULL)
-	{
-		free(data.win_ptr)	;
-		return (MLX_ERROR);
-	}
-
-	int y = 0;
-	int x;
-	while (y < data.map.y_max)
-	{
-		x = 0;
-		while (x < data.map.x_max)
-		{
-			data.map.coords[y][x].vect.x -= data.map.x_max / 2;
-			data.map.coords[y][x].vect.y -= data.map.y_max / 2;
-			x++;
-		}
-		y++;
-	}
-//	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
-//	data.map.coords[1][1].vect = *matrix_to_vec(mat_mul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
-//	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
-
-	/* setup hooks */
-	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
-
-	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	//CHANGE INTO MLX_KEY_HOOK OR WHATEVER
-	mlx_key_hook(data.win_ptr, &handle_keypress, &data);
-//	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
-//	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
-
-	mlx_loop(data.mlx_ptr);
-
-	/* we will exit the loop if there's no window left, and execute this code */
-	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
-	mlx_destroy_display(data.mlx_ptr);
-	free(data.mlx_ptr);
-	return (0);
-}
 
