@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 13:50:02 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:26:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,19 @@ typedef struct s_vector
 	int	z;
 	int	w;
 }	t_vector;
+
+typedef struct s_square
+{
+	t_vector	*ne;
+	t_vector	*nw;
+	t_vector	*se;
+	t_vector	*sw;
+}	t_square;
+
+typedef struct s_mesh
+{
+	t_square	**mesh;
+}	t_mesh;
 
 typedef struct s_matrix
 {
