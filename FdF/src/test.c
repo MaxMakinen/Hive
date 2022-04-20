@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/19 12:54:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:58:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-#define OFFSET 18
+#define OFFSET 23
 #define RED_PIXEL 0xFF0000
 #define GREEN_PIXEL 0xFF00
 #define BLUE_PIXEL 0xFF
@@ -284,6 +284,15 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 	int	threshold_inc;
 	int color;
 
+	offset = WINDOW_WIDTH;
+	offset /= 2;
+	adjust = WINDOW_HEIGHT;
+	adjust /= 2;
+	start.x += offset;
+	start.y += adjust;
+	end.x += offset;
+	end.y += adjust;
+
 	delta_x = start.x - end.x;
 	delta_y = start.y - end.y;
 	color = RED_PIXEL;
@@ -409,8 +418,8 @@ int main(int argc, char **argv)
 		x = 0;
 		while (x < data.map.x_max)
 		{
-			data.map.coords[y][x].vect.x += data.map.x_max / 2;
-			data.map.coords[y][x].vect.y += data.map.y_max / 2;
+			data.map.coords[y][x].vect.x -= data.map.x_max / 2;
+			data.map.coords[y][x].vect.y -= data.map.y_max / 2;
 			x++;
 		}
 		y++;
