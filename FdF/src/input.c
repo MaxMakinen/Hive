@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/19 12:09:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:53:47 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	prep_map(t_map *map)
 	counter = 0;
 	map->coords = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *));
 	map->pool = (t_coord *)ft_calloc(map->x_max * map->y_max, sizeof(t_coord));
+	map->vec = (t_vector *)ft_calloc(map->y_max * map->x_max, sizeof(t_vector));
 	temp_coord = map->pool;
 	while (counter < map->y_max)
 	{
@@ -82,6 +83,7 @@ t_map	input (char *filename, t_map *map)
 	int		x;
 	int		y;
 	int		fd;
+	int		exp = 0;
 
 	y = 0;
 	count_elems(filename, &fd, map);
@@ -98,7 +100,13 @@ t_map	input (char *filename, t_map *map)
 			map->coords[y][x].vect.z = ft_atoi(temp[x]);
 			map->coords[y][x].vect.x = x;
 			map->coords[y][x].vect.y = y;
+			map->coords[y][x].vect.w = 1;
+			map->vec[exp].x = x;
+			map->vec[exp].y = y;
+			map->vec[exp].z = ft_atoi(temp[x]);
+			map->vec[exp].w = 1;
 			x++;
+			exp++;
 		}
 		y++;
 		free(line);

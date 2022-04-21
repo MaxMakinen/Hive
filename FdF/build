@@ -1,1 +1,1 @@
-clang src/test.c src/matrix.c src/main.c src/input.c src/vector.c libft/libft.a -g -I include/ -lX11 -lXext -lmlx -lm
+clang src/*.c libft/libft.a -g -I include/ -lX11 -lXext -lmlx -lm

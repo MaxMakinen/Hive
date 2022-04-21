@@ -6,13 +6,39 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 16:50:36 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:33:46 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include "fdf.h"
 	
+
+void	log_matrix(t_matrix matrix)
+{
+	int			x;
+	int			y;
+
+	x = 0;
+	y = 0;
+	while (y < matrix.y_max)
+	{
+		x = 0;
+		while (x < matrix.x_max)
+		{
+			printf("[%f] ", matrix.m[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
+
+void	log_vector(t_vector vec)
+{
+	printf("[%f]\n[%f]\n[%f]\n[%f]\n", vec.x, vec.y, vec.z, vec.w);
+}
+
 int main(int argc, char **argv)
 {
 	t_data	data;
@@ -24,6 +50,8 @@ int main(int argc, char **argv)
 	}
 	data.map = input(argv[1], &data.map);
 
+	data.map.grid = make_grid(&data.map);
+
 	data.mlx_ptr = mlx_init();
 	/* Create the image */
 	if (data.mlx_ptr == NULL)
@@ -34,23 +62,6 @@ int main(int argc, char **argv)
 		free(data.win_ptr)	;
 		return (MLX_ERROR);
 	}
-
-	t_matrix	*proj;
-	proj = projection_matrix();
-	int x = 0;
-	int y;
-	while (x < 4)
-	{
-		y = 0;
-		while(y < 4)
-		{
-			printf("[%f],", proj->matrix[x][y]);
-			y++;
-		}
-		printf("\n");
-		x++;
-	}
-
 
 /*
 	int y = 0;
@@ -68,11 +79,12 @@ int main(int argc, char **argv)
 	}
 */
 
+
 //	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
 //	data.map.coords[1][1].vect = *matrix_to_vec(mat_mul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
 //	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
 
-	/* setup hooks */
+	// setup hooks
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
 
@@ -84,9 +96,11 @@ int main(int argc, char **argv)
 
 	mlx_loop(data.mlx_ptr);
 
-	/* we will exit the loop if there's no window left, and execute this code */
+	// we will exit the loop if there's no window left, and execute this code
 	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	mlx_destroy_display(data.mlx_ptr);
+
+	
 	free(data.mlx_ptr);
 	return (0);
 }

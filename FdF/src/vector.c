@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:35:16 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/20 15:46:20 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:56:26 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 t_vector	*prep_vector(t_vector *vector)
 {
+	vector = malloc(sizeof(vector));
 	vector->x = 0;
 	vector->y = 0;
 	vector->z = 0;
@@ -22,7 +23,7 @@ t_vector	*prep_vector(t_vector *vector)
 	return (vector);
 }
 
-t_vector vect_mult(t_vector vect, int num)
+t_vector vec_mult(t_vector vect, int num)
 {
 	vect.x *= num;
 	vect.y *= num;
@@ -30,15 +31,15 @@ t_vector vect_mult(t_vector vect, int num)
 	return (vect);
 }
 
-t_vector *vect_add(t_vector *vect, int num)
+t_vector *vec_add(t_vector *vect, int num)
 {
 	vect->x += num;
 	vect->y += num;
-	//vect->z += num;
+	vect->z += num;
 	return (vect);
 }
 
-t_vector *vect_subt(t_vector *vect, int num)
+t_vector *vec_subt(t_vector *vect, int num)
 {
 	vect->x -= num;
 	vect->y -= num;
@@ -46,7 +47,7 @@ t_vector *vect_subt(t_vector *vect, int num)
 	return (vect);
 }
 
-t_vector *vect_div(t_vector *vect, int num)
+t_vector *vec_div(t_vector *vect, int num)
 {
 	if (num != 0)
 	{
