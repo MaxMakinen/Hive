@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 18:24:17 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 20:17:46 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 		diff = minmax.m[1][1] - minmax.m[0][1];
 	else
 		diff = minmax.m[0][1] - minmax.m[1][1];
-	centy += (diff / 4);
+	centy -= ((diff * 0.75f));
 	centx -= (diff);
 	printf("cenxt : %f	centy : %f\n", centx, centy);
 	centx = -centx;

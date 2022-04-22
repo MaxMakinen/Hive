@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 18:16:03 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 20:18:55 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,19 +143,33 @@ void render_background(t_img *img, int color)
 {
 	int	i;
 	int	j;
+	int x, xa, ya;
+	int	y, xb, yb;
 
+	x = WINDOW_HEIGHT / 10;
+	y = WINDOW_WIDTH / 10;
+	xa = x;
+	ya = y;
+	xb = 4 * x;
+	yb = 4 * y;
 	i = 0;
 	while (i < WINDOW_HEIGHT)
 	{
 		j = 0;
 		while (j < WINDOW_WIDTH)
 		{
+			img_pix_put(img , j, i, color);
+			/*
 			if (j == WINDOW_WIDTH / 2)
-				img_pix_put(img , j++, i, WHITE_PIXEL);
+				img_pix_put(img , j, i, WHITE_PIXEL);
 			else if (i == WINDOW_HEIGHT / 2)
-				img_pix_put(img , j++, i, WHITE_PIXEL);
-			else
-				img_pix_put(img , j++, i, color);
+				img_pix_put(img , j, i, WHITE_PIXEL);
+			if (i == x && j > yb && j < (yb + ya + ya))
+				img_pix_put(img , j, i, WHITE_PIXEL);
+			if (i > x)
+				x += xa;
+			*/
+			j++;
 		}
 		i++;
 	}
