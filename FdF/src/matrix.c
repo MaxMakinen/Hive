@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:32:59 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/21 15:11:43 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:51:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_matrix *vec_to_matrix(t_vector *vector, t_matrix *matrix)
 	matrix->m[0][0] = vector->x;
 	matrix->m[1][0] = vector->y;
 	matrix->m[2][0] = vector->z;
-	matrix->m[3][0] = vector->w;
 	return (matrix);
 }
 
@@ -28,7 +27,6 @@ t_vector	*matrix_to_vec(t_matrix *matrix, t_vector *vector)
 	vector->x = matrix->m[0][0];
 	vector->y = matrix->m[1][0];
 	vector->z = matrix->m[2][0];
-	vector->w = matrix->m[3][0];
 	return (vector);
 }
 
@@ -42,7 +40,6 @@ t_matrix	*prep_rotate_z(float angle)
 	matrix->m[1][0] = sin(angle);
 	matrix->m[1][1] = cos(angle);
 	matrix->m[2][2] = 1.0f;
-	matrix->m[3][3] = 1.0f;
 	return (matrix);
 }
 

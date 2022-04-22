@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/21 19:18:13 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:35:48 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_vector
 	float	x;
 	float	y;
 	float	z;
-	float	w;
 }	t_vector;
 
 typedef struct s_square
@@ -85,7 +84,8 @@ typedef struct s_map
 	int			y_max;
 	t_coord		**coords;
 	t_coord		*pool;
-	t_vector	*vec;
+	t_vector	**vec;
+	t_vector	*pvec;
 	t_mesh		*grid;
 }	t_map;
 
@@ -122,10 +122,10 @@ void		count_elems(char *filename, int *fd, t_map *map);
 int			openfd(char *filename, int *fd);
 int			closefd(int fd);
 t_vector	*prep_vector(t_vector *vector);
-t_vector	vec_mult(t_vector vect, int num);
-t_vector	*vec_add(t_vector *vect, int num);
-t_vector	*vec_subt(t_vector *vect, int num);
-t_vector	*vec_div(t_vector *vect, int num);
+t_vector	*vec_mult(t_vector *vect, float num);
+t_vector	*vec_add(t_vector *vect, float num);
+t_vector	*vec_subt(t_vector *vect, float num);
+t_vector	*vec_div(t_vector *vect, float num);
 t_matrix	*vec_to_matrix(t_vector *vector, t_matrix *matrix);
 t_vector	*matrix_to_vec(t_matrix *matrix, t_vector *vector);
 t_matrix	*prep_rotate_z(float angle);
@@ -148,5 +148,6 @@ t_square    build_square(t_map *map, t_vector v);
 t_mesh  	*make_grid(t_map *map);
 void    	draw_grid(t_mesh *grid, t_img *img);
 void	    draw_square(t_square sq, t_img *img);
-
+t_vector	*vec_adjust(t_vector *vec, int x, int y);
+t_matrix		*isometric(t_map *map, t_img *img, float xoff);
 #endif

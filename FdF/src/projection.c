@@ -6,17 +6,17 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/21 19:20:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:01:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-/*
+
 t_map *project(t_map *map, t_matrix *matrix)
 {
 	int	x;
 	int	y;
-	t_matrix	*temp;
+	t_vector	temp;
 
 	y = 0;
 	while (y < map->y_max)
@@ -24,16 +24,15 @@ t_map *project(t_map *map, t_matrix *matrix)
 		x = 0;
 		while (x < map->x_max)
 		{
-			temp = vect_to_matrix(map->coords[y][x].vect);
-			temp = mat_mul(rotate_z(angle), temp);
-			map->coords[y][x].vect = *matrix_to_vect(temp);
+			temp = map->coords[y][x].vect;
+			map->coords[y][x].vect = *mult_matrix_vec(&temp, &map->coords[y][x].vect, matrix);
 			x++;
 		}
 		y++;
 	}
 	return (map);
 }
-*/
+
 t_square	build_square(t_map *map, t_vector v)
 {
 	t_square	sq;
@@ -97,3 +96,49 @@ void	draw_grid(t_mesh *grid, t_img *img)
 	}
 }
 
+t_matrix	*isometric(t_map *map, t_img *img, float xoff)
+{
+	t_vector	temp;
+	t_matrix	*minmax = prep_matrix(2,2);
+	//float		origin;
+	int			x;
+	int			y;
+	//float		diff;
+/*
+	diff = 0.0f;
+	a = map->x_max;
+	b = map->y_max;
+	if (a < b)
+		ft_swapint(&a,&b);
+	if (a != b)
+	{
+		a -= b;
+		diff = (float)a;
+	}
+	//xoff = (WINDOW_WIDTH / (map->x_max * 3));
+*/	//origin = (WINDOW_WIDTH / 2) * (WINDOW_HEIGHT / 2 + 1) - ((diff / 2) * xoff);
+	y = 0;
+	while (y < map->y_max)
+	{
+		x = 0;
+		while (x < map->x_max)
+		{
+			temp.x = (map->coords[y][x].vect.x * xoff - map->coords[y][x].vect.y * xoff);
+			temp.y = ((map->coords[y][x].vect.x + map->coords[y][x].vect.y) * (xoff * 0.5));
+			temp.y += (-(map->coords[y][x].vect.z * xoff));
+			if (temp.x < minmax->m[0][0])
+				minmax->m[0][0] = temp.x;
+			if (temp.x > minmax->m[0][1])
+				minmax->m[0][1] = temp.x;
+			if (temp.y < minmax->m[1][0])
+				minmax->m[1][0] = temp.y;
+			if (temp.y > minmax->m[1][1])
+				minmax->m[1][1] = temp.y;
+			map->coords[y][x].vect.x = temp.x;
+			map->coords[y][x].vect.y = temp.y;
+			x++;
+		}
+		y++;
+	}
+	return (minmax);
+}

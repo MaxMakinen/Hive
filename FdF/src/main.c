@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/21 18:33:46 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:24:17 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	log_matrix(t_matrix matrix)
 
 void	log_vector(t_vector vec)
 {
-	printf("[%f]\n[%f]\n[%f]\n[%f]\n", vec.x, vec.y, vec.z, vec.w);
+	printf("[%f]\n[%f]\n[%f]\n", vec.x, vec.y, vec.z);
 }
 
 int main(int argc, char **argv)
@@ -50,7 +50,57 @@ int main(int argc, char **argv)
 	}
 	data.map = input(argv[1], &data.map);
 
-	data.map.grid = make_grid(&data.map);
+	// Center map in middle of screen
+	
+	float winx = WINDOW_WIDTH / 2;
+	float winy = WINDOW_HEIGHT / 2;
+	float centx = data.map.x_max / 2;
+	float centy = data.map.y_max / 2;
+	float diff;
+	diff = (float)ft_abs(data.map.x_max - data.map.y_max);
+	centx = -centx;
+	centy = -centy;
+	int x, y = 0;
+
+/*
+	t_matrix *proj = prep_projection_matrix();
+	t_matrix *rotz = prep_rotate_z(0.1f);
+	log_matrix(*rotz);
+	printf("\n[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
+	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
+	project(&data.map, proj);
+*/
+	t_matrix minmax;
+	minmax = *isometric(&data.map, &data.img, 20);	
+	printf("0,1 : %f,%f\n", minmax.m[0][0], minmax.m[0][1]);
+	printf("2,3 : %f,%f\n", minmax.m[1][0], minmax.m[1][1]);
+	centx = ((-minmax.m[0][0]) + minmax.m[0][1]) / 2;
+	centy = ((-minmax.m[1][0]) + minmax.m[1][1]) / 2;
+	centx = ((minmax.m[0][0]) + minmax.m[0][1]);
+	centy = ((minmax.m[1][0]) + minmax.m[1][1]);
+	if (minmax.m[0][1] < minmax.m[1][1])
+		diff = minmax.m[1][1] - minmax.m[0][1];
+	else
+		diff = minmax.m[0][1] - minmax.m[1][1];
+	centy += (diff / 4);
+	centx -= (diff);
+	printf("cenxt : %f	centy : %f\n", centx, centy);
+	centx = -centx;
+	centy = -centy;
+	printf("cenxt : %f	centy : %f\n", centx, centy);
+	while (y < data.map.y_max)
+	{
+		x = 0;
+		while (x < data.map.x_max)
+		{
+			vec_adjust(&data.map.coords[y][x].vect, centx, centy);
+			vec_adjust(&data.map.coords[y][x].vect, winx, winy);
+			x++;
+		}
+		y++;
+	}
+//	printf("[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
+//	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
 
 	data.mlx_ptr = mlx_init();
 	/* Create the image */
