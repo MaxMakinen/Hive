@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 19:51:58 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:44:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_map
 {
 	int 		x_max;
 	int			y_max;
+	float		angle;
 	t_coord		**coords;
 	t_coord		*pool;
 	t_vector	**vec;
@@ -105,6 +106,7 @@ typedef struct s_data
 	void	*win_ptr;														   
 	t_img	img; /* added for image rendering */								
 	t_map	map;																
+	t_matrix *proj;
 }   t_data;																	 
 																				
 typedef struct s_rect														   
@@ -150,4 +152,5 @@ void    	draw_grid(t_mesh *grid, t_img *img);
 void	    draw_square(t_square sq, t_img *img);
 t_vector	*vec_adjust(t_vector *vec, int x, int y);
 t_matrix		*isometric(t_map *map, t_img *img, float xoff);
+void		log_matrix(t_matrix matrix);
 #endif

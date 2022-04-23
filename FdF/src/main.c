@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 20:17:46 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:46:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	log_matrix(t_matrix matrix)
 		printf("\n");
 		y++;
 	}
+	printf("\n");
 }
 
 void	log_vector(t_vector vec)
@@ -51,7 +52,7 @@ int main(int argc, char **argv)
 	data.map = input(argv[1], &data.map);
 
 	// Center map in middle of screen
-	
+/*	
 	float winx = WINDOW_WIDTH / 2;
 	float winy = WINDOW_HEIGHT / 2;
 	float centx = data.map.x_max / 2;
@@ -61,15 +62,21 @@ int main(int argc, char **argv)
 	centx = -centx;
 	centy = -centy;
 	int x, y = 0;
-
-/*
+*/
+	data.map.angle = 0.01f;
+	data.proj = prep_projection_matrix();
+	
 	t_matrix *proj = prep_projection_matrix();
 	t_matrix *rotz = prep_rotate_z(0.1f);
-	log_matrix(*rotz);
+	log_matrix(*proj);
 	printf("\n[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
 	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
 	project(&data.map, proj);
-*/
+	printf("\n[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
+	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
+
+
+	/*
 	t_matrix minmax;
 	minmax = *isometric(&data.map, &data.img, 20);	
 	printf("0,1 : %f,%f\n", minmax.m[0][0], minmax.m[0][1]);
@@ -101,7 +108,7 @@ int main(int argc, char **argv)
 	}
 //	printf("[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
 //	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
-
+*/
 	data.mlx_ptr = mlx_init();
 	/* Create the image */
 	if (data.mlx_ptr == NULL)

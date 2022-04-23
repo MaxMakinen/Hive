@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 20:18:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:30:03 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int render(t_data *data)
 	if (data->win_ptr == NULL)
 		return (1);
 	render_background(&data->img, BLACK_PIXEL);
-	
 	while (y < data->map.y_max)
 	{
 		x = 0;
@@ -193,7 +192,7 @@ int render_rect(t_img *img, t_rect rect)
 
 int	check_color(t_vector coord)
 {
-	if (coord.z > 0)
+	if (coord.z > 0.995f)
 		return (GREEN_PIXEL);
 	return (RED_PIXEL);
 }

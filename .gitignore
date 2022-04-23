@@ -6,3 +6,4 @@ ft_printf/.git
 init/.git
 ./*/.git
 ft_printf
+*.swp

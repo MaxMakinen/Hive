@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:32:59 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 11:51:23 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:41:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,40 @@ t_matrix	*prep_rotate_z(float angle)
 	t_matrix	*matrix;
 
 	matrix = prep_matrix(4,4);
-	matrix->m[0][0] = cos(angle);
-	matrix->m[0][1] = -sin(angle);
-	matrix->m[1][0] = sin(angle);
-	matrix->m[1][1] = cos(angle);
+	matrix->m[0][0] = cosf(angle);
+	matrix->m[0][1] = -sinf(angle);
+	matrix->m[1][0] = sinf(angle);
+	matrix->m[1][1] = cosf(angle);
 	matrix->m[2][2] = 1.0f;
+	matrix->m[3][3] = 1.0f;
 	return (matrix);
 }
 
 t_matrix	*prep_rotate_x(float angle)
 {
 	t_matrix	*matrix;
-	float x[3] = {1.0f,0.0f,0.0f};
-	float y[3] = {0.0f, cos(angle), -sin(angle)};
-	float z[3] = {0.0f, sin(angle), cos(angle)};
 
 	matrix = prep_matrix(4,4);
-	matrix->m[0] = x;
-	matrix->m[1] = y;
-	matrix->m[2] = z;
+	matrix->m[0][0] = 1.0f;
+	matrix->m[1][1] = cosf(angle);
+	matrix->m[1][2] = -sinf(angle);
+	matrix->m[2][1] = sinf(angle);
+	matrix->m[2][2] = cosf(angle);
+	matrix->m[3][3] = 1.0f;
 	return (matrix);
 }
 
 t_matrix	*prep_rotate_y(float angle)
 {
 	t_matrix	*matrix;
-	float	x[3] = {cos(angle), 0.0f, sin(angle)};
-	float	y[3] = {0.0f, 1.0f, 0.0f};
-	float	z[3] = {-sin(angle), 0.0f, cos(angle)};
 
 	matrix = prep_matrix(4,4);
-	matrix->m[0] = x;
-	matrix->m[1] = y;
-	matrix->m[2] = z;
+	matrix->m[0][0] = cosf(angle);
+	matrix->m[0][2] = sinf(angle);
+	matrix->m[2][0] = -sinf(angle);
+	matrix->m[2][2] = cosf(angle);
+	matrix->m[1][1] = 1.0f;
+	matrix->m[3][3] = 1.0f;
 	return (matrix);
 }
 
@@ -120,7 +121,7 @@ t_vector	*mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m)
 	float w = src->x * m->m[3][0] + src->y * m->m[3][1] + src->z * m->m[3][2] + m->m[3][3];
 	 
 
-	if (w != 0)
+	if (w != 0.0f)
 	{
 		dst->x /= w;
 		dst->y /= w;
