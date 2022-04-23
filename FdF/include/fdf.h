@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 11:44:58 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:17:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ typedef struct s_map
 {
 	int 		x_max;
 	int			y_max;
-	float		angle;
+	float		anglex;
+	float		angley;
+	float		anglez;
 	t_coord		**coords;
 	t_coord		*pool;
 	t_vector	**vec;

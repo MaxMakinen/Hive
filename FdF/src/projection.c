@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 12:14:36 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:31:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,9 @@ t_map *project(t_map *map, t_matrix *matrix)
 	t_matrix	roty;
 	t_matrix	rotz;
 
-	map->angle = 2.5f;
-	rotx = *prep_rotate_x(map->angle);
-	printf("rotx\n");
-	log_matrix(rotx);
-	map->angle = 1.0f;
-	roty = *prep_rotate_y(map->angle);
-	printf("roty\n");
-	log_matrix(roty);
-	map->angle = 0.0f;
-	rotz = *prep_rotate_z(map->angle);
-	printf("rotz\n");
-	log_matrix(rotz);
+	rotx = *prep_rotate_x(map->anglex);
+	roty = *prep_rotate_y(map->angley);
+	rotz = *prep_rotate_z(map->anglez);
 	y = 0;
 	while (y < map->y_max)
 	{
@@ -45,15 +36,15 @@ t_map *project(t_map *map, t_matrix *matrix)
 			tempx = map->coords[y][x].vect;
 			tempxz = map->coords[y][x].vect;
 
-			tempx = *mult_matrix_vec(&map->coords[y][x].vect, &tempx, &rotx);
-			temp = *mult_matrix_vec(&tempx, &tempxz, &rotz);
-			//temp = *mult_matrix_vec(&tempxz, &temp, &roty);
+			mult_matrix_vec(&map->coords[y][x].vect, &tempx, &rotx);
+			mult_matrix_vec(&tempx, &tempxz, &rotz);
+			mult_matrix_vec(&tempxz, &temp, &roty);
 			temp.z += map->x_max + 4;
-			map->coords[y][x].vect = *mult_matrix_vec(&temp, &map->coords[y][x].vect, matrix);
-			map->coords[y][x].vect.x += 1.0f;
-			map->coords[y][x].vect.y += 1.0f;
-			map->coords[y][x].vect.x *= 0.5f * (float)WINDOW_WIDTH;
-			map->coords[y][x].vect.y *= 0.5f * (float)WINDOW_HEIGHT;
+			map->vec[y][x] = *mult_matrix_vec(&temp, &map->vec[y][x], matrix);
+			map->vec[y][x].x += 1.0f;
+			map->vec[y][x].y += 1.0f;
+			map->vec[y][x].x *= 0.5f * (float)WINDOW_WIDTH;
+			map->vec[y][x].y *= 0.5f * (float)WINDOW_HEIGHT;
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 11:46:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:17:18 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	data.map = input(argv[1], &data.map);
 
 	// Center map in middle of screen
-/*	
+	
 	float winx = WINDOW_WIDTH / 2;
 	float winy = WINDOW_HEIGHT / 2;
 	float centx = data.map.x_max / 2;
@@ -62,18 +62,24 @@ int main(int argc, char **argv)
 	centx = -centx;
 	centy = -centy;
 	int x, y = 0;
-*/
-	data.map.angle = 0.01f;
+	while (y < data.map.y_max)
+	{
+		x = 0;
+		while (x < data.map.x_max)
+		{
+			vec_adjust(&data.map.coords[y][x].vect, centx, centy);
+			data.map.coords[y][x].vect.z *= -1;
+			x++;
+		}
+		y++;
+	}
+
+	data.map.anglex = -0.8f;
+	data.map.angley = 0.0f;
+	data.map.anglez = 0.0f;
 	data.proj = prep_projection_matrix();
-	
-	t_matrix *proj = prep_projection_matrix();
-	t_matrix *rotz = prep_rotate_z(0.1f);
-	log_matrix(*proj);
-	printf("\n[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
-	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
-	project(&data.map, proj);
-	printf("\n[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
-	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
+
+	project(&data.map, data.proj);
 
 
 	/*

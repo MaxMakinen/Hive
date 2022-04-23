@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 11:30:03 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:26:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 	}
 	else
 	{
-		m = (float)dist.y / dist.x;
+		m = dist.y / dist.x;
 		offset = 0;
 		adjust = 1;
 		if (m < 0)
@@ -108,6 +108,7 @@ int render(t_data *data)
 	if (data->win_ptr == NULL)
 		return (1);
 	render_background(&data->img, BLACK_PIXEL);
+	//project(&data->map, data->proj);
 	while (y < data->map.y_max)
 	{
 		x = 0;
@@ -115,10 +116,10 @@ int render(t_data *data)
 		{
 			if((x + 1) < data->map.x_max)
 //				render_line(&data->img, data->map.vec[y][x], data->map.vec[y][x + 1]);
-				render_line(&data->img, data->map.coords[y][x].vect, data->map.coords[y][x + 1].vect);
+				render_line(&data->img, data->map.vec[y][x], data->map.vec[y][x + 1]);
 			if((y + 1) < data->map.y_max)
 //				render_line(&data->img, data->map.vec[y][x], data->map.vec[y + 1][x]);
-				render_line(&data->img, data->map.coords[y][x].vect, data->map.coords[y + 1][x].vect);
+				render_line(&data->img, data->map.vec[y][x], data->map.vec[y + 1][x]);
 			x++;
 		}
 		y++;
@@ -194,6 +195,6 @@ int	check_color(t_vector coord)
 {
 	if (coord.z > 0.995f)
 		return (GREEN_PIXEL);
-	return (RED_PIXEL);
+	return (0x808080 * coord.z);
 }
 
