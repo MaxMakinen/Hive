@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:32:59 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 11:41:23 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 11:59:53 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_matrix	*prep_rotate_z(float angle)
 	matrix->m[1][0] = sinf(angle);
 	matrix->m[1][1] = cosf(angle);
 	matrix->m[2][2] = 1.0f;
-	matrix->m[3][3] = 1.0f;
 	return (matrix);
 }
 
@@ -54,7 +53,6 @@ t_matrix	*prep_rotate_x(float angle)
 	matrix->m[1][2] = -sinf(angle);
 	matrix->m[2][1] = sinf(angle);
 	matrix->m[2][2] = cosf(angle);
-	matrix->m[3][3] = 1.0f;
 	return (matrix);
 }
 
@@ -68,7 +66,6 @@ t_matrix	*prep_rotate_y(float angle)
 	matrix->m[2][0] = -sinf(angle);
 	matrix->m[2][2] = cosf(angle);
 	matrix->m[1][1] = 1.0f;
-	matrix->m[3][3] = 1.0f;
 	return (matrix);
 }
 
@@ -79,6 +76,11 @@ t_matrix	*prep_matrix(int x_max, int y_max)
 	t_matrix *matrix;
 
 	matrix = malloc(sizeof(matrix));
+	if (!matrix)
+	{
+		printf("prep_matrix malloc error\n");
+			exit(1);
+	}
 	matrix->m = (float **)ft_calloc(y_max, sizeof(float *));
 	matrix->pool = (float *)ft_calloc(y_max * x_max, sizeof(float *));
 	temp = matrix->pool;

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 11:46:58 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/23 12:14:36 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,21 @@ t_map *project(t_map *map, t_matrix *matrix)
 	int	x;
 	int	y;
 	t_vector	temp;
+	t_vector	tempx;
+	t_vector	tempxz;
 	t_matrix	rotx;
 	t_matrix	roty;
 	t_matrix	rotz;
 
-	map->angle = 50.0f;
+	map->angle = 2.5f;
 	rotx = *prep_rotate_x(map->angle);
 	printf("rotx\n");
 	log_matrix(rotx);
-	map->angle = 50.0f;
-	rotx = *prep_rotate_y(map->angle);
+	map->angle = 1.0f;
+	roty = *prep_rotate_y(map->angle);
 	printf("roty\n");
 	log_matrix(roty);
-	map->angle = 50.0f;
+	map->angle = 0.0f;
 	rotz = *prep_rotate_z(map->angle);
 	printf("rotz\n");
 	log_matrix(rotz);
@@ -40,11 +42,13 @@ t_map *project(t_map *map, t_matrix *matrix)
 		while (x < map->x_max)
 		{
 			temp = map->coords[y][x].vect;
+			tempx = map->coords[y][x].vect;
+			tempxz = map->coords[y][x].vect;
 
-//			temp = *mult_matrix_vec(&map->coords[y][x].vect, &temp, &rotx);
-//			temp = *mult_matrix_vec(&map->coords[y][x].vect, &temp, &roty);
-			temp = *mult_matrix_vec(&map->coords[y][x].vect, &temp, &rotz);
-			temp.z += map->x_max;
+			tempx = *mult_matrix_vec(&map->coords[y][x].vect, &tempx, &rotx);
+			temp = *mult_matrix_vec(&tempx, &tempxz, &rotz);
+			//temp = *mult_matrix_vec(&tempxz, &temp, &roty);
+			temp.z += map->x_max + 4;
 			map->coords[y][x].vect = *mult_matrix_vec(&temp, &map->coords[y][x].vect, matrix);
 			map->coords[y][x].vect.x += 1.0f;
 			map->coords[y][x].vect.y += 1.0f;
