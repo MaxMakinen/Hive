@@ -6,13 +6,27 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 15:26:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/24 14:35:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	render_line(t_img *img, t_vector start, t_vector end)
+float ft_pyth(float a, float b)
+{
+	return (sqrtf(powf(a, 2) + powf(b, 2)));
+}
+
+float ft_norm(float num, float min, float max)
+{
+	return ((num - min) / (max - min));
+}
+
+float ft_lerp(float norm, float min, float max)
+{
+	return ((max-min) * norm + min);
+}
+int	render_line(t_img *img, t_coord start, t_coord end)
 {
 	int	x;
 	int	y;
@@ -23,21 +37,23 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 	int	threshold;
 	int	threshold_inc;
 	t_vector dist;
+	float hypotenuse;
 
 	float meep;
 
-	dist.x = start.x - end.x;
-	dist.y = start.y - end.y;
+	dist.x = start.vect.x - end.vect.x;
+	dist.y = start.vect.y - end.vect.y;
 	if (dist.x == 0)
 	{
-		if (end.y < start.y)
+		if (end.vect.y < start.vect.y)
 		{
-			meep = start.y;
-			start.y = end.y;
-			end.y = meep;
+			meep = start.vect.y;
+			start.vect.y = end.vect.y;
+			end.vect.y = meep;
 		}
-		while (start.y <= end.y)
-			img_pix_put(img, start.x, start.y++, check_color(start));
+		hypotenuse = ft_pyth(end.vect.x - start.vect.x, end.vect.y - start.vect.y);
+		while (start.vect.y <= end.vect.y)
+			img_pix_put(img, start.vect.x, start.vect.y++, check_color(y, start.vect.y, end.vect.y, start.color, end.color));
 	}
 	else
 	{
@@ -51,17 +67,18 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 			delta = ft_abs(dist.y) * 2;
 			threshold = ft_abs(dist.x);
 			threshold_inc = ft_abs(dist.x) * 2;
-			y = start.y;
-			if (end.x < start.x)
+			y = start.vect.y;
+			if (end.vect.x < start.vect.x)
 			{
-				meep = start.x;
-				start.x = end.x;
-				end.x = meep;
-				y = end.y;
+				meep = start.vect.x;
+				start.vect.x = end.vect.x;
+				end.vect.x = meep;
+				y = end.vect.y;
 			}
-			while (start.x <= end.x)
+			hypotenuse = ft_pyth(end.vect.x - start.vect.x, end.vect.y - start.vect.y);
+			while (start.vect.x <= end.vect.x)
 			{
-				img_pix_put(img, start.x++, y, check_color(start));
+				img_pix_put(img, start.vect.x++, y, check_color(x, start.vect.x, end.vect.x, start.color, end.color));
 				offset += delta;
 				if (offset >= threshold)
 				{
@@ -75,17 +92,18 @@ int	render_line(t_img *img, t_vector start, t_vector end)
 			delta= ft_abs(dist.x) * 2;
 			threshold = ft_abs(dist.y);
 			threshold_inc = ft_abs(dist.y) * 2;
-			x = start.x;
-			if (end.y < start.y)
+			x = start.vect.x;
+			if (end.vect.y < start.vect.y)
 			{
-				meep = start.y;
-				start.y = end.y;
-				end.y = meep;
-				x = end.x;
+				meep = start.vect.y;
+				start.vect.y = end.vect.y;
+				end.vect.y = meep;
+				x = end.vect.x;
 			}
-			while (start.y < end.y)
+			hypotenuse = ft_pyth(end.vect.x - start.vect.x, end.vect.y - start.vect.y);
+			while (start.vect.y < end.vect.y)
 			{
-				img_pix_put(img, x, start.y++, check_color(start));
+				img_pix_put(img, x, start.vect.y++, check_color(y, start.vect.y, end.vect.y, start.color, end.color));
 				offset += delta;
 				if (offset >= threshold)
 				{
@@ -191,10 +209,27 @@ int render_rect(t_img *img, t_rect rect)
 		return (0);
 }
 
-int	check_color(t_vector coord)
+//doesn't need to be a function?
+int	check_color(float num, float start, float end, int col1, int col2)
 {
-	if (coord.z > 0.995f)
-		return (GREEN_PIXEL);
-	return (0x808080 * coord.z);
+	int red, green, blue;
+	float norm, lerp;
+
+	if (num == end)
+		return (col2);
+	if (num == start)
+		return (col1);
+	/*
+	norm = ft_norm(num, start, end);
+	lerp = ft_lerp(norm, col1, col2);
+	col = (int)lerp;
+//	if (col == 0)
+//		return (0x808080);
+//		*/
+	float range = end - start;
+	red = ((int)((num / range) * (col1 >> 16) + ((range-num)/range) * (col2 >> 16)) & 0xFF);
+	green = ((int)((num / range) * (col1 >> 8) + ((range-num)/range) * (col2 >> 8)) & 0xFF);
+	blue = ((int)((num / range) * col1 + ((range-num)/range) * col2) & 0xFF);
+	return ((red << 16) | (green << 8) | blue);
 }
 

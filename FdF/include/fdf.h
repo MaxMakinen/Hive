@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 15:17:59 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/24 13:43:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ typedef struct s_map
 	float		anglez;
 	t_coord		**coords;
 	t_coord		*pool;
-	t_vector	**vec;
-	t_vector	*pvec;
+	t_coord		**vec;
+	t_coord		*pvec;
 	t_mesh		*grid;
 }	t_map;
 
@@ -142,8 +142,8 @@ void		img_pix_put(t_img *img, int x, int y, int color);
 void		render_background(t_img *img, int color);
 int 		render_rect(t_img *img, t_rect rect);
 t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector);
-int			check_color(t_vector coord);
-int			render_line(t_img *img, t_vector start, t_vector end);
+int 		check_color(float num, float start, float end, int col1, int col2);
+int			render_line(t_img *img, t_coord start, t_coord end);
 int			render(t_data *data);
 t_map		*project(t_map *map, t_matrix *matrix);
 t_matrix	*prep_projection_matrix(void);

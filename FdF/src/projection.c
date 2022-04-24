@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 15:31:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/24 13:55:27 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ t_map *project(t_map *map, t_matrix *matrix)
 			mult_matrix_vec(&tempx, &tempxz, &rotz);
 			mult_matrix_vec(&tempxz, &temp, &roty);
 			temp.z += map->x_max + 4;
-			map->vec[y][x] = *mult_matrix_vec(&temp, &map->vec[y][x], matrix);
-			map->vec[y][x].x += 1.0f;
-			map->vec[y][x].y += 1.0f;
-			map->vec[y][x].x *= 0.5f * (float)WINDOW_WIDTH;
-			map->vec[y][x].y *= 0.5f * (float)WINDOW_HEIGHT;
+			map->vec[y][x].vect = *mult_matrix_vec(&temp, &map->vec[y][x].vect, matrix);
+			map->vec[y][x].vect.x += 1.0f;
+			map->vec[y][x].vect.y += 1.0f;
+			map->vec[y][x].vect.x *= 0.5f * (float)WINDOW_WIDTH;
+			map->vec[y][x].vect.y *= 0.5f * (float)WINDOW_HEIGHT;
+			map->vec[y][x].color = map->coords[y][x].color;
 			x++;
 		}
 		y++;
@@ -57,7 +58,7 @@ t_map *project(t_map *map, t_matrix *matrix)
 	free(rotz.pool);
 	return (map);
 }
-
+/*
 t_square	build_square(t_map *map, t_vector v)
 {
 	t_square	sq;
@@ -120,7 +121,7 @@ void	draw_grid(t_mesh *grid, t_img *img)
 		x++;
 	}
 }
-
+*/
 t_matrix	*isometric(t_map *map, t_img *img, float xoff)
 {
 	t_vector	temp;
