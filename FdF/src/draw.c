@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 17:16:07 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/24 17:40:26 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,15 @@ double ft_percent(int num, int min, int max)
 
 float ft_norm(float num, float min, float max)
 {
-	float	norm;
-
-	if (min < 0)
-	{
-		num += min + 1;
-		max += min + 1;
-		min += min + 1;
-	}
-	norm = ((num - min) / (max - min));
-	if (norm <= 0.0f)
-		return (1.0f);
-	return (norm);
+	return ((num - min) / (max - min));
 }
 
 float ft_lerp(float norm, float min, float max)
 {
 	return ((max-min) * norm + min);
 }
+
+
 int	render_line(t_img *img, t_coord start, t_coord end)
 {
 	int	x;
@@ -236,12 +227,21 @@ int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
 	int red, green, blue;
 	int red1, green1, blue1;
 	int red2, green2, blue2;
+	int	min, max;
 	float norm, lerp;
 
 	if (delta.x > delta.y)
+	{
 		norm = ft_norm(point.x, start.vect.x, end.vect.x);
+		min = start.vect.x;
+		max = end.vect.x;
+	}
 	else
+	{
 		norm = ft_norm(point.x, start.vect.x, end.vect.x);
+		min = start.vect.y;
+		max = end.vect.y;
+	}
 	
 	//printf("norm = %f\n", norm);
 
@@ -251,6 +251,7 @@ int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
 	green2 = (end.color >> 8) & 0xFF;
 	blue1 = start.color & 0xFF;
 	blue2 = end.color & 0xFF;
+
 	red = ft_lerp(norm, red1, red2);
 	green = ft_lerp(norm, green1, green2);
 	blue = ft_lerp(norm, blue1, blue2);
