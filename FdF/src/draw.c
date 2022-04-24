@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 14:35:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/24 17:16:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,32 @@ float ft_pyth(float a, float b)
 	return (sqrtf(powf(a, 2) + powf(b, 2)));
 }
 
+double ft_percent(int num, int min, int max)
+{
+	double diff;
+	double range;
+
+	diff = num - min;
+	range = max - min;
+	if (diff == 0)
+		return (1.0);
+	return (diff / range);
+}
+
 float ft_norm(float num, float min, float max)
 {
-	return ((num - min) / (max - min));
+	float	norm;
+
+	if (min < 0)
+	{
+		num += min + 1;
+		max += min + 1;
+		min += min + 1;
+	}
+	norm = ((num - min) / (max - min));
+	if (norm <= 0.0f)
+		return (1.0f);
+	return (norm);
 }
 
 float ft_lerp(float norm, float min, float max)
@@ -43,6 +66,7 @@ int	render_line(t_img *img, t_coord start, t_coord end)
 
 	dist.x = start.vect.x - end.vect.x;
 	dist.y = start.vect.y - end.vect.y;
+	dist.z = start.vect.z - end.vect.z;
 	if (dist.x == 0)
 	{
 		if (end.vect.y < start.vect.y)
@@ -51,9 +75,8 @@ int	render_line(t_img *img, t_coord start, t_coord end)
 			start.vect.y = end.vect.y;
 			end.vect.y = meep;
 		}
-		hypotenuse = ft_pyth(end.vect.x - start.vect.x, end.vect.y - start.vect.y);
 		while (start.vect.y <= end.vect.y)
-			img_pix_put(img, start.vect.x, start.vect.y++, check_color(y, start.vect.y, end.vect.y, start.color, end.color));
+			img_pix_put(img, start.vect.x, start.vect.y++, check_color((t_vector){x, y, 0}, start, end, dist));
 	}
 	else
 	{
@@ -75,10 +98,9 @@ int	render_line(t_img *img, t_coord start, t_coord end)
 				end.vect.x = meep;
 				y = end.vect.y;
 			}
-			hypotenuse = ft_pyth(end.vect.x - start.vect.x, end.vect.y - start.vect.y);
 			while (start.vect.x <= end.vect.x)
 			{
-				img_pix_put(img, start.vect.x++, y, check_color(x, start.vect.x, end.vect.x, start.color, end.color));
+				img_pix_put(img, start.vect.x++, y, check_color((t_vector){x, y, 0}, start, end, dist));
 				offset += delta;
 				if (offset >= threshold)
 				{
@@ -100,10 +122,9 @@ int	render_line(t_img *img, t_coord start, t_coord end)
 				end.vect.y = meep;
 				x = end.vect.x;
 			}
-			hypotenuse = ft_pyth(end.vect.x - start.vect.x, end.vect.y - start.vect.y);
 			while (start.vect.y < end.vect.y)
 			{
-				img_pix_put(img, x, start.vect.y++, check_color(y, start.vect.y, end.vect.y, start.color, end.color));
+				img_pix_put(img, x, start.vect.y++, check_color((t_vector){x, y, 0}, start, end, dist));
 				offset += delta;
 				if (offset >= threshold)
 				{
@@ -210,26 +231,30 @@ int render_rect(t_img *img, t_rect rect)
 }
 
 //doesn't need to be a function?
-int	check_color(float num, float start, float end, int col1, int col2)
+int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
 {
 	int red, green, blue;
+	int red1, green1, blue1;
+	int red2, green2, blue2;
 	float norm, lerp;
 
-	if (num == end)
-		return (col2);
-	if (num == start)
-		return (col1);
-	/*
-	norm = ft_norm(num, start, end);
-	lerp = ft_lerp(norm, col1, col2);
-	col = (int)lerp;
-//	if (col == 0)
-//		return (0x808080);
-//		*/
-	float range = end - start;
-	red = ((int)((num / range) * (col1 >> 16) + ((range-num)/range) * (col2 >> 16)) & 0xFF);
-	green = ((int)((num / range) * (col1 >> 8) + ((range-num)/range) * (col2 >> 8)) & 0xFF);
-	blue = ((int)((num / range) * col1 + ((range-num)/range) * col2) & 0xFF);
+	if (delta.x > delta.y)
+		norm = ft_norm(point.x, start.vect.x, end.vect.x);
+	else
+		norm = ft_norm(point.x, start.vect.x, end.vect.x);
+	
+	//printf("norm = %f\n", norm);
+
+	red1 = (start.color >> 16) & 0xFF;
+	red2 = (end.color >> 16) & 0xFF;
+	green1 = (start.color >> 8) & 0xFF;
+	green2 = (end.color >> 8) & 0xFF;
+	blue1 = start.color & 0xFF;
+	blue2 = end.color & 0xFF;
+	red = ft_lerp(norm, red1, red2);
+	green = ft_lerp(norm, green1, green2);
+	blue = ft_lerp(norm, blue1, blue2);
+
 	return ((red << 16) | (green << 8) | blue);
 }
 

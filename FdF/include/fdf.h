@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 13:43:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/24 16:48:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void		img_pix_put(t_img *img, int x, int y, int color);
 void		render_background(t_img *img, int color);
 int 		render_rect(t_img *img, t_rect rect);
 t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector);
-int 		check_color(float num, float start, float end, int col1, int col2);
+int check_color(t_vector point, t_coord start, t_coord end, t_vector delta);
 int			render_line(t_img *img, t_coord start, t_coord end);
 int			render(t_data *data);
 t_map		*project(t_map *map, t_matrix *matrix);

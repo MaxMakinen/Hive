@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 14:24:12 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:53:27 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ t_map	input (char *filename, t_map *map)
 			if (map->coords[y][x].vect.z > 0)
 				map->coords[y][x].color = RED_PIXEL;
 			else if (map->coords[y][x].vect.z < 0)
-				map->coords[y][x].color = BLUE_PIXEL;
-			else if (map->coords[y][x].vect.z == 0)
 				map->coords[y][x].color = GREEN_PIXEL;
+			else if (map->coords[y][x].vect.z == 0)
+				map->coords[y][x].color = BLUE_PIXEL;
 
 			x++;
 			exp++;

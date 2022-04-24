@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 13:55:27 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:45:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_map *project(t_map *map, t_matrix *matrix)
 			mult_matrix_vec(&map->coords[y][x].vect, &tempx, &rotx);
 			mult_matrix_vec(&tempx, &tempxz, &rotz);
 			mult_matrix_vec(&tempxz, &temp, &roty);
-			temp.z += map->x_max + 4;
+			temp.z += map->x_max;
 			map->vec[y][x].vect = *mult_matrix_vec(&temp, &map->vec[y][x].vect, matrix);
 			map->vec[y][x].vect.x += 1.0f;
 			map->vec[y][x].vect.y += 1.0f;
