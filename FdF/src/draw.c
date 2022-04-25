@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 12:25:03 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:10:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,17 @@ t_intvec get_current(t_vector start, t_vector end, int delta, int dir)
 	return (current);
 }
 
-void draw_line(t_img *img, t_coord start, t_coord end)
+int	getcol(t_rgb start, t_rgb end, int delta, int step)
+{
+	t_rgb new;
+
+	new.red = start.red * step + end.red * (delta - step);
+	new.green = start.green * step + end.green * (delta - step);
+	new.blue = start.blue * step + end.blue * (delta - step);
+	return (rgb_int(new));
+}
+
+void draw_line(t_data *data, t_coord start, t_coord end)
 {
 	t_intvec	delta;
 	t_intvec	abs_delta;
@@ -79,7 +89,7 @@ void draw_line(t_img *img, t_coord start, t_coord end)
 	if (abs_delta.y <= abs_delta.x)
 	{
 		current = get_current(start.vect, end.vect, delta.x, 1);
-		img_pix_put(img, current.x, current.y, color);
+		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
 		while (current.x < current.z)
 		{
 			current.x += 1;
@@ -90,13 +100,13 @@ void draw_line(t_img *img, t_coord start, t_coord end)
 				current.y += check.z;
 				check.x += 2 * (abs_delta.y - abs_delta.x);
 			}
-			img_pix_put(img, current.x, current.y, color);
+			img_pix_put(&data->img, current.x, current.y, getcol(start.color, end.color, delta.x, current.x));
 		}
 	}
 	else
 	{
 		current = get_current(start.vect, end.vect, delta.y, 0);
-		img_pix_put(img, current.x, current.y, color);
+		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
 		while (current.y < current.z)
 		{
 			current.y += 1;
@@ -107,7 +117,7 @@ void draw_line(t_img *img, t_coord start, t_coord end)
 				current.x += check.z;
 				check.y += 2 * (abs_delta.x - abs_delta.y);
 			}
-			img_pix_put(img, current.x, current.y, color);
+			img_pix_put(&data->img, current.x, current.y, getcol(start.color, end.color, delta.y, current.y));
 		}
 	}
 }
@@ -122,18 +132,15 @@ int render(t_data *data)
 	if (data->win_ptr == NULL)
 		return (1);
 	render_background(&data->img, BLACK_PIXEL);
-	//project(&data->map, data->proj);
 	while (y < data->map.y_max)
 	{
 		x = 0;
 		while (x < data->map.x_max)
 		{
 			if((x + 1) < data->map.x_max)
-//				render_line(&data->img, data->map.vec[y][x], data->map.vec[y][x + 1]);
-				draw_line(&data->img, data->map.vec[y][x], data->map.vec[y][x + 1]);
+				draw_line(data, data->map.vec[y][x], data->map.vec[y][x + 1]);
 			if((y + 1) < data->map.y_max)
-//				render_line(&data->img, data->map.vec[y][x], data->map.vec[y + 1][x]);
-				draw_line(&data->img, data->map.vec[y][x], data->map.vec[y + 1][x]);
+				draw_line(data, data->map.vec[y][x], data->map.vec[y + 1][x]);
 			x++;
 		}
 		y++;
@@ -173,16 +180,6 @@ void render_background(t_img *img, int color)
 		while (j < WINDOW_WIDTH)
 		{
 			img_pix_put(img , j, i, color);
-			/*
-			if (j == WINDOW_WIDTH / 2)
-				img_pix_put(img , j, i, WHITE_PIXEL);
-			else if (i == WINDOW_HEIGHT / 2)
-				img_pix_put(img , j, i, WHITE_PIXEL);
-			if (i == x && j > yb && j < (yb + ya + ya))
-				img_pix_put(img , j, i, WHITE_PIXEL);
-			if (i > x)
-				x += xa;
-			*/
 			j++;
 		}
 		i++;

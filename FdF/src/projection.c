@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 18:45:45 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 14:05:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_map *project(t_map *map, t_matrix *matrix)
 			map->vec[y][x].vect.x *= 0.5f * (float)WINDOW_WIDTH;
 			map->vec[y][x].vect.y *= 0.5f * (float)WINDOW_HEIGHT;
 			map->vec[y][x].color = map->coords[y][x].color;
+			map->vec[y][x].orig = &map->coords[y][x].vect;
 			x++;
 		}
 		y++;

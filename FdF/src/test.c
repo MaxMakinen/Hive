@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 17:46:46 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:57:01 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	ft_abs(int num)
 
 int handle_keypress(int keysym, t_data *data)
 {
+	int x = 0;
 	if (keysym == 65307)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
@@ -51,6 +52,17 @@ int handle_keypress(int keysym, t_data *data)
 	if(keysym == 100)
 	{
 		data->map.angley -= 0.1f;
+	}
+	if(keysym == 114)
+	{
+		while (x < 1000)
+		{
+			data->map.anglex += 0.001f;
+			data->map.angley += 0.002f;
+			project(&data->map, data->proj);
+			render(data);
+			x++;
+		}
 	}
 	project(&data->map, data->proj);
 	render(data);

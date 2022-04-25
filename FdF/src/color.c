@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 17:49:34 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 10:29:25 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:09:47 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ float ft_lerp(float norm, float min, float max)
 	return ((max-min) * norm + min);
 }
 
+int	rgb_int(t_rgb rgb)
+{
+	return ((rgb.red << 16) | (rgb.green << 8) | rgb.blue);
+}
+
+t_rgb int_rgb(int col)
+{
+	t_rgb rgb;
+
+	rgb.red = (col >> 16) & 0xFF;
+	rgb.green = (col >> 8) & 0xFF;
+	rgb.blue = col & 0xFF;
+
+	return (rgb);
+}
+/*
 int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
 {
 	int red, green, blue;
@@ -68,6 +84,7 @@ int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
 
 	return ((red << 16) | (green << 8) | blue);
 }
+*/
 
 int	g_col(t_rgb rgb, t_rgb step, int pos)
 {

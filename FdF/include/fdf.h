@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 12:18:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:07:08 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ typedef struct s_intvec
 	int	z;
 }	t_intvec;
 
+typedef struct s_rgb
+{
+	int red;
+	int green;
+	int blue;
+}	t_rgb;
+
 typedef struct s_square
 {
 	t_vector	p[4];
@@ -82,7 +89,7 @@ typedef struct s_matrix
 typedef struct s_coord
 {
 	int			invisible;
-	int			color;
+	t_rgb		color;
 	t_vector	vect;
 	t_vector	*orig;
 }   t_coord;
@@ -91,6 +98,8 @@ typedef struct s_map
 {
 	int 		x_max;
 	int			y_max;
+	int			z_max;
+	int			z_min;
 	float		anglex;
 	float		angley;
 	float		anglez;
@@ -129,13 +138,6 @@ typedef struct s_rect
 	int	color;																  
 }   t_rect;  
 
-typedef struct s_rgb
-{
-	int red;
-	int green;
-	int blue;
-}	t_rgb;
-
 t_map		input(char *filename, t_map *map);
 void		prep_map(t_map *map);
 void		count_elems(char *filename, int *fd, t_map *map);
@@ -172,4 +174,8 @@ t_vector	*vec_adjust(t_vector *vec, int x, int y);
 t_matrix		*isometric(t_map *map, t_img *img, float xoff);
 void			log_matrix(t_matrix matrix);
 int				g_col(t_rgb rgb, t_rgb step, int pos);
+float		ft_lerp(float norm, float min, float max);
+float		ft_norm(float num, float min, float max);
+int			rgb_int(t_rgb rgb);
+t_rgb		int_rgb(int col);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/22 18:53:27 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:06:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	count_elems(char *filename, int *fd, t_map *map)
 	}
 	map->x_max = len;
 	map->y_max = rows;
+	map->z_max = 0;
+	map->z_min = 0;
 	closefd(*fd);
 }
 
@@ -87,6 +89,7 @@ t_map	input (char *filename, t_map *map)
 	char	*line;
 	int		x;
 	int		y;
+	int		z;
 	int		fd;
 	int		exp = 0;
 
@@ -105,12 +108,17 @@ t_map	input (char *filename, t_map *map)
 			map->coords[y][x].vect.z = ft_atoi(temp[x]);
 			map->coords[y][x].vect.x = x;
 			map->coords[y][x].vect.y = y;
+			z = ft_atoi(temp[x]);
+			if (z > map->z_max)
+				map->z_max = z;
+			if (z < map->z_min)
+				map->z_min = z;
 			if (map->coords[y][x].vect.z > 0)
-				map->coords[y][x].color = RED_PIXEL;
+				map->coords[y][x].color = int_rgb(RED_PIXEL);
 			else if (map->coords[y][x].vect.z < 0)
-				map->coords[y][x].color = GREEN_PIXEL;
+				map->coords[y][x].color = int_rgb(GREEN_PIXEL);
 			else if (map->coords[y][x].vect.z == 0)
-				map->coords[y][x].color = BLUE_PIXEL;
+				map->coords[y][x].color = int_rgb(BLUE_PIXEL);
 
 			x++;
 			exp++;
