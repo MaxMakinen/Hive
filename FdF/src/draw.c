@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 16:56:14 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 17:09:14 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 	if (abs_delta.y <= abs_delta.x)
 	{
 		current = get_current(start.vect, end.vect, delta.x, 1);
-		img_pix_put(&data->img, current.x, current.y, color);
+		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
 		while (current.x < current.z)
 		{
 			current.x += 1;
@@ -100,13 +100,13 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				current.y += check.z;
 				check.x += 2 * (abs_delta.y - abs_delta.x);
 			}
-			img_pix_put(&data->img, current.x, current.y, color);
+			img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
 		}
 	}
 	else
 	{
 		current = get_current(start.vect, end.vect, delta.y, 0);
-		img_pix_put(&data->img, current.x, current.y, color);
+		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
 		while (current.y < current.z)
 		{
 			current.y += 1;
@@ -117,7 +117,7 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				current.x += check.z;
 				check.y += 2 * (abs_delta.x - abs_delta.y);
 			}
-			img_pix_put(&data->img, current.x, current.y, color);
+			img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
 		}
 	}
 }

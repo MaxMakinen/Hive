@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 17:49:34 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 15:09:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 17:10:47 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ t_rgb int_rgb(int col)
 
 	return (rgb);
 }
-/*
-int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
+
+int	check_color(t_intvec point, t_coord start, t_coord end, t_intvec delta)
 {
-	int red, green, blue;
-	int red1, green1, blue1;
-	int red2, green2, blue2;
 	int	min, max;
+	t_rgb	new;
 	float norm, lerp;
 
 	if (delta.x > delta.y)
@@ -71,20 +69,13 @@ int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
 		max = end.vect.y;
 	}
 	
-	red1 = (start.color >> 16) & 0xFF;
-	red2 = (end.color >> 16) & 0xFF;
-	green1 = (start.color >> 8) & 0xFF;
-	green2 = (end.color >> 8) & 0xFF;
-	blue1 = start.color & 0xFF;
-	blue2 = end.color & 0xFF;
+	new.red = ft_lerp(norm, start.color.red, end.color.red);
+	new.green = ft_lerp(norm, start.color.green, end.color.green);
+	new.blue = ft_lerp(norm, start.color.blue, end.color.blue);
 
-	red = ft_lerp(norm, red1, red2);
-	green = ft_lerp(norm, green1, green2);
-	blue = ft_lerp(norm, blue1, blue2);
-
-	return ((red << 16) | (green << 8) | blue);
+	return (rgb_int(new));
 }
-*/
+
 
 int	g_col(t_rgb rgb, t_rgb step, int pos)
 {
