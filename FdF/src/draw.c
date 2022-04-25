@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 15:10:04 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:56:14 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ t_intvec get_current(t_vector start, t_vector end, int delta, int dir)
 
 int	getcol(t_rgb start, t_rgb end, int delta, int step)
 {
-	t_rgb new;
+	t_rgb	new;
 
-	new.red = start.red * step + end.red * (delta - step);
-	new.green = start.green * step + end.green * (delta - step);
-	new.blue = start.blue * step + end.blue * (delta - step);
+	new.red = (start.red / step) + (end.red / (delta - step));
+	new.green = (start.green / step) + (end.green / (delta - step));
+	new.blue = (start.blue / step) + (end.blue / (delta - step));
 	return (rgb_int(new));
 }
 
@@ -89,7 +89,7 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 	if (abs_delta.y <= abs_delta.x)
 	{
 		current = get_current(start.vect, end.vect, delta.x, 1);
-		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+		img_pix_put(&data->img, current.x, current.y, color);
 		while (current.x < current.z)
 		{
 			current.x += 1;
@@ -100,13 +100,13 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				current.y += check.z;
 				check.x += 2 * (abs_delta.y - abs_delta.x);
 			}
-			img_pix_put(&data->img, current.x, current.y, getcol(start.color, end.color, delta.x, current.x));
+			img_pix_put(&data->img, current.x, current.y, color);
 		}
 	}
 	else
 	{
 		current = get_current(start.vect, end.vect, delta.y, 0);
-		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+		img_pix_put(&data->img, current.x, current.y, color);
 		while (current.y < current.z)
 		{
 			current.y += 1;
@@ -117,7 +117,7 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				current.x += check.z;
 				check.y += 2 * (abs_delta.x - abs_delta.y);
 			}
-			img_pix_put(&data->img, current.x, current.y, getcol(start.color, end.color, delta.y, current.y));
+			img_pix_put(&data->img, current.x, current.y, color);
 		}
 	}
 }
@@ -164,24 +164,16 @@ void render_background(t_img *img, int color)
 {
 	int	i;
 	int	j;
-	int x, xa, ya;
-	int	y, xb, yb;
+	int	*pixel;
+	int size;
 
-	x = WINDOW_HEIGHT / 10;
-	y = WINDOW_WIDTH / 10;
-	xa = x;
-	ya = y;
-	xb = 4 * x;
-	yb = 4 * y;
+	pixel = (int *)img->addr;
+	size = WINDOW_HEIGHT * WINDOW_WIDTH;
 	i = 0;
-	while (i < WINDOW_HEIGHT)
+	ft_bzero(img->addr, size * (img->bpp / 8));
+	while (i > size)
 	{
-		j = 0;
-		while (j < WINDOW_WIDTH)
-		{
-			img_pix_put(img , j, i, color);
-			j++;
-		}
+		pixel[i] = color;
 		i++;
 	}
 }
