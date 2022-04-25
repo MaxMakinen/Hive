@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 16:48:59 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 12:18:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define BLUE_PIXEL 0xFF
 # define WHITE_PIXEL 0xFFFFFF
 # define BLACK_PIXEL 0x000000
+# define SALMON_PIXEL 0xFF8080
 
 # define ZOOM 40
 
@@ -51,6 +52,13 @@ typedef struct s_vector
 	float	y;
 	float	z;
 }	t_vector;
+
+typedef struct s_intvec
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_intvec;
 
 typedef struct s_square
 {
@@ -76,6 +84,7 @@ typedef struct s_coord
 	int			invisible;
 	int			color;
 	t_vector	vect;
+	t_vector	*orig;
 }   t_coord;
 
 typedef struct s_map
@@ -120,6 +129,13 @@ typedef struct s_rect
 	int	color;																  
 }   t_rect;  
 
+typedef struct s_rgb
+{
+	int red;
+	int green;
+	int blue;
+}	t_rgb;
+
 t_map		input(char *filename, t_map *map);
 void		prep_map(t_map *map);
 void		count_elems(char *filename, int *fd, t_map *map);
@@ -154,5 +170,6 @@ void    	draw_grid(t_mesh *grid, t_img *img);
 void	    draw_square(t_square sq, t_img *img);
 t_vector	*vec_adjust(t_vector *vec, int x, int y);
 t_matrix		*isometric(t_map *map, t_img *img, float xoff);
-void		log_matrix(t_matrix matrix);
+void			log_matrix(t_matrix matrix);
+int				g_col(t_rgb rgb, t_rgb step, int pos);
 #endif

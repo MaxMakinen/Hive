@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 15:33:07 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/24 17:46:46 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int handle_keypress(int keysym, t_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
 	}
-	if(keysym == 97)
+	if(keysym == 113)
 	{
 		data->map.anglez -= 0.1f;
 	}
@@ -36,7 +36,7 @@ int handle_keypress(int keysym, t_data *data)
 	{
 		data->map.anglex -= 0.1f;
 	}
-	if(keysym == 100)
+	if(keysym == 101)
 	{
 		data->map.anglez += 0.1f;
 	}
@@ -44,11 +44,11 @@ int handle_keypress(int keysym, t_data *data)
 	{
 		data->map.anglex += 0.1f;
 	}
-	if(keysym == 113)
+	if(keysym == 97)
 	{
 		data->map.angley += 0.1f;
 	}
-	if(keysym == 101)
+	if(keysym == 100)
 	{
 		data->map.angley -= 0.1f;
 	}

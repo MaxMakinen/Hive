@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 17:40:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/25 12:25:03 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,115 +17,99 @@ float ft_pyth(float a, float b)
 	return (sqrtf(powf(a, 2) + powf(b, 2)));
 }
 
-double ft_percent(int num, int min, int max)
+t_intvec get_delta(t_vector start, t_vector end)
 {
-	double diff;
-	double range;
+	t_intvec	delta;
 
-	diff = num - min;
-	range = max - min;
-	if (diff == 0)
-		return (1.0);
-	return (diff / range);
+	delta.x = end.x - start.x;
+	delta.y = end.y - start.y;
+	delta.z = end.z - start.z;
+	return (delta);
 }
 
-float ft_norm(float num, float min, float max)
+t_intvec abs_vector(t_intvec intvec)
 {
-	return ((num - min) / (max - min));
+	intvec.x = ft_abs(intvec.x);
+	intvec.y = ft_abs(intvec.y);
+	intvec.z = ft_abs(intvec.z);
+	return (intvec);
 }
 
-float ft_lerp(float norm, float min, float max)
+t_intvec get_current(t_vector start, t_vector end, int delta, int dir)
 {
-	return ((max-min) * norm + min);
-}
+	t_intvec	current;
 
-
-int	render_line(t_img *img, t_coord start, t_coord end)
-{
-	int	x;
-	int	y;
-	float	m;
-	int delta;
-	int	adjust;
-	int	offset;
-	int	threshold;
-	int	threshold_inc;
-	t_vector dist;
-	float hypotenuse;
-
-	float meep;
-
-	dist.x = start.vect.x - end.vect.x;
-	dist.y = start.vect.y - end.vect.y;
-	dist.z = start.vect.z - end.vect.z;
-	if (dist.x == 0)
+	if (delta >= 0)
 	{
-		if (end.vect.y < start.vect.y)
-		{
-			meep = start.vect.y;
-			start.vect.y = end.vect.y;
-			end.vect.y = meep;
-		}
-		while (start.vect.y <= end.vect.y)
-			img_pix_put(img, start.vect.x, start.vect.y++, check_color((t_vector){x, y, 0}, start, end, dist));
+		current.x = start.x;
+		current.y = start.y;
+		if (dir == 1)
+			current.z = end.x;
+		else
+			current.z = end.y;
 	}
 	else
 	{
-		m = dist.y / dist.x;
-		offset = 0;
-		adjust = 1;
-		if (m < 0)
-			adjust = -1;
-		if (m <= 1 && m >= -1)
-		{
-			delta = ft_abs(dist.y) * 2;
-			threshold = ft_abs(dist.x);
-			threshold_inc = ft_abs(dist.x) * 2;
-			y = start.vect.y;
-			if (end.vect.x < start.vect.x)
-			{
-				meep = start.vect.x;
-				start.vect.x = end.vect.x;
-				end.vect.x = meep;
-				y = end.vect.y;
-			}
-			while (start.vect.x <= end.vect.x)
-			{
-				img_pix_put(img, start.vect.x++, y, check_color((t_vector){x, y, 0}, start, end, dist));
-				offset += delta;
-				if (offset >= threshold)
-				{
-					y += adjust;
-					threshold +=threshold_inc;
-				}
-			}
-		}
+		current.x = end.x;
+		current.y = end.y;
+		if (dir == 1)
+			current.z = start.x;
 		else
+			current.z = start.y;
+	}
+	return (current);
+}
+
+void draw_line(t_img *img, t_coord start, t_coord end)
+{
+	t_intvec	delta;
+	t_intvec	abs_delta;
+	t_intvec	current;
+	t_intvec	check;
+	int color = 0xFF8080;
+
+	delta = get_delta(start.vect, end.vect);
+	abs_delta = abs_vector(delta);
+	check.x = 2 * abs_delta.y - abs_delta.x;
+	check.y = 2 * abs_delta.x - abs_delta.y;
+	if ((delta.x < 0 && delta.y < 0) || (delta.x > 0 && delta.y > 0))
+		check.z = 1;
+	else
+		check.z = -1;
+	if (abs_delta.y <= abs_delta.x)
+	{
+		current = get_current(start.vect, end.vect, delta.x, 1);
+		img_pix_put(img, current.x, current.y, color);
+		while (current.x < current.z)
 		{
-			delta= ft_abs(dist.x) * 2;
-			threshold = ft_abs(dist.y);
-			threshold_inc = ft_abs(dist.y) * 2;
-			x = start.vect.x;
-			if (end.vect.y < start.vect.y)
+			current.x += 1;
+			if (check.x < 0)
+				check.x += 2 * abs_delta.y;
+			else
 			{
-				meep = start.vect.y;
-				start.vect.y = end.vect.y;
-				end.vect.y = meep;
-				x = end.vect.x;
+				current.y += check.z;
+				check.x += 2 * (abs_delta.y - abs_delta.x);
 			}
-			while (start.vect.y < end.vect.y)
-			{
-				img_pix_put(img, x, start.vect.y++, check_color((t_vector){x, y, 0}, start, end, dist));
-				offset += delta;
-				if (offset >= threshold)
-				{
-					x += adjust;
-					threshold += threshold_inc;
-				}
-			}
+			img_pix_put(img, current.x, current.y, color);
 		}
 	}
-	return (0);
+	else
+	{
+		current = get_current(start.vect, end.vect, delta.y, 0);
+		img_pix_put(img, current.x, current.y, color);
+		while (current.y < current.z)
+		{
+			current.y += 1;
+			if (check.y <= 0)
+				check.y += 2 * abs_delta.x;
+			else
+			{
+				current.x += check.z;
+				check.y += 2 * (abs_delta.x - abs_delta.y);
+			}
+			img_pix_put(img, current.x, current.y, color);
+		}
+	}
 }
 
 int render(t_data *data)
@@ -146,10 +130,10 @@ int render(t_data *data)
 		{
 			if((x + 1) < data->map.x_max)
 //				render_line(&data->img, data->map.vec[y][x], data->map.vec[y][x + 1]);
-				render_line(&data->img, data->map.vec[y][x], data->map.vec[y][x + 1]);
+				draw_line(&data->img, data->map.vec[y][x], data->map.vec[y][x + 1]);
 			if((y + 1) < data->map.y_max)
 //				render_line(&data->img, data->map.vec[y][x], data->map.vec[y + 1][x]);
-				render_line(&data->img, data->map.vec[y][x], data->map.vec[y + 1][x]);
+				draw_line(&data->img, data->map.vec[y][x], data->map.vec[y + 1][x]);
 			x++;
 		}
 		y++;
@@ -222,40 +206,3 @@ int render_rect(t_img *img, t_rect rect)
 }
 
 //doesn't need to be a function?
-int	check_color(t_vector point, t_coord start, t_coord end, t_vector delta)
-{
-	int red, green, blue;
-	int red1, green1, blue1;
-	int red2, green2, blue2;
-	int	min, max;
-	float norm, lerp;
-
-	if (delta.x > delta.y)
-	{
-		norm = ft_norm(point.x, start.vect.x, end.vect.x);
-		min = start.vect.x;
-		max = end.vect.x;
-	}
-	else
-	{
-		norm = ft_norm(point.x, start.vect.x, end.vect.x);
-		min = start.vect.y;
-		max = end.vect.y;
-	}
-	
-	//printf("norm = %f\n", norm);
-
-	red1 = (start.color >> 16) & 0xFF;
-	red2 = (end.color >> 16) & 0xFF;
-	green1 = (start.color >> 8) & 0xFF;
-	green2 = (end.color >> 8) & 0xFF;
-	blue1 = start.color & 0xFF;
-	blue2 = end.color & 0xFF;
-
-	red = ft_lerp(norm, red1, red2);
-	green = ft_lerp(norm, green1, green2);
-	blue = ft_lerp(norm, blue1, blue2);
-
-	return ((red << 16) | (green << 8) | blue);
-}
-
