@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 15:06:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:35:12 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	count_elems(char *filename, int *fd, t_map *map)
 	map->y_max = rows;
 	map->z_max = 0;
 	map->z_min = 0;
+	map->zoom = len;
 	closefd(*fd);
 }
 

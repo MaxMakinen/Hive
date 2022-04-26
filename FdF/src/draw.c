@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 17:09:14 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:25:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,23 @@ t_intvec get_current(t_vector start, t_vector end, int delta, int dir)
 	return (current);
 }
 
+int in_window(t_intvec vector)
+{
+	if (vector.x < WINDOW_WIDTH && vector.x > 0)
+	{
+		if (vector.y < WINDOW_HEIGHT && vector.y > 0)
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
 int	getcol(t_rgb start, t_rgb end, int delta, int step)
 {
 	t_rgb	new;
 
-	new.red = (start.red / step) + (end.red / (delta - step));
-	new.green = (start.green / step) + (end.green / (delta - step));
-	new.blue = (start.blue / step) + (end.blue / (delta - step));
+	new.red = ((step / delta) * start.red) + (((delta - step) / delta) * end.red);
+	new.green = ((step / delta) * start.green) + (((delta - step) / delta) * end.green);
+	new.blue = ((step / delta) * start.blue) + (((delta - step) / delta) * end.blue);
 	return (rgb_int(new));
 }
 
@@ -76,7 +86,7 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 	t_intvec	abs_delta;
 	t_intvec	current;
 	t_intvec	check;
-	int color = 0xFF8080;
+	int			color = 0xFF6060;
 
 	delta = get_delta(start.vect, end.vect);
 	abs_delta = abs_vector(delta);
@@ -89,7 +99,9 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 	if (abs_delta.y <= abs_delta.x)
 	{
 		current = get_current(start.vect, end.vect, delta.x, 1);
-		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+		if (in_window(current))
+//			img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+			img_pix_put(&data->img, current.x, current.y, color);
 		while (current.x < current.z)
 		{
 			current.x += 1;
@@ -100,13 +112,17 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				current.y += check.z;
 				check.x += 2 * (abs_delta.y - abs_delta.x);
 			}
-			img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
+			if (in_window(current))
+				img_pix_put(&data->img, current.x, current.y, color);
+//				img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
 		}
 	}
 	else
 	{
 		current = get_current(start.vect, end.vect, delta.y, 0);
-		img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+		if (in_window(current))
+//			img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+			img_pix_put(&data->img, current.x, current.y, color);
 		while (current.y < current.z)
 		{
 			current.y += 1;
@@ -117,7 +133,9 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				current.x += check.z;
 				check.y += 2 * (abs_delta.x - abs_delta.y);
 			}
-			img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
+			if (in_window(current))
+				img_pix_put(&data->img, current.x, current.y, color);
+//				img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
 		}
 	}
 }

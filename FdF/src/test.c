@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 15:57:01 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:36:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ int handle_keypress(int keysym, t_data *data)
 	if(keysym == 100)
 	{
 		data->map.angley -= 0.1f;
+	}
+	if(keysym == 105)
+	{
+		data->map.zoom += 1;
+	}
+	if(keysym == 107)
+	{
+		data->map.zoom -= 1;
 	}
 	if(keysym == 114)
 	{

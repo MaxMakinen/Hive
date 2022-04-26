@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 17:10:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:34:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # include <stdio.h>
 
 # define MLX_ERROR 1
+
+# define TRUE 1
+# define FALSE 0
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
@@ -100,6 +103,7 @@ typedef struct s_map
 	int			y_max;
 	int			z_max;
 	int			z_min;
+	int			zoom;
 	float		anglex;
 	float		angley;
 	float		anglez;
