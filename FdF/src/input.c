@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 13:28:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:40:34 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,25 @@ void	count_elems(char *filename, int *fd, t_map *map)
 			len++;
 		if (check == '\n')
 			rows++;
-		if (rows == 0)
-			previous = check;
+		previous = check;
 	}
+	if (previous != '\n')
+		rows++;
 	map->x_max = len;
 	map->y_max = rows;
 	map->z_max = 0;
 	map->z_min = 0;
+	map->anglex = -0.4f;
+	map->angley = 0.0f;
+	map->anglez = 0.0f;
 	map->zoom = len;
-	map->fpov = 90.0f;
+	map->f_pov = 90.0f;
+	map->f_near = 1.1f;
+	map->f_far = 1000.0f;
+	map->rot_x = prep_matrix(4, 4);
+	map->rot_y = prep_matrix(4, 4);
+	map->rot_z = prep_matrix(4, 4);
+	map->proj = prep_projection_matrix(map, prep_matrix(4, 4));
 	closefd(*fd);
 }
 
@@ -69,10 +79,14 @@ void	prep_map(t_map *map)
 	t_coord	*temp_vec;
 
 	counter = 0;
-	map->coords = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *));
-	map->pool = (t_coord *)ft_calloc(map->x_max * map->y_max, sizeof(t_coord));
-	map->vec = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *));
-	map->pvec = (t_coord *)ft_calloc(map->y_max * map->x_max, sizeof(t_coord));
+	if (!(map->coords = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *))))
+		err_msg(ERR_MALLOC);
+	if (!(map->pool = (t_coord *)ft_calloc(map->x_max * map->y_max, sizeof(t_coord))))
+		err_msg(ERR_MALLOC);
+	if (!(map->vec = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *))))
+		err_msg(ERR_MALLOC);
+	if (!(map->pvec = (t_coord *)ft_calloc(map->y_max * map->x_max, sizeof(t_coord))))
+		err_msg(ERR_MALLOC);
 	temp_coord = map->pool;
 	temp_vec = map->pvec;
 	while (counter < map->y_max)
@@ -85,10 +99,60 @@ void	prep_map(t_map *map)
 	}
 }
 
+void	err_msg(const char *str)
+{
+	ft_putendl_fd(str, 2);
+	exit(0);
+}
+
+int ft_isprefix(const char *str, int base)
+{
+	int i;
+
+	i = 0;
+	if (base == 2 || base == 8 || base == 16)
+	{
+		if (str[i++] != '0')
+			return (FALSE);
+		if (base == 2 && (str[i] == 'b' || str[i] == 'B'))
+			return (TRUE);
+		if (base == 16 && (str[i] == 'x' || str[i] == 'X'))
+			return (TRUE);
+		if (base == 8)
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+int	ft_isnumber(const char *str, int base)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (base != 10 && !ft_isprefix(&str[i], base))
+		return (FALSE);
+	if (base == 2 || base == 16)
+		i += 2;
+	else if (base == 8)
+		i += 1;
+	else if (base == 10 && (str[i] == '+' || str [i] == '-'))
+		i += 1;
+	while(str[i])
+	{
+		if(!ft_isdigit_base(str[i], base))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
 t_map	input (char *filename, t_map *map)
 {
 	char	**temp;
 	char	*line;
+	char	**num;
 	int		x;
 	int		y;
 	int		z;
@@ -105,23 +169,35 @@ t_map	input (char *filename, t_map *map)
 		temp = ft_strsplit(line, ' ');
 		while (temp[x])
 		{
-			if (temp[x][0] == 'e')
-				map->coords[y][x].invisible = 1;
-			map->coords[y][x].vect.z = ft_atoi(temp[x]);
+			if(!(num = ft_strsplit(temp[x], ',')))
+				err_msg(ERR_INPUT_READ);
+			if(!ft_isnumber(num[0], 10))
+				err_msg(ERR_INPUT_READ);
+			map->coords[y][x].vect.z = ft_atoi(num[0]);
 			map->coords[y][x].vect.x = x;
 			map->coords[y][x].vect.y = y;
+			map->coords[y][x].visible = 1;
 			z = ft_atoi(temp[x]);
 			if (z > map->z_max)
 				map->z_max = z;
 			if (z < map->z_min)
 				map->z_min = z;
-			if (map->coords[y][x].vect.z > 0)
-				map->coords[y][x].color = int_rgb(RED_PIXEL);
-			else if (map->coords[y][x].vect.z < 0)
-				map->coords[y][x].color = int_rgb(GREEN_PIXEL);
-			else if (map->coords[y][x].vect.z == 0)
-				map->coords[y][x].color = int_rgb(BLUE_PIXEL);
-
+			if (num[1])
+			{
+				if (!ft_isnumber(num[1], 16))
+					err_msg(ERR_INPUT_READ);
+				map->coords[y][x].color = int_rgb(ft_atoi(num[1]));
+			}
+			else
+			{
+				if (map->coords[y][x].vect.z > 0)
+					map->coords[y][x].color = int_rgb(RED_PIXEL);
+				else if (map->coords[y][x].vect.z < 0)
+					map->coords[y][x].color = int_rgb(GREEN_PIXEL);
+				else if (map->coords[y][x].vect.z == 0)
+					map->coords[y][x].color = int_rgb(BLUE_PIXEL);
+			}
+			ft_arrfree(num);
 			x++;
 			exp++;
 		}

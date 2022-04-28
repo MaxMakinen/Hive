@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:04:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/04 10:10:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:59:43 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	*ft_arrfree(char **arr)
 {
-	char	*temp;
+	int	i;
 
-	while (*arr)
+	i = 0;
+	while (arr[i])
 	{
-		temp = *arr++;
-		ft_strdel(&temp);
+		ft_strdel(&arr[i++]);
 	}
 	ft_strdel(arr);
 	return (NULL);

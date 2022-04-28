@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/08 18:19:40 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:57:52 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int		ft_isupper(int c);
 int		ft_islower(int c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
+int		ft_isbdigit(int c);
+int		ft_isodigit(int c);
 int		ft_isxdigit(int c);
+int		ft_isdigit_base(int c, int base);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);

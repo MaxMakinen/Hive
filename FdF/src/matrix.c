@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:32:59 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 13:30:23 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:34:52 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ t_vector	*matrix_to_vec(t_matrix *matrix, t_vector *vector)
 	return (vector);
 }
 
-t_matrix	*prep_rotate_z(float angle)
+t_matrix	*prep_rotate_z(t_matrix *matrix, float angle)
 {
-	t_matrix	*matrix;
 
-	matrix = prep_matrix(4,4);
 	matrix->m[0][0] = cosf(angle);
 	matrix->m[0][1] = -sinf(angle);
 	matrix->m[1][0] = sinf(angle);
@@ -43,11 +41,8 @@ t_matrix	*prep_rotate_z(float angle)
 	return (matrix);
 }
 
-t_matrix	*prep_rotate_x(float angle)
+t_matrix	*prep_rotate_x(t_matrix *matrix, float angle)
 {
-	t_matrix	*matrix;
-
-	matrix = prep_matrix(4,4);
 	matrix->m[0][0] = 1.0f;
 	matrix->m[1][1] = cosf(angle);
 	matrix->m[1][2] = -sinf(angle);
@@ -56,11 +51,8 @@ t_matrix	*prep_rotate_x(float angle)
 	return (matrix);
 }
 
-t_matrix	*prep_rotate_y(float angle)
+t_matrix	*prep_rotate_y(t_matrix *matrix, float angle)
 {
-	t_matrix	*matrix;
-
-	matrix = prep_matrix(4,4);
 	matrix->m[0][0] = cosf(angle);
 	matrix->m[0][2] = sinf(angle);
 	matrix->m[2][0] = -sinf(angle);
@@ -96,23 +88,21 @@ t_matrix	*prep_matrix(int x_max, int y_max)
 	return (matrix);
 }
 
-t_matrix	*prep_projection_matrix(t_map *map)
+t_matrix	*prep_projection_matrix(t_map *map, t_matrix *matrix)
 {
-	float	fNear = 0.1f;
-	float	fFar = 1000.0f;
-	float	fFov = map->fpov;
+	float	fNear = map->f_near;
+	float	fFar = map->f_far;
+	float	fFov = map->f_pov;
 	float	fAspectRatio = (float)WINDOW_HEIGHT / (float)WINDOW_WIDTH;
 	float	fFovRad = 1.0f / tan(fFov * 0.5f / 180.0f * 3.14159f);
-	t_matrix	*mat_proj;
 
-	mat_proj = prep_matrix(4,4);
-	mat_proj->m[0][0] = fAspectRatio * fFovRad;
-	mat_proj->m[1][1] = fFovRad;
-	mat_proj->m[2][2] = fFar / (fFar - fNear);
-	mat_proj->m[2][3] = (-fFar * fNear) / (fFar - fNear);
-	mat_proj->m[3][2] = 1.0f;
-	mat_proj->m[3][3] = 0.0f;
-	return (mat_proj);
+	matrix->m[0][0] = fAspectRatio * fFovRad;
+	matrix->m[1][1] = fFovRad;
+	matrix->m[2][2] = fFar / (fFar - fNear);
+	matrix->m[2][3] = (-fFar * fNear) / (fFar - fNear);
+	matrix->m[3][2] = 1.0f;
+	matrix->m[3][3] = 0.0f;
+	return (matrix);
 }
 
 t_vector	*mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m)

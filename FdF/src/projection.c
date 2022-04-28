@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/27 19:52:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:46:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,19 @@ t_map *project(t_map *map, t_matrix *matrix)
 	t_vector	temp;
 	t_vector	tempx;
 	t_vector	tempxz;
-	t_matrix	rotx;
-	t_matrix	roty;
-	t_matrix	rotz;
 
-	rotx = *prep_rotate_x(map->anglex);
-	roty = *prep_rotate_y(map->angley);
-	rotz = *prep_rotate_z(map->anglez);
+	prep_rotate_x(map->rot_x, map->anglex);
+	prep_rotate_y(map->rot_y, map->angley);
+	prep_rotate_z(map->rot_z, map->anglez);
 	y = 0;
 	while (y < map->y_max)
 	{
 		x = 0;
 		while (x < map->x_max)
 		{
-			mult_matrix_vec(&map->coords[y][x].vect, &tempx, &rotx);
-			mult_matrix_vec(&tempx, &tempxz, &rotz);
-			mult_matrix_vec(&tempxz, &temp, &roty);
+			mult_matrix_vec(&map->coords[y][x].vect, &tempx, map->rot_x);
+			mult_matrix_vec(&tempx, &tempxz, map->rot_z);
+			mult_matrix_vec(&tempxz, &temp, map->rot_y);
 			temp.z += map->zoom;
 			map->vec[y][x].vect = *mult_matrix_vec(&temp, &map->vec[y][x].vect, matrix);
 			map->vec[y][x].vect.x += 1.0f;
@@ -42,83 +39,15 @@ t_map *project(t_map *map, t_matrix *matrix)
 			map->vec[y][x].vect.x *= 0.5f * (float)WINDOW_WIDTH;
 			map->vec[y][x].vect.y *= 0.5f * (float)WINDOW_HEIGHT;
 			map->vec[y][x].color = map->coords[y][x].color;
+			map->vec[y][x].visible = map->coords[y][x].visible;
 			map->vec[y][x].orig = &map->coords[y][x].vect;
 			x++;
 		}
 		y++;
 	}
-	free(rotx.m);
-	free(rotx.pool);
-	free(roty.m);
-	free(roty.pool);
-	free(rotz.m);
-	free(rotz.pool);
 	return (map);
 }
-/*
-t_square	build_square(t_map *map, t_vector v)
-{
-	t_square	sq;
 
-	sq.p[0] = map->coords[(int)v.y][(int)v.x].vect;
-	sq.p[1] = map->coords[(int)v.y][(int)v.x + 1].vect;
-	sq.p[2] = map->coords[((int)v.y) + 1][(int)v.x].vect;
-	sq.p[3] = map->coords[((int)v.y) + 1][(int)v.x + 1].vect;
-	return (sq);
-}
-
-t_mesh	*make_grid(t_map *map)
-{
-	t_mesh	*grid;
-	int		x;
-	int		y;
-	int		z;
-	int		len;
-
-	y = 0;
-	z = 0;
-	len = map->x_max;
-	len *= map->y_max;
-	grid = (t_mesh *)malloc(sizeof(t_mesh));
-	grid->mesh = (t_square *)malloc(sizeof(t_square) * len);
-	len -= (map->y_max + map->x_max - 1);
-	grid->len = len;
-	while (y < map->y_max)
-	{
-		x = 0;
-		while ((x + 1) < map->x_max)
-		{
-			grid->mesh[z] = build_square(map, map->coords[y][x].vect);
-			z++;
-			x++;
-		}
-		y++;
-	}
-	return (grid);
-
-}
-
-void	draw_square(t_square sq, t_img *img)
-{
-	render_line(img, sq.p[0], sq.p[1]);
-	render_line(img, sq.p[2], sq.p[3]);
-	render_line(img, sq.p[0], sq.p[2]);
-	render_line(img, sq.p[1], sq.p[3]);
-}
-
-void	draw_grid(t_mesh *grid, t_img *img)
-{
-	int	x;
-	int len;
-
-	x = 0;
-	while (x < grid->len)
-	{
-		draw_square(grid->mesh[x], img);
-		x++;
-	}
-}
-*/
 t_matrix	*isometric(t_map *map, float xoff)
 {
 	t_vector	temp;

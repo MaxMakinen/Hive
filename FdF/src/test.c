@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 13:41:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 21:07:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,22 @@ int handle_keypress(int keysym, t_data *data)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
+	}
+	if(keysym == 65429)
+	{
+		data->map.anglez -= 0.05f;
+		data->map.anglex -= 0.05f;
+	}
+	if(keysym == 65434)
+	{
+		data->map.anglez += 0.05f;
+		data->map.anglex -= 0.05f;
+	}
+	if(keysym == 65437)
+	{
+		data->map.anglex += 0.01f;
+		data->map.angley += 0.02f;
+		data->map.anglez += 0.02f;
 	}
 	if(keysym == 113)
 	{
@@ -63,27 +79,25 @@ int handle_keypress(int keysym, t_data *data)
 	}
 	if(keysym == 108)
 	{
-		data->map.zoom -= 10;
+		data->map.zoom += 10;
 	}
 	if(keysym == 111)
 	{
-		data->map.zoom += 10;
+		data->map.zoom -= 10;
 	}
 	if(keysym == 110)
 	{
-		data->map.fpov -= 10.0f;
-		if (data->map.fpov <= 0)
-			data->map.fpov = 1.0f;
-		free(data->proj);
-		data->proj = prep_projection_matrix(&data->map);
+		data->map.f_pov -= 10.0f;
+		if (data->map.f_pov <= 0)
+			data->map.f_pov = 1.0f;
+		data->map.proj = prep_projection_matrix(&data->map, data->map.proj);
 	}
 	if(keysym == 109)
 	{
-		data->map.fpov += 10.0f;
-		if ((int)data->map.fpov % 10 != 0)
-			data->map.fpov = 10.0f;
-		free(data->proj);
-		data->proj = prep_projection_matrix(&data->map);
+		data->map.f_pov += 10.0f;
+		if ((int)data->map.f_pov % 10 != 0)
+			data->map.f_pov = 10.0f;
+		data->map.proj = prep_projection_matrix(&data->map, data->map.proj);
 	}
 	if(keysym == 114)
 	{
@@ -91,23 +105,29 @@ int handle_keypress(int keysym, t_data *data)
 		{
 			data->map.anglex += 0.001f;
 			data->map.angley += 0.002f;
-			project(&data->map, data->proj);
+			project(&data->map, data->map.proj);
 			render(data);
 			x++;
 		}
 	}
-	project(&data->map, data->proj);
+	project(&data->map, data->map.proj);
 	render(data);
-	printf("Keypress: %d\n", keysym);
+//	printf("Keypress: %d\n", keysym);
 	return (0);
 }
-/*
+
 int handle_keyrelease(int keysym, t_data *data)
 {
-	printf("Keyrelease: %d\n", keysym);
+	if (keysym == 120)
+	{
+		data->map.anglex = 0;
+		data->map.angley = 0;
+		data->map.anglez = 0;
+	}
+//	printf("Keyrelease: %d\n", keysym);
 	return (0);
 }
-*/
+
 t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector)
 {
 	int		rows;

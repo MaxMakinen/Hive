@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 13:29:27 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:57:25 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int main(int argc, char **argv)
 
 	// Center map in middle of screen
 	
-//	float winx = WINDOW_WIDTH / 2;
-//	float winy = WINDOW_HEIGHT / 2;
 	float centx = data.map.x_max / 2;
 	float centy = data.map.y_max / 2;
 	centx = -centx;
@@ -72,47 +70,10 @@ int main(int argc, char **argv)
 		y++;
 	}
 
-	data.map.anglex = -0.8f;
-	data.map.angley = 0.0f;
-	data.map.anglez = 0.0f;
-	data.proj = prep_projection_matrix(&data.map);
 
-	project(&data.map, data.proj);
+	project(&data.map, data.map.proj);
 
 
-	/*
-	t_matrix minmax;
-	minmax = *isometric(&data.map, &data.img, 20);	
-	printf("0,1 : %f,%f\n", minmax.m[0][0], minmax.m[0][1]);
-	printf("2,3 : %f,%f\n", minmax.m[1][0], minmax.m[1][1]);
-	centx = ((-minmax.m[0][0]) + minmax.m[0][1]) / 2;
-	centy = ((-minmax.m[1][0]) + minmax.m[1][1]) / 2;
-	centx = ((minmax.m[0][0]) + minmax.m[0][1]);
-	centy = ((minmax.m[1][0]) + minmax.m[1][1]);
-	if (minmax.m[0][1] < minmax.m[1][1])
-		diff = minmax.m[1][1] - minmax.m[0][1];
-	else
-		diff = minmax.m[0][1] - minmax.m[1][1];
-	centy -= ((diff * 0.75f));
-	centx -= (diff);
-	printf("cenxt : %f	centy : %f\n", centx, centy);
-	centx = -centx;
-	centy = -centy;
-	printf("cenxt : %f	centy : %f\n", centx, centy);
-	while (y < data.map.y_max)
-	{
-		x = 0;
-		while (x < data.map.x_max)
-		{
-			vec_adjust(&data.map.coords[y][x].vect, centx, centy);
-			vec_adjust(&data.map.coords[y][x].vect, winx, winy);
-			x++;
-		}
-		y++;
-	}
-//	printf("[2][2] x : %f	y : %f	z : %f\n", data.map.coords[2][2].vect.x, data.map.coords[2][2].vect.y, data.map.coords[2][2].vect.z);
-//	printf("[2][0] x : %f	y : %f	z : %f\n", data.map.coords[2][0].vect.x, data.map.coords[2][0].vect.y, data.map.coords[2][0].vect.z);
-*/
 	data.mlx_ptr = mlx_init();
 	/* Create the image */
 	if (data.mlx_ptr == NULL)
@@ -124,36 +85,16 @@ int main(int argc, char **argv)
 		return (MLX_ERROR);
 	}
 
-/*
-	int y = 0;
-	int x;
-	while (y < data.map.y_max)
-	{
-		x = 0;
-		while (x < data.map.x_max)
-		{
-			data.map.coords[y][x].vect.x -= data.map.x_max / 2;
-			data.map.coords[y][x].vect.y -= data.map.y_max / 2;
-			x++;
-		}
-		y++;
-	}
-*/
-
-
-//	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
-//	data.map.coords[1][1].vect = *matrix_to_vec(mat_mul(rotate_x(1), vec_to_matrix(&data.map.coords[1][1].vect)));
-//	printf("vect x : %i\nvect y : %i\nvect z : %i\n",data.map.coords[1][1].vect.x, data.map.coords[1][1].vect.y, data.map.coords[1][1].vect.z);
-
 	// setup hooks
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
 
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 
-	mlx_key_hook(data.win_ptr, &handle_keypress, &data);
-//	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
-//	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
+//	mlx_key_hook(data.win_ptr, &handle_keypress, &data);
+	mlx_hook(data.win_ptr, 2, 1L<<0, &handle_keypress, &data);
+	mlx_hook(data.win_ptr, 3, 1l<<0, &handle_keyrelease, &data);
+	mlx_hook(data.win_ptr, 17, 1l<<0, close, &data);
 
 	mlx_loop(data.mlx_ptr);
 

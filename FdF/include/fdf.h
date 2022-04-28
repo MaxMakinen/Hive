@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 13:33:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:51:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # include "fdf.h"
 # include "libft.h"
+# include "error_msg.h"
 
 # include <mlx.h>
 # ifdef LINUX
@@ -92,7 +93,7 @@ typedef struct s_matrix
 
 typedef struct s_coord
 {
-	int			invisible;
+	int			visible;
 	t_rgb		color;
 	t_vector	vect;
 	t_vector	*orig;
@@ -105,10 +106,16 @@ typedef struct s_map
 	int			z_max;
 	int			z_min;
 	int			zoom;
-	float		fpov;
+	float		f_pov;
+	float		f_near;
+	float		f_far;
 	float		anglex;
 	float		angley;
 	float		anglez;
+	t_matrix	*proj;
+	t_matrix	*rot_x;
+	t_matrix	*rot_y;
+	t_matrix	*rot_z;
 	t_coord		**coords;
 	t_coord		*pool;
 	t_coord		**vec;
@@ -132,7 +139,6 @@ typedef struct s_data
 	void	*win_ptr;														   
 	t_img	img; /* added for image rendering */								
 	t_map	map;																
-	t_matrix *proj;
 }   t_data;																	 
 																				
 typedef struct s_rect														   
@@ -156,12 +162,15 @@ t_vector	*vec_subt(t_vector *vect, float num);
 t_vector	*vec_div(t_vector *vect, float num);
 t_matrix	*vec_to_matrix(t_vector *vector, t_matrix *matrix);
 t_vector	*matrix_to_vec(t_matrix *matrix, t_vector *vector);
-t_matrix	*prep_rotate_z(float angle);
-t_matrix	*prep_rotate_x(float angle);
-t_matrix	*prep_rotate_y(float angle);
+t_matrix	*prep_rotate_z(t_matrix *matrix, float angle);
+t_matrix	*prep_rotate_x(t_matrix *matrix, float angle);
+t_matrix	*prep_rotate_y(t_matrix *matrix, float angle);
 t_matrix	*prep_matrix(int x_max, int y_max);
 int			ft_abs(int num);
+
 int			handle_keypress(int keysym, t_data *data);
+int			handle_keyrelease(int keysym, t_data *data);
+
 void		img_pix_put(t_img *img, int x, int y, int color);
 void		render_background(t_img *img, int color);
 int 		render_rect(t_img *img, t_rect rect);
@@ -169,7 +178,7 @@ t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector);
 int			render_line(t_img *img, t_coord start, t_coord end);
 int			render(t_data *data);
 t_map		*project(t_map *map, t_matrix *matrix);
-t_matrix	*prep_projection_matrix(t_map *map);
+t_matrix	*prep_projection_matrix(t_map *map, t_matrix *matrix);
 t_vector    *mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
 t_square    build_square(t_map *map, t_vector v);
 t_mesh  	*make_grid(t_map *map);
@@ -184,4 +193,5 @@ float		ft_norm(float num, float min, float max);
 int			rgb_int(t_rgb rgb);
 t_rgb		int_rgb(int col);
 int			check_color(t_intvec point, t_coord start, t_coord end, t_intvec delta);
+void		err_msg(const char *str);
 #endif
