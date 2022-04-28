@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/26 10:34:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/27 19:52:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	draw_grid(t_mesh *grid, t_img *img)
 	}
 }
 */
-t_matrix	*isometric(t_map *map, t_img *img, float xoff)
+t_matrix	*isometric(t_map *map, float xoff)
 {
 	t_vector	temp;
 	t_matrix	*minmax = prep_matrix(2,2);

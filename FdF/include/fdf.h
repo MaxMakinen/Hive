@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/26 10:34:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:33:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@
 # define BLUE_PIXEL 0xFF
 # define WHITE_PIXEL 0xFFFFFF
 # define BLACK_PIXEL 0x000000
-# define SALMON_PIXEL 0xFF8080
+# define SALMON 0xFF8080
 
 # define ZOOM 40
+# define FPOV 90.0f
 
 typedef struct s_vector
 {
@@ -104,6 +105,7 @@ typedef struct s_map
 	int			z_max;
 	int			z_min;
 	int			zoom;
+	float		fpov;
 	float		anglex;
 	float		angley;
 	float		anglez;
@@ -167,14 +169,14 @@ t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector);
 int			render_line(t_img *img, t_coord start, t_coord end);
 int			render(t_data *data);
 t_map		*project(t_map *map, t_matrix *matrix);
-t_matrix	*prep_projection_matrix(void);
+t_matrix	*prep_projection_matrix(t_map *map);
 t_vector    *mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
 t_square    build_square(t_map *map, t_vector v);
 t_mesh  	*make_grid(t_map *map);
 void    	draw_grid(t_mesh *grid, t_img *img);
 void	    draw_square(t_square sq, t_img *img);
 t_vector	*vec_adjust(t_vector *vec, int x, int y);
-t_matrix		*isometric(t_map *map, t_img *img, float xoff);
+t_matrix		*isometric(t_map *map, float xoff);
 void			log_matrix(t_matrix matrix);
 int				g_col(t_rgb rgb, t_rgb step, int pos);
 float		ft_lerp(float norm, float min, float max);

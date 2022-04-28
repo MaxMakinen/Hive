@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/24 14:05:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:29:27 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ int main(int argc, char **argv)
 
 	// Center map in middle of screen
 	
-	float winx = WINDOW_WIDTH / 2;
-	float winy = WINDOW_HEIGHT / 2;
+//	float winx = WINDOW_WIDTH / 2;
+//	float winy = WINDOW_HEIGHT / 2;
 	float centx = data.map.x_max / 2;
 	float centy = data.map.y_max / 2;
-	float diff;
-	diff = (float)ft_abs(data.map.x_max - data.map.y_max);
 	centx = -centx;
 	centy = -centy;
 	int x, y = 0;
@@ -77,7 +75,7 @@ int main(int argc, char **argv)
 	data.map.anglex = -0.8f;
 	data.map.angley = 0.0f;
 	data.map.anglez = 0.0f;
-	data.proj = prep_projection_matrix();
+	data.proj = prep_projection_matrix(&data.map);
 
 	project(&data.map, data.proj);
 

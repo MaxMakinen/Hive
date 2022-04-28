@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/26 10:36:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:41:30 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,35 @@ int handle_keypress(int keysym, t_data *data)
 	}
 	if(keysym == 105)
 	{
-		data->map.zoom += 1;
+		data->map.zoom -= 1;
 	}
 	if(keysym == 107)
 	{
-		data->map.zoom -= 1;
+		data->map.zoom += 1;
+	}
+	if(keysym == 108)
+	{
+		data->map.zoom -= 10;
+	}
+	if(keysym == 111)
+	{
+		data->map.zoom += 10;
+	}
+	if(keysym == 110)
+	{
+		data->map.fpov -= 10.0f;
+		if (data->map.fpov <= 0)
+			data->map.fpov = 1.0f;
+		free(data->proj);
+		data->proj = prep_projection_matrix(&data->map);
+	}
+	if(keysym == 109)
+	{
+		data->map.fpov += 10.0f;
+		if ((int)data->map.fpov % 10 != 0)
+			data->map.fpov = 10.0f;
+		free(data->proj);
+		data->proj = prep_projection_matrix(&data->map);
 	}
 	if(keysym == 114)
 	{
@@ -89,7 +113,6 @@ t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector)
 	int		rows;
 	int		cols;
 	int		index;
-	int		len;
 	float		sum;
 	t_matrix	*result;
 

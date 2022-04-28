@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 17:49:34 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/25 17:10:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:17:54 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,13 @@ t_rgb int_rgb(int col)
 
 int	check_color(t_intvec point, t_coord start, t_coord end, t_intvec delta)
 {
-	int	min, max;
 	t_rgb	new;
-	float norm, lerp;
+	float	norm;
 
 	if (delta.x > delta.y)
-	{
 		norm = ft_norm(point.x, start.vect.x, end.vect.x);
-		min = start.vect.x;
-		max = end.vect.x;
-	}
 	else
-	{
-		norm = ft_norm(point.x, start.vect.x, end.vect.x);
-		min = start.vect.y;
-		max = end.vect.y;
-	}
+		norm = ft_norm(point.y, start.vect.y, end.vect.y);
 	
 	new.red = ft_lerp(norm, start.color.red, end.color.red);
 	new.green = ft_lerp(norm, start.color.green, end.color.green);

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/26 10:25:04 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:20:10 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 	t_intvec	abs_delta;
 	t_intvec	current;
 	t_intvec	check;
-	int			color = 0xFF6060;
 
 	delta = get_delta(start.vect, end.vect);
 	abs_delta = abs_vector(delta);
@@ -100,8 +99,8 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 	{
 		current = get_current(start.vect, end.vect, delta.x, 1);
 		if (in_window(current))
-//			img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
-			img_pix_put(&data->img, current.x, current.y, color);
+			img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+//			img_pix_put(&data->img, current.x, current.y, color);
 		while (current.x < current.z)
 		{
 			current.x += 1;
@@ -113,16 +112,16 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				check.x += 2 * (abs_delta.y - abs_delta.x);
 			}
 			if (in_window(current))
-				img_pix_put(&data->img, current.x, current.y, color);
-//				img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
+//				img_pix_put(&data->img, current.x, current.y, color);
+				img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
 		}
 	}
 	else
 	{
 		current = get_current(start.vect, end.vect, delta.y, 0);
 		if (in_window(current))
-//			img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
-			img_pix_put(&data->img, current.x, current.y, color);
+			img_pix_put(&data->img, current.x, current.y, rgb_int(start.color));
+//			img_pix_put(&data->img, current.x, current.y, color);
 		while (current.y < current.z)
 		{
 			current.y += 1;
@@ -134,8 +133,8 @@ void draw_line(t_data *data, t_coord start, t_coord end)
 				check.y += 2 * (abs_delta.x - abs_delta.y);
 			}
 			if (in_window(current))
-				img_pix_put(&data->img, current.x, current.y, color);
-//				img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
+//				img_pix_put(&data->img, current.x, current.y, color);
+				img_pix_put(&data->img, current.x, current.y, check_color(current, start, end, delta));
 		}
 	}
 }
@@ -170,7 +169,6 @@ int render(t_data *data)
 void img_pix_put(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
-	float	temp;
 
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(int *)pixel = color;
@@ -181,7 +179,6 @@ void img_pix_put(t_img *img, int x, int y, int color)
 void render_background(t_img *img, int color)
 {
 	int	i;
-	int	j;
 	int	*pixel;
 	int size;
 
@@ -212,4 +209,3 @@ int render_rect(t_img *img, t_rect rect)
 		return (0);
 }
 
-//doesn't need to be a function?

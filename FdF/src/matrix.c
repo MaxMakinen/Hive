@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:32:59 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/23 11:59:53 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:30:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ t_matrix	*prep_matrix(int x_max, int y_max)
 	return (matrix);
 }
 
-t_matrix	*prep_projection_matrix(void)
+t_matrix	*prep_projection_matrix(t_map *map)
 {
 	float	fNear = 0.1f;
 	float	fFar = 1000.0f;
-	float	fFov = 90.0f;
+	float	fFov = map->fpov;
 	float	fAspectRatio = (float)WINDOW_HEIGHT / (float)WINDOW_WIDTH;
 	float	fFovRad = 1.0f / tan(fFov * 0.5f / 180.0f * 3.14159f);
 	t_matrix	*mat_proj;
