@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/29 12:27:51 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:07:26 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define TRUE 1
 # define FALSE 0
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 1200
+# define WINDOW_HEIGHT 900
 
 # define OFFSET 23
 # define RED_PIXEL 0xFF0000

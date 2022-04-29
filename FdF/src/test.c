@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/29 16:06:28 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:03:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_abs(int num)
 {
-	if (num < -2147483648)
+	if (num == -2147483648)
 		return (2147483647);
 	if (num < 0)
 		num = -num;
@@ -77,28 +77,28 @@ int handle_keypress(int keysym, t_data *data)
 	{
 		data->map.zoom += 1;
 	}
-	if(keysym == 108)
+	if(keysym == 108 || keysym == 65453)
 	{
 		data->map.zoom += 10;
 	}
-	if(keysym == 111)
+	if(keysym == 111 || keysym == 65451)
 	{
 		data->map.zoom -= 10;
 	}
-	if(keysym == 110 || keysym == 5)
+	if(keysym == 103 || keysym == 5)
 	{
 		data->map.f_pov = 0.0f;
-		data->map.zoom = 1000;
+		data->map.zoom =(data->map.x_max + data->map.y_max + data->map.z_max) / 2 * 100;
 		if (data->map.zoom < 0)
 			data->map.zoom = 0;
 		if (data->map.f_pov <= 0)
 			data->map.f_pov = 1.0f;
 		data->map.proj = prep_projection_matrix(&data->map, data->map.proj);
 	}
-	if(keysym == 109 || keysym == 17)
+	if(keysym == 116 || keysym == 17)
 	{
 		data->map.f_pov = 90.0f;
-		data->map.zoom = (data->map.x_max + data->map.y_max) / 2 + 5;
+		data->map.zoom = (data->map.x_max + data->map.y_max + data->map.z_max) / 2;
 		if ((int)data->map.f_pov % 10 != 0)
 			data->map.f_pov = 10.0f;
 		data->map.proj = prep_projection_matrix(&data->map, data->map.proj);
