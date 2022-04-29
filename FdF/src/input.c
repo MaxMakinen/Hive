@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 20:40:34 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/29 15:53:39 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,9 @@ void	count_elems(char *filename, int *fd, t_map *map)
 		rows++;
 	map->x_max = len;
 	map->y_max = rows;
-	map->z_max = 0;
-	map->z_min = 0;
-	map->anglex = -0.4f;
-	map->angley = 0.0f;
-	map->anglez = 0.0f;
 	map->zoom = len;
-	map->f_pov = 90.0f;
-	map->f_near = 1.1f;
-	map->f_far = 1000.0f;
-	map->rot_x = prep_matrix(4, 4);
-	map->rot_y = prep_matrix(4, 4);
-	map->rot_z = prep_matrix(4, 4);
-	map->proj = prep_projection_matrix(map, prep_matrix(4, 4));
+	if (rows > len)
+		map->zoom = rows;
 	closefd(*fd);
 }
 
@@ -206,5 +196,7 @@ t_map	input (char *filename, t_map *map)
 		ft_arrfree(temp);
 	}
 	closefd(fd);
+	if (map->z_max > map->zoom)
+		map->zoom = map->z_max + 10;
 	return (*map);
 }

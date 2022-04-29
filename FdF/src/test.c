@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 21:07:07 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/29 15:48:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	ft_abs(int num)
 
 int handle_keypress(int keysym, t_data *data)
 {
-	int x = 0;
-	if (keysym == 65307)
+	if (keysym == 65307 || keysym == 53)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
+		exit(0);
 	}
 	if(keysym == 65429)
 	{
@@ -39,17 +39,17 @@ int handle_keypress(int keysym, t_data *data)
 		data->map.anglez += 0.05f;
 		data->map.anglex -= 0.05f;
 	}
-	if(keysym == 65437)
+	if(keysym == 65437 || keysym == 9)
 	{
-		data->map.anglex += 0.01f;
-		data->map.angley += 0.02f;
-		data->map.anglez += 0.02f;
+		data->map.anglex += 0.02f;
+		data->map.angley += 0.04f;
+		data->map.anglez += 0.04f;
 	}
 	if(keysym == 113)
 	{
 		data->map.anglez -= 0.1f;
 	}
-	if(keysym == 119)
+	if(keysym == 119 || keysym == 13)
 	{
 		data->map.anglex -= 0.1f;
 	}
@@ -57,23 +57,23 @@ int handle_keypress(int keysym, t_data *data)
 	{
 		data->map.anglez += 0.1f;
 	}
-	if(keysym == 115)
+	if(keysym == 115 || keysym == 1)
 	{
 		data->map.anglex += 0.1f;
 	}
-	if(keysym == 97)
+	if(keysym == 97 || keysym == 0)
 	{
 		data->map.angley += 0.1f;
 	}
-	if(keysym == 100)
+	if(keysym == 100 || keysym == 2)
 	{
 		data->map.angley -= 0.1f;
 	}
-	if(keysym == 105)
+	if(keysym == 105 || keysym == 15)
 	{
 		data->map.zoom -= 1;
 	}
-	if(keysym == 107)
+	if(keysym == 107 || keysym == 3)
 	{
 		data->map.zoom += 1;
 	}
@@ -85,34 +85,33 @@ int handle_keypress(int keysym, t_data *data)
 	{
 		data->map.zoom -= 10;
 	}
-	if(keysym == 110)
+	if(keysym == 110 || keysym == 5)
 	{
-		data->map.f_pov -= 10.0f;
+		data->map.f_pov = 0.0f;
+		data->map.zoom = 1000;
+		if (data->map.zoom < 0)
+			data->map.zoom = 0;
 		if (data->map.f_pov <= 0)
 			data->map.f_pov = 1.0f;
 		data->map.proj = prep_projection_matrix(&data->map, data->map.proj);
 	}
-	if(keysym == 109)
+	if(keysym == 109 || keysym == 17)
 	{
-		data->map.f_pov += 10.0f;
+		data->map.f_pov = 90.0f;
+		data->map.zoom = (data->map.x_max + data->map.y_max) / 2 + 5;
 		if ((int)data->map.f_pov % 10 != 0)
 			data->map.f_pov = 10.0f;
 		data->map.proj = prep_projection_matrix(&data->map, data->map.proj);
 	}
-	if(keysym == 114)
+	if(keysym == 114 || keysym == 15)
 	{
-		while (x < 1000)
-		{
-			data->map.anglex += 0.001f;
-			data->map.angley += 0.002f;
-			project(&data->map, data->map.proj);
-			render(data);
-			x++;
-		}
+		data->map.anglex = 0.0f;
+		data->map.angley = 0.0f;
+		data->map.anglez = 0.0f;
 	}
 	project(&data->map, data->map.proj);
 	render(data);
-//	printf("Keypress: %d\n", keysym);
+	printf("Keypress: %d\n", keysym);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/29 13:32:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/29 15:49:12 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ void	log_vector(t_vector vec)
 	printf("[%f]\n[%f]\n[%f]\n", vec.x, vec.y, vec.z);
 }
 
+void init_map(t_map *map)
+{
+	map->x_max = 0;
+	map->y_max = 0;
+	map->z_max = 0;
+	map->z_min = 0;
+	map->anglex = 0.0f;
+	map->angley = 0.0f;
+	map->anglez = 0.0f;
+	map->zoom = 0;
+	map->f_pov = 90.0f;
+	map->f_near = 1.1f;
+	map->f_far = 1000.0f;
+	map->rot_x = prep_matrix(4, 4);
+	map->rot_y = prep_matrix(4, 4);
+	map->rot_z = prep_matrix(4, 4);
+	map->proj = prep_projection_matrix(map, prep_matrix(4, 4));
+}
+
 int main(int argc, char **argv)
 {
 	t_data	data;
@@ -48,6 +67,7 @@ int main(int argc, char **argv)
 		ft_putendl("Usage: fdf <input file>");
 		return(1);
 	}
+	init_map(&data.map);
 	data.map = input(argv[1], &data.map);
 
 	// Center map in middle of screen
