@@ -6,11 +6,10 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 20:57:25 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/29 13:32:37 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
 #include "fdf.h"
 	
 
@@ -100,7 +99,8 @@ int main(int argc, char **argv)
 
 	// we will exit the loop if there's no window left, and execute this code
 	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
-	mlx_destroy_display(data.mlx_ptr);
+//	mlx_destroy_display(data.mlx_ptr);
+	mlx_destroy_window(data.mlx_ptr, data.img.mlx_img);
 
 	
 	free(data.mlx_ptr);

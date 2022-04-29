@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 20:51:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/04/29 12:27:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 # include "fdf.h"
 # include "libft.h"
 # include "error_msg.h"
+# include "mlx.h"
 
-# include <mlx.h>
 # ifdef LINUX
-	#include <X11/keysym.h>
-	#include <X11/X.h>
+	# include <mlx.h>
+	# include <X11/keysym.h>
+	# include <X11/X.h>
 # endif
 
 # include <stdio.h>
