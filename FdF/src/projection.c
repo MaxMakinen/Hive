@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 20:46:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/02 14:23:37 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_map *project(t_map *map, t_matrix *matrix)
 			map->vec[y][x].vect.y *= 0.5f * (float)WINDOW_HEIGHT;
 			map->vec[y][x].color = map->coords[y][x].color;
 			map->vec[y][x].visible = map->coords[y][x].visible;
-			map->vec[y][x].orig = &map->coords[y][x].vect;
 			x++;
 		}
 		y++;
@@ -52,23 +51,8 @@ t_matrix	*isometric(t_map *map, float xoff)
 {
 	t_vector	temp;
 	t_matrix	*minmax = prep_matrix(2,2);
-	//float		origin;
 	int			x;
 	int			y;
-	//float		diff;
-/*
-	diff = 0.0f;
-	a = map->x_max;
-	b = map->y_max;
-	if (a < b)
-		ft_swapint(&a,&b);
-	if (a != b)
-	{
-		a -= b;
-		diff = (float)a;
-	}
-	//xoff = (WINDOW_WIDTH / (map->x_max * 3));
-*/	//origin = (WINDOW_WIDTH / 2) * (WINDOW_HEIGHT / 2 + 1) - ((diff / 2) * xoff);
 	y = 0;
 	while (y < map->y_max)
 	{

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 09:06:28 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/02 13:00:47 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	ft_isnumber(const char *str, int base)
 	return (TRUE);
 }
 
-t_map	input (char *filename, t_map *map)
+t_map	*input (char *filename, t_map *map)
 {
 	char	**temp;
 	char	*line;
@@ -198,5 +198,5 @@ t_map	input (char *filename, t_map *map)
 	closefd(fd);
 	if (map->z_max > map->zoom)
 		map->zoom = map->z_max + 10;
-	return (*map);
+	return (map);
 }
