@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpalacio <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:54:47 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/04/28 16:07:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/05/01 09:37:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include "mlx.h"
 # include <math.h>
 # include <fcntl.h>
+
+# ifdef LINUX
+    # include <mlx.h>
+    # include <X11/keysym.h>
+    # include <X11/X.h>
+# endif
 
 /*----RESOLUTION----*/
 # define WIN_WIDTH	1920

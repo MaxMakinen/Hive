@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/29 23:07:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/02 09:22:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@
 # define WINDOW_HEIGHT 900
 
 # define OFFSET 23
+
 # define RED_PIXEL 0xFF0000
 # define GREEN_PIXEL 0xFF00
 # define BLUE_PIXEL 0xFF
-# define WHITE_PIXEL 0xFFFFFF
-# define BLACK_PIXEL 0x000000
+# define WHITE 0xFFFFFF
+# define BLACK 0x000000
 # define SALMON 0xFF8080
+# define BACKGROUND 0xFF202020
 
 # define ZOOM 40
 # define FPOV 90.0f
@@ -139,6 +141,7 @@ typedef struct s_data
 	void	*mlx_ptr;														   
 	void	*win_ptr;														   
 	t_img	img; /* added for image rendering */								
+	t_img	bckgrnd;								
 	t_map	map;																
 }   t_data;																	 
 																				
@@ -172,12 +175,7 @@ int			ft_abs(int num);
 int			handle_keypress(int keysym, t_data *data);
 int			handle_keyrelease(int keysym, t_data *data);
 
-void		img_pix_put(t_img *img, int x, int y, int color);
-void		render_background(t_img *img, int color);
-int 		render_rect(t_img *img, t_rect rect);
 t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector);
-int			render_line(t_img *img, t_coord start, t_coord end);
-int			render(t_data *data);
 t_map		*project(t_map *map, t_matrix *matrix);
 t_matrix	*prep_projection_matrix(t_map *map, t_matrix *matrix);
 t_vector    *mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
@@ -188,11 +186,18 @@ void	    draw_square(t_square sq, t_img *img);
 t_vector	*vec_adjust(t_vector *vec, int x, int y);
 t_matrix		*isometric(t_map *map, float xoff);
 void			log_matrix(t_matrix matrix);
-int				g_col(t_rgb rgb, t_rgb step, int pos);
 float		ft_lerp(float norm, float min, float max);
 float		ft_norm(float num, float min, float max);
+void		err_msg(const char *str);
+
+int			render_line(t_img *img, t_coord start, t_coord end);
+int			render(t_data *data);
+void		img_pix_put(t_img *img, int x, int y, int color);
+void		render_background(t_img *img, int color);
+int 		render_rect(t_img *img, t_rect rect);
+
+int				g_col(t_rgb rgb, t_rgb step, int pos);
+int			check_color(t_intvec point, t_coord start, t_coord end, t_intvec delta);
 int			rgb_int(t_rgb rgb);
 t_rgb		int_rgb(int col);
-int			check_color(t_intvec point, t_coord start, t_coord end, t_intvec delta);
-void		err_msg(const char *str);
 #endif

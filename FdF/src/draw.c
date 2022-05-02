@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 20:01:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/02 10:35:44 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int render(t_data *data)
 	y = 0;
 	if (data->win_ptr == NULL)
 		return (1);
-	render_background(&data->img, BLACK_PIXEL);
+	render_background(&data->img, 0x202020);
 	while (y < data->map.y_max)
 	{
 		x = 0;
@@ -172,23 +172,49 @@ void img_pix_put(t_img *img, int x, int y, int color)
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(int *)pixel = color;
 }
+/*
+void img_pix_put(t_img *img, int x, int y, int color)
+{
+	char	*pixel;
+	int		i;
 
+	i = img->bpp;
+	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	while (i >= 0)
+	{
+		if (img->endian != 0)
+			*pixel++ = (color >> i) & 0xFF;
+		else
+			*pixel++ = (color >> (img->bpp - 8 - i)) & 0xFF;
+		i -= 8;
+	}
+}
+*/
 		/* img versions */
 
 void render_background(t_img *img, int color)
 {
-	int	i;
+//	int	i;
 	int	*pixel;
-	int size;
+//	int size;
+	int x, y = 0;
 
 	pixel = (int *)img->addr;
-	size = WINDOW_HEIGHT * WINDOW_WIDTH;
+/*	size = WINDOW_HEIGHT * WINDOW_WIDTH;
 	i = 0;
-	ft_bzero(img->addr, size * (img->bpp / 8));
-	while (i > size)
+	ft_memset(img->addr, 0, size * (img->bpp / 8));
+	while (i < size)
 	{
 		pixel[i] = color;
 		i++;
+	}
+*/
+	while (y < WINDOW_HEIGHT)
+	{
+		x = 0;
+		while (x < WINDOW_WIDTH)
+			img_pix_put(img, x++, y, color);
+		y++;
 	}
 }
 

@@ -6,7 +6,7 @@
 #    By: dpalacio <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 12:22:28 by dpalacio          #+#    #+#              #
-#    Updated: 2022/04/28 14:06:00 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/05/01 09:38:51 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ INCLUDES = -I ./libft/ -I /usr/local/include
 
 LIB = -L ./libft -lft -L /usr/local/lib/ -lmlx
 
-FW = -framework OpenGL -framework AppKit
+#FW = -framework OpenGL -framework AppKit
+FW = -lX11 -lXext -lmlx -lm
 
 SRC = main.c mouse_controller.c key_controller.c draw_manager.c \
 	read_file.c color_gradient.c color_manager.c controls.c \
