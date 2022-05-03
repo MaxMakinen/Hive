@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 17:37:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:02:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,9 @@ void init_map(t_map *map)
 // Center map in middle of screen
 void center_coords(t_data *data)
 {
-	int x;
-	int y;
-	float centx;
-	float centy;
-
-	centx = (data->map->x_max / 2) * -1;
-	centy = (data->map->y_max / 2) * -1;
-	y = 0;
-	while (y < data->map->y_max)
-	{
-		x = 0;
-		while (x < data->map->x_max)
-		{
-			vec_adjust(&data->map->coords[y][x].vect, centx, centy);
-			data->map->coords[y][x].vect.z *= -1;
-			x++;
-		}
-		y++;
-	}
+	data->map->offset.x = (data->map->x_max / 2) * -1;
+	data->map->offset.y = (data->map->y_max / 2) * -1;
+	data->map->offset.z = 0;
 }
 /*
 void setup_hooks(t_data *data)

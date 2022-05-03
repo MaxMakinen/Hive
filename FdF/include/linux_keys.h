@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:18 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 17:05:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 08:12:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define NUM9		65434
 # define NUM_PLUS	65453
 # define NUM_MINUS	65451
+# define NUM_MAX	65453
+# define NUM_MIN	65429
 
 # define KEY_ESC	65307
 # define KEY_W		119

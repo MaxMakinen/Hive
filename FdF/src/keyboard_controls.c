@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:08:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 17:25:45 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:21:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,23 @@ void numpad(t_data *data, int keysym)
 
 void	view_control(t_data *data, int keysym)
 {
+	if(keysym == KEY_1)
+		reset_view(data);
 	if(keysym == KEY_2)
 		set_ortho(data);
 	if(keysym == KEY_3)
 		set_persp(data);
-	if(keysym == KEY_1)
-		reset_view(data);
+	if(keysym == KEY_4)
+		flatten(data, 1);
+	if(keysym == KEY_5)
+		flatten(data, (-1));
 }
 
 int handle_keypress(int keysym, t_data *data)
 {
-	if (keysym >= 65429 && keysym <= 65453)
+	if (keysym >= NUM_MIN && keysym <= NUM_MAX)
 		numpad(data, keysym);
-	if (keysym >= 49 && keysym <= 52)
+	if (keysym >= 49 && keysym <= 53)
 		view_control(data, keysym);
 	if (keysym == KEY_ESC)
 		clean_exit(data);

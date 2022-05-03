@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 18:08:49 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:00:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_map
 	t_coord		*pool;
 	t_coord		**vec;
 	t_coord		*pvec;
+	t_intvec	offset;
 }	t_map;
 
 typedef struct s_img															
@@ -148,7 +149,8 @@ void		setup_hooks(t_data *data);
 t_vector	*prep_vector(t_vector *vector);
 t_vector	*vec_mult(t_vector *vect, float num);
 t_vector	*vec_add(t_vector *vect, float num);
-t_vector	*vec_subt(t_vector *vect, float num);
+void		flatten(t_data *data, int num);
+t_vector	*vec_adjust(t_vector *vec, t_intvec *offset);
 t_vector	*vec_div(t_vector *vect, float num);
 t_matrix	*vec_to_matrix(t_vector *vector, t_matrix *matrix);
 t_vector	*matrix_to_vec(t_matrix *matrix, t_vector *vector);
@@ -188,7 +190,6 @@ int			mouse_move(int x, int y, t_data *data);
 t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector);
 t_map		*project(t_map *map, t_matrix *matrix);
 t_vector    *mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
-t_vector	*vec_adjust(t_vector *vec, int x, int y);
 t_matrix		*isometric(t_map *map, float xoff);
 
 void			log_matrix(t_matrix matrix);

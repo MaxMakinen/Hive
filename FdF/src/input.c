@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 13:00:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:09:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	count_elems(char *filename, int *fd, t_map *map)
 
 	rows = 0;
 	len = 0;
+	previous = 0;
 	*fd = openfd(filename, fd);
 	while (read(*fd, &check, 1))
 	{
@@ -145,7 +146,6 @@ t_map	*input (char *filename, t_map *map)
 	char	**num;
 	int		x;
 	int		y;
-	int		z;
 	int		fd;
 	int		exp = 0;
 
@@ -167,11 +167,10 @@ t_map	*input (char *filename, t_map *map)
 			map->coords[y][x].vect.x = x;
 			map->coords[y][x].vect.y = y;
 			map->coords[y][x].visible = 1;
-			z = ft_atoi(temp[x]);
-			if (z > map->z_max)
-				map->z_max = z;
-			if (z < map->z_min)
-				map->z_min = z;
+			if (map->coords[y][x].vect.z > map->z_max)
+				map->z_max = map->coords[y][x].vect.z;
+			if (map->coords[y][x].vect.z < map->z_min)
+				map->z_min = map->coords[y][x].vect.z;
 			if (num[1])
 			{
 				if (!ft_isnumber(num[1], 16))

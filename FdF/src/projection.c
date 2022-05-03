@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 14:23:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:11:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ t_map *project(t_map *map, t_matrix *matrix)
 		x = 0;
 		while (x < map->x_max)
 		{
-			mult_matrix_vec(&map->coords[y][x].vect, &tempx, map->rot_x);
+			temp = map->coords[y][x].vect;
+			vec_adjust(&temp, &map->offset);
+			mult_matrix_vec(&temp, &tempx, map->rot_x);
 			mult_matrix_vec(&tempx, &tempxz, map->rot_z);
 			mult_matrix_vec(&tempxz, &temp, map->rot_y);
 			temp.z += map->zoom;
 			map->vec[y][x].vect = *mult_matrix_vec(&temp, &map->vec[y][x].vect, matrix);
 			map->vec[y][x].vect.x += 1.0f;
 			map->vec[y][x].vect.y += 1.0f;
+			map->vec[y][x].vect.z *= -1;
 			map->vec[y][x].vect.x *= 0.5f * (float)WINDOW_WIDTH;
 			map->vec[y][x].vect.y *= 0.5f * (float)WINDOW_HEIGHT;
 			map->vec[y][x].color = map->coords[y][x].color;
