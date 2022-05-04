@@ -6,20 +6,22 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 10:09:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:45:53 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "../libft/libft.h"
 #define DISTANCE 38
+
 /*
  * Code realloc for easier array shape changes?
  * Need new version of splitstr in order to extract info like wordcount?
- * Make libft versions of openfd and closefd, add options for opening choices. Enum?
+ * Make libft versions of openfd and closefd, add options for opening choices.
+ * Enum?
  */
 
-int openfd(char *filename, int *fd)
+int	openfd(char *filename, int *fd)
 {
 	*fd = open(filename, O_RDONLY);
 	if (*fd == -1)
@@ -27,14 +29,14 @@ int openfd(char *filename, int *fd)
 	return (*fd);
 }
 
-int closefd(int fd)
+int	closefd(int fd)
 {
 	if (close(fd) == -1)
 		exit(2);
 	return (1);
 }
 
-void	count_elems(char *filename, int *fd, t_map *map)
+void	count_elems(char *filename, int	*fd, t_map *map)
 {
 	char	check;
 	char	previous;
@@ -70,13 +72,17 @@ void	prep_map(t_map *map)
 	t_coord	*temp_vec;
 
 	counter = 0;
-	if (!(map->coords = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *))))
+	map->coords = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *));
+	if (!map->coords)
 		err_msg(ERR_MALLOC);
-	if (!(map->pool = (t_coord *)ft_calloc(map->x_max * map->y_max, sizeof(t_coord))))
+	map->pool = (t_coord *)ft_calloc(map->x_max * map->y_max, sizeof(t_coord));
+	if (!map->pool)
 		err_msg(ERR_MALLOC);
-	if (!(map->vec = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *))))
+	map->vec = (t_coord **)ft_calloc(map->y_max, sizeof(t_coord *));
+	if (!map->vec)
 		err_msg(ERR_MALLOC);
-	if (!(map->pvec = (t_coord *)ft_calloc(map->y_max * map->x_max, sizeof(t_coord))))
+	map->pvec = (t_coord *)ft_calloc(map->y_max * map->x_max, sizeof(t_coord));
+	if (!map->pvec)
 		err_msg(ERR_MALLOC);
 	temp_coord = map->pool;
 	temp_vec = map->pvec;
@@ -96,50 +102,7 @@ void	err_msg(const char *str)
 	exit(0);
 }
 
-int ft_isprefix(const char *str, int base)
-{
-	int i;
-
-	i = 0;
-	if (base == 2 || base == 8 || base == 16)
-	{
-		if (str[i++] != '0')
-			return (FALSE);
-		if (base == 2 && (str[i] == 'b' || str[i] == 'B'))
-			return (TRUE);
-		if (base == 16 && (str[i] == 'x' || str[i] == 'X'))
-			return (TRUE);
-		if (base == 8)
-			return (TRUE);
-	}
-	return (FALSE);
-}
-
-int	ft_isnumber(const char *str, int base)
-{
-	int	i;
-
-	i = 0;
-	while (ft_isspace(str[i]))
-		i++;
-	if (base != 10 && !ft_isprefix(&str[i], base))
-		return (FALSE);
-	if (base == 2 || base == 16)
-		i += 2;
-	else if (base == 8)
-		i += 1;
-	else if (base == 10 && (str[i] == '+' || str [i] == '-'))
-		i += 1;
-	while(str[i])
-	{
-		if(!ft_isdigit_base(str[i], base))
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
-}
-
-t_map	*input (char *filename, t_map *map)
+t_map	*input(char *filename, t_map *map)
 {
 	char	**temp;
 	char	*line;
@@ -147,7 +110,6 @@ t_map	*input (char *filename, t_map *map)
 	int		x;
 	int		y;
 	int		fd;
-	int		exp = 0;
 
 	y = 0;
 	count_elems(filename, &fd, map);
@@ -159,9 +121,10 @@ t_map	*input (char *filename, t_map *map)
 		temp = ft_strsplit(line, ' ');
 		while (temp[x])
 		{
-			if(!(num = ft_strsplit(temp[x], ',')))
+			num = ft_strsplit(temp[x], ',');
+			if (!num)
 				err_msg(ERR_INPUT_READ);
-			if(!ft_isnumber(num[0], 10))
+			if (!ft_isnumber(num[0], 10))
 				err_msg(ERR_INPUT_READ);
 			map->coords[y][x].vect.z = ft_atoi(num[0]);
 			map->coords[y][x].vect.x = x;
@@ -188,7 +151,6 @@ t_map	*input (char *filename, t_map *map)
 			}
 			ft_arrfree(num);
 			x++;
-			exp++;
 		}
 		y++;
 		free(line);

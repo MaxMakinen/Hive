@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:48:01 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 08:13:31 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:52:14 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,26 @@
 # define NUM_MAX 92
 # define NUM_MIN 69
 
-# define KEY_ESC 53
 # define KEY_W 13
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_Q 12
 # define KEY_E 14
+# define LETTER_MAX 14
+# define LETTER_MIN 0
 
-# define KEY_PLUS 27
-# define KEY_MINUS 24
+# define KEY_ESC 53
+# define KEY_PLUS 24
+# define KEY_MINUS 27
 
 # define KEY_1 18
 # define KEY_2 19
 # define KEY_3 20
 # define KEY_4 21
 # define KEY_5 23
+# define KEY_MIN 18
+# define KEY_MAX 23
 
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 17:57:52 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:55:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 # define BUFF_SIZE 4096
 # define MAX_FD 8192
+# define TRUE 1
+# define FALSE 0
 
 typedef struct s_list
 {

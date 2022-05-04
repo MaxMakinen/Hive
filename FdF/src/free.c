@@ -6,19 +6,19 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:10:32 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 15:15:34 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:23:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	destroy(void *param)
+int	destroy(void	*param)
 {
-	(void)param;
+	clean_exit(param);
 	exit(0);
 }
 
-void free_matrix(t_matrix **matrix)
+void	free_matrix(t_matrix **matrix)
 {
 	free((*matrix)->pool);
 	(*matrix)->pool = NULL;
@@ -28,13 +28,13 @@ void free_matrix(t_matrix **matrix)
 	*matrix = NULL;
 }
 
-void free_coord(t_coord **coord)
+void	free_coord(t_coord **coord)
 {
 	free(*coord);
 	*coord = NULL;
 }
 
-void free_map(t_map **map)
+void	free_map(t_map **map)
 {
 	free_matrix(&(*map)->proj);
 	free_matrix(&(*map)->rot_x);
@@ -50,7 +50,7 @@ void free_map(t_map **map)
 	*map = NULL;
 }
 
-void clean_exit(t_data *data)
+void	clean_exit(t_data *data)
 {
 	free_map(&data->map);
 	mlx_destroy_image(data->mlx_ptr, data->img->mlx_img);

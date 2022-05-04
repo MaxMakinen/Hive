@@ -6,77 +6,83 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:08:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 10:21:23 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:51:12 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void numpad(t_data *data, int keysym)
+void	numpad(t_data *data, int keysym)
 {
-	if(keysym == NUM7)
-		roll(data, -0.1);
-	if(keysym == NUM9)
-		roll(data, 0.1f);
-	if(keysym == NUM6)
-		yaw(data, -0.1f);
-	if(keysym == NUM4)
-		yaw(data, 0.1f);
-	if(keysym == NUM8)
-		pitch(data, -0.1f);
-	if(keysym == NUM2)
-		pitch(data, 0.1f);
-	if(keysym == NUM1)
+	if (keysym == NUM7)
+		roll(data, -0.01);
+	if (keysym == NUM9)
+		roll(data, 0.01f);
+	if (keysym == NUM6)
+		yaw(data, -0.01f);
+	if (keysym == NUM4)
+		yaw(data, 0.01f);
+	if (keysym == NUM8)
+		pitch(data, -0.01f);
+	if (keysym == NUM2)
+		pitch(data, 0.01f);
+	if (keysym == NUM1)
 		rot_bottomleft(data);
-	if(keysym == NUM3)
+	if (keysym == NUM3)
 		rot_bottomright(data);
-	if(keysym == NUM5 || keysym == 9)
+	if (keysym == NUM5 || keysym == 9)
 		spin(data);
-	if(keysym == NUM0)
+	if (keysym == NUM0)
 		rot_flag(data);
-	if(keysym == NUM_PLUS)
-		zoom(data, 10);
-	if(keysym == NUM_MINUS)
+	if (keysym == NUM_PLUS)
 		zoom(data, -10);
+	if (keysym == NUM_MINUS)
+		zoom(data, 10);
 }
 
 void	view_control(t_data *data, int keysym)
 {
-	if(keysym == KEY_1)
+	if (keysym == KEY_1)
 		reset_view(data);
-	if(keysym == KEY_2)
+	if (keysym == KEY_2)
 		set_ortho(data);
-	if(keysym == KEY_3)
+	if (keysym == KEY_3)
 		set_persp(data);
-	if(keysym == KEY_4)
+	if (keysym == KEY_4)
 		flatten(data, 1);
-	if(keysym == KEY_5)
+	if (keysym == KEY_5)
 		flatten(data, (-1));
 }
 
-int handle_keypress(int keysym, t_data *data)
+void	wasd(t_data *data, int keysym)
+{
+	if (keysym == KEY_Q)
+		roll(data, -0.1f);
+	if (keysym == KEY_E)
+		roll(data, 0.1f);
+	if (keysym == KEY_W)
+		pitch(data, -0.1f);
+	if (keysym == KEY_S)
+		pitch(data, 0.1f);
+	if (keysym == KEY_D)
+		yaw(data, -0.1f);
+	if (keysym == KEY_A)
+		yaw(data, 0.1f);
+}
+
+int	handle_keypress(int keysym, t_data *data)
 {
 	if (keysym >= NUM_MIN && keysym <= NUM_MAX)
 		numpad(data, keysym);
-	if (keysym >= 49 && keysym <= 53)
+	if (keysym >= KEY_MIN && keysym <= KEY_MAX)
 		view_control(data, keysym);
+	if (keysym >= LETTER_MIN && keysym <= LETTER_MAX)
+		wasd(data, keysym);
 	if (keysym == KEY_ESC)
 		clean_exit(data);
-	if(keysym == KEY_Q)
-		roll(data, -0.1f);
-	if(keysym == KEY_E)
-		roll(data, 0.1f);
-	if(keysym == KEY_W)
-		pitch(data, -0.1f);
-	if(keysym == KEY_S)
-		pitch(data, 0.1f);
-	if(keysym == KEY_D)
-		yaw(data, -0.1f);
-	if(keysym == KEY_A)
-		yaw(data, 0.1f);
-	if(keysym == KEY_PLUS)
+	if (keysym == KEY_PLUS)
 		zoom(data, -1);
-	if(keysym == KEY_MINUS)
+	if (keysym == KEY_MINUS)
 		zoom(data, 1);
 	project(data->map, data->map->proj);
 	render(data);

@@ -6,35 +6,38 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 12:00:15 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:25:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void init_data(t_data *data)
+void	init_data(t_data *data)
 {
 	data->map = (t_map *)ft_calloc(sizeof(t_map), 1);
 	data->img = (t_img *)ft_calloc(sizeof(t_img), 1);
 	init_map(data->map);
 }
 
-void create_img(t_data *data, char *name)
+void	create_img(t_data *data, char *name)
 {
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
 		err_msg("MLX ERROR init");
-	data->win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, name);
+	data->win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, \
+			WINDOW_HEIGHT, name);
 	if (data->win_ptr == NULL)
 	{
-		free(data->win_ptr)	;
+		free(data->win_ptr);
 		err_msg("MLX ERROR img");
 	}
-	data->img->mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data->img->addr = mlx_get_data_addr(data->img->mlx_img, &data->img->bpp, &data->img->line_len, &data->img->endian);
+	data->img->mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, \
+			WINDOW_HEIGHT);
+	data->img->addr = mlx_get_data_addr(data->img->mlx_img, \
+			&data->img->bpp, &data->img->line_len, &data->img->endian);
 }
 
-void init_map(t_map *map)
+void	init_map(t_map *map)
 {
 	map->x_max = 0;
 	map->y_max = 0;
@@ -55,14 +58,14 @@ void init_map(t_map *map)
 }
 
 // Center map in middle of screen
-void center_coords(t_data *data)
+void	center_coords(t_data *data)
 {
 	data->map->offset.x = (data->map->x_max / 2) * -1;
 	data->map->offset.y = (data->map->y_max / 2) * -1;
 	data->map->offset.z = 1.0f;
 }
 /*
-void setup_hooks(t_data *data)
+void	setup_hooks(t_data *data)
 {
 //	mlx_loop_hook(data->mlx_ptr, rotate, data);
 

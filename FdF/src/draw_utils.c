@@ -6,13 +6,13 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:41:48 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 18:06:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:22:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int in_window(t_intvec vector)
+int	in_window(t_intvec vector)
 {
 	if (vector.x < WINDOW_WIDTH && vector.x > 0)
 	{
@@ -27,23 +27,23 @@ int	getcol(t_rgb start, t_rgb end, int delta, int step)
 	t_rgb	new;
 
 	new.red = ((step / delta) * start.red) + \
-			  (((delta - step) / delta) * end.red);
+				(((delta - step) / delta) * end.red);
 	new.green = ((step / delta) * start.green) + \
 				(((delta - step) / delta) * end.green);
 	new.blue = ((step / delta) * start.blue) + \
-			   (((delta - step) / delta) * end.blue);
+				(((delta - step) / delta) * end.blue);
 	return (rgb_int(new));
 }
 
-t_intvec find_current(t_vector *strt, t_vector *end, t_intvec *ad, t_intvec *d)
+t_intvec	find_current(t_vector *s, t_vector *e, t_intvec *ad, t_intvec *d)
 {
 	if (ad->y <= ad->x)
-		return (get_current(strt, end, d->x, 1));
+		return (get_current(s, e, d->x, 1));
 	else
-		return (get_current(strt, end, d->y, 0));
+		return (get_current(s, e, d->y, 0));
 }
 
-t_intvec get_current(t_vector *start, t_vector *end, int delta, int dir)
+t_intvec	get_current(t_vector *start, t_vector *end, int delta, int dir)
 {
 	t_intvec	current;
 

@@ -6,19 +6,13 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:30:54 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 18:26:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:18:56 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/*
-void draw(t_intvec current, t_intvec abs_delta, t_intvec check)
-{
-}
-*/
-
-int draw_line(t_data *data, t_coord start, t_coord end)
+int	draw_line(t_data *data, t_coord start, t_coord end)
 {
 	t_intvec	delta;
 	t_intvec	abs_delta;
@@ -50,7 +44,8 @@ int draw_line(t_data *data, t_coord start, t_coord end)
 				check.x += 2 * (abs_delta.y - abs_delta.x);
 			}
 			if (in_window(current))
-				img_pix_put(data->img, current.x, current.y, check_color(current, start, end, delta));
+				img_pix_put(data->img, current.x, current.y, \
+						check_color(current, start, end, delta));
 		}
 	}
 	else
@@ -65,7 +60,8 @@ int draw_line(t_data *data, t_coord start, t_coord end)
 				check.y += 2 * (abs_delta.x - abs_delta.y);
 			}
 			if (in_window(current))
-				img_pix_put(data->img, current.x, current.y, check_color(current, start, end, delta));
+				img_pix_put(data->img, current.x, current.y, \
+						check_color(current, start, end, delta));
 		}
 	}
 	return (1);

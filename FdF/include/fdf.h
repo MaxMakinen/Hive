@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 09:39:50 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:54:10 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "libft.h"
 # include "error_msg.h"
 # include "mlx.h"
-# include "linux_keys.h"
+# include "mac_keys.h"
 
 # ifdef LINUX
 	# include "linux_keys.h"
@@ -179,6 +179,10 @@ t_matrix	*prep_matrix(int x_max, int y_max);
 t_matrix	*prep_projection_matrix(t_map *map, t_matrix *matrix);
 
 int			ft_abs(int num);
+float		ft_lerp(float norm, float min, float max);
+float		ft_norm(float num, float min, float max);
+int			ft_isnumber(const char *str, int base);
+int			ft_isprefix(const char *str, int base);
 
 int			handle_keypress(int keysym, t_data *data);
 int			handle_keyrelease(int keysym, t_data *data);
@@ -193,8 +197,6 @@ t_vector    *mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
 t_matrix		*isometric(t_map *map, float xoff);
 
 void			log_matrix(t_matrix matrix);
-float		ft_lerp(float norm, float min, float max);
-float		ft_norm(float num, float min, float max);
 
 int			render_line(t_img *img, t_coord start, t_coord end);
 int			render(t_data *data);
