@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 10:00:57 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/04 09:39:50 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
 # define SALMON 0xFF8080
-# define BACKGROUND 0xFF202020
+# define BACKGROUND 0x202020
 
 # define ZOOM 40
 # define FPOV 90.0f
@@ -115,7 +115,7 @@ typedef struct s_map
 	t_coord		*pool;
 	t_coord		**vec;
 	t_coord		*pvec;
-	t_intvec	offset;
+	t_vector	offset;
 }	t_map;
 
 typedef struct s_img															
@@ -150,7 +150,7 @@ t_vector	*prep_vector(t_vector *vector);
 t_vector	*vec_mult(t_vector *vect, float num);
 t_vector	*vec_add(t_vector *vect, float num);
 void		flatten(t_data *data, int num);
-t_vector	*vec_adjust(t_vector *vec, t_intvec *offset);
+t_vector	*vec_adjust(t_vector *vec, t_vector *offset);
 t_vector	*vec_div(t_vector *vect, float num);
 t_matrix	*vec_to_matrix(t_vector *vector, t_matrix *matrix);
 t_vector	*matrix_to_vec(t_matrix *matrix, t_vector *vector);

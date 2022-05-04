@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 10:11:11 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 11:47:09 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_map *project(t_map *map, t_matrix *matrix)
 		while (x < map->x_max)
 		{
 			temp = map->coords[y][x].vect;
+			temp.z = -temp.z;
 			vec_adjust(&temp, &map->offset);
 			mult_matrix_vec(&temp, &tempx, map->rot_x);
 			mult_matrix_vec(&tempx, &tempxz, map->rot_z);

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 17:43:10 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:10:43 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int render(t_data *data)
 		y++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img->mlx_img, 0, 0);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 15 , 12, SALMON, "zoom");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 35 , 12, SALMON, ft_itoa(data->map->zoom));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 10:02:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:00:15 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void center_coords(t_data *data)
 {
 	data->map->offset.x = (data->map->x_max / 2) * -1;
 	data->map->offset.y = (data->map->y_max / 2) * -1;
-	data->map->offset.z = 0;
+	data->map->offset.z = 1.0f;
 }
 /*
 void setup_hooks(t_data *data)
