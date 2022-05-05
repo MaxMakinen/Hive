@@ -6,12 +6,11 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:35:16 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/03 12:01:10 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 10:01:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 t_vector	*prep_vector(t_vector *vector)
 {
@@ -22,7 +21,7 @@ t_vector	*prep_vector(t_vector *vector)
 	return (vector);
 }
 
-t_vector *vec_mult(t_vector *vect, float num)
+t_vector	*vec_mult(t_vector *vect, float num)
 {
 	vect->x *= num;
 	vect->y *= num;
@@ -30,7 +29,7 @@ t_vector *vec_mult(t_vector *vect, float num)
 	return (vect);
 }
 
-t_vector *vec_add(t_vector *vect, float num)
+t_vector	*vec_add(t_vector *vect, float num)
 {
 	vect->x += num;
 	vect->y += num;
@@ -38,15 +37,7 @@ t_vector *vec_add(t_vector *vect, float num)
 	return (vect);
 }
 
-void flatten(t_data *data, int num)
-{
-	if (num < 0)
-		data->map->offset.z -= 0.1f;
-	else
-		data->map->offset.z += 0.11f;
-}
-
-t_vector *vec_div(t_vector *vect, float num)
+t_vector	*vec_div(t_vector *vect, float num)
 {
 	if (num != 0)
 	{
@@ -54,12 +45,12 @@ t_vector *vec_div(t_vector *vect, float num)
 		vect->y /= num;
 		vect->z /= num;
 	}
-	else 
-		(write(1,"div 0 error\n", 12));
+	else
+		(write(1, "div 0 error\n", 12));
 	return (vect);
 }
 
-t_vector *vec_adjust(t_vector *vec, t_vector *offset)
+t_vector	*vec_adjust(t_vector *vec, t_vector *offset)
 {
 	vec->x += offset->x;
 	vec->y += offset->y;

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 13:25:45 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 09:46:37 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_map(t_map *map)
 	map->anglez = 0.0f;
 	map->zoom = 0;
 	map->rotate = 0;
-	map->f_pov = 90.0f;
+	map->f_fov = 90.0f;
 	map->f_near = 1.1f;
 	map->f_far = 1000.0f;
 	map->rot_x = prep_matrix(4, 4);

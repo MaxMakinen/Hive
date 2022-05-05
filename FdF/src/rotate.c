@@ -6,19 +6,19 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:21:48 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 11:33:18 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 09:55:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int rotate(t_data *data)
+int	rotate(t_data *data)
 {
 	if (data->map->rotate == 1)
 	{
-		data->map->anglex +=0.002f;
-		data->map->angley +=0.004f;
-		data->map->anglez +=0.004f;
+		data->map->anglex += 0.002f;
+		data->map->angley += 0.004f;
+		data->map->anglez += 0.004f;
 		project(data->map, data->map->proj);
 		render(data);
 	}
@@ -27,7 +27,6 @@ int rotate(t_data *data)
 
 t_matrix	*prep_rotate_z(t_matrix *matrix, float angle)
 {
-
 	matrix->m[0][0] = cosf(angle);
 	matrix->m[0][1] = -sinf(angle);
 	matrix->m[1][0] = sinf(angle);

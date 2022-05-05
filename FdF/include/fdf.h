@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 13:54:10 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 09:53:01 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "libft.h"
 # include "error_msg.h"
 # include "mlx.h"
-# include "mac_keys.h"
+# include "linux_keys.h"
 
 # ifdef LINUX
 	# include "linux_keys.h"
@@ -99,7 +99,7 @@ typedef struct s_map
 	int			z_max;
 	int			z_min;
 	int			zoom;
-	float		f_pov;
+	float		f_fov;
 	float		f_near;
 	float		f_far;
 	float		anglex;
@@ -191,10 +191,9 @@ int			mouse_press(int button, int x, int y, t_data *data);
 int			mouse_release(int button, int x, int y, t_data *data);
 int			mouse_move(int x, int y, t_data *data);
 
-t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector);
+t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector, t_matrix *result);
 t_map		*project(t_map *map, t_matrix *matrix);
 t_vector    *mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
-t_matrix		*isometric(t_map *map, float xoff);
 
 void			log_matrix(t_matrix matrix);
 
