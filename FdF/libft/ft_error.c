@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flatten_zoom.c                                     :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 12:48:14 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 12:48:17 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/05/05 12:48:27 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/05/05 12:49:41 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	flatten(t_data *data, int num)
+void	ft_error(const char *str)
 {
-	if (num < 0)
-		data->map->offset.z -= 0.1f;
-	else
-		data->map->offset.z += 0.11f;
-}
-
-void	zoom(t_data *data, int range)
-{
-	data->map->zoom += range;
+	ft_putendl_fd(str, 2);
+	exit(0);
 }

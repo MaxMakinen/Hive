@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:43:43 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 09:25:51 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:48:20 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_input(t_matrix *mat1, t_matrix *mat2)
 {
 	if (mat1->y_max != mat2->x_max)
-		err_msg("matmul error: rows != cols\n");
+		ft_error("matmul error: rows != cols\n");
 }
 
 t_matrix	*mat_mul(t_matrix *mat1, t_matrix *mat2, t_matrix *result)

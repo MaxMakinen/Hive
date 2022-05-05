@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flatten_zoom.c                                     :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 12:48:14 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 12:48:17 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/05/02 15:10:02 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/05/02 15:11:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	flatten(t_data *data, int num)
+int	ft_abs(int num)
 {
+	if (num == -2147483648)
+		return (2147483647);
 	if (num < 0)
-		data->map->offset.z -= 0.1f;
-	else
-		data->map->offset.z += 0.11f;
-}
-
-void	zoom(t_data *data, int range)
-{
-	data->map->zoom += range;
+		num = -num;
+	return (num);
 }

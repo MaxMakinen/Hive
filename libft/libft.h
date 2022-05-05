@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/08 18:19:40 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:04:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,24 @@ int		ft_ispunct(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 /*
-atoi & itoa
+fd functions
+*/
+int		ft_openfd(char *filename, int *fd);
+int		ft_closefd(int fd);
+/*
+math functions
+*/
+int		ft_abs(int num);
+float	ft_lerp(float norm, float min, float max);
+float	ft_norm(float num, float min, float max);
+/*
+atoi & itoa etc.
 */
 int		ft_atoi(const char *nptr);
 char	*ft_itoa(int n);
 char	*ft_itobin(unsigned int num);
+int		ft_isnumber(const char *str, int base);
+int		ft_isprefix(const char *str, int base);
 /*
 put type functions
 */
@@ -126,5 +139,9 @@ void	*ft_arrfree(char **arr);
 Get_next_line
 */
 int		get_next_line(const int fd, char **line);
+/*
+error handling
+*/
+void	ft_error(const char *str);
 
 #endif

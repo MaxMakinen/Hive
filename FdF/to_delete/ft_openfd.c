@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flatten_zoom.c                                     :+:      :+:    :+:   */
+/*   ft_openfd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 12:48:14 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 12:48:17 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/05/05 12:48:49 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/05/05 12:53:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
+#include <fcntl.h>
 
-void	flatten(t_data *data, int num)
+int	ft_openfd(char *filename, int *fd)
 {
-	if (num < 0)
-		data->map->offset.z -= 0.1f;
-	else
-		data->map->offset.z += 0.11f;
-}
-
-void	zoom(t_data *data, int range)
-{
-	data->map->zoom += range;
+	*fd = open(filename, O_RDONLY);
+	if (*fd == -1)
+		ft_error(2);
+	return (*fd);
 }

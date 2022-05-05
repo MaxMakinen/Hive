@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 09:46:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:46:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	create_img(t_data *data, char *name)
 {
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
-		err_msg("MLX ERROR init");
+		ft_error("MLX ERROR init");
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, \
 			WINDOW_HEIGHT, name);
 	if (data->win_ptr == NULL)
 	{
 		free(data->win_ptr);
-		err_msg("MLX ERROR img");
+		ft_error("MLX ERROR img");
 	}
 	data->img->mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, \
 			WINDOW_HEIGHT);

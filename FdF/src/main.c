@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 13:09:50 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:48:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		err_msg("Usage: fdf <input file>");
+		ft_error("Usage: fdf <input file>");
 	init_data(&data);
 	data.map = input(argv[1], data.map);
 	center_coords(&data);

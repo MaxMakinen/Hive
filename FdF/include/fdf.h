@@ -6,13 +6,14 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 09:53:01 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:34:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include "libft.h"
 # include "../libft/libft.h"
 # include <fcntl.h>
 
@@ -175,6 +176,8 @@ void		set_ortho(t_data *data);
 void		set_persp(t_data *data);
 void		reset_view(t_data *data);
 
+void		malloc_struct(t_map *map);
+void		prep_map(t_map *map);
 t_matrix	*prep_matrix(int x_max, int y_max);
 t_matrix	*prep_projection_matrix(t_map *map, t_matrix *matrix);
 

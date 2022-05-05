@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flatten_zoom.c                                     :+:      :+:    :+:   */
+/*   ft_linear_inter.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 12:48:14 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 12:48:17 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/05/04 13:14:02 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/05/04 13:17:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-void	flatten(t_data *data, int num)
+float	ft_lerp(float norm, float min, float max)
 {
-	if (num < 0)
-		data->map->offset.z -= 0.1f;
-	else
-		data->map->offset.z += 0.11f;
-}
-
-void	zoom(t_data *data, int range)
-{
-	data->map->zoom += range;
+	return ((max - min) * norm + min);
 }
