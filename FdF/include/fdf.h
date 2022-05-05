@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 14:34:11 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:38:46 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,14 +205,14 @@ int			render(t_data *data);
 void		img_pix_put(t_img *img, int x, int y, int color);
 void		render_background(t_img *img, int color);
 
-int			draw_line(t_data *data, t_coord start, t_coord end);
+int			draw_line(t_data *data, t_coord *start, t_coord *end);
 t_intvec	get_current(t_vector *start, t_vector *end, int delta, int dir);
-int			in_window(t_intvec vector);
+int			in_window(t_intvec *vector);
 t_intvec	get_delta(t_vector start, t_vector end);
 t_intvec	abs_vector(t_intvec intvec);
 
 t_intvec	find_current(t_vector *strt, t_vector *end, t_intvec *ad, t_intvec *d);
-int			check_color(t_intvec point, t_coord start, t_coord end, t_intvec delta);
+int			check_color(t_intvec *point, t_coord *start, t_coord *end, t_intvec *delta);
 int			rgb_int(t_rgb rgb);
 t_rgb		int_rgb(int col);
 

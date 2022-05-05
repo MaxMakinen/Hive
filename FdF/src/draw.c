@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 19:38:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 11:54:44 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:42:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@ int	render(t_data *data)
 	y = 0;
 	if (data->win_ptr == NULL)
 		return (1);
-	render_background(data->img, 0x151010);
+	render_background(data->img, BACKGROUND);
 	while (y < data->map->y_max)
 	{
 		x = 0;
 		while (x < data->map->x_max)
 		{
 			if ((x + 1) < data->map->x_max)
-				draw_line(data, data->map->vec[y][x], data->map->vec[y][x + 1]);
+				draw_line(data, &data->map->vec[y][x], \
+						&data->map->vec[y][x + 1]);
 			if ((y + 1) < data->map->y_max)
-				draw_line(data, data->map->vec[y][x], data->map->vec[y + 1][x]);
+				draw_line(data, &data->map->vec[y][x], \
+						&data->map->vec[y + 1][x]);
 			x++;
 		}
 		y++;

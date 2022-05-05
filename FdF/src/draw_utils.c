@@ -6,17 +6,17 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:41:48 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 13:22:57 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:38:30 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	in_window(t_intvec vector)
+int	in_window(t_intvec *vector)
 {
-	if (vector.x < WINDOW_WIDTH && vector.x > 0)
+	if (vector->x < WINDOW_WIDTH && vector->x > 0)
 	{
-		if (vector.y < WINDOW_HEIGHT && vector.y > 0)
+		if (vector->y < WINDOW_HEIGHT && vector->y > 0)
 			return (TRUE);
 	}
 	return (FALSE);
