@@ -192,15 +192,15 @@ int	main(void)
 	ft_printf("{%.2f}\n", 0.1f + 0.2f);
 	printf("{%.2f}\n", 0.1f + 0.2f);
 
-	printf("ld size = %d d size = %d ull size = %d size_t = %d\n",\
+	printf("ld size = %ld d size = %ld ull size = %ld size_t = %ld\n",\
 		   sizeof(long double), sizeof(double), sizeof(unsigned long long), sizeof(size_t));
 
-	ft_printf("{%f}\n", -42.0f);
-	printf("{%f}\n", -42.0f);
+	ft_printf("{%lf}\n", -1.42);
+	printf("{%lf}\n", -1.42);
 
 	ft_printf("{%.10f}\n", 1.0f);
 	printf("{%.10f}\n", 1.0f);
 
-	ft_printf("{%Lf}\n", 0.1f + 0.2f);
-	printf("{%Lf}\n", 0.1f + 0.2f);
+	ft_printf("{%Lf}\n", -1.42l);
+	printf("{%Lf}\n", -1.42l);
 }
