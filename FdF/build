@@ -1,2 +1,0 @@
-clang src/*.c libft/libft.a -g -I include/ -Wall -Wextra -Werror -lX11 -lXext -lmlx -lm -O3
-# -Wconversion

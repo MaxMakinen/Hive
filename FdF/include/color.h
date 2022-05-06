@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/02 15:10:02 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/02 15:11:19 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/05/06 09:44:32 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/05/06 13:23:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef COLOR_H
+# define COLOR_H
 
-int	ft_abs(int num)
-{
-	if (num == -2147483648)
-		return (2147483647);
-	if (num < 0)
-		num = -num;
-	return (num);
-}
+# define RED_PIXEL 0xFF0000
+# define GREEN_PIXEL 0xFF00
+# define BLUE_PIXEL 0xFF
+# define PURPLE_PIXEL 0x770077
+# define WHITE 0xFFFFFF
+# define BLACK 0x000000
+# define SALMON 0xFF8080
+# define BACKGROUND 0x151010
+
+#endif

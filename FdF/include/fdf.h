@@ -6,37 +6,27 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:37:58 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 15:38:46 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 14:34:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "libft.h"
-# include "../libft/libft.h"
 # include <fcntl.h>
-
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
 
-# include "fdf.h"
+# include "mlx.h"
 # include "libft.h"
 # include "error_msg.h"
-# include "mlx.h"
-# include "linux_keys.h"
-
-# ifdef LINUX
-	# include "linux_keys.h"
-	# include <mlx.h>
-	# include <X11/keysym.h>
-	# include <X11/X.h>
+# if defined(__linux__)
+#  include "linux_keys.h"
+# else
+#  include "mac_keys.h"
 # endif
-
-# include <stdio.h>
-
-# define MLX_ERROR 1
+# include "color.h"
 
 # define TRUE 1
 # define FALSE 0
@@ -44,46 +34,41 @@
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 
-# define OFFSET 23
-
-# define RED_PIXEL 0xFF0000
-# define GREEN_PIXEL 0xFF00
-# define BLUE_PIXEL 0xFF
-# define WHITE 0xFFFFFF
-# define BLACK 0x000000
-# define SALMON 0xFF8080
-# define BACKGROUND 0x202020
-
-# define ZOOM 40
-# define FPOV 90.0f
-
 typedef struct s_vector
 {
-	float	x;
-	float	y;
-	float	z;
+	float		x;
+	float		y;
+	float		z;
 }	t_vector;
 
 typedef struct s_intvec
 {
-	int	x;
-	int	y;
-	int	z;
+	int			x;
+	int			y;
+	int			z;
 }	t_intvec;
+
+typedef struct s_draw_tools
+{
+	t_intvec	delta;
+	t_intvec	abs_delta;
+	t_intvec	current;
+	t_intvec	check;
+}	t_d_tools;
 
 typedef struct s_rgb
 {
-	int red;
-	int green;
-	int blue;
+	int			red;
+	int			green;
+	int			blue;
 }	t_rgb;
 
 typedef struct s_matrix
 {
-	float	**m;
-	float	*pool;
-	int		x_max;
-	int		y_max;
+	float		**m;
+	float		*pool;
+	int			x_max;
+	int			y_max;
 }	t_matrix;
 
 typedef struct s_coord
@@ -91,11 +76,11 @@ typedef struct s_coord
 	int			visible;
 	t_rgb		color;
 	t_vector	vect;
-}   t_coord;
+}	t_coord;
 
 typedef struct s_map
 {
-	int 		x_max;
+	int			x_max;
 	int			y_max;
 	int			z_max;
 	int			z_min;
@@ -117,29 +102,28 @@ typedef struct s_map
 	t_coord		**vec;
 	t_coord		*pvec;
 	t_vector	offset;
+	t_vector	camera;
 }	t_map;
 
-typedef struct s_img															
-{																			   
-	void	*mlx_img;														   
-	char	*addr;															  
-	int		bpp; /* bits per pixel */										   
-	int		line_len;														   
-	int		endian;															 
-}   t_img;																	  
-																				
-typedef struct s_data														   
-{																			   
-	void	*mlx_ptr;														   
-	void	*win_ptr;														   
-	t_img	*img; /* added for image rendering */								
-	t_map	*map;																
-}   t_data;																	 
+typedef struct s_img
+{
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
+
+typedef struct s_data
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	*img;
+	t_map	*map;
+}	t_data;
 
 t_map		*input(char *filename, t_map *map);
 void		count_elems(char *filename, int *fd, t_map *map);
-int			openfd(char *filename, int *fd);
-int			closefd(int fd);
 
 void		init_data(t_data *data);
 void		create_img(t_data *data, char *name);
@@ -196,9 +180,7 @@ int			mouse_move(int x, int y, t_data *data);
 
 t_matrix	*mat_mul(t_matrix *matrix, t_matrix *vector, t_matrix *result);
 t_map		*project(t_map *map, t_matrix *matrix);
-t_vector    *mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
-
-void			log_matrix(t_matrix matrix);
+t_vector	*mult_matrix_vec(t_vector *src, t_vector *dst, t_matrix *m);
 
 int			render_line(t_img *img, t_coord start, t_coord end);
 int			render(t_data *data);
@@ -211,16 +193,16 @@ int			in_window(t_intvec *vector);
 t_intvec	get_delta(t_vector start, t_vector end);
 t_intvec	abs_vector(t_intvec intvec);
 
-t_intvec	find_current(t_vector *strt, t_vector *end, t_intvec *ad, t_intvec *d);
-int			check_color(t_intvec *point, t_coord *start, t_coord *end, t_intvec *delta);
+t_intvec	find_current(t_vector *strt, t_vector *end, t_d_tools *d_tools);
+int			check_color(t_intvec *point, t_coord *start, t_coord *end, \
+		t_intvec *delta);
 int			rgb_int(t_rgb rgb);
 t_rgb		int_rgb(int col);
-
-void		err_msg(const char *str);
 
 int			destroy(void *param);
 void		free_matrix(t_matrix **matrix);
 void		free_coord(t_coord **coord);
 void		free_map(t_map **map);
 void		clean_exit(t_data *data);
+
 #endif

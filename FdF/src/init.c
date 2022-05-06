@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 13:46:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:56:10 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ void	create_img(t_data *data, char *name)
 			&data->img->bpp, &data->img->line_len, &data->img->endian);
 }
 
+void	prep_camera(t_map *map)
+{
+	map->camera.x = 1.0f;
+	map->camera.y = 1.0f;
+	map->camera.z = 1.0f;
+}
+
 void	init_map(t_map *map)
 {
 	map->x_max = 0;
@@ -55,24 +62,12 @@ void	init_map(t_map *map)
 	map->rot_y = prep_matrix(4, 4);
 	map->rot_z = prep_matrix(4, 4);
 	map->proj = prep_projection_matrix(map, prep_matrix(4, 4));
+	prep_camera(map);
 }
 
-// Center map in middle of screen
 void	center_coords(t_data *data)
 {
 	data->map->offset.x = (data->map->x_max / 2) * -1;
 	data->map->offset.y = (data->map->y_max / 2) * -1;
 	data->map->offset.z = 1.0f;
 }
-/*
-void	setup_hooks(t_data *data)
-{
-//	mlx_loop_hook(data->mlx_ptr, rotate, data);
-
-	mlx_hook(data->win_ptr, 6, 1L<<8, mouse_move, data);
-	mlx_hook(data->win_ptr, 4, 1L<<2, mouse_press, data);
-
-	mlx_hook(data->win_ptr, 2, 1L<<0, handle_keypress, data);
-	mlx_hook(data->win_ptr, 17, 0, destroy, data);
-}
-*/

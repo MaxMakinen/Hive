@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:14:18 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 09:32:18 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 14:06:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,12 @@
 # define MOUSE_MIDDLE		2
 # define MOUSE_SCROLL_UP	4
 # define MOUSE_SCROLL_DOWN	5
+
+# define ARROW_LEFT		65361
+# define ARROW_UP		65362
+# define ARROW_RIGHT	65363
+# define ARROW_DOWN		65364
+# define ARROW_MIN		65361
+# define ARROW_MAX		65364
 
 #endif

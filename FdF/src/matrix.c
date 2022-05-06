@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:32:59 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 09:02:11 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 09:52:39 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ t_matrix	*prep_matrix(int x_max, int y_max)
 
 	matrix = (t_matrix *)malloc(sizeof(t_matrix));
 	if (!matrix)
-	{
-		printf("prep_matrix malloc error\n");
-		exit(1);
-	}
+		ft_error("prep_matrix malloc error");
 	matrix->m = (float **)ft_calloc(y_max, sizeof(float *));
 	matrix->pool = (float *)ft_calloc(y_max * x_max, sizeof(float));
 	temp = matrix->pool;

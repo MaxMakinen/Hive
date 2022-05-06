@@ -1,1 +1,0 @@
-gcc src/*.c libft/libft.a -I include -g -Wall -Wextra -Werror -lm -lmlx -framework OpenGL -framework AppKit

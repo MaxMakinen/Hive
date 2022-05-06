@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:19:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 09:52:36 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:56:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	apply_rotation(t_map *map, t_vector *temp)
 
 void	center_view(t_map *map, int y, int x)
 {
-	map->vec[y][x].vect.x += 1.0f;
-	map->vec[y][x].vect.y += 1.0f;
+	map->vec[y][x].vect.x += map->camera.x;
+	map->vec[y][x].vect.y += map->camera.y;
 	map->vec[y][x].vect.z *= -1;
 	map->vec[y][x].vect.x *= 0.5f * (float)WINDOW_WIDTH;
 	map->vec[y][x].vect.y *= 0.5f * (float)WINDOW_HEIGHT;

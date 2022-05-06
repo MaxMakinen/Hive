@@ -6,20 +6,11 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:30:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 14:32:20 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:15:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-//#define DISTANCE 38
-
-/*
- * Code realloc for easier array shape changes?
- * Need new version of splitstr in order to extract info like wordcount?
- * Make libft versions of ft_openfd and ft_closefd,
- * add options for opening choices.
- * Enum?
- */
 
 void	count_elems(char *filename, int	*fd, t_map *map)
 {
@@ -63,9 +54,9 @@ void	import_color(char **num, t_map *map, t_intvec pos)
 		if (map->coords[pos.y][pos.x].vect.z > 0)
 			map->coords[pos.y][pos.x].color = int_rgb(RED_PIXEL);
 		else if (map->coords[pos.y][pos.x].vect.z < 0)
-			map->coords[pos.y][pos.x].color = int_rgb(GREEN_PIXEL);
-		else if (map->coords[pos.y][pos.x].vect.z == 0)
 			map->coords[pos.y][pos.x].color = int_rgb(BLUE_PIXEL);
+		else if (map->coords[pos.y][pos.x].vect.z == 0)
+			map->coords[pos.y][pos.x].color = int_rgb(PURPLE_PIXEL);
 	}
 }
 
@@ -75,7 +66,7 @@ void	get_values(char **num, t_map *map, t_intvec pos)
 		ft_error(ERR_INPUT_READ);
 	if (!ft_isnumber(num[0], 10))
 		ft_error(ERR_INPUT_READ);
-	map->coords[pos.y][pos.x].vect.z = ft_atoi(num[0]);
+	map->coords[pos.y][pos.x].vect.z = (float)ft_atoi(num[0]);
 	map->coords[pos.y][pos.x].vect.x = pos.x;
 	map->coords[pos.y][pos.x].vect.y = pos.y;
 	map->coords[pos.y][pos.x].visible = 1;

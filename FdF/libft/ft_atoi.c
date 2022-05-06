@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 10:23:44 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/04/28 18:13:48 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:12:13 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int	ft_atoi(const char *nptr)
 	negative = 1;
 	while (ft_isspace(*nptr) == 1)
 		nptr++;
-	if (nptr[0] == '0' && (nptr[1] == 'x' || nptr[1] == 'X'))
-		value = hextoi(nptr);
-	else if (nptr[0] == '-' || nptr[0] == '+')
+	if (nptr[0] == '-' || nptr[0] == '+')
 	{
 		if (nptr[0] == '-')
 			negative = -1;
 		nptr++;
 	}
+	if (nptr[0] == '0' && (nptr[1] == 'x' || nptr[1] == 'X'))
+		value = hextoi(nptr);
 	else
 	{
 		while (*nptr != 0 && (ft_isdigit(*nptr) != 0))

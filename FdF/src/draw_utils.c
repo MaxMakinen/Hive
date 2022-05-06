@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:41:48 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 15:38:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:13:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	getcol(t_rgb start, t_rgb end, int delta, int step)
 	return (rgb_int(new));
 }
 
-t_intvec	find_current(t_vector *s, t_vector *e, t_intvec *ad, t_intvec *d)
+t_intvec	find_current(t_vector *start, t_vector *end, t_d_tools *d_tools)
 {
-	if (ad->y <= ad->x)
-		return (get_current(s, e, d->x, 1));
+	if (d_tools->abs_delta.y <= d_tools->abs_delta.x)
+		return (get_current(start, end, d_tools->delta.x, 1));
 	else
-		return (get_current(s, e, d->y, 0));
+		return (get_current(start, end, d_tools->delta.y, 0));
 }
 
 t_intvec	get_current(t_vector *start, t_vector *end, int delta, int dir)

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:08:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/04 13:51:12 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 14:08:07 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	numpad(t_data *data, int keysym)
 	if (keysym == NUM0)
 		rot_flag(data);
 	if (keysym == NUM_PLUS)
-		zoom(data, -10);
+		zoom(data, -100 + data->map->f_fov);
 	if (keysym == NUM_MINUS)
-		zoom(data, 10);
+		zoom(data, 100 - data->map->f_fov);
 }
 
 void	view_control(t_data *data, int keysym)
@@ -70,6 +70,18 @@ void	wasd(t_data *data, int keysym)
 		yaw(data, 0.1f);
 }
 
+void	pan_camera(t_data *data, int keysym)
+{
+	if (keysym == ARROW_LEFT)
+		data->map->camera.x -= 0.1f;
+	if (keysym == ARROW_RIGHT)
+		data->map->camera.x += 0.1f;
+	if (keysym == ARROW_UP)
+		data->map->camera.y -= 0.1f;
+	if (keysym == ARROW_DOWN)
+		data->map->camera.y += 0.1f;
+}
+
 int	handle_keypress(int keysym, t_data *data)
 {
 	if (keysym >= NUM_MIN && keysym <= NUM_MAX)
@@ -78,6 +90,8 @@ int	handle_keypress(int keysym, t_data *data)
 		view_control(data, keysym);
 	if (keysym >= LETTER_MIN && keysym <= LETTER_MAX)
 		wasd(data, keysym);
+	if (keysym >= ARROW_MIN && keysym <= ARROW_MAX)
+		pan_camera(data, keysym);
 	if (keysym == KEY_ESC)
 		clean_exit(data);
 	if (keysym == KEY_PLUS)
@@ -86,6 +100,5 @@ int	handle_keypress(int keysym, t_data *data)
 		zoom(data, 1);
 	project(data->map, data->map->proj);
 	render(data);
-	printf("Keypress: %d\n", keysym);
 	return (0);
 }

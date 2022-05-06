@@ -6,37 +6,11 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 13:06:27 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 13:48:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 10:02:44 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	log_matrix(t_matrix matrix)
-{
-	int			x;
-	int			y;
-
-	x = 0;
-	y = 0;
-	while (y < matrix.y_max)
-	{
-		x = 0;
-		while (x < matrix.x_max)
-		{
-			printf("[%f] ", matrix.m[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
-	printf("\n");
-}
-
-void	log_vector(t_vector vec)
-{
-	printf("[%f]\n[%f]\n[%f]\n", vec.x, vec.y, vec.z);
-}
 
 int	show(t_data *data)
 {

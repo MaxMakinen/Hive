@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:42:07 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 10:04:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 14:05:12 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,6 @@ void	reset_view(t_data *data)
 	data->map->anglex = 0.0f;
 	data->map->angley = 0.0f;
 	data->map->anglez = 0.0f;
+	data->map->camera.x = 1.0f;
+	data->map->camera.y = 1.0f;
 }

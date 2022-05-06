@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:21:48 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/05 09:55:07 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:37:48 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	rotate(t_data *data)
 {
 	if (data->map->rotate == 1)
 	{
-		data->map->anglex += 0.002f;
-		data->map->angley += 0.004f;
-		data->map->anglez += 0.004f;
+		data->map->anglex -= 0.002f;
+		data->map->angley -= 0.004f;
+		data->map->anglez -= 0.004f;
 		project(data->map, data->map->proj);
 		render(data);
 	}
