@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 09:44:32 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/06 13:23:51 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/09 10:20:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
 # define SALMON 0xFF8080
-# define BACKGROUND 0x151010
+# define BACKGROUND 0x00151010
 
 #endif
