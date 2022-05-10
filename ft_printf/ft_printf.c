@@ -3,33 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/08 17:07:26 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/08 19:56:53 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/05/09 10:40:29 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/05/09 15:00:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "libft.h"
+#include "stdarg.h"
 
 typedef int *(*funcptr)();			//generic function pointer.
 typedef funcptr (*ptrfuncptr)();	//ptr to func returning generic function pointer.
 
-#include <stdio.h>
+/*
+ * printf calls vprintf-> calls vdprintf
+ * asprintf calls vasprintf
+ */
 
-int main(void)
+int	ft_printf(const char *format, ...)
 {
-	int x = 1988;
+	va_list	ap;
+	int		ret;
 
-	printf("hex :	%d\n",x);
-	printf("itoa :	%s\n",ft_itoa_base(x, 10));
-	printf("itox :	%s\n",ft_itoa_base(x, 16));
-	printf("itoo :	%s\n",ft_itoa_base(x, 8));
-	printf("itob :	%s\n\n",ft_itoa_base(x, 2));
-	x = -1988;
-	printf("itoa :	%s\n",ft_itoa_base(x, 10));
-	printf("itox :	%s\n",ft_itoa_base(x, 16));
-	printf("itoo :	%s\n",ft_itoa_base(x, 8));
-	printf("itob :	%s\n",ft_itoa_base(x, 2));
+	va_start(ap, format);
+	ret = ft_vdprintf(1, format, ap);
+	va_end(ap);
+	return (ret):
 }
 
+int	ft_dprintf(int fd ,const char *format, ...)
+{
+	va_list	ap;
+	int		ret;
+
+	va_start(ap, format);
+	ret = ft_vdprintf(fd, format, ap);
+	va_end(ap);
+	return (ret):
+}
+
+int	ft_vdprint(int fd, const char *format, va_list ap)
+{
+	char	*temp;
+	char	*read;
+	int		ret;
+
+	read = format;
+	while (*read)
+	{
+		if (read* == '%')
+			conversion(fd, &read, &ap, &ret);
+		if (read* == '\\')
+		{
+			read++;
+			if (!*read)
+				break;
+		}
+		ret += write(fd, read, 1);
+		read++;
+	}
+	return (ret);
+}
