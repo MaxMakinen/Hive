@@ -6,17 +6,18 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/09 12:54:25 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:03:02 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
+#include "ft_printf.h"
 #include <unistd.h>
 
-static int	get_len(long num, int base, int *neg)
+static int	get_len(long num, int base)
 {
 	int	len;
-	int size;
+	int	size;
 
 	len = 0;
 	size = base;
@@ -32,20 +33,20 @@ static int	get_len(long num, int base, int *neg)
 	return (size);
 }
 
-static void	prefix(int base, int neg, int fd)
+static void	prefix(int base, int neg, t_printf *data)
 {
 	if (base != 10)
 	{
-		write(fd, "0", 1);
+		data->ret += write(data->fd, "0", 1);
 		if (base == 16)
-			write(fd, "x", 1);
+			data->ret += write(data->fd, "x", 1);
 		else if (base == 8)
-			write(fd, "o", 1);
+			data->ret += write(data->fd, "o", 1);
 		else if (base == 2)
-			write(fd, "b", 1);
+			data->ret += write(data->fd, "b", 1);
 	}
 	else if (neg == 1)
-		write(fd, "-", 1);
+		data->ret += write(data->fd, "-", 1);
 }
 
 static void	check_neg(long *num, int *neg, int base)
@@ -58,9 +59,7 @@ static void	check_neg(long *num, int *neg, int base)
 	}
 }
 
-#include <stdio.h>
-
-void	ft_itoa_base_fd(int num, int base, int fd)
+void	ft_itoa_base_fd(t_printf *data, int num, int base)
 {
 	int		len;
 	int		neg;
@@ -72,13 +71,12 @@ void	ft_itoa_base_fd(int num, int base, int fd)
 	temp = num;
 	neg = 0;
 	check_neg(&temp, &neg, base);
-	len = get_len(temp, base, &neg);
-	prefix(base, neg, fd);
-	while (len >= base)
+	len = get_len(temp, base);
+	prefix(base, neg, data);
+	while (len > 0)
 	{
-		printf("len : %d\n", len);
-		step = key[temp / len];
-		write(fd, &step, 1);
+		step = key[((temp / len) % base)];
+		data->ret += write(data->fd, &step, 1);
 		len /= base;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/08 18:26:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:35:30 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 # define BUFF_SIZE 4096
 # define MAX_FD 8192
+# define MAX_INT 2147483647
+# define MIN_INT -2147483648
 # define TRUE 1
 # define FALSE 0
 
@@ -84,15 +86,8 @@ atoi & itoa etc.
 int		ft_atoi(const char *nptr);
 char	*ft_itoa(int n);
 char	*ft_itoa_base(int src, int base);
-char	*ft_itobin(unsigned int num);
 int		ft_isnumber(const char *str, int base);
 int		ft_isprefix(const char *str, int base);
-/*
-atoi & itoa
-*/
-int		ft_atoi(const char *nptr);
-char	*ft_itoa(int n);
-char	*ft_itobin(unsigned int num);
 /*
 put type functions
 */

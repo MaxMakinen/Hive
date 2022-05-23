@@ -6,45 +6,81 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/09 12:55:18 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:59:36 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	conversion(int fd, **const char format, va_list *ap, int *ret)
+int	print_char(const char **format, t_printf *data)
 {
-	int count;
+	int	c;
 
-	count = 1;
-	*format++;
-	if (**format == conv_id[i]) //conv_id is array of flags to identify desired function pointer
-		conv_func[i](fd, format, ap, ret); //conv func = array of function pointers
-	
+	c = va_arg(data->ap, int);
+	data->ret += write(data->fd, &c, 1);
+	return (1);
 }
 
-void	output_char(int fd, **const char format, va_list *ap, int *ret)
+void padding(t_printf *data, int width)
 {
-	char	c;
+	char	padding;
 
-	c = va_arg(*ap, char);
-	*ret += write(fd, &c, 1);
+	if (!(data->flags & LEFT) && data->flags & ZERO)
+		padding = '0';
+	else
+		padding = ' ';
+	while (width > 0)
+	{
+		data->ret += write(data->fd, &padding, 1);
+		width--;
+	}
 }
 
-void	output_string(int fd, **const char format, va_list *ap, int *ret)
+int	print_string(const char **format, t_printf *data)
 {
 	char	*s;
+	int		len;
+	int		width;
 
-	s = va_arg(*ap, *char);
-	*ret += write(fd, s, ft_strlen(s));
+	s = va_arg(data->ap, char*);
+	len = ft_strlen(s);
+	width = data->width - len;
+	if (data->flags & ZERO)
+		data->flags = data->flags ^ ZERO;
+	if (width > 0 && !(data->flags & LEFT))
+		padding(data, width);
+	data->ret += write(data->fd, s, len);
+	if (width > 0 && data->flags & LEFT)
+		padding(data, width);
+	return (1);
 }
 
-void	output_decimal(int fd, **const char format, va_list *ap, int *ret)
+int	print_decimal(const char **format, t_printf *data)
+{
+	int num;
+	int	len;
+
+	len = 1;
+	num = va_arg(data->ap, int);
+	ft_itoa_base_fd(data, num, 10);
+	return (len);
+}
+/*
+void	output_octal(int fd, const char **format, va_list *ap, int *ret)
 {
 	int	num;
 
 	num = va_arg(*ap, int);
+	ft_itoa_base_fd(num, 8, fd);
 }
-void	output_octal(int fd, **const char format, va_list *ap, int *ret)
-void	output_hex(int fd, **const char format, va_list *ap, int *ret)
-void	output_float(int fd, **const char format, va_list *ap, int *ret)
+
+void	output_hex(int fd, const char **format, va_list *ap, int *ret)
+{
+	int	num;
+
+	num = va_arg(*ap, int);
+	ft_itoa_base_fd(num, 16, fd);
+}
+//void	output_float(int fd, const char **format, va_list *ap, int *ret)
+
+*/

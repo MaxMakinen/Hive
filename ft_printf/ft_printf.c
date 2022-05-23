@@ -6,15 +6,12 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:40:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/09 15:00:57 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:55:17 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "stdarg.h"
+#include "ft_printf.h"
 
-typedef int *(*funcptr)();			//generic function pointer.
-typedef funcptr (*ptrfuncptr)();	//ptr to func returning generic function pointer.
 
 /*
  * printf calls vprintf-> calls vdprintf
@@ -29,7 +26,7 @@ int	ft_printf(const char *format, ...)
 	va_start(ap, format);
 	ret = ft_vdprintf(1, format, ap);
 	va_end(ap);
-	return (ret):
+	return (ret);
 }
 
 int	ft_dprintf(int fd ,const char *format, ...)
@@ -40,28 +37,47 @@ int	ft_dprintf(int fd ,const char *format, ...)
 	va_start(ap, format);
 	ret = ft_vdprintf(fd, format, ap);
 	va_end(ap);
-	return (ret):
+	return (ret);
 }
 
-int	ft_vdprint(int fd, const char *format, va_list ap)
+void	prep_data(t_printf *data)
 {
-	char	*temp;
-	char	*read;
-	int		ret;
+	data->flags = 0;
+	data->ret = 0;
+	data->width = 0;
+	data->precision = -1;
+	data->flag_ptr[0] = &zero_padding;
+	data->flag_ptr[1] = &left_adjusted;
+	data->flag_ptr[2] = &add_plus;
+	data->flag_ptr[3] = &add_space;
+	data->flag_ptr[4] = &add_prefix;
+	data->conv_ptr[0] = &print_char;
+	data->conv_ptr[1] = &print_string;
+	data->conv_ptr[2] = &print_decimal;
+}
 
-	read = format;
-	while (*read)
+int	ft_vdprintf(int fd, const char *format, va_list ap)
+{
+	t_printf	data;
+	int			steps;
+
+	data.fd = fd;
+	va_copy(data.ap, ap);
+	prep_data(&data);
+	while (*format)
 	{
-		if (read* == '%')
-			conversion(fd, &read, &ap, &ret);
-		if (read* == '\\')
+		if (*format == '%')
 		{
-			read++;
-			if (!*read)
-				break;
+			steps = parse(format, &data);
+			if (steps == -1)
+				return (-1);
+			else
+				format += steps;
 		}
-		ret += write(fd, read, 1);
-		read++;
+		else
+			data.ret += write(fd, format, 1);
+		format++;
 	}
-	return (ret);
+	va_end(data.ap);
+	return (data.ret);
 }
