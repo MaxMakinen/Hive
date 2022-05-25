@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 12:31:53 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:10:16 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	get_len(long num, int base, t_printf *data)
 		num /= base;
 	}
 	data->precision -= len;
-	data->width -= len;
+	data->width -= len + ((data->flags & NEGATIVE) || (data->flags & PLUS));
 	if (data->precision >= 0)
 		data->width -= data->precision;
 	while (len-- > 2)
@@ -37,7 +37,7 @@ static int	get_len(long num, int base, t_printf *data)
 	return (size);
 }
 
-static void	prefix(int base, int neg, t_printf *data)
+static void	prefix(int base, t_printf *data)
 {
 	if (data->flags & PREFIX)
 	{
@@ -51,18 +51,16 @@ static void	prefix(int base, int neg, t_printf *data)
 			else if (base == 2)
 				data->ret += write(data->fd, "b", 1);
 		}
-		else if (neg == 1)
-			data->ret += write(data->fd, "-", 1);
 	}
 }
 
-static void	check_neg(long *num, int *neg, int base)
+static void	check_neg(long long *num, t_printf *data, int base)
 {
 	if (*num < 0)
 	{
 		*num *= -1;
 		if (base == 10)
-			*neg = 1;
+			data->flags |= NEGATIVE;
 	}
 }
 
@@ -76,7 +74,7 @@ int	ft_divmod(long long *num, int base)
 	return (mod);
 }
 
-void	check_padding(t_printf *data)
+void	check_padding(t_printf *data, int base)
 {
 	if (data->precision > -1 && data->flags & ZERO)
 		data->flags ^= ZERO;
@@ -84,18 +82,23 @@ void	check_padding(t_printf *data)
 		padding(data);
 	else
 		data->flags ^= LEFT;
+	if (base == 10 && !(data->flags & NEGATIVE) && data->flags & PLUS)
+		data->ret += write(data->fd, "+", 1);
+	data->flags &= ~(PLUS);
+	if (base == 10 && data->flags & NEGATIVE)
+		data->ret += write(data->fd, "-", 1);
+	data->flags &= ~(NEGATIVE);
 	while (data->precision > 0)
 	{
-		data->ret += write(1, "0", 1);
+		data->ret += write(data->fd, "0", 1);
 		data->precision--;
 	}
 }
 
-void	ft_itoa_base_fd(t_printf *data, int num, int base)
+void	ft_lltoa_base_fd(t_printf *data, long long num, int base)
 {
-	int		len;
-	int		neg;
-	long	temp;
+	long long	len;
+	long long	temp;
 	char	*key;
 	char	step;
 
@@ -104,18 +107,17 @@ void	ft_itoa_base_fd(t_printf *data, int num, int base)
 	else
 		key = "0123456789abcdef";
 	temp = num;
-	neg = 0;
-	check_neg(&temp, &neg, base);
+	check_neg(&temp, data, base);
 	len = get_len(temp, base, data);
-	check_padding(data);
-	prefix(base, neg, data);
+	check_padding(data, base);
+	prefix(base, data);
 	while (len > 0)
 	{
 		step = key[((temp / len) % base)];
 		data->ret += write(data->fd, &step, 1);
 		len /= base;
 	}
-	check_padding(data);
+	check_padding(data, base);
 }
 
 static u_int64_t	u_get_len(u_int64_t num, int base, t_printf *data)
@@ -158,18 +160,18 @@ static void	u_prefix(int base, t_printf *data)
 	}
 }
 
-void	ft_ulltoa_base_fd(t_printf *data, u_int64_t num, int base)
+void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base)
 {
-	u_int64_t		len;
-	char	*key;
-	char	step;
+	unsigned long long	len;
+	char				*key;
+	char				step;
 
 	if (data->flags & HEX)
 		key = "0123456789ABCDEF";
 	else
 		key = "0123456789abcdef";
 	len = u_get_len(num, base, data);
-	check_padding(data);
+	check_padding(data, base);
 	u_prefix(base, data);
 	while (len > 0)
 	{
@@ -177,7 +179,7 @@ void	ft_ulltoa_base_fd(t_printf *data, u_int64_t num, int base)
 		data->ret += write(data->fd, &step, 1);
 		len /= base;
 	}
-	check_padding(data);
+	check_padding(data, base);
 }
 /*
 int	lltoa_base_fd(t_printf *data, long long num, int base)
@@ -196,7 +198,7 @@ int	lltoa_base_fd(t_printf *data, long long num, int base)
 	{
 		hex = num & 0xF;
 		temp += hex % base;
-		write(1, key[temp], 1);
+		write(data->fd, key[temp], 1);
 		num = num >> 4;
 	}
 

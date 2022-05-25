@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 12:29:39 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:10:03 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	print_char(const char **format, t_printf *data)
 {
-	int	c;
+	char c;
 
 	(void)format;
 	c = va_arg(data->ap, int);
@@ -58,25 +58,29 @@ int	print_string(const char **format, t_printf *data)
 
 int	print_decimal(const char **format, t_printf *data)
 {
-	int num;
-	int	len;
-
 	(void)format;
-	len = 1;
-	num = va_arg(data->ap, int);
-	ft_itoa_base_fd(data, num, 10);
-	return (len);
+	if (data->flags & SIGNED)
+	{
+		get_signed(data);
+		ft_lltoa_base_fd(data, data->input.sll, 10);
+	}
+	else
+	{
+		get_unsigned(data);
+		ft_ulltoa_base_fd(data, data->input.ull, 10);
+	}
+	return (1);
 }
 
 int	print_hexadecimal(const char **format, t_printf *data)
 {
-	int num;
+	unsigned int num;
 	int	len;
 
 	(void)format;
 	len = 1;
-	num = va_arg(data->ap, int);
-	ft_itoa_base_fd(data, num, 16);
+	num = va_arg(data->ap, unsigned int);
+	ft_ulltoa_base_fd(data, num, 16);
 	return (len);
 }
 

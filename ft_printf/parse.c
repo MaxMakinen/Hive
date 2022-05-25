@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 08:42:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 12:05:23 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:49:30 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	parse(const char *format, t_printf *data)
 	{
 		if (*format == 'X')
 			data->flags |= HEX;
+		if (*format == 'd')
+			data->flags |= SIGNED;
 		if (*format == conversion[selection])
 		{
 			format += data->conv_ptr[selection](format, data);

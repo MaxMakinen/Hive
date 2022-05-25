@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 12:29:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:04:55 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 
 typedef int (*t_funcptr)();
 
+typedef union u_input
+{
+	long long			sll;
+	unsigned long long	ull;
+}	t_input;
+
 typedef struct s_printf
 {
 	int			fd;
@@ -29,11 +35,11 @@ typedef struct s_printf
 	int			flags;
 	int			width;
 	int			precision;
+	t_input		input;
 	va_list		ap;
 	t_funcptr	flag_ptr[8];//[FLAG(PARAMB)];
 	t_funcptr	conv_ptr[8];//[CONVERSION(PARAMB)];
 }	t_printf;
-
 
 /*
  * 	Prototypes
@@ -63,8 +69,8 @@ int	print_pointer(const char **format, t_printf *data);
 int	parse(const char *format, t_printf *data);
 
 
-void	ft_itoa_base_fd(t_printf *data, int num, int base);
-void	ft_ulltoa_base_fd(t_printf *data, u_int64_t num, int base);
+void	ft_itoa_base_fd(t_printf *data, long long num, int base);
+void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base);
 int	ft_bit(int step);
 
 # define ZERO ft_bit(1)
@@ -79,5 +85,7 @@ int	ft_bit(int step);
 # define LONGLONG ft_bit(10)
 # define LONGDOUBLE ft_bit(11)
 # define HEX ft_bit(12)
+# define NEGATIVE ft_bit(13)
+# define SIGNED ft_bit(14)
 
 #endif
