@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:54:13 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/23 10:15:14 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:59:46 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	precision(const char *format, t_printf *data)
 
 	len = 1;
 	format++;
+	// Change into local while loop, should be faster.
 	data->precision = ft_atoi(format);
 	while (ft_isdigit(*format))
 	{

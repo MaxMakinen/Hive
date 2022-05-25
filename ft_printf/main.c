@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:05:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/23 11:03:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:33:16 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,59 +19,198 @@ int	main(void)
 	int	num = 123;
 	char	*str = "meep";
 
-	ft_printf("	string test\n\n");
+	ft_printf("	~ ~=<: string test :>=~ ~\n\n");
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%s\n", "meep");
 	printf("test	= %d\n", test);
 	
 	test = printf("printf	= ");
 	test = printf("%s\n", "meep");
-	printf("printf test = %d\n\n	~ ~=<:#:>=~ ~\n\n", test);
+	printf("printf test = %d\n", test);
 
-	ft_printf("	char test\n\n");
+	ft_printf("	~ ~=<: char test :>=~ ~\n\n");
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%c\n", 'M');
 	printf("test	= %d\n", test);
 	
 	test = printf("printf	= ");
 	test = printf("%c\n", 'M');
-	printf("printf test = %d\n\n	~ ~=<:#:>=~ ~\n\n", test);
+	printf("printf test = %d\n", test);
 
-	ft_printf("	width test\n\n");
+	ft_printf("	~ ~=<: width test :>=~ ~\n\n");
 	ft_printf("ft_pf	= ");
-	test = ft_printf("%010s\n", str);
+	test = ft_printf("%10s\n", str);
 	printf("test	= %d\n", test);
 	
 	test = printf("printf	= ");
-	test = printf("%010s\n", str);
-	printf("printf test = %d\n\n	~ ~=<:#:>=~ ~\n\n", test);
+	test = printf("%10s\n", str);
+	printf("printf test = %d\n", test);
 
-	ft_printf("	width + left test\n\n");
+	ft_printf("	~ ~=<: width + left test :>=~ ~\n\n");
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%-10s$\n", str);
 	printf("test	= %d\n", test);
 	
 	test = printf("printf	= ");
 	test = printf("%-10s$\n", str);
-	printf("printf test = %d\n\n	~ ~=<:#:>=~ ~\n\n", test);
+	printf("printf test = %d\n", test);
 
-	ft_printf("	precision test\n\n");
+	ft_printf("	~ ~=<: precision test :>=~ ~\n\n");
 	ft_printf("ft_pf str	= ");
 	test = ft_printf("%.10s$\n", str);
 	printf("test	= %d\n", test);
 	
 	test = printf("printf str	= ");
 	test = printf("%.10s$\n", str);
-	printf("printf test = %d\n\n	~ ~=<:#:>=~ ~\n\n", test);
+	printf("printf test = %d\n", test);
 
-	ft_printf("	decimal test\n\n");
+	ft_printf("	~ ~=<: decimal test :>=~ ~\n\n");
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%d\n", num);
 	printf("test	= %d\n", test);
 	
 	test = printf("printf	= ");
 	test = printf("%d\n", num);
-	printf("printf test = %d\n\n	~ ~=<:#:>=~ ~\n\n", test);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: decimal + width test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%5d\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%5d\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: decimal + precision test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%.5d\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%.5d\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: decimal + width + precision test :>=~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%10.5d\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%10.5d\n", num);
+	printf("test	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%5.10d\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%5.10d\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: hexadecimal test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%x\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%x\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: HEXAdecimal test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%X\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%X\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%5X\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%5X\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%.5X\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%.5X\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%2.5X\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%2.5X\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%#X\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%#X\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: octal test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%o\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%o\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%5o\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%5o\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%.5o\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%.5o\n", num);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%#o\n", num);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%#o\n", num);
+	printf("printf test = %d\n", test);
+
+	int	*pnum;
+	pnum = &num;
+	ft_printf("	~ ~=<: pointer test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%p\n", pnum);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%p\n", pnum);
+	printf("printf test = %d\n", test);
+
+	pnum = NULL;
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%p\n", pnum);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%p\n", pnum);
+	printf("printf test = %d\n", test);
 
 	return (0);
 }

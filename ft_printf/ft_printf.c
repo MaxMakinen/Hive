@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:40:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/23 10:55:17 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:05:16 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ void	prep_data(t_printf *data)
 	data->conv_ptr[0] = &print_char;
 	data->conv_ptr[1] = &print_string;
 	data->conv_ptr[2] = &print_decimal;
+	data->conv_ptr[3] = &print_hexadecimal;
+	data->conv_ptr[4] = &print_hexadecimal;
+	data->conv_ptr[5] = &print_octal;
+	data->conv_ptr[6] = &print_decimal;
+	data->conv_ptr[7] = &print_pointer;
 }
 
 int	ft_vdprintf(int fd, const char *format, va_list ap)
@@ -75,7 +80,8 @@ int	ft_vdprintf(int fd, const char *format, va_list ap)
 				format += steps;
 		}
 		else
-			data.ret += write(fd, format, 1);
+			data.ret += write(fd, format, 1); 
+// Can I move the writes into a single one called at the end or when we encounter a oercentage? like printstr?
 		format++;
 	}
 	va_end(data.ap);
