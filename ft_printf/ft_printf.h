@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 17:04:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/27 09:22:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	print_pointer(const char **format, t_printf *data);
 int	parse(const char *format, t_printf *data);
 
 
-void	ft_itoa_base_fd(t_printf *data, long long num, int base);
+void	ft_itoa_base_fd(t_printf *data, int num, int base);
+void	ft_lltoa_base_fd(t_printf *data, long long num, int base);
 void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base);
 int	ft_bit(int step);
 
@@ -79,13 +80,15 @@ int	ft_bit(int step);
 # define SPACE ft_bit(4)
 # define MINUS ft_bit(5)
 # define PREFIX ft_bit(6)
-# define CHAR ft_bit(7)
-# define SHORT ft_bit(8)
-# define LONG ft_bit(9)
-# define LONGLONG ft_bit(10)
-# define LONGDOUBLE ft_bit(11)
-# define HEX ft_bit(12)
-# define NEGATIVE ft_bit(13)
-# define SIGNED ft_bit(14)
+
+# define HEX ft_bit(7)
+# define NEGATIVE ft_bit(8)
+# define SIGNED ft_bit(9)
+
+# define CHAR ft_bit(10)
+# define SHORT ft_bit(11)
+# define LONG ft_bit(12)
+# define LONGLONG ft_bit(13)
+# define LONGDOUBLE ft_bit(14)
 
 #endif

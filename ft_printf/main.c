@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:05:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 15:30:44 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/27 08:42:27 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,51 @@ int	main(void)
 	
 	test = printf("printf	= ");
 	test = printf("%5x\n", num);
+	printf("printf test = %d\n", test);
+
+	unsigned int unum = 420;
+	ft_printf("	~ ~=<: unsigned int decimal test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%u\n", unum);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%u\n", unum);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: unsigned int decimal + width test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%5u\n", unum);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%5u\n", unum);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: unsigned int decimal + precision test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%.5u\n", unum);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%.5u\n", unum);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: unsigned int decimal + width + precision test :>=~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%10.5u\n", unum);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%10.5u\n", unum);
+	printf("test	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%5.10u\n", unum);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%5.10u\n", unum);
 	printf("printf test = %d\n", test);
 
 	return (0);

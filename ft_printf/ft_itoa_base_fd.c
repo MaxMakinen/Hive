@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 17:10:16 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/27 08:57:34 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_printf.h"
 #include <unistd.h>
 
-static int	get_len(long num, int base, t_printf *data)
+static int	get_len(long long num, int base, t_printf *data)
 {
 	int	len;
 	int	size;
@@ -97,7 +97,7 @@ void	check_padding(t_printf *data, int base)
 
 void	ft_lltoa_base_fd(t_printf *data, long long num, int base)
 {
-	long long	len;
+	int		len;
 	long long	temp;
 	char	*key;
 	char	step;
@@ -120,10 +120,10 @@ void	ft_lltoa_base_fd(t_printf *data, long long num, int base)
 	check_padding(data, base);
 }
 
-static u_int64_t	u_get_len(u_int64_t num, int base, t_printf *data)
+static unsigned long long	u_get_len(unsigned long long num, int base, t_printf *data)
 {
-	u_int64_t	len;
-	u_int64_t	size;
+	unsigned long long	len;
+	unsigned long long	size;
 
 	len = 0;
 	size = base;

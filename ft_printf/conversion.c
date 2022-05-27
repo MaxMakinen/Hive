@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 17:10:03 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/27 09:02:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ int	print_decimal(const char **format, t_printf *data)
 	(void)format;
 	if (data->flags & SIGNED)
 	{
-		get_signed(data);
+		data->input.sll = va_arg(data->ap, int);
 		ft_lltoa_base_fd(data, data->input.sll, 10);
 	}
 	else
 	{
-		get_unsigned(data);
+		data->input.ull = va_arg(data->ap, unsigned int);
 		ft_ulltoa_base_fd(data, data->input.ull, 10);
 	}
 	return (1);
@@ -91,14 +91,14 @@ int	print_octal(const char **format, t_printf *data)
 
 	(void)format;
 	len = 1;
-	num = va_arg(data->ap, int);
-	ft_itoa_base_fd(data, num, 8);
+	num = va_arg(data->ap, unsigned int);
+	ft_ulltoa_base_fd(data, num, 8);
 	return (len);
 }
 
 int	print_pointer(const char **format, t_printf *data)
 {
-	u_int64_t	num;
+	unsigned long long	num;
 	void	*ptr;
 	int	len;
 
@@ -106,7 +106,7 @@ int	print_pointer(const char **format, t_printf *data)
 	data->flags |= PREFIX;
 	len = 1;
 	ptr = (va_arg(data->ap, void *));
-	num = (u_int64_t)ptr;
+	num = (unsigned long long)ptr;
 	ft_ulltoa_base_fd(data, num, 16);
 	return (len);
 }
