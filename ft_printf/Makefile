@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/05/30 12:03:12 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/05/30 14:35:37 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME =			libftprintf.a
 SRC_PATH =		./src/
 INCLUDE_PATH =	./include/ 
 SRCS =			ft_printf.c flags.c conversion.c parse.c width_and_precision.c\
-				ft_itoa_base_fd.c ft_bit.c
+				ft_itoa_base_fd.c ft_bit.c get_number.c
 LIB =			libft.a
 INCLUDES =		-I $(INCLUDE_PATH) -I ./libft/
 OBJECTS =		$(addprefix $(SRC_PATH), $(SRCS:%.c=%.o))

@@ -6,11 +6,33 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 08:42:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 13:15:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:18:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	get_length(const char **format, t_printf *data)
+{
+	if (**format == 'h')
+	{
+		*format += 1;
+		if (**format == 'h')
+			data->flags |= SHORT;
+		else
+			data->flags |= CHAR;
+	}
+	else if (**format == 'l')
+	{
+		*format += 1;
+		if (**format == 'l')
+			data->flags |= LONGLONG;
+		else
+			data->flags |= LONG;
+	}
+	else if (**format == 'L')
+		data->flags |= LONGDOUBLE;
+}
 
 int	parse(const char *format, t_printf *data)
 {
@@ -22,8 +44,10 @@ int	parse(const char *format, t_printf *data)
 	format++;
 	mem = format;
 	flags = "0-+ #";
-	conversion = "csdxXoupi";
+	conversion = "csdxXoupif";
 	selection = 0;
+	if (*format == 0)
+		return (-1);
 	if (*format == '%')
 	{
 		data->ret += write(data->fd, "%", 1);
@@ -44,6 +68,7 @@ int	parse(const char *format, t_printf *data)
 	if (*format == '.')
 		format += precision(format, data);
 	selection = 0;
+	get_length(&format, data);
 	while (conversion[selection] != '\0')
 	{
 		if (*format == 'X')
@@ -57,5 +82,7 @@ int	parse(const char *format, t_printf *data)
 		}
 		selection++;
 	}
+	if (format == mem)
+		data->ret += write(data->fd, "%", 1);
 	return (format - mem);
 }

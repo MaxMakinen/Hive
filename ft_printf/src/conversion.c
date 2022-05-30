@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 13:00:04 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:34:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,11 @@ int	print_string(const char **format, t_printf *data)
 int	print_decimal(const char **format, t_printf *data)
 {
 	(void)format;
+	get_number(data);
 	if (data->flags & SIGNED)
-	{
-		data->input.sll = va_arg(data->ap, int);
 		ft_lltoa_base_fd(data, data->input.sll, 10);
-	}
 	else
-	{
-		data->input.ull = va_arg(data->ap, unsigned int);
 		ft_ulltoa_base_fd(data, data->input.ull, 10);
-	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 13:12:31 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:35:03 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 typedef int (*t_funcptr)();
 
+// This union should propably be removed. Don't think it does anything.
 typedef union u_input
 {
 	long long			sll;
@@ -38,7 +39,7 @@ typedef struct s_printf
 	t_input		input;
 	va_list		ap;
 	t_funcptr	flag_ptr[5];//[FLAG(PARAMB)];
-	t_funcptr	conv_ptr[9];//[CONVERSION(PARAMB)];
+	t_funcptr	conv_ptr[10];//[CONVERSION(PARAMB)];
 }	t_printf;
 
 /*
@@ -67,6 +68,7 @@ int	print_octal(const char **format, t_printf *data);
 int	print_pointer(const char **format, t_printf *data);
 
 int	parse(const char *format, t_printf *data);
+void	get_number(t_printf *data);
 
 
 void	ft_itoa_base_fd(t_printf *data, int num, int base);

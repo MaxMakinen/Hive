@@ -6,12 +6,14 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:05:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 12:33:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:42:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
+#include <limits.h>                                                             
+#include <signal.h>  
 
 int	main(void)
 {
@@ -358,7 +360,7 @@ int	main(void)
 
 	ft_printf("	~ ~=<: print NULL string test :>=~\n\n");
 	ft_printf("ft_pf	= ");
-	test = ft_printf("%NULL %s\n", NULL);
+	test = ft_printf("NULL %s\n", NULL);
 	printf("test	= %d\n", test);
 	
 	test = printf("printf	= ");
@@ -390,5 +392,47 @@ int	main(void)
 	test = printf("%p\n", 0);
 	printf("printf test = %d\n", test);
 
+	ft_printf("	~ ~=<: print %% test :>=~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%%\n");
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%%\n");
+	printf("test	= %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%\n");
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%\n");
+	printf("test	= %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%");
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%");
+	printf("\ntest	= %d\n", test);
+
+	ft_printf("	~ ~=<: print ld test :>=~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%ld", (long)INT_MAX + 1);
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%ld", (long)INT_MAX + 1);
+	printf("\ntest	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%ld", LONG_MAX);
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%ld", LONG_MAX);
+	printf("\ntest	= %d\n", test);
+	
 	return (0);
 }
