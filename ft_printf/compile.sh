@@ -1,1 +1,0 @@
-gcc -Wall -Wextra -Werror -g ./tests/main.c ./src/ft_printf.c ./src/conversion.c ./src/flags.c ./src/ft_bit.c ./src/ft_itoa_base_fd.c ./src/parse.c ./src/width_and_precision.c libft/libft.a -I ./include/ -I ./libft/

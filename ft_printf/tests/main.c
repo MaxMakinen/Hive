@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:05:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/27 08:42:27 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 12:33:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,6 +354,40 @@ int	main(void)
 	
 	test = printf("printf	= ");
 	test = printf("%5.10u\n", unum);
+	printf("printf test = %d\n", test);
+
+	ft_printf("	~ ~=<: print NULL string test :>=~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%NULL %s\n", NULL);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("NULL %s\n", NULL);
+	printf("test	= %d\n", test);
+	
+	ft_printf("	~ ~=<: pointer test :>=~ ~\n\n");
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%p\n", 1);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%p\n", 1);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%p\n", 15);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%p\n", 15);
+	printf("printf test = %d\n", test);
+
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%p\n", 0);
+	printf("test	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%p\n", 0);
 	printf("printf test = %d\n", test);
 
 	return (0);

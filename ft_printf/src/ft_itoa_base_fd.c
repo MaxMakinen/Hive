@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 11:03:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:09:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_len(long long num, int base, t_printf *data)
 
 	len = 0;
 	size = base;
-	if (num == 0)
+	if (num < (long long)base)
 		return (1);
 	while (num > 0)
 	{
@@ -125,7 +125,7 @@ static unsigned long long	u_get_len(unsigned long long num, int base, t_printf *
 
 	len = 0;
 	size = base;
-	if (num == 0)
+	if (num < (unsigned long long)base)
 		return (1);
 	while (num > 0)
 	{

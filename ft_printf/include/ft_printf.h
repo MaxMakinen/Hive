@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 10:57:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:12:31 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef struct s_printf
 	int			precision;
 	t_input		input;
 	va_list		ap;
-	t_funcptr	flag_ptr[8];//[FLAG(PARAMB)];
-	t_funcptr	conv_ptr[8];//[CONVERSION(PARAMB)];
+	t_funcptr	flag_ptr[5];//[FLAG(PARAMB)];
+	t_funcptr	conv_ptr[9];//[CONVERSION(PARAMB)];
 }	t_printf;
 
 /*

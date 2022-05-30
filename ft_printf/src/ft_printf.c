@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:40:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/25 12:05:16 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:12:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ int	ft_dprintf(int fd ,const char *format, ...)
 	return (ret);
 }
 
+void	reset_data(t_printf *data)
+{
+	data->flags = 0;
+	data->width = 0;
+	data->precision = -1;
+}
+
 void	prep_data(t_printf *data)
 {
 	data->flags = 0;
@@ -59,6 +66,7 @@ void	prep_data(t_printf *data)
 	data->conv_ptr[5] = &print_octal;
 	data->conv_ptr[6] = &print_decimal;
 	data->conv_ptr[7] = &print_pointer;
+	data->conv_ptr[8] = &print_decimal;
 }
 
 int	ft_vdprintf(int fd, const char *format, va_list ap)
@@ -78,6 +86,7 @@ int	ft_vdprintf(int fd, const char *format, va_list ap)
 				return (-1);
 			else
 				format += steps;
+			reset_data(&data);
 		}
 		else
 			data.ret += write(fd, format, 1); 

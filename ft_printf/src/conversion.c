@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/27 09:02:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:00:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	print_string(const char **format, t_printf *data)
 	int		len;
 
 	(void)format;
-	s = va_arg(data->ap, char*);
+	s = (char *)va_arg(data->ap, char*);
+	if (s == 0)
+		s = "(null)";
 	len = ft_strlen(s);
 	data->width = data->width - len;
 	if (data->flags & ZERO)
@@ -100,13 +102,17 @@ int	print_pointer(const char **format, t_printf *data)
 {
 	unsigned long long	num;
 	void	*ptr;
-	int	len;
 
 	(void)format;
 	data->flags |= PREFIX;
-	len = 1;
 	ptr = (va_arg(data->ap, void *));
 	num = (unsigned long long)ptr;
-	ft_ulltoa_base_fd(data, num, 16);
-	return (len);
+	if (num == 0)
+	{
+		data->ret += 5;
+		ft_putstr("(nil)");
+	}
+	else
+		ft_ulltoa_base_fd(data, num, 16);
+	return (1);
 }

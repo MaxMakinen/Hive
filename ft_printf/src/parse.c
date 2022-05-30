@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 08:42:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 11:03:43 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:15:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	parse(const char *format, t_printf *data)
 	format++;
 	mem = format;
 	flags = "0-+ #";
-	conversion = "csdxXoup";
+	conversion = "csdxXoupi";
 	selection = 0;
 	if (*format == '%')
 	{
@@ -48,7 +48,7 @@ int	parse(const char *format, t_printf *data)
 	{
 		if (*format == 'X')
 			data->flags |= HEX;
-		if (*format == 'd')
+		if (*format == 'd' || *format == 'i')
 			data->flags |= SIGNED;
 		if (*format == conversion[selection])
 		{
