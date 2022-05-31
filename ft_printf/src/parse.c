@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 08:42:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 14:18:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/31 10:25:52 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,21 @@ void	get_length(const char **format, t_printf *data)
 	{
 		*format += 1;
 		if (**format == 'h')
-			data->flags |= SHORT;
-		else
+		{
 			data->flags |= CHAR;
+			*format += 1;
+		}
+		else
+			data->flags |= SHORT;
 	}
 	else if (**format == 'l')
 	{
 		*format += 1;
 		if (**format == 'l')
+		{
 			data->flags |= LONGLONG;
+			*format += 1;
+		}
 		else
 			data->flags |= LONG;
 	}

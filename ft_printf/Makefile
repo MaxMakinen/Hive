@@ -6,12 +6,12 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/05/30 14:35:37 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/05/31 08:31:46 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =			clang
-FLAGS = 		-Wall -Wextra -Werror -c
+FLAGS = 		-Wall -Wextra -Werror -c -g
 DEBFLAGS = 		-Wall -Wextra -Werror -c -g
 NAME =			libftprintf.a
 SRC_PATH =		./src/

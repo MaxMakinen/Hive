@@ -6,21 +6,25 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 13:09:58 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:35:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	get_len(long long num, int base, t_printf *data)
+static long long	get_len(long long num, int base, t_printf *data)
 {
-	int	len;
-	int	size;
+	int			len;
+	long long	size;
 
 	len = 0;
-	size = base;
-	if (num < (long long)base)
-		return (1);
+	size = 1;
+	if (num < 0)
+	{
+		num /= base;
+		num = -num;
+		len++;
+	}
 	while (num > 0)
 	{
 		len++;
@@ -30,7 +34,7 @@ static int	get_len(long long num, int base, t_printf *data)
 	data->width -= len + ((data->flags & NEGATIVE) || (data->flags & PLUS));
 	if (data->precision >= 0)
 		data->width -= data->precision;
-	while (len-- > 2)
+	while (len-- > 1)
 		size *= base;
 	return (size);
 }
@@ -52,11 +56,10 @@ static void	prefix(int base, t_printf *data)
 	}
 }
 
-static void	check_neg(long long *num, t_printf *data, int base)
+static void	check_neg(long long num, t_printf *data, int base)
 {
-	if (*num < 0)
+	if (num < 0)
 	{
-		*num *= -1;
 		if (base == 10)
 			data->flags |= NEGATIVE;
 	}
@@ -72,20 +75,27 @@ int	ft_divmod(long long *num, int base)
 	return (mod);
 }
 
-void	check_padding(t_printf *data, int base)
+void	plusmin(t_printf *data, int base)
 {
-	if (data->precision > -1 && data->flags & ZERO)
-		data->flags ^= ZERO;
-	if (!(data->flags & LEFT))
-		padding(data);
-	else
-		data->flags ^= LEFT;
 	if (base == 10 && !(data->flags & NEGATIVE) && data->flags & PLUS)
 		data->ret += write(data->fd, "+", 1);
 	data->flags &= ~(PLUS);
 	if (base == 10 && data->flags & NEGATIVE)
 		data->ret += write(data->fd, "-", 1);
-	data->flags &= ~(NEGATIVE);
+}
+
+void	check_padding(t_printf *data, int base)
+{
+	if (data->precision > -1 && data->flags & ZERO)
+		data->flags &= ~(ZERO);
+	if (data->flags & ZERO)
+		plusmin(data, base);
+	if (!(data->flags & LEFT))
+		padding(data);
+	else
+		data->flags ^= LEFT;
+	if (!(data->flags & ZERO))
+		plusmin(data, base);
 	while (data->precision > 0)
 	{
 		data->ret += write(data->fd, "0", 1);
@@ -95,26 +105,28 @@ void	check_padding(t_printf *data, int base)
 
 void	ft_lltoa_base_fd(t_printf *data, long long num, int base)
 {
-	int		len;
-	long long	temp;
+	long long	len;
 	char	*key;
-	char	step;
+	int	step;
 
 	if (data->flags & HEX)
 		key = "0123456789ABCDEF";
 	else
 		key = "0123456789abcdef";
-	temp = num;
-	check_neg(&temp, data, base);
-	len = get_len(temp, base, data);
+	check_neg(num, data, base);
+	len = get_len(num, base, data);
 	check_padding(data, base);
 	prefix(base, data);
 	while (len > 0)
 	{
-		step = key[((temp / len) % base)];
-		data->ret += write(data->fd, &step, 1);
+		if (data->flags & NEGATIVE)
+			step = (-((num / len) % base));
+		else
+			step = ((num / len) % base);
+		data->ret += write(data->fd, &(key[step]), 1);
 		len /= base;
 	}
+	data->flags &= ~(NEGATIVE);
 	check_padding(data, base);
 }
 
@@ -124,19 +136,17 @@ static unsigned long long	u_get_len(unsigned long long num, int base, t_printf *
 	unsigned long long	size;
 
 	len = 0;
-	size = base;
-	if (num < (unsigned long long)base)
-		return (1);
+	size = 1;
 	while (num > 0)
 	{
 		len++;
 		num /= base;
 	}
 	data->precision -= len;
-	data->width -= len;
+	data->width -= len + (base == 8) + (2 * (base == 16));
 	if (data->precision >= 0)
 		data->width -= data->precision;
-	while (len-- > 2)
+	while (len-- > 1)
 		size *= base;
 	return (size);
 }
@@ -152,8 +162,6 @@ static void	u_prefix(int base, t_printf *data)
 				data->ret += write(data->fd, "X", 1);
 			if (base == 16 && !(data->flags & HEX))
 				data->ret += write(data->fd, "x", 1);
-			else if (base == 2)
-				data->ret += write(data->fd, "b", 1);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 14:34:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:36:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ int	print_char(const char **format, t_printf *data)
 
 	(void)format;
 	c = va_arg(data->ap, int);
+	data->width -= 1;
+	if (data->flags & ZERO)
+		data->flags = data->flags ^ ZERO;
+	if (data->width > 0 && !(data->flags & LEFT))
+		padding(data);
 	data->ret += write(data->fd, &c, 1);
+	if (data->width > 0 && data->flags & LEFT)
+		padding(data);
 	return (1);
 }
 
@@ -71,26 +78,18 @@ int	print_decimal(const char **format, t_printf *data)
 
 int	print_hexadecimal(const char **format, t_printf *data)
 {
-	unsigned int num;
-	int	len;
-
 	(void)format;
-	len = 1;
-	num = va_arg(data->ap, unsigned int);
-	ft_ulltoa_base_fd(data, num, 16);
-	return (len);
+	get_number(data);
+	ft_ulltoa_base_fd(data, data->input.ull, 16);
+	return (1);
 }
 
 int	print_octal(const char **format, t_printf *data)
 {
-	int num;
-	int	len;
-
 	(void)format;
-	len = 1;
-	num = va_arg(data->ap, unsigned int);
-	ft_ulltoa_base_fd(data, num, 8);
-	return (len);
+	get_number(data);
+	ft_ulltoa_base_fd(data, data->input.ull, 8);
+	return (1);
 }
 
 int	print_pointer(const char **format, t_printf *data)
@@ -104,8 +103,14 @@ int	print_pointer(const char **format, t_printf *data)
 	num = (unsigned long long)ptr;
 	if (num == 0)
 	{
-		data->ret += 5;
-		ft_putstr("(nil)");
+		data->width -= 5;
+		if (data->flags & ZERO)
+			data->flags = data->flags ^ ZERO;
+		if (data->width > 0 && !(data->flags & LEFT))
+			padding(data);
+		data->ret += write(data->fd, "(nil)", 5);
+		if (data->width > 0 && data->flags & LEFT)
+			padding(data);
 	}
 	else
 		ft_ulltoa_base_fd(data, num, 16);

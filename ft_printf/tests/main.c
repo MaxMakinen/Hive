@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:05:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/30 14:42:11 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/05/31 10:29:03 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,6 +433,54 @@ int	main(void)
 	test = printf("printf	= ");
 	test = printf("%ld", LONG_MAX);
 	printf("\ntest	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%ld", LONG_MIN);
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%ld", LONG_MIN);
+	printf("\ntest	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%d", -42);
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%d", -42);
+	printf("\ntest	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%lx", ULONG_MAX);
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%lx", ULONG_MAX);
+	printf("\ntest	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%lx", 0ul);
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%lx", 0ul);
+	printf("\ntest	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%lld", 0ll);
+	printf("\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%lld", 0ll);
+	printf("\ntest	= %d\n", test);
+	
+	ft_printf("ft_pf	= ");
+	test = ft_printf("%3c", 0);
+	printf("$\ntest	= %d\n", test);
+	
+	test = printf("printf	= ");
+	test = printf("%3c", 0);
+	printf("$\ntest	= %d\n", test);
 	
 	return (0);
 }
