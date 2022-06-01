@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/05/31 08:31:46 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/06/01 10:46:26 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ fclean: clean libfclean
 
 re: fclean all
 
-tidy: all clean
+tidy: re clean
+	rm -f $(OBJECTS) 
 
 .PHONY: all libclean libfclean clean fclean re tidy

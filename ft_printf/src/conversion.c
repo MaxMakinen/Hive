@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/31 11:36:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/01 09:02:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	print_pointer(const char **format, t_printf *data)
 			data->flags = data->flags ^ ZERO;
 		if (data->width > 0 && !(data->flags & LEFT))
 			padding(data);
-		data->ret += write(data->fd, "(nil)", 5);
+		data->ret += write(data->fd, NIL, NILSIZE);
 		if (data->width > 0 && data->flags & LEFT)
 			padding(data);
 	}
