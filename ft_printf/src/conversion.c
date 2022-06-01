@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/01 09:02:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:08:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	print_string(const char **format, t_printf *data)
 	if (s == 0)
 		s = "(null)";
 	len = ft_strlen(s);
+	if (data->precision > -1 && data->precision < len)
+		len = data->precision;
 	data->width = data->width - len;
 	if (data->flags & ZERO)
 		data->flags = data->flags ^ ZERO;

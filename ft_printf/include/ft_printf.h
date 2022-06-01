@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/01 10:38:34 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:42:47 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,12 @@ int	ft_bit(int step);
 
 # define EMPTY ft_bit(15)
 
-# define NIL "(nil)"
-# define NILSIZE 5
+# if defined (__linux__)
+#  define NIL "(nil)"
+#  define NILSIZE 5
+# else
+#  define NIL "0x0"
+#  define NILSIZE 3
+# endif
 
 #endif

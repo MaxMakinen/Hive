@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:27:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/01 10:41:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:45:01 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	get_number(t_printf *data)
 			data->input.sll = (long long)va_arg(data->ap, long long);
 		else
 			data->input.sll = (int)va_arg(data->ap, int);
-		if (data->input.sll == 0)
-			data->flags &= ~(PREFIX);
 	}
 	else
 	{
@@ -41,7 +39,5 @@ void	get_number(t_printf *data)
 			data->input.ull = (unsigned long long)va_arg(data->ap, unsigned long long);
 		else
 			data->input.ull = (unsigned int)va_arg(data->ap, unsigned int);
-		if (data->input.ull == 0)
-			data->flags &= ~(PREFIX);
 	}
 }

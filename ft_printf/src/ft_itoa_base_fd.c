@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/01 10:43:39 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:26:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static long long	get_len(long long num, int base, t_printf *data)
 	int			len;
 	long long	size;
 
-	len = 0;
-	size = 1;
+	size = (num != 0 || data->precision != 0);
+	len = (num == 0) * size;
 	if (num < 0)
 	{
 		num /= base;
@@ -31,7 +31,7 @@ static long long	get_len(long long num, int base, t_printf *data)
 		num /= base;
 	}
 	data->precision -= len;
-	data->width -= len + ((data->flags & NEGATIVE) || (data->flags & PLUS));
+	data->width -= len + ((data->flags & NEGATIVE) || (data->flags & PLUS) || (data->flags & SPACE));
 	if (data->precision >= 0)
 		data->width -= data->precision;
 	while (len-- > 1)
@@ -43,19 +43,27 @@ static void	prefix(int base, t_printf *data)
 {
 	if (base != 10)
 	{
-		if (data->flags & PREFIX)
-		{
+		/*
+		 * TODO This shit can't be right. Test in different OS.
+		 */
+		if (base == 8 && (data->precision == 0 && data->flags & PREFIX))
 			data->ret += write(data->fd, "0", 1);
-			if (base == 16 && data->flags & HEX)
-				data->ret += write(data->fd, "X", 1);
-			if (base == 16 && !(data->flags & HEX))
-				data->ret += write(data->fd, "x", 1);
+		if (data->flags & PREFIX && !(data->flags & EMPTY))
+		{
+			if (base == 8 && (data->precision != 0))
+				data->ret += write(data->fd, "0", 1);
+			if (base == 16 && data->flags & HEX && data->precision != 0)
+				data->ret += write(data->fd, "0X", 2);
+			if (base == 16 && !(data->flags & HEX) && data->precision != 0)
+				data->ret += write(data->fd, "0x", 2);
 		}
 	}
 	if (base == 10)
 	{
 		if (!(data->flags & NEGATIVE) && data->flags & PLUS)
 			data->ret += write(data->fd, "+", 1);
+		else if (!(data->flags & NEGATIVE) && data->flags & SPACE)
+			data->ret += write(data->fd, " ", 1);
 		if (data->flags & NEGATIVE)
 			data->ret += write(data->fd, "-", 1);
 	}
@@ -68,16 +76,6 @@ static void	check_neg(long long num, t_printf *data, int base)
 		if (base == 10)
 			data->flags |= NEGATIVE;
 	}
-}
-
-// I'm not currently using thid bugger
-int	ft_divmod(long long *num, int base)
-{
-	int mod;
-
-	mod = *num % base;
-	*num /= base;
-	return (mod);
 }
 
 void	print_precision(t_printf *data)
@@ -138,22 +136,24 @@ void	ft_lltoa_base_fd(t_printf *data, long long num, int base)
 	check_padding(data, base, 1);
 }
 
+#include <stdio.h>
 static unsigned long long	u_get_len(unsigned long long num, int base, t_printf *data)
 {
 	unsigned long long	len;
 	unsigned long long	size;
 
-	len = 0 + (num == 0);
-	size = 1;
+	size = ((num != 0) || (data->precision != 0));//((num != 0) || (base == 8));
+	len = 0;
 	while (num > 0)
 	{
 		len++;
 		num /= base;
 	}
-	data->precision -= len;
-	data->width -= len;
-	if (data->flags & PREFIX)
-		data->width -= (base == 8) + (2 * (base == 16));
+	data->precision -= len + (num == 0);
+	data->width -= len + (num == 0);
+//	if (data->flags & PREFIX)
+//		data->width -= (base == 8) + (2 * (base == 16));
+	printf("\nlen = %llu, size = %llu\nwidth = %d, prec = %d\n", len, size, data->width, data->precision);
 	if (data->precision >= 0)
 		data->width -= data->precision;
 	while (len-- > 1)
@@ -171,6 +171,8 @@ void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base)
 		key = "0123456789ABCDEF";
 	else
 		key = "0123456789abcdef";
+	if (num == 0)
+		data->flags |= EMPTY;
 	len = u_get_len(num, base, data);
 	check_padding(data, base, 0);
 	while (len > 0)
