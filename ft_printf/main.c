@@ -5,7 +5,6 @@
 
 int	main(void)
 {
-/*
 	ft_printf("{%-10d}\n", 42);
 	printf("{%-10d}\n", 42);
 
@@ -80,12 +79,17 @@ int	main(void)
 
 	ft_printf("{%#4.3o}\n", 1);
 	printf("{%#4.3o}\n", 1);
-*/
-	
-	ft_printf("{%020p}\n", &strlen);
-	printf("{%020p}\n", &strlen);
 
-	ft_printf("{%030x}\n", 0xFFFF);
-	printf("{%030x}\n", 0xFFFF);
+	int test;
+	test = ft_printf("{%020p}\n", &strlen);
+	printf("test = %d\n", test);
+	test = printf("{%020p}\n", &strlen);
+	printf("test = %d\n", test);
+
+
+	test = ft_printf("{%030x}\n", 0xFFFF);
+	printf("test = %d\n", test);
+	test = printf("{%030x}\n", 0xFFFF);
+	printf("test = %d\n", test);
 
 }

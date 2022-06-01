@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/01 16:26:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:52:47 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,24 @@ static long long	get_len(long long num, int base, t_printf *data)
 {
 	int			len;
 	long long	size;
+	unsigned long long temp;
 
-	size = (num != 0 || data->precision != 0);
-	len = (num == 0) * size;
+	size = ((num != 0) || (data->precision != 0));
+	len = 0;
 	if (num < 0)
 	{
-		num /= base;
-		num = -num;
-		len++;
+		temp = -num;
+		data->flags |= NEGATIVE;
 	}
+	else
+		temp = num;
 	while (num > 0)
 	{
 		len++;
 		num /= base;
 	}
-	data->precision -= len;
-	data->width -= len + ((data->flags & NEGATIVE) || (data->flags & PLUS) || (data->flags & SPACE));
-	if (data->precision >= 0)
-		data->width -= data->precision;
-	while (len-- > 1)
+	data->width -= ((data->flags & NEGATIVE) || (data->flags & PLUS) || (data->flags & SPACE));
+	while (len-- > 0)
 		size *= base;
 	return (size);
 }
@@ -87,6 +86,18 @@ void	print_precision(t_printf *data)
 	}
 }
 
+void	check_width(t_printf *data, int base)
+{
+	data->width -= data->len;
+	data->precision -= data->len;
+	if (data->precision > 0)
+	data->width -= data->precision;
+	if (base == 8 && data->flags & PREFIX)
+		data->width -= 1;
+	if (base == 16 && data->flags & PREFIX)
+		data->width -= 2;
+}
+
 void	check_padding(t_printf *data, int base, int left)
 {
 	if (data->precision > -1 && data->flags & ZERO)
@@ -123,6 +134,7 @@ void	ft_lltoa_base_fd(t_printf *data, long long num, int base)
 		key = "0123456789abcdef";
 	check_neg(num, data, base);
 	len = get_len(num, base, data);
+	check_width(data, base);
 	check_padding(data, base, 0);
 	while (len > 0)
 	{
@@ -136,7 +148,14 @@ void	ft_lltoa_base_fd(t_printf *data, long long num, int base)
 	check_padding(data, base, 1);
 }
 
-#include <stdio.h>
+/*
+	data->precision -= len + (num == 0);
+	data->width -= len + (num == 0);
+	printf("\nlen = %llu, size = %llu\nwidth = %d, prec = %d\n", len, size, data->width, data->precision);
+	if (data->precision >= 0)
+		data->width -= data->precision;
+*/
+
 static unsigned long long	u_get_len(unsigned long long num, int base, t_printf *data)
 {
 	unsigned long long	len;
@@ -149,14 +168,8 @@ static unsigned long long	u_get_len(unsigned long long num, int base, t_printf *
 		len++;
 		num /= base;
 	}
-	data->precision -= len + (num == 0);
-	data->width -= len + (num == 0);
-//	if (data->flags & PREFIX)
-//		data->width -= (base == 8) + (2 * (base == 16));
-	printf("\nlen = %llu, size = %llu\nwidth = %d, prec = %d\n", len, size, data->width, data->precision);
-	if (data->precision >= 0)
-		data->width -= data->precision;
-	while (len-- > 1)
+	data->len = len + (num == 0);
+	while (len-- > 0)
 		size *= base;
 	return (size);
 }
@@ -174,6 +187,7 @@ void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base)
 	if (num == 0)
 		data->flags |= EMPTY;
 	len = u_get_len(num, base, data);
+	check_width(data, base);
 	check_padding(data, base, 0);
 	while (len > 0)
 	{
