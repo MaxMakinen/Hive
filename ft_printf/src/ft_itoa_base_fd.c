@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/01 18:52:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:06:01 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,18 @@ static long long	get_len(long long num, int base, t_printf *data)
 	size = ((num != 0) || (data->precision != 0));
 	len = 0;
 	if (num < 0)
-	{
 		temp = -num;
-		data->flags |= NEGATIVE;
-	}
 	else
 		temp = num;
-	while (num > 0)
+	while (temp > 0)
 	{
 		len++;
-		num /= base;
+		temp /= base;
 	}
-	data->width -= ((data->flags & NEGATIVE) || (data->flags & PLUS) || (data->flags & SPACE));
-	while (len-- > 0)
+//	ft_putendl(ft_itoa(len));
+	data->len = len + (num == 0);
+//	data->width -= ((data->flags & NEGATIVE) || (data->flags & PLUS) || (data->flags & SPACE));
+	while (--len > 0)
 		size *= base;
 	return (size);
 }
@@ -43,7 +42,7 @@ static void	prefix(int base, t_printf *data)
 	if (base != 10)
 	{
 		/*
-		 * TODO This shit can't be right. Test in different OS.
+		 * TODO This shit can't be right. Test in different OS. Turns out this shit is right...
 		 */
 		if (base == 8 && (data->precision == 0 && data->flags & PREFIX))
 			data->ret += write(data->fd, "0", 1);

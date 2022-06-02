@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:05:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/31 10:29:03 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:05:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,27 +371,27 @@ int	main(void)
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%p\n", 1);
 	printf("test	= %d\n", test);
-	
+/*	
 	test = printf("printf	= ");
 	test = printf("%p\n", 1);
 	printf("printf test = %d\n", test);
-
+*/
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%p\n", 15);
 	printf("test	= %d\n", test);
-	
+/*	
 	test = printf("printf	= ");
 	test = printf("%p\n", 15);
 	printf("printf test = %d\n", test);
-
+*/
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%p\n", 0);
 	printf("test	= %d\n", test);
-	
+/*	
 	test = printf("printf	= ");
 	test = printf("%p\n", 0);
 	printf("printf test = %d\n", test);
-
+*/
 	ft_printf("	~ ~=<: print %% test :>=~\n\n");
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%%\n");
@@ -404,19 +404,19 @@ int	main(void)
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%\n");
 	printf("test	= %d\n", test);
-	
+/*	
 	test = printf("printf	= ");
 	test = printf("%\n");
 	printf("test	= %d\n", test);
-
+*/
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%");
 	printf("\ntest	= %d\n", test);
-	
+/*	
 	test = printf("printf	= ");
 	test = printf("%");
 	printf("\ntest	= %d\n", test);
-
+*/
 	ft_printf("	~ ~=<: print ld test :>=~\n\n");
 	ft_printf("ft_pf	= ");
 	test = ft_printf("%ld", (long)INT_MAX + 1);
@@ -475,11 +475,11 @@ int	main(void)
 	printf("\ntest	= %d\n", test);
 	
 	ft_printf("ft_pf	= ");
-	test = ft_printf("%3c", 0);
+	test = ft_printf("%p", &strlen);
 	printf("$\ntest	= %d\n", test);
 	
 	test = printf("printf	= ");
-	test = printf("%3c", 0);
+	test = printf("%p", &strlen);
 	printf("$\ntest	= %d\n", test);
 	
 	return (0);
