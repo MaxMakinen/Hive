@@ -80,16 +80,55 @@ int	main(void)
 	ft_printf("{%#4.3o}\n", 1);
 	printf("{%#4.3o}\n", 1);
 
+	ft_printf("{%#.3x}\n", 1);
+	printf("{%#.3x}\n", 1);
+
+	ft_printf("{%#4.3x}\n", 1);
+	printf("{%#4.3x}\n", 1);
+
 	int test;
 	test = ft_printf("{%020p}\n", &strlen);
-	printf("test = %d\n", test);
+	printf("ft_test = %d\n", test);
 	test = printf("{%020p}\n", &strlen);
 	printf("test = %d\n", test);
 
-
 	test = ft_printf("{%030x}\n", 0xFFFF);
-	printf("test = %d\n", test);
+	printf("ft_test = %d\n", test);
 	test = printf("{%030x}\n", 0xFFFF);
 	printf("test = %d\n", test);
 
+	test = ft_printf("{% 10.4d}\n", 4242);
+	printf("ft_test = %d\n", test);
+	test = printf("{% 10.4d}\n", 4242);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{% u}\n", 4294967295);
+	printf("ft_test = %d\n", test);
+	test = printf("{% u}\n", 4294967295);
+	printf("test = %d\n", test);
+
+	test = ft_printf("%5%");
+	printf("\nft_test = %d\n", test);
+	test = printf("%5%");
+	printf("\ntest = %d\n", test);
+
+	test = ft_printf("%jx", 424242);
+	printf("\nft_test = %d\n", test);
+	test = printf("%jx", 424242);
+	printf("\ntest = %d\n", test);
+
+	test = ft_printf("%05%");
+	printf("\nft_test = %d\n", test);
+	test = printf("%05%");
+	printf("\ntest = %d\n", test);
+
+	test = ft_printf("% hZ%");
+	printf("\nft_test = %d\n", test);
+	test = printf("% hZ%");
+	printf("\ntest = %d\n", test);
+
+	test = ft_printf("%llx", 42424242);
+	printf("\nft_test = %d\n", test);
+	test = printf("%llx", 42424242);
+	printf("\ntest = %d\n", test);
 }

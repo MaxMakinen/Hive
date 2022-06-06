@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 08:42:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/31 10:25:52 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 10:18:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,15 @@ void	get_length(const char **format, t_printf *data)
 			data->flags |= LONG;
 	}
 	else if (**format == 'L')
+	{
 		data->flags |= LONGDOUBLE;
+		*format += 1;
+	}
+	else if (**format == 'j')
+	{
+		data->flags |= LONGLONG;
+		*format += 1;
+	}
 }
 
 int	parse(const char *format, t_printf *data)
@@ -50,22 +58,17 @@ int	parse(const char *format, t_printf *data)
 	format++;
 	mem = format;
 	flags = "0-+ #";
-	conversion = "csdxXoupif";
+	conversion = "csdxXoupif%";
 	selection = 0;
 	if (*format == 0)
 		return (-1);
-	if (*format == '%')
-	{
-		data->ret += write(data->fd, "%", 1);
-		return (1);
-	}
 	while (flags[selection] != '\0')
 	{
 		if (*format == flags[selection])
 		{
 			format += data->flag_ptr[selection](format, data);
 			selection = 0;
-			continue;
+			continue ;
 		}
 		selection++;
 	}
@@ -84,11 +87,9 @@ int	parse(const char *format, t_printf *data)
 		if (*format == conversion[selection])
 		{
 			format += data->conv_ptr[selection](format, data);
-			break;
+			break ;
 		}
 		selection++;
 	}
-	if (format == mem)
-		data->ret += write(data->fd, "%", 1);
 	return (format - mem);
 }

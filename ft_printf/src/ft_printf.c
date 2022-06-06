@@ -6,17 +6,11 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:40:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/31 10:30:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 09:49:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-
-/*
- * printf calls vprintf-> calls vdprintf
- * asprintf calls vasprintf
- */
 
 int	ft_printf(const char *format, ...)
 {
@@ -29,7 +23,7 @@ int	ft_printf(const char *format, ...)
 	return (ret);
 }
 
-int	ft_dprintf(int fd ,const char *format, ...)
+int	ft_dprintf(int fd, const char *format, ...)
 {
 	va_list	ap;
 	int		ret;
@@ -64,9 +58,11 @@ void	prep_data(t_printf *data)
 	data->conv_ptr[3] = &print_hexadecimal;
 	data->conv_ptr[4] = &print_hexadecimal;
 	data->conv_ptr[5] = &print_octal;
-	data->conv_ptr[6] = &print_decimal;
+	data->conv_ptr[6] = &print_unsigned_int;
 	data->conv_ptr[7] = &print_pointer;
 	data->conv_ptr[8] = &print_decimal;
+	data->conv_ptr[9] = &print_decimal;
+	data->conv_ptr[10] = &print_percentage;
 }
 
 int	ft_vdprintf(int fd, const char *format, va_list ap)
@@ -89,8 +85,10 @@ int	ft_vdprintf(int fd, const char *format, va_list ap)
 			reset_data(&data);
 		}
 		else
-			data.ret += write(fd, format, 1); 
-// Can I move the writes into a single one called at the end or when we encounter a oercentage? like printstr?
+			data.ret += write(fd, format, 1);
+/* Can I move the writes into a single one called at the end,
+ *  or when we encounter a percentage? like printstr?
+ */
 		format++;
 	}
 	va_end(data.ap);

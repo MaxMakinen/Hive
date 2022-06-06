@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:54:13 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/01 11:25:31 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 08:52:58 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	width(const char *format, t_printf *data)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	data->width = ft_atoi(format);
@@ -26,13 +26,15 @@ int	width(const char *format, t_printf *data)
 	return (len);
 }
 
+/* TODO Change ft_atoi into local while loop, could be faster.
+ */
+
 int	precision(const char *format, t_printf *data)
 {
-	int len;
+	int	len;
 
 	len = 1;
 	format++;
-	// TODO Change into local while loop, should be faster.
 	data->precision = ft_atoi(format);
 	while (ft_isdigit(*format))
 	{
