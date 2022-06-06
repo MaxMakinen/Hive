@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 08:40:24 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 08:41:47 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:13:31 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	print_unsigned_int(const char **format, t_printf *data)
 int	print_hexadecimal(const char **format, t_printf *data)
 {
 	(void)format;
+	if (data->precision > -1)
+		data->flags &= ~(ZERO);
 	get_number(data);
 	ft_ulltoa_base_fd(data, data->input.ull, 16);
 	return (1);
@@ -30,6 +32,8 @@ int	print_hexadecimal(const char **format, t_printf *data)
 int	print_octal(const char **format, t_printf *data)
 {
 	(void)format;
+	if (data->precision > -1)
+		data->flags &= ~(ZERO);
 	get_number(data);
 	ft_ulltoa_base_fd(data, data->input.ull, 8);
 	return (1);
@@ -41,21 +45,12 @@ int	print_pointer(const char **format, t_printf *data)
 	void				*ptr;
 
 	(void)format;
+	if (data->precision > -1)
+		data->flags &= ~(ZERO);
 	data->flags |= PREFIX;
+	data->flags |= POINTER;
 	ptr = (va_arg(data->ap, void *));
 	num = (unsigned long long)ptr;
-	if (num == 0)
-	{
-		data->width -= 5;
-		if (data->flags & ZERO)
-			data->flags = data->flags ^ ZERO;
-		if (data->width > 0 && !(data->flags & LEFT))
-			padding(data);
-		data->ret += write(data->fd, NIL, NILSIZE);
-		if (data->width > 0 && data->flags & LEFT)
-			padding(data);
-	}
-	else
-		ft_ulltoa_base_fd(data, num, 16);
+	ft_ulltoa_base_fd(data, num, 16);
 	return (1);
 }

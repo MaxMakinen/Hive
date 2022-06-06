@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 09:59:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:59:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		add_space(const char *format, t_printf *data);
 
 int		width(const char *format, t_printf *data);
 int		precision(const char *format, t_printf *data);
+void	check_padding(t_printf *data, int base, int left);
 void	padding(t_printf *data);
 void	print_precision(t_printf *data);
 
@@ -98,13 +99,16 @@ int		ft_bit(int step);
 # define LONGDOUBLE ft_bit(14)
 
 # define EMPTY ft_bit(15)
+# define POINTER ft_bit(16)
 
 # if defined (__linux__)
 #  define NIL "(nil)"
 #  define NILSIZE 5
+#  define LINUX 1
 # else
-#  define NIL "0x0"
-#  define NILSIZE 3
+#  define NIL "0x"
+#  define NILSIZE 2
+#  define LINUX 0
 # endif
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 08:56:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:01:57 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static void	prefix(int base, t_printf *data)
 		 */
 		if (base == 8 && data->precision == 0 && data->flags & PREFIX)
 			data->ret += write(data->fd, "0", 1);
-		if (data->flags & PREFIX && !(data->flags & EMPTY))
+		if ((data->flags & PREFIX && !(data->flags & EMPTY)) || data->flags & POINTER)
 		{
 			if (base == 8 && (data->precision < 1))
 				data->ret += write(data->fd, "0", 1);
 			if (base == 16 && data->flags & HEX && data->precision != 0)
 				data->ret += write(data->fd, "0X", 2);
-			if (base == 16 && !(data->flags & HEX) && data->precision != 0)
+			if ((base == 16 && !(data->flags & HEX) && data->precision != 0) || data->flags & POINTER)
 				data->ret += write(data->fd, "0x", 2);
 		}
 	}
@@ -111,8 +111,6 @@ void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base)
 		key = "0123456789ABCDEF";
 	else
 		key = "0123456789abcdef";
-	if (num == 0)
-		data->flags |= EMPTY;
 	len = u_get_len(num, base, data);
 	check_width(data, base);
 	check_padding(data, base, 0);

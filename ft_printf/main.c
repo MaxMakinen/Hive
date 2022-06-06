@@ -47,9 +47,6 @@ int	main(void)
 	ft_printf("{%3.2d}\n", 0);
 	printf("{%3.2d}\n", 0);
 
-	ft_printf("{%020p}\n", &strlen);
-	printf("{%020p}\n", &strlen);
-
 	ft_printf("{%030x}\n", 0xFFFF);
 	printf("{%030x}\n", 0xFFFF);
 
@@ -57,7 +54,7 @@ int	main(void)
 	printf("{%.4s}\n", "42 is the answer");
 
 	ft_printf("{%#.o, %#.0o}\n", 0, 0);
-	printf("{%#.o, %#.0o} THIS IS WRONG! TRY ON OTHER OS. SEND BUGREPORT ABOUT PRINTF ABERRANT BEHAVIOUR\n", 0, 0);
+	printf("{%#.o, %#.0o}\n", 0, 0);
 
 	ft_printf("{%#.x, %#.0x}\n", 0, 0);
 	printf("{%#.x, %#.0x}\n", 0, 0);
@@ -131,4 +128,35 @@ int	main(void)
 	printf("\nft_test = %d\n", test);
 	test = printf("%llx", 42424242);
 	printf("\ntest = %d\n", test);
+
+	test = ft_printf("%5%");
+	printf("\nft_test = %d\n", test);
+	test = printf("%5%");
+	printf("\ntest = %d\n", test);
+
+	test = ft_printf("%");
+	printf("\nft_test = %d\n", test);
+	test = printf("%");
+	printf("\ntest = %d\n", test);
+
+	ft_printf("{%.p}\n", 0);
+	printf("{%.p}\n", 0);
+
+	ft_printf("{%.x}\n", 0);
+	printf("{%.x}\n", 0);
+
+	ft_printf("{%p}\n", 0);
+	printf("{%p}\n", 0);
+
+	ft_printf("{%x}\n", 0);
+	printf("{%x}\n", 0);
+
+	ft_printf("{%-15p}\n", 0);
+	printf("{%-15p}\n", 0);
+
+	ft_printf("{%05%}\n", 0);
+	printf("{%05%}\n", 0);
+
+	ft_printf("{%08.3d}\n", 8375);
+	printf("{%08.3d}\n", 8375);
 }

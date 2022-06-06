@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:27:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 08:49:52 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:44:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,6 @@ void	get_number(t_printf *data)
 		else
 			data->input.ull = (unsigned int)va_arg(data->ap, unsigned int);
 	}
+	if (data->input.ull == 0)
+		data->flags |= EMPTY;
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 08:42:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 10:18:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:59:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	parse(const char *format, t_printf *data)
 	conversion = "csdxXoupif%";
 	selection = 0;
 	if (*format == 0)
-		return (-1);
+		return (0);
 	while (flags[selection] != '\0')
 	{
 		if (*format == flags[selection])
