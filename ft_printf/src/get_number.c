@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:27:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 14:44:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:00:40 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void	get_number(t_printf *data)
 	}
 	if (data->input.ull == 0)
 		data->flags |= EMPTY;
+}
+
+void	get_float(t_printf *data)
+{
+		if (data->flags & LONGDOUBLE)
+			data->input.ld = (long double)va_arg(data->ap, long double);
+		else
+			data->input.ld = (long double)va_arg(data->ap, double);
+	if (data->input.ld < 0)
+	{	
+		data->flags |= NEGATIVE;
+		data->input.ld = -data->input.ld;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 14:59:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:59:08 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef union u_input
 {
 	long long			sll;
 	unsigned long long	ull;
+	long double			ld;
 }	t_input;
 
 typedef struct s_printf
@@ -68,9 +69,11 @@ int		print_octal(const char **format, t_printf *data);
 int		print_pointer(const char **format, t_printf *data);
 int		print_unsigned_int(const char **format, t_printf *data);
 int		print_percentage(const char **format, t_printf *data);
+int		print_float(const char *format, t_printf *data);
 
 int		parse(const char *format, t_printf *data);
 void	get_number(t_printf *data);
+void    get_float(t_printf *data);
 
 void	ft_itoa_base_fd(t_printf *data, int num, int base);
 void	ft_lltoa_base_fd(t_printf *data, long long num, int base);

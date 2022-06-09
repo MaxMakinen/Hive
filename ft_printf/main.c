@@ -159,4 +159,39 @@ int	main(void)
 
 	ft_printf("{%08.3d}\n", 8375);
 	printf("{%08.3d}\n", 8375);
+
+	ft_printf("{%-5c}\n", 'B');
+	printf("{%-5c}\n", 'B');
+
+	ft_printf("{%f}\n", 5.0f / 2.0f);
+	printf("{%f}\n", 5.0f / 2.0f);
+
+	ft_printf("{%f}\n", 10.0f / 3.0f);
+	printf("{%f}\n", 10.0f / 3.0f);
+
+	ft_printf("{%f}\n", 1.0f / 3.85f);
+	printf("{%f}\n", 1.0f / 3.85f);
+
+	ft_printf("{%.2f}\n", 1.0f / 3.85f);
+	printf("{%.2f}\n", 1.0f / 3.85f);
+
+	test = ft_printf("{%.15f}\n", 1.0f / 3.85f);
+	printf("test = %d\n", test);
+	test = printf("{%.15f}\n", 1.0f / 3.85f);
+	printf("test = %d\n", test);
+
+	ft_printf("{%.f}\n", 1.0f / 3.85f);
+	printf("{%.f}\n", 1.0f / 3.85f);
+
+	ft_printf("{%.2f}\n", 1.225f);
+	printf("{%.2f}\n", 1.225f);
+
+	ft_printf("{%.2f}\n", 1.335f);
+	printf("{%.2f}\n", 1.335f);
+
+	ft_printf("{%.2f}\n", 0.1f + 0.2f);
+	printf("{%.2f}\n", 0.1f + 0.2f);
+
+	printf("ld size = %d d size = %d ull size = %d size_t = %d\n",\
+		   sizeof(long double), sizeof(double), sizeof(unsigned long long), sizeof(size_t));
 }

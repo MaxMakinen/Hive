@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:40:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 09:49:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:02:02 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	prep_data(t_printf *data)
 	data->conv_ptr[6] = &print_unsigned_int;
 	data->conv_ptr[7] = &print_pointer;
 	data->conv_ptr[8] = &print_decimal;
-	data->conv_ptr[9] = &print_decimal;
+	data->conv_ptr[9] = &print_float;
 	data->conv_ptr[10] = &print_percentage;
 }
 
