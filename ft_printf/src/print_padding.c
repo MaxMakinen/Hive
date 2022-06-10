@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 08:43:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 08:54:39 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/10 10:33:09 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	padding(t_printf *data)
 {
 	char	padding;
 
-	if (!(data->flags & LEFT) && data->flags & ZERO)
+	if (!(data->flags & ft_bit(LEFT)) && data->flags & ft_bit(ZERO))
 		padding = '0';
 	else
 		padding = ' ';

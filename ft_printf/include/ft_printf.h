@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/09 13:59:08 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/10 10:26:54 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,36 @@
 # include "libft.h"
 # include <stdarg.h>
 # include <unistd.h>
+
+# define ZERO 1
+# define LEFT 2
+# define PLUS 3
+# define SPACE 4
+# define MINUS 5
+# define PREFIX 6
+
+# define HEX 7
+# define NEGATIVE 8
+# define SIGNED 9
+
+# define CHAR 10
+# define SHORT 11
+# define LONG 12
+# define LONGLONG 13
+# define LONGDOUBLE 14
+
+# define EMPTY 15
+# define POINTER 16
+
+# if defined (__linux__)
+#  define NIL "(nil)"
+#  define NILSIZE 5
+#  define LINUX 1
+# else
+#  define NIL "0x"
+#  define NILSIZE 2
+#  define LINUX 0
+# endif
 
 typedef int	(*t_funcptr)();
 
@@ -73,45 +103,11 @@ int		print_float(const char *format, t_printf *data);
 
 int		parse(const char *format, t_printf *data);
 void	get_number(t_printf *data);
-void    get_float(t_printf *data);
+void	get_float(t_printf *data);
 
 void	ft_itoa_base_fd(t_printf *data, int num, int base);
 void	ft_lltoa_base_fd(t_printf *data, long long num, int base);
 void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base);
 int		ft_bit(int step);
-
-/*
- * Replace ft_bit with a Macro
- */
-
-# define ZERO ft_bit(1)
-# define LEFT ft_bit(2)
-# define PLUS ft_bit(3)
-# define SPACE ft_bit(4)
-# define MINUS ft_bit(5)
-# define PREFIX ft_bit(6)
-
-# define HEX ft_bit(7)
-# define NEGATIVE ft_bit(8)
-# define SIGNED ft_bit(9)
-
-# define CHAR ft_bit(10)
-# define SHORT ft_bit(11)
-# define LONG ft_bit(12)
-# define LONGLONG ft_bit(13)
-# define LONGDOUBLE ft_bit(14)
-
-# define EMPTY ft_bit(15)
-# define POINTER ft_bit(16)
-
-# if defined (__linux__)
-#  define NIL "(nil)"
-#  define NILSIZE 5
-#  define LINUX 1
-# else
-#  define NIL "0x"
-#  define NILSIZE 2
-#  define LINUX 0
-# endif
 
 #endif

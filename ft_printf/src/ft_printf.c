@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:40:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/09 14:02:02 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:11:45 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,6 @@ int	ft_vdprintf(int fd, const char *format, va_list ap)
 		}
 		else
 			data.ret += write(fd, format, 1);
-/* Can I move the writes into a single one called at the end,
- *  or when we encounter a percentage? like printstr?
- */
 		format++;
 	}
 	va_end(data.ap);

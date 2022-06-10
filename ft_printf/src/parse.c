@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 08:42:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 13:59:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:03:16 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,31 @@ void	get_length(const char **format, t_printf *data)
 		*format += 1;
 		if (**format == 'h')
 		{
-			data->flags |= CHAR;
+			data->flags |= ft_bit(CHAR);
 			*format += 1;
 		}
 		else
-			data->flags |= SHORT;
+			data->flags |= ft_bit(SHORT);
 	}
 	else if (**format == 'l')
 	{
 		*format += 1;
 		if (**format == 'l')
 		{
-			data->flags |= LONGLONG;
+			data->flags |= ft_bit(LONGLONG);
 			*format += 1;
 		}
 		else
-			data->flags |= LONG;
+			data->flags |= ft_bit(LONG);
 	}
 	else if (**format == 'L')
 	{
-		data->flags |= LONGDOUBLE;
+		data->flags |= ft_bit(LONGDOUBLE);
 		*format += 1;
 	}
 	else if (**format == 'j')
 	{
-		data->flags |= LONGLONG;
+		data->flags |= ft_bit(LONGLONG);
 		*format += 1;
 	}
 }
@@ -81,9 +81,9 @@ int	parse(const char *format, t_printf *data)
 	while (conversion[selection] != '\0')
 	{
 		if (*format == 'X')
-			data->flags |= HEX;
+			data->flags |= ft_bit(HEX);
 		if (*format == 'd' || *format == 'i')
-			data->flags |= SIGNED;
+			data->flags |= ft_bit(SIGNED);
 		if (*format == conversion[selection])
 		{
 			format += data->conv_ptr[selection](format, data);

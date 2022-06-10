@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/06 15:01:57 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:11:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,29 @@ static void	prefix(int base, t_printf *data)
 {
 	if (base != 10)
 	{
-		/*
-		 * TODO This shit can't be right. Test in different OS. 
-		 * Turns out this shit is right...
-		 * mix into the different checks better.
-		 */
-		if (base == 8 && data->precision == 0 && data->flags & PREFIX)
+		if (base == 8 && data->precision == 0 && data->flags & ft_bit(PREFIX))
 			data->ret += write(data->fd, "0", 1);
-		if ((data->flags & PREFIX && !(data->flags & EMPTY)) || data->flags & POINTER)
+		if ((data->flags & ft_bit(PREFIX) && !(data->flags & ft_bit(EMPTY))) \
+				|| data->flags & ft_bit(POINTER))
 		{
 			if (base == 8 && (data->precision < 1))
 				data->ret += write(data->fd, "0", 1);
-			if (base == 16 && data->flags & HEX && data->precision != 0)
+			if (base == 16 && data->flags & ft_bit(HEX) && \
+					data->precision != 0)
 				data->ret += write(data->fd, "0X", 2);
-			if ((base == 16 && !(data->flags & HEX) && data->precision != 0) || data->flags & POINTER)
+			if ((base == 16 && !(data->flags & ft_bit(HEX)) && \
+						data->precision != 0) || data->flags & ft_bit(POINTER))
 				data->ret += write(data->fd, "0x", 2);
 		}
 	}
 	if (base == 10)
 	{
-		if (!(data->flags & NEGATIVE) && data->flags & PLUS)
+		if (!(data->flags & ft_bit(NEGATIVE)) && data->flags & ft_bit(PLUS))
 			data->ret += write(data->fd, "+", 1);
-		else if (!(data->flags & NEGATIVE) && data->flags & SPACE)
+		else if (!(data->flags & ft_bit(NEGATIVE)) && \
+				data->flags & ft_bit(SPACE))
 			data->ret += write(data->fd, " ", 1);
-		if (data->flags & NEGATIVE)
+		if (data->flags & ft_bit(NEGATIVE))
 			data->ret += write(data->fd, "-", 1);
 	}
 }
@@ -47,36 +46,36 @@ static void	prefix(int base, t_printf *data)
 void	check_width(t_printf *data, int base)
 {
 	data->width -= data->len;
-	data->width -= ((data->flags & NEGATIVE) || (data->flags & PLUS) || \
-			data->flags & SPACE);
+	data->width -= ((data->flags & ft_bit(NEGATIVE)) || \
+			(data->flags & ft_bit(PLUS)) || data->flags & ft_bit(SPACE));
 	data->precision -= data->len;
 	if (data->precision > 0)
 		data->width -= data->precision;
-	if (base == 8 && data->flags & PREFIX && data->precision < 1)
+	if (base == 8 && data->flags & ft_bit(PREFIX) && data->precision < 1)
 		data->width -= 1;
-	if (base == 16 && data->flags & PREFIX)
+	if (base == 16 && data->flags & ft_bit(PREFIX))
 		data->width -= 2;
 }
 
 void	check_padding(t_printf *data, int base, int left)
 {
-	if (data->precision > -1 && data->flags & ZERO)
-		data->flags &= ~(ZERO);
-	if (left && data->flags & LEFT)
+	if (data->precision > -1 && data->flags & ft_bit(ZERO))
+		data->flags &= ~(ft_bit(ZERO));
+	if (left && data->flags & ft_bit(LEFT))
 		padding(data);
 	else if (!left)
 	{
-		if (data->flags & ZERO && !(data->flags & LEFT))
+		if (data->flags & ft_bit(ZERO) && !(data->flags & ft_bit(LEFT)))
 		{
 			prefix(base, data);
 			padding(data);
 		}
-		else if (!(data->flags & LEFT))
+		else if (!(data->flags & ft_bit(LEFT)))
 		{
 			padding(data);
 			prefix(base, data);
 		}
-		else if (data->flags & LEFT)
+		else if (data->flags & ft_bit(LEFT))
 			prefix(base, data);
 		print_precision(data);
 	}
@@ -107,7 +106,7 @@ void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base)
 	char				*key;
 	char				step;
 
-	if (data->flags & HEX)
+	if (data->flags & ft_bit(HEX))
 		key = "0123456789ABCDEF";
 	else
 		key = "0123456789abcdef";
