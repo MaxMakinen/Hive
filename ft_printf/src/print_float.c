@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:29:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/06 14:57:17 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/10 10:08:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	print_float(const char *format, t_printf *data)
 	if (decimal % 10 > 4)
 		decimal += 10;
 	if (data->flags & NEGATIVE)
-		data->ret = write(data->fd, "-", 1);
+		data->ret += write(data->fd, "-", 1);
 	putnbr(num, data);
 	if (precision != 0)
 	{
