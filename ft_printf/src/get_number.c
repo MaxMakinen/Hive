@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:27:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/10 11:07:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:20:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	get_number(t_printf *data)
 
 void	get_float(t_printf *data)
 {
-		if (data->flags & ft_bit(LONGDOUBLE))
-			data->input.ld = (long double)va_arg(data->ap, long double);
-		else
-			data->input.ld = (long double)va_arg(data->ap, double);
+	if (data->flags & ft_bit(LONGDOUBLE))
+		data->input.ld = (long double)va_arg(data->ap, long double);
+	else
+		data->input.ld = (long double)va_arg(data->ap, double);
 	if (data->input.ld < 0)
 	{	
 		data->flags |= ft_bit(NEGATIVE);

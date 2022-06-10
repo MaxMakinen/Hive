@@ -189,8 +189,8 @@ int	main(void)
 	ft_printf("{%.2f}\n", 1.335f);
 	printf("{%.2f}\n", 1.335f);
 
-	ft_printf("{%.2f}\n", 0.1f + 0.2f);
-	printf("{%.2f}\n", 0.1f + 0.2f);
+	ft_printf("{%.17f}\n", 0.1f + 0.2f);
+	printf("{%.17f}\n", 0.1f + 0.2f);
 
 	printf("ld size = %ld d size = %ld ull size = %ld size_t = %ld\n",\
 		   sizeof(long double), sizeof(double), sizeof(unsigned long long), sizeof(size_t));
@@ -207,5 +207,15 @@ int	main(void)
 	test = ft_printf("{%f}{%lf}{%Lf}\n", -1.42, -1.42, -1.42l);
 	printf("ft_test = %d\n", test);
 	test = printf("{%f}{%lf}{%Lf}\n", -1.42, -1.42, -1.42l);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%hd}{%hhd}{%hhd}\n", 4242, 4242, -4242);
+	printf("ft_test = %d\n", test);
+	test = printf("{%hd}{%hhd}{%hhd}\n", 4242, 4242, -4242);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%ld}{%lld}{%lld}\n", 424242, 424242, -424242ll);
+	printf("ft_test = %d\n", test);
+	test = printf("{%ld}{%lld}{%lld}\n", 424242, 424242, -424242ll);
 	printf("test = %d\n", test);
 }
