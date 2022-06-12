@@ -6,13 +6,24 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/10 11:11:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:41:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	prefix(int base, t_printf *data)
+static inline void	base_ten(t_printf *data)
+{
+	if (!(data->flags & ft_bit(NEGATIVE)) && data->flags & ft_bit(PLUS))
+		data->ret += write(data->fd, "+", 1);
+	else if (!(data->flags & ft_bit(NEGATIVE)) && \
+			data->flags & ft_bit(SPACE))
+		data->ret += write(data->fd, " ", 1);
+	if (data->flags & ft_bit(NEGATIVE))
+		data->ret += write(data->fd, "-", 1);
+}
+
+void	prefix(int base, t_printf *data)
 {
 	if (base != 10)
 	{
@@ -32,15 +43,7 @@ static void	prefix(int base, t_printf *data)
 		}
 	}
 	if (base == 10)
-	{
-		if (!(data->flags & ft_bit(NEGATIVE)) && data->flags & ft_bit(PLUS))
-			data->ret += write(data->fd, "+", 1);
-		else if (!(data->flags & ft_bit(NEGATIVE)) && \
-				data->flags & ft_bit(SPACE))
-			data->ret += write(data->fd, " ", 1);
-		if (data->flags & ft_bit(NEGATIVE))
-			data->ret += write(data->fd, "-", 1);
-	}
+		base_ten(data);
 }
 
 void	check_width(t_printf *data, int base)
@@ -57,31 +60,7 @@ void	check_width(t_printf *data, int base)
 		data->width -= 2;
 }
 
-void	check_padding(t_printf *data, int base, int left)
-{
-	if (data->precision > -1 && data->flags & ft_bit(ZERO))
-		data->flags &= ~(ft_bit(ZERO));
-	if (left && data->flags & ft_bit(LEFT))
-		padding(data);
-	else if (!left)
-	{
-		if (data->flags & ft_bit(ZERO) && !(data->flags & ft_bit(LEFT)))
-		{
-			prefix(base, data);
-			padding(data);
-		}
-		else if (!(data->flags & ft_bit(LEFT)))
-		{
-			padding(data);
-			prefix(base, data);
-		}
-		else if (data->flags & ft_bit(LEFT))
-			prefix(base, data);
-		print_precision(data);
-	}
-}
-
-static unsigned long long	u_get_len(unsigned long long num, int base, \
+static unsigned long long	get_len(unsigned long long num, int base, \
 		t_printf *data)
 {
 	unsigned long long	len;
@@ -110,7 +89,7 @@ void	ft_ulltoa_base_fd(t_printf *data, unsigned long long num, int base)
 		key = "0123456789ABCDEF";
 	else
 		key = "0123456789abcdef";
-	len = u_get_len(num, base, data);
+	len = get_len(num, base, data);
 	check_width(data, base);
 	check_padding(data, base, 0);
 	while (len > 0)

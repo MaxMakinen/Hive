@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/10 10:26:54 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:39:25 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@
 
 typedef int	(*t_funcptr)();
 
-// This union should propably be removed. Don't think it does anything.
 typedef union u_input
 {
 	long long			sll;
@@ -90,6 +89,7 @@ int		precision(const char *format, t_printf *data);
 void	check_padding(t_printf *data, int base, int left);
 void	padding(t_printf *data);
 void	print_precision(t_printf *data);
+void	prefix(int base, t_printf *data);
 
 int		print_char(const char **format, t_printf *data);
 int		print_string(const char **format, t_printf *data);
