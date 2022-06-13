@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 10:43:29 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/20 10:53:57 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:51:20 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@ int	ft_bit(int step)
 {
 	if (step == 0)
 		return (0);
-	return (1 << (step -1));
+	return (1 << (step - 1));
 }
