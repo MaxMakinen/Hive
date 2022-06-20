@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/12 15:41:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/19 14:44:25 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ void	prefix(int base, t_printf *data)
 {
 	if (base != 10)
 	{
-		if (base == 8 && data->precision == 0 && data->flags & ft_bit(PREFIX))
-			data->ret += write(data->fd, "0", 1);
 		if ((data->flags & ft_bit(PREFIX) && !(data->flags & ft_bit(EMPTY))) \
 				|| data->flags & ft_bit(POINTER))
 		{
-			if (base == 8 && (data->precision < 1))
+			if ((base == 8 && data->input.ull != 0) && \
+					data->precision <= data->len)
 				data->ret += write(data->fd, "0", 1);
 			if (base == 16 && data->flags & ft_bit(HEX) && \
 					data->precision != 0)
@@ -51,12 +50,11 @@ void	check_width(t_printf *data, int base)
 	data->width -= data->len;
 	data->width -= ((data->flags & ft_bit(NEGATIVE)) || \
 			(data->flags & ft_bit(PLUS)) || data->flags & ft_bit(SPACE));
-	data->precision -= data->len;
-	if (data->precision > 0)
-		data->width -= data->precision;
-	if (base == 8 && data->flags & ft_bit(PREFIX) && data->precision < 1)
+	if (base == 8 && data->flags & ft_bit(PREFIX) \
+			&& data->input.ull != 0 && data->precision <= data->len)
 		data->width -= 1;
-	if (base == 16 && data->flags & ft_bit(PREFIX))
+	if (base == 16 && data->flags & ft_bit(PREFIX) \
+			&& data->input.ull != 0)
 		data->width -= 2;
 }
 

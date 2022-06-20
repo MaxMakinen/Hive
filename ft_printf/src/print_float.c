@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:29:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/10 12:31:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/19 16:27:36 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,23 @@ size_t	get_precision(t_printf *data)
 size_t	get_decimal(t_printf *data, size_t num, size_t precision)
 {
 	size_t	decimal;
+	size_t	temp;
+	size_t	len;
 
+	temp = (size_t)data->input.ld;
+	len = 0;
+	if (temp == 0)
+		len = 1;
+	while (temp > 0)
+	{
+		temp /= 10;
+		len++;
+	}
+	data->len = (len + (data->flags & ft_bit(PLUS) || data->flags & ft_bit(NEGATIVE));
 	decimal = (size_t)((data->input.ld - \
 				(long double)num) * (long double)precision);
 	if (decimal % 10 > 4)
 		decimal += 10;
-	if (data->flags & ft_bit(NEGATIVE))
-		data->ret += write(data->fd, "-", 1);
 	return (decimal);
 }
 
@@ -75,8 +85,9 @@ int	print_float(const char *format, t_printf *data)
 	precision = get_precision(data);
 	num = (size_t)data->input.ld;
 	decimal = get_decimal(data, num, precision);
+	float_padding(data, 0);
 	putnbr(num, data);
-	if (precision != 0)
+	if (precision != 0 || data->flags & ft_bit(PREFIX))
 	{
 		data->ret += write(1, ".", 1);
 	}
@@ -87,5 +98,6 @@ int	print_float(const char *format, t_printf *data)
 		data->ret += write(1, &number, 1);
 		precision /= 10;
 	}
+	float_padding(data, 1);
 	return (1);
 }

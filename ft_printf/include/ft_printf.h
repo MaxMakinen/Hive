@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:36:03 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/13 15:45:17 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/19 14:57:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		add_space(const char *format, t_printf *data);
 int		width(const char *format, t_printf *data);
 int		precision(const char *format, t_printf *data);
 void	check_padding(t_printf *data, int base, int left);
+void	float_padding(t_printf *data, int left);
 void	padding(t_printf *data);
 void	print_precision(t_printf *data);
 void	prefix(int base, t_printf *data);

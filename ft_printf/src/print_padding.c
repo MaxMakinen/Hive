@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 08:43:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/12 15:31:41 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:40:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 void	padding(t_printf *data)
 {
 	char	padding;
+	int		prec;
 
+	if (data->precision - data->len >= 0)
+		prec = data->precision - data->len;
+	else
+		prec = 0;
 	if (!(data->flags & ft_bit(LEFT)) && data->flags & ft_bit(ZERO))
 		padding = '0';
 	else
 		padding = ' ';
-	while (data->width > 0)
+	while ((data->width - prec) > 0)
 	{
 		data->ret += write(data->fd, &padding, 1);
 		data->width--;
@@ -29,10 +34,13 @@ void	padding(t_printf *data)
 
 void	print_precision(t_printf *data)
 {
-	while (data->precision > 0)
+	int	prec;
+
+	prec = data->precision;
+	while ((prec - data->len) > 0)
 	{
 		data->ret += write(data->fd, "0", 1);
-		data->precision--;
+		prec--;
 	}
 }
 
@@ -58,4 +66,28 @@ void	check_padding(t_printf *data, int base, int left)
 			prefix(base, data);
 		print_precision(data);
 	}
+}
+
+void	float_padding(t_printf *data, int left)
+{
+	if (left && data->flags & ft_bit(LEFT))
+		padding(data);
+	if (data->flags & ft_bit(ZERO) && !(data->flags & ft_bit(LEFT)) && !left)
+	{
+		if (data->flags & ft_bit(NEGATIVE))
+			data->ret += write(data->fd, "-", 1);
+		if (data->flags & ft_bit(PLUS) && !(data->flags & ft_bit(NEGATIVE)))
+			data->ret += write(data->fd, "+", 1);
+		padding(data);
+	}
+	else if (!(data->flags & ft_bit(ZERO) && !(data->flags & ft_bit(LEFT))) && !left)
+	{
+		padding(data);
+		if (data->flags & ft_bit(NEGATIVE))
+			data->ret += write(data->fd, "-", 1);
+		if (data->flags & ft_bit(PLUS) && !(data->flags & ft_bit(NEGATIVE)))
+			data->ret += write(data->fd, "+", 1);
+	}
+	else if (!left)
+		padding(data);
 }

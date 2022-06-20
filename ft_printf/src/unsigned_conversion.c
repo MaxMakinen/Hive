@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 08:40:24 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/10 10:35:09 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/19 12:25:25 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	print_octal(const char **format, t_printf *data)
 	(void)format;
 	if (data->precision > -1)
 		data->flags &= ~(ft_bit(ZERO));
+	if (data->precision == 0 && data->flags & ft_bit(PREFIX))
+		data->precision = 1;
 	get_number(data);
 	ft_ulltoa_base_fd(data, data->input.ull, 8);
 	return (1);
