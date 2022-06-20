@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 11:14:12 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/05/11 13:35:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:59:17 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ math functions
 int		ft_abs(int num);
 float	ft_lerp(float norm, float min, float max);
 float	ft_norm(float num, float min, float max);
+size_t	ft_pow(size_t num, size_t pow);
 /*
 atoi & itoa etc.
 */

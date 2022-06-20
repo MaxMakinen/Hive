@@ -253,4 +253,87 @@ int	main(void)
 	printf("ft_test = %d\n", test);
 	test = printf("{%.2f}{%.2lf}{%.2Lf}\n", 0.15, 0.15, 0.15l);
 	printf("test = %d\n", test);
+
+	test = ft_printf("{%.0f}{%.0f}{%.0f}\n", 0.5, 1.5, 2.5);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.0f}{%.0f}{%.0f}\n", 0.5, 1.5, 2.5);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%.8f}{%.8f}{%.8f}\n", 0.5, 1.5, 2.5);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.8f}{%.8f}{%.8f}\n", 0.5, 1.5, 2.5);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%.1f}{%.1f}{%.1f}\n", 0.05, 1.15, 2.25);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.1f}{%.1f}{%.1f}\n", 0.05, 1.15, 2.25);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%.8f}{%.8f}{%.8f}\n", 0.05, 1.15, 2.25);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.8f}{%.8f}{%.8f}\n", 0.05, 1.15, 2.25);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%.8f}{%.8f}{%.8f}\n", 0.000000005, 1.000000015, 2.000000025);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.8f}{%.8f}{%.8f}\n", 0.000000005, 1.000000015, 2.000000025);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%.1f}{%.1f}{%.1f}{%.1f}\n", 0.05, 1.15, 2.25, 3.35);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.1f}{%.1f}{%.1f}{%.1f}\n", 0.05, 1.15, 2.25, 3.35);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%.2f}{%.2f}{%.2f}{%.2f}\n", 0.005, 1.015, 2.025, 3.035);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.2f}{%.2f}{%.2f}{%.2f}\n", 0.005, 1.015, 2.025, 3.035);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{%.3f}{%.3f}{%.3f}{%.3f}\n", 0.0005, 1.0015, 2.0025, 3.0035);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.3f}{%.3f}{%.3f}{%.3f}\n", 0.0005, 1.0015, 2.0025, 3.0035);
+	printf("test = %d\n", test);
+	
+	test = ft_printf("{%.0f}{%.0f}{%.0f}{%.0f}{%.0f}\n", 0.5, 1.5, 2.5, 3.5, 4.5, 5.5);
+	printf("ft_test = %d\n", test);
+	test = printf("{%.0f}{%.0f}{%.0f}{%.0f}{%.0f}\n", 0.5, 1.5, 2.5, 3.5, 4.5, 5.5);
+	printf("test = %d\n", test);
+
+	test = ft_printf("{% -8f}\n", 3.035);
+	printf("ft_test = %d\n", test);
+	test = printf("{% -8f}\n", 3.035);
+	printf("test = %d\n", test);
+
+	ft_printf("{%p}\n", 0);
+	printf("{%p}\n", 0);
+
+	ft_printf("{%x}\n", 0);
+	printf("{%x}\n", 0);
+
+	ft_printf("{%-15p}\n", 0);
+	printf("{%-15p}\n", 0);
+
+	ft_printf("{%-15p}\n", 0);
+	printf("{%-15p}\n", 0);
+
+	ft_printf("{%05%}\n", 0);
+	printf("{%05%}\n", 0);
+
+	ft_printf("{%08.3d}\n", 8375);
+	printf("{%08.3d}\n", 8375);
+
+	ft_printf("{%-15p}\n", 0);
+	printf("{%-15p}\n", 0);
+
+	ft_printf("{%x}\n", 0);
+	printf("{%x}\n", 0);
+
+	ft_printf("{%-15p}\n", 0);
+	printf("{%-15p}\n", 0);
+
+	test = ft_printf("{%f}{%lf}{%Lf}\n", -1000.0 * 0.0, -1000.0 * 0.0, -1000.0l * 0.0l);
+	printf("ft_test = %d\n", test);
+	test = printf("{%f}{%lf}{%Lf}\n", -1000.0 * 0.0, -1000.0 * 0.0,  -1000.0l * 0.0l);
+	printf("test = %d\n", test);
+	printf("ld = %lu\n", sizeof(long double));
 }

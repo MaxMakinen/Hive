@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 08:40:24 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/19 12:25:25 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:32:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	print_octal(const char **format, t_printf *data)
 
 int	print_pointer(const char **format, t_printf *data)
 {
-	unsigned long long	num;
 	void				*ptr;
 
 	(void)format;
@@ -52,7 +51,7 @@ int	print_pointer(const char **format, t_printf *data)
 	data->flags |= ft_bit(PREFIX);
 	data->flags |= ft_bit(POINTER);
 	ptr = (va_arg(data->ap, void *));
-	num = (unsigned long long)ptr;
-	ft_ulltoa_base_fd(data, num, 16);
+	data->input.ull = (unsigned long long)ptr;
+	ft_ulltoa_base_fd(data, data->input.ull, 16);
 	return (1);
 }

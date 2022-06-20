@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 08:43:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/20 09:25:35 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:05:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,34 +88,24 @@ void	f_padding(t_printf *data)
 	}
 }
 
-
 void	float_padding(t_printf *data, int left)
 {
-	if (left && data->flags & ft_bit(LEFT))
+	if (left == 1 && data->flags & ft_bit(LEFT))
 		f_padding(data);
-	if (data->flags & ft_bit(ZERO) && !(data->flags & ft_bit(LEFT)) && left == 0)
+	if (left == 0 && data->flags & ft_bit(ZERO) && \
+			!(data->flags & ft_bit(LEFT)))
 	{
-		if (data->flags & ft_bit(NEGATIVE))
-			data->ret += write(data->fd, "-", 1);
-		if (data->flags & ft_bit(PLUS) && !(data->flags & ft_bit(NEGATIVE)))
-			data->ret += write(data->fd, "+", 1);
-		if (data->flags & ft_bit(SPACE) && !(data->flags & ft_bit(NEGATIVE)))
-			data->ret += write(data->fd, " ", 1);
+		prefix(10, data);
 		f_padding(data);
 	}
-	else if (!(data->flags & ft_bit(ZERO) && !(data->flags & ft_bit(LEFT))) && left == 0)
+	else if (left == 0 && !(data->flags & ft_bit(ZERO)) && \
+			!(data->flags & ft_bit(LEFT)))
 	{
 		f_padding(data);
-		if (data->flags & ft_bit(NEGATIVE))
-			data->ret += write(data->fd, "-", 1);
-		if (data->flags & ft_bit(PLUS) && !(data->flags & ft_bit(NEGATIVE)))
-			data->ret += write(data->fd, "+", 1);
-		if (data->flags & ft_bit(SPACE) && !(data->flags & ft_bit(NEGATIVE)))
-			data->ret += write(data->fd, " ", 1);
+		prefix(10, data);
 	}
-//	else if (left == 0)
-//		if (data->flags & ft_bit(NEGATIVE))
-//			data->ret += write(data->fd, "-", 1);
-//		if (data->flags & ft_bit(PLUS) && !(data->flags & ft_bit(NEGATIVE)))
-//			data->ret += write(data->fd, "+", 1);
+	else if (left == 0 && data->flags & ft_bit(LEFT))
+	{
+		prefix(10, data);
+	}
 }

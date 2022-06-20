@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/06/19 12:43:49 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/06/20 17:57:19 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS =			ft_printf.c flags.c conversion.c unsigned_conversion.c \
 				parse.c width_and_precision.c ft_ulltoa_base_fd.c ft_bit.c \
 				get_number.c print_padding.c print_float.c
 LIB =			libft.a
-FLAGS = 		-Wall -Wextra -Werror -c $(CFLAGS) -g
+FLAGS = 		-Wall -Wextra -Werror -c $(CFLAGS)
 CPPFLAGS =		-I $(INCLUDE_PATH) -I ./libft/
 OBJECTS =		$(addprefix $(SRC_PATH), $(SRCS:%.c=%.o))
 

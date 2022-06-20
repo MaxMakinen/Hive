@@ -1,7 +1,19 @@
 #include "ft_printf.h"
+#include <stdio.h>
 
 int main(void)
 {
-	ft_printf("%#08.0f\n",17.0f);
-	ft_printf("%#08.0f\n",0.0f);
+	int	test = 0;
+
+	ft_printf("{%x}\n", 0);
+	printf("{%x}\n", 0);
+
+	ft_printf("{%-15p}\n", 0);
+	printf("{%-15p}\n", 0);
+
+	ft_printf("{%x}\n", 0);
+	printf("{%x}\n", 0);
+
+	ft_printf("{%-15p}\n", &test);
+	printf("{%-15p}\n", &test);
 }

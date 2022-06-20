@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:00:20 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/19 14:47:36 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:39:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	print_decimal(const char **format, t_printf *data)
 int	print_percentage(const char **format, t_printf *data)
 {
 	(void)format;
-//	data->width -= 1;
+	data->width -= 1;
 	if (data->width > 0 && !(data->flags & ft_bit(LEFT)))
 		padding(data);
 	data->ret += write(data->fd, "%", 1);

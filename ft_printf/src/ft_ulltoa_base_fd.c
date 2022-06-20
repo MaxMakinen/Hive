@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:55:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/19 14:44:25 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:33:28 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_width(t_printf *data, int base)
 			&& data->input.ull != 0 && data->precision <= data->len)
 		data->width -= 1;
 	if (base == 16 && data->flags & ft_bit(PREFIX) \
-			&& data->input.ull != 0)
+			&& (data->input.ull != 0 || data->flags & ft_bit(POINTER)))
 		data->width -= 2;
 }
 
