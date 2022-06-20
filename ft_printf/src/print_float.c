@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:29:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/19 16:27:36 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/20 09:28:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,19 @@ size_t	get_decimal(t_printf *data, size_t num, size_t precision)
 	size_t	len;
 
 	temp = (size_t)data->input.ld;
-	len = 0;
-	if (temp == 0)
-		len = 1;
-	while (temp > 0)
+	len = 1;
+//	if (temp == 0)
+//		len = 1;
+	while (temp > 9)
 	{
 		temp /= 10;
 		len++;
 	}
-	data->len = (len + (data->flags & ft_bit(PLUS) || data->flags & ft_bit(NEGATIVE));
+	data->len = len + ((data->flags & ft_bit(PLUS)) > 0 || ((data->flags & ft_bit(NEGATIVE)) > 0) || ((data->flags & ft_bit(SPACE)) > 0));
 	decimal = (size_t)((data->input.ld - \
 				(long double)num) * (long double)precision);
+	if (data->precision > 0 || data->flags & ft_bit(PREFIX))
+		data->len += 1;
 	if (decimal % 10 > 4)
 		decimal += 10;
 	return (decimal);
