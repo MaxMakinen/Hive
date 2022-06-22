@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:22:42 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/06/22 11:48:03 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:50:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int ac, char **av)
 {
 	int		fd = 0;
 	char	*map;
-
+	//TODO Make struct for line len info etc?
 	if (ac == 3)
 	{
 		map = prep_map(av[1]);
