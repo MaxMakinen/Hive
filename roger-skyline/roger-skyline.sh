@@ -1,5 +1,6 @@
 #!/bin/bash
 # https://andreafortuna.org/2019/10/24/how-to-create-a-virtualbox-vm-from-command-line/
+# https://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
 
 if [ $# == 1 ]; then
 	MACHINENAME=$1
