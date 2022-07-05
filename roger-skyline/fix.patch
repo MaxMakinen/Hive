@@ -1,0 +1,5 @@
+# patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-43fe646e-339f-47b7-aec8-fb2e2c6b9c0d-isolinux-txt.cfg < fix.patch 
+0a1
+> default install
+1a3
+>   menu default

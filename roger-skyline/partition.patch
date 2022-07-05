@@ -1,0 +1,26 @@
+6,7c6,27
+< d-i partman-auto/choose_recipe select atomic
+< 
+---
+> d-i partman-lvm/confirm boolean true
+> d-i partman-lvm/confirm_nooverwrite boolean true
+> d-i partman-auto/choose_recipe select unencrypted-install
+> d-i partman-auto/expert_recipe string \
+>         unencrypted-install :: \
+>                 4301 4301 4301 ext4 \
+>                         $primary{ } \
+>                         method{ format } format{ } \
+>                         use_filesystem{ } filesystem{ ext4 } \
+>                         mountpoint{ / } \
+>                 . \
+>                 1024 1024 1024 linux-swap \
+>                         $primary{ } \
+>                         method{ swap } format{ } \
+>                 . \
+>                 2560 10000000 -1 ext4 \
+>                         $primary{ } \
+>                         method{ format } format{ } \
+>                         use_filesystem{ } filesystem{ ext4 } \
+>                         mountpoint{ /home } \
+>                 .
+> d-i partman-md/confirm boolean true

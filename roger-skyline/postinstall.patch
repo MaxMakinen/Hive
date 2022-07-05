@@ -1,0 +1,19 @@
+246c246,259
+< exit ${MY_EXITCODE}
+---
+> # get our apt up to speed
+> echo "echo "p4ssw0rd" | su -c "apt update && apt upgrade -y"" >> "${MY_LOGFILE}"
+> # add /sbin into our PATH so that we can call functions easier
+> echo "echo "p4ssw0rd" | su -c "echo 'export PATH="/sbin:$PATH"' >> .bashrc"" >> "${MY_LOGFILE}"
+> echo "echo "p4ssw0rd" | su -c "source .bashrc"" >> "${MY_LOGFILE}"
+> # install sudo and add user to group
+> echo "echo "p4ssw0rd" | su -c "apt install sudo -y"" >> "${MY_LOGFILE}"
+> echo "echo "p4ssw0rd" | su -c "adduser user sudo"" >> "${MY_LOGFILE}"
+> # install net-tools for network shenanigans
+> echo "echo "p4ssw0rd" | su -c "apt install net-tools -y"" >> "${MY_LOGFILE}"
+> # install ufw (uncomplicated firewall) for the project
+> echo "echo "p4ssw0rd" | su -c "apt install ufw -y"" >> "${MY_LOGFILE}"
+> # install fail2ban to protect ourselves from slowloris attack
+> echo "echo "p4ssw0rd" | su -c "apt install fail2ban -y"" >> "${MY_LOGFILE}"
+247a261
+> exit ${MY_EXITCODE}
