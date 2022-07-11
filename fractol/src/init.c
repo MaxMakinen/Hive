@@ -6,15 +6,33 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/11 13:51:27 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:53:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+void	zero_coord(t_coord *coord)
+{
+	coord->x = 0.0;
+	coord->y = 0.0;
+}
+
+void	zero_screen(t_screen *screen)
+{
+	screen->x = 0;
+	screen->y = 0;
+}
+
 void	init_data(t_data *data)
 {
 	data->img = (t_img *)ft_calloc(sizeof(t_img), 1);
+	data->world = (t_coord *)ft_calloc(sizeof(t_coord), 1);
+	data->offset = (t_coord *)ft_calloc(sizeof(t_coord), 1);
+	data->screen = (t_screen *)ft_calloc(sizeof(t_screen), 1);
+	zero_coord(data->world);
+	zero_coord(data->offset);
+	zero_screen(data->screen);
 }
 
 void    render_background(t_img *img, int color)                                

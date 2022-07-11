@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/11 13:51:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:51:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ union u_color
 	char rgb[4];
 };
 
+typedef struct s_coord
+{
+	double	x;
+	double	y;
+}	t_coord;
+
+typedef struct s_screen
+{
+	int	x;
+	int	y;
+}	t_screen;
+
 typedef struct s_img
 {
 	void	*mlx_img;
@@ -50,10 +62,12 @@ typedef struct s_img
 
 typedef struct s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img	*img;
-//	t_map	*map;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_img		*img;
+	t_coord		*world;
+	t_screen	*screen;
+	t_coord		*offset;
 }	t_data;
 
 void	exit_error(char *str);
@@ -66,5 +80,8 @@ void	img_pix_put(t_img *img, int x, int y, int color);
 int	render(t_data *data);
 int	get_color(int iteration);
 int	mandel(int pixel_x, int pixel_y);
+
+void	screen_to_world(t_data *data);
+void	world_to_screen(t_data *data);
 
 #endif

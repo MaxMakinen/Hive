@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 12:35:16 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/11 14:18:55 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:58:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ int	get_color(int iteration)
 	color.color = 0;
 	if (iteration == 200)
 		return (color.color);
-//	color.rgb[1] = iteration % 255;
-//	iteration -= iteration % 255;
-	color.color = iteration;
-//	printf("%d", iteration);
+	color.rgb[1] = iteration % 255;
+	iteration -= iteration % 255;
+	color.rgb[2] = iteration % 255;
+	iteration -= iteration % 255;
+	color.rgb[3] = iteration % 255;
+	iteration -= iteration % 255;
+//	color.color = iteration;
 	return (color.color);
 }
 
@@ -66,10 +69,8 @@ int	mandel(int pixel_x, int pixel_y)
 	int	iteration;
 	int	max_iteration;
 
-	pixel_x++;
-	pixel_y++;
-	scaled_x = (double)(ft_lerp(ft_norm(pixel_x, 0.0, WINDOW_WIDTH), -2.00, 0.47));
-	scaled_y = (double)(ft_lerp(ft_norm(pixel_y, 0.0, WINDOW_HEIGHT), -1.12, 1.12));
+	scaled_x = (double)(ft_lerp(ft_norm(pixel_x, 0.0, (float)WINDOW_WIDTH), -2.00, 0.47));
+	scaled_y = (double)(ft_lerp(ft_norm(pixel_y, 0.0, (float)WINDOW_HEIGHT), -1.12, 1.12));
 	x = 0;
 	y = 0;
 	iteration = 0;
