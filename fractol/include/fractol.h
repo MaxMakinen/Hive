@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/11 14:51:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:40:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include "mlx.h"
 # include "libft.h"
 # include "color.h"
+
+# if defined(__linux__)
+#  include "linux_keys.h"
+# else
+#  include "mac_keys.h"
+# endif
 
 # define TRUE 1
 # define FALSE 0
@@ -60,14 +66,26 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_mouse
+{
+	int			pressed;
+	t_screen	pos;
+}	t_mouse;
+
 typedef struct s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		*img;
-	t_coord		*world;
-	t_screen	*screen;
-	t_coord		*offset;
+	int			max_iterations;
+	t_coord		zoom;
+	t_mouse		mouse;
+	t_coord		world_min;
+	t_coord		world_max;
+	t_screen	screen_min;
+	t_screen	screen_max;
+	t_coord		offset;
+	t_coord		scale;
 }	t_data;
 
 void	exit_error(char *str);
@@ -77,11 +95,19 @@ void	create_img(t_data *data, char *name);
 void	clean_exit(t_data *data);
 
 void	img_pix_put(t_img *img, int x, int y, int color);
-int	render(t_data *data);
-int	get_color(int iteration);
-int	mandel(int pixel_x, int pixel_y);
+int		render(t_data *data);
+int		get_color(t_data *data, int iteration);
+int		mandel(int pixel_x, int pixel_y);
+void	mandelbrot(t_data *data);
 
-void	screen_to_world(t_data *data);
-void	world_to_screen(t_data *data);
+void	world_to_screen(t_data *data, t_coord world, t_screen *screen);
+void	screen_to_world(t_data *data, t_screen screen, t_coord *world);
 
+void	zoom(t_data *data, double zoom);
+void	reset_scale(t_data *data);
+void	reset_values(t_data *data);
+
+int mouse_press(int button, int x, int y, t_data *data);
+int	mouse_release(int button, int x, int y, t_data *data);
+int	mouse_move(int x, int y, t_data *data);
 #endif

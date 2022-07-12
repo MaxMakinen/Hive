@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/11 14:53:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:14:53 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,27 @@ void	zero_screen(t_screen *screen)
 	screen->y = 0;
 }
 
+void	reset_scale(t_data *data)
+{
+	//data->scale.x = (float)WINDOW_WIDTH / 2.0;
+	data->scale.x = (double)WINDOW_HEIGHT / 3.00;
+	data->scale.y = (double)WINDOW_HEIGHT / 3.00;
+}
+
 void	init_data(t_data *data)
 {
 	data->img = (t_img *)ft_calloc(sizeof(t_img), 1);
-	data->world = (t_coord *)ft_calloc(sizeof(t_coord), 1);
-	data->offset = (t_coord *)ft_calloc(sizeof(t_coord), 1);
-	data->screen = (t_screen *)ft_calloc(sizeof(t_screen), 1);
-	zero_coord(data->world);
-	zero_coord(data->offset);
-	zero_screen(data->screen);
+	zero_coord(&data->world_min);
+	zero_coord(&data->world_max);
+	zero_screen(&data->screen_min);
+	zero_screen(&data->screen_max);
+	zero_coord(&data->offset);
+	reset_scale(data);
+	data->zoom.x = 1.1;
+	data->zoom.y = 0.9;
+	data->offset.x = -3.0;
+	data->offset.y = -1.5;
+	data->max_iterations = 200;
 }
 
 void    render_background(t_img *img, int color)                                
