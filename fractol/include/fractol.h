@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 12:09:17 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:29:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		get_color(t_data *data, int iteration);
 
 void	mandelbrot(t_data *data);
 void	julia(t_data *data);
-void	multi_julia(t_data *data);
+void	multibrot(t_data *data);
 
 void	world_to_screen(t_data *data, t_coord world, t_screen *screen);
 void	screen_to_world(t_data *data, t_screen screen, t_coord *world);

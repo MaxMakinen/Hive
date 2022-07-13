@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 09:06:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 12:10:52 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:36:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	julia(t_data *data)
 
 	if (data->julia_stop == 0)
 		screen_to_world(data, data->mouse.pos, &data->julia);
+
+//	data->julia.x = sin(data->multi);
+//	data->julia.y = 0.0; //sin(data->multi);
+//	data->multi += 0.03;
+	
 	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
 	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
 
@@ -62,7 +67,7 @@ void	julia(t_data *data)
 	}
 }
 
-void	multi_julia(t_data *data)
+void	multibrot(t_data *data)
 {
 	double	x_scale;
 	double	y_scale;

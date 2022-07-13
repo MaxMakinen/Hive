@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 12:11:59 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:37:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	init_data(t_data *data)
 	data->zoom.y = 0.9;
 	data->offset.x = -3.0;
 	data->offset.y = -1.5;
-	data->max_iterations = 200;
+	data->max_iterations = 128;
 	data->multi = 2.0;
 }
 
