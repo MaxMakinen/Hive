@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:53:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 08:52:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 09:39:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	render(t_data *data)
 	reset_values(data);
 	screen_to_world(data, data->screen_min, &data->world_min);
 	screen_to_world(data, data->screen_max, &data->world_max);
-	mandelbrot(data);
+//	mandelbrot(data);
+	julia(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->img->mlx_img, 0, 0);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 10, 0, "Max iterations:");
