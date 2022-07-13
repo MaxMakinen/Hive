@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:53:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 09:39:33 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:07:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	render(t_data *data)
 	screen_to_world(data, data->screen_min, &data->world_min);
 	screen_to_world(data, data->screen_max, &data->world_max);
 //	mandelbrot(data);
-	julia(data);
+//	julia(data);
+	multi_julia(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->img->mlx_img, 0, 0);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 10, 0, "Max iterations:");
@@ -43,26 +44,8 @@ int	render(t_data *data)
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 70, 0, ft_itoa(data->offset.x * 100));
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 90, 0, "Offset Y:");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 90, 0, ft_itoa(data->offset.y * 100));
-	/*
-	int	x;
-	int	y;
-
-	y = 0;
-	if (data->win_ptr == NULL)
-		return (1);
-	while (y < WINDOW_HEIGHT)
-	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			img_pix_put(data->img, x, y, mandel(x ,y));
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-			data->img->mlx_img, 0, 0);
-	*/
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 110, 0, "Multi:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 110, 0, ft_itoa(data->multi));
 	return (0);
 }
 

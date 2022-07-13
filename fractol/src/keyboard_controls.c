@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:08:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 08:54:54 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:11:41 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,20 @@ int	handle_keypress(int keysym, t_data *data)
 	}
 	if (keysym == NUM8)
 		reset_scale(data);
+	if (keysym == NUM4)
+	{
+		data->multi -= 1.0;
+	}
+	if (keysym == NUM5)
+	{
+		data->multi += 1.0;
+	}
+	if (keysym == NUM6)
+	{
+		if (data->mandel == 1)
+			data->mandel = 0;
+		else
+			data->mandel = 1;
+	}
 	return (0);
 }

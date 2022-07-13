@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 11:18:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:11:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ void	init_data(t_data *data)
 	zero_coord(&data->julia);
 	reset_scale(data);
 	data->julia_stop = 0;
+	data->mandel = 0;
 	data->zoom.x = 1.1;
 	data->zoom.y = 0.9;
 	data->offset.x = -3.0;
 	data->offset.y = -1.5;
 	data->max_iterations = 200;
+	data->multi = 2.0;
 }
 
 void    render_background(t_img *img, int color)                                
