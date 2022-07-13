@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/12 15:14:53 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 08:54:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	zero_screen(t_screen *screen)
 
 void	reset_scale(t_data *data)
 {
-	//data->scale.x = (float)WINDOW_WIDTH / 2.0;
 	data->scale.x = (double)WINDOW_HEIGHT / 3.00;
 	data->scale.y = (double)WINDOW_HEIGHT / 3.00;
 }

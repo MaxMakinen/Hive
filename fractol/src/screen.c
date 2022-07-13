@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 14:25:13 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/12 11:44:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 08:59:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,9 @@ void	zoom(t_data *data, double zoom)
 {
 	data->scale.x *= zoom;
 	data->scale.y *= zoom;
+	if (data->scale.x < 1.0 || data->scale.y < 1.0)
+	{
+		data->scale.x = 1.0;
+		data->scale.y = 1.0;
+	}
 }

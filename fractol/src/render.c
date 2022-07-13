@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:53:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/12 14:39:19 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 08:52:37 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ int	render(t_data *data)
 	mandelbrot(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->img->mlx_img, 0, 0);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 10, 0, "Max iterations:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 110, 10, 0, ft_itoa(data->max_iterations));
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 30, 0, "Scale:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 30, 0, ft_itoa(data->scale.x));
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 50, 0, "Zoom:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 50, 0, ft_itoa(data->zoom.x * 100));
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 70, 0, "Offset X:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 70, 0, ft_itoa(data->offset.x * 100));
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 90, 0, "Offset Y:");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 90, 0, ft_itoa(data->offset.y * 100));
 	/*
 	int	x;
 	int	y;

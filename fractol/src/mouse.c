@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:06:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/12 14:45:35 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 08:45:43 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,8 @@ int mouse_press(int button, int x, int y, t_data *data)
 		data->offset.x += (pre_zoom_mouse.x - post_zoom_mouse.x);
 		data->offset.y += (pre_zoom_mouse.y - post_zoom_mouse.y);
 	}
-	if (button == MOUSE_MIDDLE)
-	{
+	if (button == MOUSE_MIDDLE || button == MOUSE_LEFT)
 		data->mouse.pressed = 1;
-		data->mouse.pos.x = x;
-		data->mouse.pos.y = y;
-	}
 	return (1);
 }
 
