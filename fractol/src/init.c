@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 14:37:32 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:47:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ void	reset_scale(t_data *data)
 	data->scale.y = (double)WINDOW_HEIGHT / 3.00;
 }
 
+void	set_function_pointers(t_data *data)
+{
+	data->fractal[0] = &mandelbrot;
+	data->fractal[1] = &julia;
+	data->fractal[2] = &multibrot;
+}
+
 void	init_data(t_data *data)
 {
 	data->img = (t_img *)ft_calloc(sizeof(t_img), 1);
@@ -42,12 +49,15 @@ void	init_data(t_data *data)
 	reset_scale(data);
 	data->julia_stop = 0;
 	data->mandel = 0;
+	data->color = 0;
 	data->zoom.x = 1.1;
 	data->zoom.y = 0.9;
 	data->offset.x = -3.0;
 	data->offset.y = -1.5;
 	data->max_iterations = 128;
 	data->multi = 2.0;
+	set_function_pointers(data);
+	data->function = -1;
 }
 
 void    render_background(t_img *img, int color)                                

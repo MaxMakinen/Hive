@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:47:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/12 13:46:52 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:49:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,34 @@ int	destroy(void	*param)
 	return (1);
 }
 
-
 void	exit_error(char *str)
 {
 	ft_putendl(str);
 	exit(1);
 }
 
+void	check_input(t_data *data, char *str)
+{
+	if (!ft_strncmp(str, "mandelbrot", sizeof(str)))
+		data->function = 0;
+	if (!ft_strncmp(str, "julia", sizeof(str)))
+		data->function = 1;
+	if (!ft_strncmp(str, "multibrot", sizeof(str)))
+		data->function = 2;
+	if (data->function < 0)
+		exit_error("Invalid fractal");
+}
+
 int main(int ac, char **av)
 {
 	t_data	data;
 
-	(void)av;
-	if (ac != 1)
-		exit_error("Usage: STILL IN TESTING");
+	if (ac != 2)
+		exit_error("Usage: <fractal> [mandelbrot] [julia] [multibrot]");
 	init_data(&data);
-	create_img(&data, "Rumplestiltskin");
+	check_input(&data, av[1]);
+	create_img(&data, av[1]);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img->mlx_img, 0, 0);
-//	render(&data);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);								
 	mlx_hook(data.win_ptr, 4, 1L << 2, mouse_press, &data);					 
 	mlx_hook(data.win_ptr, 6, 1L << 6, mouse_move, &data);					 

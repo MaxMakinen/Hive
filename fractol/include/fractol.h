@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 14:29:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:47:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,17 @@
 # define TRUE 1
 # define FALSE 0
 
-# define WINDOW_WIDTH 1600
-# define WINDOW_HEIGHT 900
+# define WINDOW_WIDTH 1200
+# define WINDOW_HEIGHT 600
 
 # define KEY_ESC 65307
+
+typedef void	(*t_funcptr)();
 
 union u_color
 {
 	int	color;
-	char rgb[4];
+	unsigned char rgb[4];
 };
 
 typedef struct s_coord
@@ -81,6 +83,8 @@ typedef struct s_data
 	int			max_iterations;
 	int			julia_stop;
 	int			mandel;
+	int			color;
+	int			function;
 	t_coord		julia;
 	t_coord		zoom;
 	t_mouse		mouse;
@@ -90,6 +94,7 @@ typedef struct s_data
 	t_screen	screen_max;
 	t_coord		offset;
 	t_coord		scale;
+	t_funcptr	fractal[3];
 }	t_data;
 
 void	exit_error(char *str);
