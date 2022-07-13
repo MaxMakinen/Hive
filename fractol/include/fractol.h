@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 09:40:09 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:13:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct s_data
 	void		*win_ptr;
 	t_img		*img;
 	int			max_iterations;
+	int			julia_stop;
+	t_coord		julia;
 	t_coord		zoom;
 	t_mouse		mouse;
 	t_coord		world_min;

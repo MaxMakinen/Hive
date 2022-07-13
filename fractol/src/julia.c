@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 09:06:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 10:24:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:24:10 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,15 @@ void	julia(t_data *data)
 	int		y;
 	int		iteration;
 
-	double	radius;
-	t_coord	temp;
-
-	screen_to_world(data, data->mouse.pos, &temp);
-	radius = sqrt(temp.x * temp.x + temp.y * temp.y);
-
-	radius = 4.0;
-	data->world_min.x = -radius;
-	data->world_min.y = -radius;
-	data->world_max.x = radius;
-	data->world_max.y = radius;
-	
+	if (data->julia_stop == 0)
+		screen_to_world(data, data->mouse.pos, &data->julia);
 	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
 	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
 
-	/*
+	
 	x_pos = data->world_min.x;
 	y_pos = data->world_min.y;
-	*/
-	x_pos = data->screen_min.x;
-	y_pos = data->world_min.y;
+	
 	y = data->screen_min.y;
 
 	double temp_x;
@@ -55,13 +43,13 @@ void	julia(t_data *data)
 		x = data->screen_min.x;
 		while (x < data->screen_max.x)
 		{
-			real = temp.x;
-			imag = temp.y;
+			real = x_pos;
+			imag = y_pos;
 			iteration = 0;
-			while ((real * real + imag * imag) < (radius * radius) && iteration < data->max_iterations)
+			while ((real * real + imag * imag) < 4.0 && iteration < data->max_iterations)
 			{
-				temp_x = real * real - imag * imag + x_pos;
-				imag = 2 * real *imag + y_pos;
+				temp_x = real * real - imag * imag + data->julia.x;
+				imag = 2 * real *imag + data->julia.y;
 				real = temp_x;
 				iteration++;
 			}

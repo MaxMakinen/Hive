@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 10:05:50 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:18:37 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	init_data(t_data *data)
 	zero_screen(&data->screen_min);
 	zero_screen(&data->screen_max);
 	zero_coord(&data->offset);
+	zero_coord(&data->julia);
 	reset_scale(data);
+	data->julia_stop = 0;
 	data->zoom.x = 1.1;
 	data->zoom.y = 0.9;
 	data->offset.x = -3.0;
