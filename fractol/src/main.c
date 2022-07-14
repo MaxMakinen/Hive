@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:47:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 15:49:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:05:12 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	check_input(t_data *data, char *str)
 		data->function = 1;
 	if (!ft_strncmp(str, "multibrot", sizeof(str)))
 		data->function = 2;
+	if (!ft_strncmp(str, "sierpinsky", sizeof(str)))
+		data->function = 3;
 	if (data->function < 0)
 		exit_error("Invalid fractal");
 }

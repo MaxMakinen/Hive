@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 15:47:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:08:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	set_function_pointers(t_data *data)
 	data->fractal[0] = &mandelbrot;
 	data->fractal[1] = &julia;
 	data->fractal[2] = &multibrot;
+	data->fractal[3] = &sierpinsky;
 }
 
 void	init_data(t_data *data)
@@ -60,21 +61,21 @@ void	init_data(t_data *data)
 	data->function = -1;
 }
 
-void    render_background(t_img *img, int color)                                
-{                                                                               
-    int i;                                                                      
-    int *pixel;                                                                 
-    int size;                                                                   
-                                                                                
-    pixel = (int *)img->addr;                                                   
-    size = WINDOW_HEIGHT * WINDOW_WIDTH;                                        
-    i = 0;                                                                      
-    while (i < size)                                                            
-    {                                                                           
-        pixel[i] = color;                                                       
-        i++;                                                                    
-    }                                                                           
-} 
+void	render_background(t_img *img, int color)
+{
+	int i;
+	int *pixel;
+	int size;
+
+	pixel = (int *)img->addr;
+	size = WINDOW_HEIGHT * WINDOW_WIDTH;
+	i = 0;
+	while (i < size)
+	{
+		pixel[i] = color;
+		i++;
+	}
+}
 
 void	create_img(t_data *data, char *name)
 {

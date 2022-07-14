@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 15:47:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:07:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_data
 	t_screen	screen_max;
 	t_coord		offset;
 	t_coord		scale;
-	t_funcptr	fractal[3];
+	t_funcptr	fractal[4];
 }	t_data;
 
 void	exit_error(char *str);
@@ -106,10 +106,12 @@ void	clean_exit(t_data *data);
 void	img_pix_put(t_img *img, int x, int y, int color);
 int		render(t_data *data);
 int		get_color(t_data *data, int iteration);
+void	render_background(t_img *img, int color);
 
 void	mandelbrot(t_data *data);
 void	julia(t_data *data);
 void	multibrot(t_data *data);
+void	sierpinsky(t_data *data);
 
 void	world_to_screen(t_data *data, t_coord world, t_screen *screen);
 void	screen_to_world(t_data *data, t_screen screen, t_coord *world);
