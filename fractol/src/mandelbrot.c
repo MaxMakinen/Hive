@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   julia.c                                            :+:      :+:    :+:   */
+/*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 09:06:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/14 09:03:18 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/07/14 09:03:30 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/07/14 09:04:11 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	julia(t_data *data)
+void	mandelbrot(t_data *data)
 {
 	double	x_scale;
 	double	y_scale;
@@ -22,25 +22,16 @@ void	julia(t_data *data)
 	int		y;
 	int		iteration;
 
-	if (data->julia_stop == 0)
-		screen_to_world(data, data->mouse.pos, &data->julia);
-
-//	data->julia.x = sin(data->multi);
-//	data->julia.y = sin(data->multi);
-//	data->multi += 0.03;
-	
 	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
 	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
 
-	
 	x_pos = data->world_min.x;
 	y_pos = data->world_min.y;
-	
 	y = data->screen_min.y;
 
-	double	temp_x;
-	double	real;
-	double	imag;
+	double temp_x;
+	double f_x;
+	double f_y;
 
 	while (y < data->screen_max.y)
 	{
@@ -48,14 +39,14 @@ void	julia(t_data *data)
 		x = data->screen_min.x;
 		while (x < data->screen_max.x)
 		{
-			real = x_pos;
-			imag = y_pos;
+			f_x = 0.0;
+			f_y = 0.0;
 			iteration = 0;
-			while ((real * real + imag * imag) < 4.0 && iteration < data->max_iterations)
+			while ((f_x * f_x + f_y * f_y) < 4.0 && iteration < data->max_iterations)
 			{
-				temp_x = real * real - imag * imag + data->julia.x;
-				imag = 2 * real *imag + data->julia.y;
-				real = temp_x;
+				temp_x = f_x * f_x - f_y * f_y + x_pos;
+				f_y = 2 * f_x *f_y + y_pos;
+				f_x = temp_x;
 				iteration++;
 			}
 			img_pix_put(data->img, x, y, get_color(data, iteration));
