@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:47:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 17:05:12 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:38:50 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 2)
-		exit_error("Usage: <fractal> [mandelbrot] [julia] [multibrot]");
+		exit_error("Usage: <fractal> [mandelbrot] [julia] [multibrot] [sierpinsky]");
 	init_data(&data);
 	check_input(&data, av[1]);
 	create_img(&data, av[1]);
