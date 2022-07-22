@@ -6,19 +6,19 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:06:28 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 11:22:39 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:42:35 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int mouse_press(int button, int x, int y, t_data *data)
+int	mouse_press(int button, int x, int y, t_data *data)
 {
+	t_coord	pre_zoom_mouse;
+	t_coord	post_zoom_mouse;
+
 	(void)x;
 	(void)y;
-	t_coord pre_zoom_mouse;
-	t_coord post_zoom_mouse;
-
 	if (button == MOUSE_SCROLL_UP || button == MOUSE_SCROLL_DOWN)
 	{
 		screen_to_world(data, data->mouse.pos, &pre_zoom_mouse);

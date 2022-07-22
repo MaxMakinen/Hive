@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 17:08:51 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:46:15 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	init_data(t_data *data)
 
 void	render_background(t_img *img, int color)
 {
-	int i;
-	int *pixel;
-	int size;
+	int	i;
+	int	*pixel;
+	int	size;
 
 	pixel = (int *)img->addr;
 	size = WINDOW_HEIGHT * WINDOW_WIDTH;
@@ -95,4 +95,3 @@ void	create_img(t_data *data, char *name)
 			&data->img->bpp, &data->img->line_len, &data->img->endian);
 	render_background(data->img, PURPLE_PIXEL);
 }
-

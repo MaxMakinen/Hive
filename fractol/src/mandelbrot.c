@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:03:30 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/14 09:04:11 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:39:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	mandelbrot(t_data *data)
 	int		x;
 	int		y;
 	int		iteration;
+	double	temp_x;
+	double	f_x;
+	double	f_y;
 
 	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
 	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
@@ -28,10 +31,6 @@ void	mandelbrot(t_data *data)
 	x_pos = data->world_min.x;
 	y_pos = data->world_min.y;
 	y = data->screen_min.y;
-
-	double temp_x;
-	double f_x;
-	double f_y;
 
 	while (y < data->screen_max.y)
 	{
@@ -45,7 +44,7 @@ void	mandelbrot(t_data *data)
 			while ((f_x * f_x + f_y * f_y) < 4.0 && iteration < data->max_iterations)
 			{
 				temp_x = f_x * f_x - f_y * f_y + x_pos;
-				f_y = 2 * f_x *f_y + y_pos;
+				f_y = 2 * f_x * f_y + y_pos;
 				f_x = temp_x;
 				iteration++;
 			}

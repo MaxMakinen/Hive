@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 09:06:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/14 09:03:18 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:45:05 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,22 @@ void	julia(t_data *data)
 	int		x;
 	int		y;
 	int		iteration;
-
-	if (data->julia_stop == 0)
-		screen_to_world(data, data->mouse.pos, &data->julia);
-
-//	data->julia.x = sin(data->multi);
-//	data->julia.y = sin(data->multi);
-//	data->multi += 0.03;
-	
-	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
-	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
-
-	
-	x_pos = data->world_min.x;
-	y_pos = data->world_min.y;
-	
-	y = data->screen_min.y;
-
 	double	temp_x;
 	double	real;
 	double	imag;
 
+	if (data->julia_stop == 0)
+		screen_to_world(data, data->mouse.pos, &data->julia);
+//	data->julia.x = sin(data->multi);
+//	data->julia.y = sin(data->multi);
+//	data->multi += 0.03;
+	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
+	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
+
+	x_pos = data->world_min.x;
+	y_pos = data->world_min.y;
+
+	y = data->screen_min.y;
 	while (y < data->screen_max.y)
 	{
 		x_pos = data->world_min.x;
@@ -54,7 +49,7 @@ void	julia(t_data *data)
 			while ((real * real + imag * imag) < 4.0 && iteration < data->max_iterations)
 			{
 				temp_x = real * real - imag * imag + data->julia.x;
-				imag = 2 * real *imag + data->julia.y;
+				imag = 2 * real * imag + data->julia.y;
 				real = temp_x;
 				iteration++;
 			}

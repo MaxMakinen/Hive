@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 17:07:51 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:08:24 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define WINDOW_WIDTH 1200
 # define WINDOW_HEIGHT 600
 
-# define KEY_ESC 65307
+	//# define KEY_ESC 65307
 
 typedef void	(*t_funcptr)();
 

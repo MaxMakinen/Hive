@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:02:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/14 09:04:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:40:52 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,21 @@ void	multibrot(t_data *data)
 	int		x;
 	int		y;
 	int		iteration;
-
-	if (data->julia_stop == 0)
-		screen_to_world(data, data->mouse.pos, &data->julia);
-	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
-	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
-
-	
-	x_pos = data->world_min.x;
-	y_pos = data->world_min.y;
-	
-	y = data->screen_min.y;
-
 	double	temp_x;
 	double	real;
 	double	imag;
 	double	powe;
 	double	ata;
 
+	if (data->julia_stop == 0)
+		screen_to_world(data, data->mouse.pos, &data->julia);
+	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
+	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
+
+	x_pos = data->world_min.x;
+	y_pos = data->world_min.y;
+
+	y = data->screen_min.y;
 	while (y < data->screen_max.y)
 	{
 		x_pos = data->world_min.x;
