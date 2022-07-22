@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:47:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/14 14:38:50 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/22 14:08:43 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	check_input(t_data *data, char *str)
 		exit_error("Invalid fractal");
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_data	data;
 
@@ -57,13 +57,13 @@ int main(int ac, char **av)
 	check_input(&data, av[1]);
 	create_img(&data, av[1]);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img->mlx_img, 0, 0);
-	mlx_loop_hook(data.mlx_ptr, &render, &data);								
-	mlx_hook(data.win_ptr, 4, 1L << 2, mouse_press, &data);					 
-	mlx_hook(data.win_ptr, 6, 1L << 6, mouse_move, &data);					 
-	mlx_hook(data.win_ptr, 5, 1L << 3, mouse_release, &data);					 
-	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);				 
-	mlx_hook(data.win_ptr, 17, 0, destroy, &data);							  
-	mlx_hook(data.win_ptr, 12, 0, render, &data);								 
-	mlx_loop(data.mlx_ptr);													 
-	free(data.mlx_ptr); 
+	mlx_loop_hook(data.mlx_ptr, &render, &data);
+	mlx_hook(data.win_ptr, 4, 1L << 2, mouse_press, &data);
+	mlx_hook(data.win_ptr, 6, 1L << 6, mouse_move, &data);
+	mlx_hook(data.win_ptr, 5, 1L << 3, mouse_release, &data);
+	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
+	mlx_hook(data.win_ptr, 17, 0, destroy, &data);
+	mlx_hook(data.win_ptr, 12, 0, render, &data);
+	mlx_loop(data.mlx_ptr);
+	free(data.mlx_ptr);
 }
