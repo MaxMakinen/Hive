@@ -6,58 +6,53 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 09:06:25 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/22 17:45:05 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:54:59 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+static int	get_iteration(t_data *data, t_coord imag_num)
+{
+	int			iteration;
+	double		temp_x;
+
+	iteration = 0;
+	while ((imag_num.x * imag_num.x + imag_num.y * imag_num.y) < 4.0 && \
+			iteration < data->max_iterations)
+	{
+		temp_x = imag_num.x * imag_num.x - imag_num.y * imag_num.y + \
+				data->julia.x;
+		imag_num.y = 2 * imag_num.x * imag_num.y + data->julia.y;
+		imag_num.x = temp_x;
+		iteration++;
+	}
+	return (iteration);
+}
+
 void	julia(t_data *data)
 {
-	double	x_scale;
-	double	y_scale;
-	double	x_pos;
-	double	y_pos;
-	int		x;
-	int		y;
-	int		iteration;
-	double	temp_x;
-	double	real;
-	double	imag;
+	t_coord		scale;
+	t_coord		pos;
+	t_screen	screen;
 
 	if (data->julia_stop == 0)
 		screen_to_world(data, data->mouse.pos, &data->julia);
-//	data->julia.x = sin(data->multi);
-//	data->julia.y = sin(data->multi);
-//	data->multi += 0.03;
-	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
-	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
-
-	x_pos = data->world_min.x;
-	y_pos = data->world_min.y;
-
-	y = data->screen_min.y;
-	while (y < data->screen_max.y)
+	set_scale(data, &scale);
+	assign(&pos, data->world_min);
+	screen.y = data->screen_min.y;
+	while (screen.y < data->screen_max.y)
 	{
-		x_pos = data->world_min.x;
-		x = data->screen_min.x;
-		while (x < data->screen_max.x)
+		pos.x = data->world_min.x;
+		screen.x = data->screen_min.x;
+		while (screen.x < data->screen_max.x)
 		{
-			real = x_pos;
-			imag = y_pos;
-			iteration = 0;
-			while ((real * real + imag * imag) < 4.0 && iteration < data->max_iterations)
-			{
-				temp_x = real * real - imag * imag + data->julia.x;
-				imag = 2 * real * imag + data->julia.y;
-				real = temp_x;
-				iteration++;
-			}
-			img_pix_put(data->img, x, y, get_color(data, iteration));
-			x_pos += x_scale;
-			x++;
+			img_pix_put(data->img, screen.x, screen.y, \
+					get_color(data, get_iteration(data, pos)));
+			pos.x += scale.x;
+			screen.x++;
 		}
-		y_pos += y_scale;
-		y++;
+		pos.y += scale.y;
+		screen.y++;
 	}
 }

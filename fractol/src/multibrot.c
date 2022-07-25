@@ -6,67 +6,75 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:02:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/22 17:40:52 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:37:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	multibrot(t_data *data)
+void	assign(t_coord *to, t_coord from)
 {
-	double	x_scale;
-	double	y_scale;
-	double	x_pos;
-	double	y_pos;
-	int		x;
-	int		y;
+	to->x = from.x;
+	to->y = from.y;
+}
+
+static int	get_iteration(t_data *data, t_coord pos, t_coord imag_num)
+{
 	int		iteration;
-	double	temp_x;
-	double	real;
-	double	imag;
 	double	powe;
 	double	ata;
+	double	temp_x;
+
+	iteration = 0;
+	while ((imag_num.x * imag_num.x + imag_num.y * imag_num.y) < 4.0 \
+			&& iteration < data->max_iterations)
+	{
+		powe = pow((imag_num.x * imag_num.x + \
+					imag_num.y * imag_num.y), (data->multi / 2.0));
+		ata = data->multi * atan2(imag_num.y, imag_num.x);
+		if (data->mandel == 0)
+			assign(&pos, data->julia);
+		temp_x = powe * cos(ata) + pos.x;
+		imag_num.y = powe * sin(ata) + pos.y;
+		imag_num.x = temp_x;
+		iteration++;
+	}
+	return (iteration);
+}
+
+void	set_scale(t_data *data, t_coord *scale)
+{
+	scale->x = (data->world_max.x - data->world_min.x) / \
+			(double)(data->screen_max.x) - (double)(data->screen_min.x);
+	scale->y = (data->world_max.y - data->world_min.y) / \
+			(double)(data->screen_max.y) - (double)(data->screen_min.y);
+}
+
+void	multibrot(t_data *data)
+{
+	t_coord		scale;
+	t_coord		pos;
+	t_screen	screen;
+	t_coord		imag_num;
 
 	if (data->julia_stop == 0)
 		screen_to_world(data, data->mouse.pos, &data->julia);
-	x_scale = (data->world_max.x - data->world_min.x) / (float)(data->screen_max.x) - (float)(data->screen_min.x);
-	y_scale = (data->world_max.y - data->world_min.y) / (float)(data->screen_max.y) - (float)(data->screen_min.y);
-
-	x_pos = data->world_min.x;
-	y_pos = data->world_min.y;
-
-	y = data->screen_min.y;
-	while (y < data->screen_max.y)
+	set_scale(data, &scale);
+	assign(&pos, data->world_min);
+	screen.y = data->screen_min.y;
+	while (screen.y < data->screen_max.y)
 	{
-		x_pos = data->world_min.x;
-		x = data->screen_min.x;
-		while (x < data->screen_max.x)
+		pos.x = data->world_min.x;
+		screen.x = data->screen_min.x;
+		while (screen.x < data->screen_max.x)
 		{
-			real = x_pos;
-			imag = y_pos;
-			iteration = 0;
-			while ((real * real + imag * imag) < 4.0 && iteration < data->max_iterations)
-			{
-				powe = pow((real * real + imag * imag), (data->multi / 2.0));
-				ata = data->multi * atan2(imag, real);
-				if (data->mandel == 0)
-				{
-					temp_x = powe * cos(ata) + data->julia.x;
-					imag = powe * sin(ata) + data->julia.y;
-				}
-				else
-				{
-					temp_x = powe * cos(ata) + x_pos;
-					imag = powe * sin(ata) + y_pos;
-				}
-				real = temp_x;
-				iteration++;
-			}
-			img_pix_put(data->img, x, y, get_color(data, iteration));
-			x_pos += x_scale;
-			x++;
+			assign(&imag_num, pos);
+			img_pix_put(data->img, screen.x, screen.y, \
+					get_color(data, get_iteration(data, pos, imag_num)));
+			pos.x += scale.x;
+			screen.x++;
 		}
-		y_pos += y_scale;
-		y++;
+		pos.y += scale.y;
+		screen.y++;
 	}
 }

@@ -6,10 +6,13 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/07/14 09:08:07 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/07/25 14:53:39 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+SHELL =			/bin/sh
+.SUFFIXES =		
+.SUFFIXES =		.c .o
 CC =			clang
 FLAGS = 		-Wall -Wextra -Werror -O3
 NAME =			fractol
@@ -17,8 +20,7 @@ SRC_PATH =		./src/
 INCLUDE_PATH =	include/ 
 VPATH = $(SRC_PATH)
 SRCS =			main.c color.c init.c mandelbrot.c julia.c multibrot.c		\
-				sierpinsky.c keyboard_controls.c mouse.c render.c	\
-				screen.c
+				keyboard_controls.c mouse.c render.c screen.c img.c
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm

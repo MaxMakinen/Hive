@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:53:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/14 09:13:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:50:21 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@ void	reset_values(t_data *data)
 	data->world_max.y = 1.0;
 }
 
+void	screen_text(t_data *data)
+{
+	char	*temp;
+
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 10, 0, "Max iterations:");
+	temp = ft_itoa(data->max_iterations);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 110, 10, 0, temp);
+	free(temp);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 55, 0, "Scale:");
+	temp = ft_itoa(data->scale);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 55, 0, temp);
+	free(temp);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 100, 0, "Multi:");
+	temp = ft_itoa(data->multi);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 100, 0, temp);
+	free(temp);
+}
+
 int	render(t_data *data)
 {
 	reset_values(data);
@@ -32,17 +50,6 @@ int	render(t_data *data)
 	data->fractal[data->function](data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->img->mlx_img, 0, 0);
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 10, 0, "Max iterations:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 110, 10, 0, ft_itoa(data->max_iterations));
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 30, 0, "Scale:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 30, 0, ft_itoa(data->scale.x));
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 50, 0, "Zoom:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 50, 0, ft_itoa(data->zoom.x * 100));
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 70, 0, "Offset X:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 70, 0, ft_itoa(data->offset.x * 100));
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 90, 0, "Offset Y:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 80, 90, 0, ft_itoa(data->offset.y * 100));
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 110, 0, "Multi:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 110, 0, ft_itoa(data->multi));
+	screen_text(data);
 	return (0);
 }

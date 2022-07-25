@@ -6,10 +6,9 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/22 17:08:24 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:37:23 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
@@ -43,8 +42,8 @@ typedef void	(*t_funcptr)();
 
 union u_color
 {
-	int	color;
-	unsigned char rgb[4];
+	int				color;
+	unsigned char	rgb[4];
 };
 
 typedef struct s_coord
@@ -86,14 +85,14 @@ typedef struct s_data
 	int			color;
 	int			function;
 	t_coord		julia;
-	t_coord		zoom;
+	double		scale;
 	t_mouse		mouse;
 	t_coord		world_min;
 	t_coord		world_max;
 	t_screen	screen_min;
 	t_screen	screen_max;
 	t_coord		offset;
-	t_coord		scale;
+	t_coord		zoom;
 	t_funcptr	fractal[4];
 }	t_data;
 
@@ -102,6 +101,7 @@ int		handle_keypress(int keysym, t_data *data);
 void	init_data(t_data *data);
 void	create_img(t_data *data, char *name);
 void	clean_exit(t_data *data);
+void	zero_coord(t_coord *coord);
 
 void	img_pix_put(t_img *img, int x, int y, int color);
 int		render(t_data *data);
@@ -111,7 +111,6 @@ void	render_background(t_img *img, int color);
 void	mandelbrot(t_data *data);
 void	julia(t_data *data);
 void	multibrot(t_data *data);
-void	sierpinsky(t_data *data);
 
 void	world_to_screen(t_data *data, t_coord world, t_screen *screen);
 void	screen_to_world(t_data *data, t_screen screen, t_coord *world);
@@ -120,7 +119,10 @@ void	zoom(t_data *data, double zoom);
 void	reset_scale(t_data *data);
 void	reset_values(t_data *data);
 
-int mouse_press(int button, int x, int y, t_data *data);
-int	mouse_release(int button, int x, int y, t_data *data);
-int	mouse_move(int x, int y, t_data *data);
+int		mouse_press(int button, int x, int y, t_data *data);
+int		mouse_release(int button, int x, int y, t_data *data);
+int		mouse_move(int x, int y, t_data *data);
+void	zoom_and_offset(t_data *data, int button);
+void	set_scale(t_data *data, t_coord *scale);
+void	assign(t_coord *to, t_coord from);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:47:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/22 14:08:43 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:37:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	clean_exit(t_data *data)
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
+	free(data->img);
+	data->img = NULL;
 	exit(0);
 }
 
@@ -41,8 +43,6 @@ void	check_input(t_data *data, char *str)
 		data->function = 1;
 	if (!ft_strncmp(str, "multibrot", sizeof(str)))
 		data->function = 2;
-	if (!ft_strncmp(str, "sierpinsky", sizeof(str)))
-		data->function = 3;
 	if (data->function < 0)
 		exit_error("Invalid fractal");
 }
@@ -52,11 +52,12 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 2)
-		exit_error("Usage: <fractal> [mandelbrot] [julia] [multibrot] [sierpinsky]");
+		exit_error("Usage: ./fractol <fractal>");
 	init_data(&data);
 	check_input(&data, av[1]);
 	create_img(&data, av[1]);
-	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img->mlx_img, 0, 0);
+	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, \
+			data.img->mlx_img, 0, 0);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	mlx_hook(data.win_ptr, 4, 1L << 2, mouse_press, &data);
 	mlx_hook(data.win_ptr, 6, 1L << 6, mouse_move, &data);

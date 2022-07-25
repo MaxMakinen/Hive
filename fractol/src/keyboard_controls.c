@@ -6,88 +6,14 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:08:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/13 15:24:06 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:16:20 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	handle_keypress(int keysym, t_data *data)
+void	mode(t_data *data, int keysym)
 {
-	t_coord pre_zoom_mouse;
-	t_coord post_zoom_mouse;
-	if (keysym == KEY_ESC)
-		clean_exit(data);
-	if (keysym == ARROW_LEFT)
-		data->offset.x -= 3.0f / data->scale.x;
-	if (keysym == ARROW_RIGHT)
-		data->offset.x += 3.0f / data->scale.x;
-	if (keysym == ARROW_UP)
-		data->offset.y -= 3.0f / data->scale.x;
-	if (keysym == ARROW_DOWN)
-		data->offset.y += 3.0f / data->scale.x;
-	if (keysym == NUM_PLUS || keysym == NUM_MINUS)
-	{
-		screen_to_world(data, data->mouse.pos, &pre_zoom_mouse);
-		if (keysym == NUM_PLUS)
-			zoom(data, data->zoom.x);
-		if (keysym == NUM_MINUS)
-			zoom(data, data->zoom.y);
-		screen_to_world(data, data->mouse.pos, &post_zoom_mouse);
-		data->offset.x += (pre_zoom_mouse.x - post_zoom_mouse.x);
-		data->offset.y += (pre_zoom_mouse.y - post_zoom_mouse.y);
-	}
-	if (keysym == KEY_Q)
-		data->max_iterations += 64;
-	if (keysym == KEY_A)
-		data->max_iterations -= 64;
-	if (keysym == NUM1)
-	{
-		data->zoom.x += 0.1;
-		data->zoom.y -= 0.1;
-		if (data->zoom.x < 1.1 || data->zoom.y > 0.9)
-		{
-			data->zoom.x = 1.1;
-			data->zoom.y = 0.9;
-		}
-	}
-	if (keysym == NUM2)
-	{
-		data->zoom.x -= 0.1;
-		data->zoom.y += 0.1;
-		if (data->zoom.x < 1.1 || data->zoom.y > 0.9)
-		{
-			data->zoom.x = 1.1;
-			data->zoom.y = 0.9;
-		}
-	}
-	if (keysym == NUM0)
-	{
-		data->zoom.x = 1.1;
-		data->zoom.y = 0.9;
-	}
-	if (keysym == NUM9)
-	{
-		data->offset.x = -3,0;
-		data->offset.y = -1.5;
-	}
-	if (keysym == NUM8)
-		reset_scale(data);
-	if (keysym == NUM4)
-	{
-		data->multi -= 1.0;
-	}
-	if (keysym == NUM5)
-	{
-		data->multi += 1.0;
-	}
-	if (keysym == NUM6)
-	{
-		if (data->mandel == 1)
-			data->mandel = 0;
-		else
-			data->mandel = 1;
-	}
 	if (keysym == KEY_1)
 		data->color = 0;
 	if (keysym == KEY_2)
@@ -96,5 +22,47 @@ int	handle_keypress(int keysym, t_data *data)
 		data->color = 2;
 	if (keysym == KEY_4)
 		data->color = 3;
+}
+
+void	pan(t_data *data, int keysym)
+{
+	if (keysym == ARROW_LEFT)
+		data->offset.x -= 3.0f / data->scale;
+	if (keysym == ARROW_RIGHT)
+		data->offset.x += 3.0f / data->scale;
+	if (keysym == ARROW_UP)
+		data->offset.y -= 3.0f / data->scale;
+	if (keysym == ARROW_DOWN)
+		data->offset.y += 3.0f / data->scale;
+}
+
+void	adjust_settings(t_data *data, int keysym)
+{
+	if (keysym == NUM8)
+		reset_scale(data);
+	if (keysym == NUM4)
+		data->multi -= 1.0;
+	if (keysym == NUM5)
+		data->multi += 1.0;
+	if (keysym == NUM6)
+		data->mandel = (data->mandel + 1) & 1;
+}
+
+int	handle_keypress(int keysym, t_data *data)
+{
+	if (keysym == KEY_ESC)
+		clean_exit(data);
+	else if (keysym >= ARROW_MIN && keysym <= ARROW_MAX)
+		pan(data, keysym);
+	else if (keysym == NUM_PLUS || keysym == NUM_MINUS)
+		zoom_and_offset(data, keysym);
+	else if (keysym >= NUM_MIN && keysym <= NUM_MAX)
+		adjust_settings(data, keysym);
+	else if (keysym == KEY_Q)
+		data->max_iterations += 64;
+	else if (keysym == KEY_A)
+		data->max_iterations -= 64;
+	else if (keysym >= KEY_MIN && keysym <= KEY_MAX)
+		mode(data, keysym);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/22 17:46:15 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:37:08 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	zero_screen(t_screen *screen)
 
 void	reset_scale(t_data *data)
 {
-	data->scale.x = (double)WINDOW_HEIGHT / 3.00;
-	data->scale.y = (double)WINDOW_HEIGHT / 3.00;
+	data->scale = (double)WINDOW_HEIGHT / 3.00;
+	data->offset.x = -3.0;
+	data->offset.y = -1.5;
 }
 
 void	set_function_pointers(t_data *data)
@@ -35,12 +36,13 @@ void	set_function_pointers(t_data *data)
 	data->fractal[0] = &mandelbrot;
 	data->fractal[1] = &julia;
 	data->fractal[2] = &multibrot;
-	data->fractal[3] = &sierpinsky;
 }
 
 void	init_data(t_data *data)
 {
 	data->img = (t_img *)ft_calloc(sizeof(t_img), 1);
+	if (data->img == NULL)
+		exit_error("img init failed");
 	zero_coord(&data->world_min);
 	zero_coord(&data->world_max);
 	zero_screen(&data->screen_min);
@@ -53,45 +55,8 @@ void	init_data(t_data *data)
 	data->color = 0;
 	data->zoom.x = 1.1;
 	data->zoom.y = 0.9;
-	data->offset.x = -3.0;
-	data->offset.y = -1.5;
 	data->max_iterations = 128;
 	data->multi = 2.0;
 	set_function_pointers(data);
 	data->function = -1;
-}
-
-void	render_background(t_img *img, int color)
-{
-	int	i;
-	int	*pixel;
-	int	size;
-
-	pixel = (int *)img->addr;
-	size = WINDOW_HEIGHT * WINDOW_WIDTH;
-	i = 0;
-	while (i < size)
-	{
-		pixel[i] = color;
-		i++;
-	}
-}
-
-void	create_img(t_data *data, char *name)
-{
-	data->mlx_ptr = mlx_init();
-	if (data->mlx_ptr == NULL)
-		exit_error("MLX ERROR: init");
-	data->win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, \
-			WINDOW_HEIGHT, name);
-	if (data->win_ptr == NULL)
-	{
-		free(data->win_ptr);
-		exit_error("MLX ERROR: img");
-	}
-	data->img->mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, \
-			WINDOW_HEIGHT);
-	data->img->addr = mlx_get_data_addr(data->img->mlx_img, \
-			&data->img->bpp, &data->img->line_len, &data->img->endian);
-	render_background(data->img, PURPLE_PIXEL);
 }
