@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:08:57 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/25 14:16:20 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:39:47 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ void	adjust_settings(t_data *data, int keysym)
 		data->multi += 1.0;
 	if (keysym == NUM6)
 		data->mandel = (data->mandel + 1) & 1;
+	if (keysym == NUM0)
+	{
+		if (data->function == 2)
+			data->function = 3;
+		else if (data->function == 3)
+			data->function = 2;
+	}
 }
 
 int	handle_keypress(int keysym, t_data *data)

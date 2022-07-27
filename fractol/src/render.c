@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:53:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/25 14:50:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:38:32 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void	screen_text(t_data *data)
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 100, 0, "Multi:");
 	temp = ft_itoa(data->multi);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 100, 0, temp);
+	free(temp);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 130, 0, "Fract:");
+	temp = ft_itoa(data->function);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 50, 130, 0, temp);
 	free(temp);
 }
 

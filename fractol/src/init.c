@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/25 14:37:08 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:12:31 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ void	set_function_pointers(t_data *data)
 	data->fractal[0] = &mandelbrot;
 	data->fractal[1] = &julia;
 	data->fractal[2] = &multibrot;
+	data->fractal[3] = &multithread;
+}
+
+void	make_array(t_data *data)
+{
+	int			x;
+	double		*temp;
+	
+	data->arr_pool = (double *)ft_calloc(WINDOW_WIDTH * WINDOW_HEIGHT, sizeof(double));
+	data->arr_ptr = (double **)ft_calloc(WINDOW_HEIGHT, sizeof(double *));
+	if (!data->arr_pool || !data->arr_ptr)
+		exit_error("double array malloc error");
+	temp = data->arr_pool;
+	x = 0;
+	while (x < WINDOW_HEIGHT)
+	{
+		*(data->arr_ptr + x) = temp;
+		temp += WINDOW_WIDTH;
+		x++;
+	}
 }
 
 void	init_data(t_data *data)
@@ -59,4 +79,7 @@ void	init_data(t_data *data)
 	data->multi = 2.0;
 	set_function_pointers(data);
 	data->function = -1;
+	data->thread = 0;
+	data->cores = (int)sysconf(_SC_NPROCESSORS_ONLN);
+	make_array(data);
 }

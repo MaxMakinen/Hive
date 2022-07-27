@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/25 14:37:23 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:14:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <math.h>
 # include <string.h>
+# include <pthread.h>
 
 # include "mlx.h"
 # include "libft.h"
@@ -30,13 +31,10 @@
 #  include "mac_keys.h"
 # endif
 
-# define TRUE 1
-# define FALSE 0
-
 # define WINDOW_WIDTH 1200
 # define WINDOW_HEIGHT 600
 
-	//# define KEY_ESC 65307
+# define MAX_THREADS 2
 
 typedef void	(*t_funcptr)();
 
@@ -79,11 +77,16 @@ typedef struct s_data
 	void		*win_ptr;
 	t_img		*img;
 	double		multi;
+	double		**arr_ptr;
+	double		*arr_pool;
 	int			max_iterations;
 	int			julia_stop;
 	int			mandel;
 	int			color;
 	int			function;
+	int			thread;
+	int			thread_size;
+	int			cores;
 	t_coord		julia;
 	double		scale;
 	t_mouse		mouse;
@@ -111,6 +114,7 @@ void	render_background(t_img *img, int color);
 void	mandelbrot(t_data *data);
 void	julia(t_data *data);
 void	multibrot(t_data *data);
+void	multithread(t_data *data);
 
 void	world_to_screen(t_data *data, t_coord world, t_screen *screen);
 void	screen_to_world(t_data *data, t_screen screen, t_coord *world);

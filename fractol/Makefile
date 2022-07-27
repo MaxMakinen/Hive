@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/07/25 14:53:39 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/07/26 17:34:36 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,11 @@ SRC_PATH =		./src/
 INCLUDE_PATH =	include/ 
 VPATH = $(SRC_PATH)
 SRCS =			main.c color.c init.c mandelbrot.c julia.c multibrot.c		\
-				keyboard_controls.c mouse.c render.c screen.c img.c
+				keyboard_controls.c mouse.c render.c screen.c img.c \
+				multithread.c
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
-LINUX_LIBS =	-lX11 -lXext -lmlx -lm
+LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread
 INCLUDES =		-I $(INCLUDE_PATH)
 OBJECTS =		$(SRCS:%.c=%.o)
 
