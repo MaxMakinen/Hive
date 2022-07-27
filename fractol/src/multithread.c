@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:02:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/27 13:13:21 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/07/27 14:34:04 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@ void	set_scale_and_thread(t_data *data, t_coord *scale, t_screen *temp, \
 	assign(pos, data->world_min);
 }
 
-void	multibrot_thread(t_data *data)
+void	*multibrot_thread(void *arg)
 {
 	t_coord		scale;
 	t_coord		pos;
 	t_screen	screen;
 	t_coord		imag_num;
 	t_screen	temp;
+	t_data		*data;
 
+	data = (t_data *)arg;
 	if (data->julia_stop == 0)
 		screen_to_world(data, data->mouse.pos, &data->julia);
 	set_scale_and_thread(data, &scale, &temp, &pos);
@@ -76,6 +78,8 @@ void	multibrot_thread(t_data *data)
 		pos.y += scale.y;
 		screen.y++;
 	}
+	pthread_exit(NULL);
+	return (NULL);
 }
 
 void	multithread(t_data *data)
@@ -87,7 +91,7 @@ void	multithread(t_data *data)
 	while (data->thread < MAX_THREADS)
 	{
 		pthread_create(&pthread[data->thread], NULL, \
-				(void *)multibrot_thread, data);
+				multibrot_thread, (void *)data);
 		data->thread++;
 	}
 	data->thread = 0;
