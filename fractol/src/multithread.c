@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:02:37 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/27 14:34:04 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/01 09:52:14 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ void	*multibrot_thread(void *arg)
 		while (screen.x < temp.y)
 		{
 			assign(&imag_num, pos);
-			data->arr_ptr[screen.y][screen.x] = get_iteration(data, pos, imag_num);
-//			img_pix_put(data->img, screen.x, screen.y, \
-//					get_color(data, get_iteration(data, pos, imag_num)));
+			img_pix_put(data->img, screen.x, screen.y, \
+					get_color(data, get_iteration(data, pos, imag_num)));
 			pos.x += scale.x;
 			screen.x++;
 		}
@@ -99,17 +98,5 @@ void	multithread(t_data *data)
 	{
 		pthread_join(pthread[data->thread], NULL);
 		data->thread++;
-	}
-	int x = 0;
-	int y = 0;
-	while (y < WINDOW_HEIGHT)
-	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			img_pix_put(data->img, x, y, get_color(data, data->arr_ptr[y][x]));
-			x++;
-		}
-		y++;
 	}
 }

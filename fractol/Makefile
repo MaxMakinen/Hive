@@ -6,37 +6,40 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/07/26 17:34:36 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/08/01 11:27:16 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL =			/bin/sh
 .SUFFIXES =		
-.SUFFIXES =		.c .o
+.SUFFIXES =		.c .o .h
 CC =			clang
 FLAGS = 		-Wall -Wextra -Werror -O3
 NAME =			fractol
-SRC_PATH =		./src/
-INCLUDE_PATH =	include/ 
-VPATH = $(SRC_PATH)
-SRCS =			main.c color.c init.c mandelbrot.c julia.c multibrot.c		\
-				keyboard_controls.c mouse.c render.c screen.c img.c \
-				multithread.c
+SRC_DIR =		src
+INC_DIR =		include
+OBJ_DIR =		obj
+SRCS =			main.o color.o init.o mandelbrot.o julia.o multibrot.o		\
+				keyboard_controls.o mouse.o render.o screen.o img.o \
+				multithread.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread
-INCLUDES =		-I $(INCLUDE_PATH)
-OBJECTS =		$(SRCS:%.c=%.o)
+INCLUDES =		-I $(INC_DIR)/
+OBJECTS =		$(addprefix $(OBJ_DIR)/, $(SRCS))
 
 
 
 all: $(NAME)
 
-.c.o:
-	@$(CC) $(CFLAGS) -c $< $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) -c $(CFLAGS) -o $@ $< $(INCLUDES)
 
 $(NAME): $(OBJECTS) $(LIB)
-	@$(CC) $(FLAGS) $(INCLUDES) -o $@ $^ $(MAC_LIBS)
+	$(CC) $(FLAGS) $(INCLUDES) -o $@ $^ $(MAC_LIBS)
+
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
 
 $(LIB):
 	@make -C libft/
@@ -61,6 +64,7 @@ libfclean:
 
 clean: libclean
 	rm -f $(OBJECTS) 
+	rm -rf $(OBJ_DIR)
 
 fclean: clean libfclean
 	rm -f $(NAME)

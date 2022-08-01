@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/07/27 13:14:38 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/01 09:53:01 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ typedef struct s_data
 	void		*win_ptr;
 	t_img		*img;
 	double		multi;
-	double		**arr_ptr;
-	double		*arr_pool;
 	int			max_iterations;
 	int			julia_stop;
 	int			mandel;
@@ -86,7 +84,6 @@ typedef struct s_data
 	int			function;
 	int			thread;
 	int			thread_size;
-	int			cores;
 	t_coord		julia;
 	double		scale;
 	t_mouse		mouse;
