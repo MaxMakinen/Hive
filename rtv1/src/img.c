@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 09:26:41 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/03 17:11:35 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/04 16:10:09 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	create_img(t_data *data, char *name)
 			WINDOW_HEIGHT);
 	data->img->addr = mlx_get_data_addr(data->img->mlx_img, \
 			&data->img->bpp, &data->img->line_len, &data->img->endian);
-	render_background(data->img, PURPLE_PIXEL);
+	render_background(data->img, BLACK);
 }
 
 void	img_pix_put(t_img *img, int x, int y, int color)

@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:08:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/03 21:40:01 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/04 22:51:42 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,16 @@
 #  include "mac_keys.h"
 # endif
 
-# define WINDOW_WIDTH 800
+# define WINDOW_WIDTH 1600
 # define WINDOW_HEIGHT 800
+# define TRUE 1
+# define FALSE 0
+
+typedef union u_rgb
+{
+	unsigned int	color;
+	unsigned char	rgb[4];
+}	t_rgb;
 
 typedef	struct s_map
 {
@@ -54,13 +62,26 @@ typedef	struct s_3vec
 	float	z;
 }	t_3vec;
 
+typedef struct s_object
+{
+	t_3vec	position;
+	t_3vec	origin;
+	t_3vec	normal;
+	t_rgb	color;
+	t_rgb	plane;
+	int		type;
+	float	radius;
+	float	radius2;
+}	t_object;
+
 typedef	struct s_scene
 {
 	t_3vec		camera;
 	t_ivec		screen_min;
 	t_ivec		screen_max;
-	t_3vec		sphere;
-	float		radius;
+	t_3vec		light;
+	t_object	object;
+	int			max_objects;
 }	t_scene;
 
 typedef struct s_img
@@ -77,9 +98,10 @@ typedef struct s_data
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		*img;
+	t_map		map;
 }	t_data;
 
-t_map	make_image(t_scene *scene);
+void	make_image(t_scene *scene, t_data *data);
 void	exit_error(char *str);
 void	init_data(t_data *data, t_scene *scene);
 

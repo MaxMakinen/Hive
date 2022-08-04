@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:47:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/03 21:40:35 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:23:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ void	clean_exit(t_data *data)
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
 	free(data->img);
+	free(data->map.pool);
+	free(data->map.ptr);
 	data->img = NULL;
+	data->map.pool = NULL;
+	data->map.ptr = NULL;
 	exit(0);
 }
 
@@ -34,7 +38,8 @@ void	exit_error(char *str)
 	ft_putendl(str);
 	exit(1);
 }
-void	draw(t_data *data, t_map *map)
+
+void	draw(t_data *data)
 {
 	int	x;
 	int	y;
@@ -45,7 +50,7 @@ void	draw(t_data *data, t_map *map)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			img_pix_put(data->img, x, y, map->ptr[y][x]);
+			img_pix_put(data->img, x, y, data->map.ptr[y][x]);
 			x++;
 		}
 		y++;
@@ -62,12 +67,10 @@ int	main(int ac, char **av)
 		exit_error("Usage: ./rtv1");
 	init_data(&data, &scene);
 	create_img(&data, "scene");
-	map = make_image(&scene);
-	draw(&data, &map);
+	make_image(&scene, &data);
+	draw(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, \
 			data.img->mlx_img, 0, 0);
-	free(map.ptr);
-	free(map.pool);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
 	mlx_hook(data.win_ptr, 17, 0, destroy, &data);

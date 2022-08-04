@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/08/03 20:59:44 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/08/04 09:37:28 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ re: fclean all
 
 re_linux: fclean linux
 
-tidy: all clean
+tidy:
+	rm -rf $(OBJ_DIR)
 
 .PHONY: all libclean libfclean clean fclean re tidy linux re_linux

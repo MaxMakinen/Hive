@@ -1,0 +1,116 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raytrace.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/08/04 09:55:45 by mmakinen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "rtv1.h"
+
+//Sphere hit calculation
+//(bx^2 + by^2 + bz^2)t2 + (2(axbx + ayby + azbz))t + (ax^2 + ay^2 + az^2 - r^2) = 0
+//			A							B							C
+//a = ray origin
+//b = ray direction
+//r = radius
+//t = hit distance
+//
+//Quadratic formula:
+//-B+/-sqrt(B^2 - 4 AC) / 2A
+
+t_map	make_image(t_scene *scene)
+{
+	int			x;
+	int			y;
+	float		length;
+	t_3vec		direction;
+	t_3vec		intersection;
+	t_3vec		temp;
+	float		a;
+	float		b;
+	float		c;
+	float		discriminant;
+	t_map		map;
+	int			*itemp;
+	float		t0;
+	float		t1;
+	t_3vec		light;
+	float		light_dist;
+	t_rgb		color;
+	float		brightness;
+
+	map.pool = (int *)ft_calloc(WINDOW_WIDTH * WINDOW_HEIGHT, sizeof(int));
+	map.ptr = (int **)ft_calloc(WINDOW_HEIGHT, sizeof(int *));
+	itemp = map.pool;
+	x = 0;
+	while (x < WINDOW_HEIGHT)
+	{
+		map.ptr[x] = itemp;
+		itemp += WINDOW_WIDTH;
+		x++;
+	}
+
+	light.x = 10.0f;
+	light.y = 10.0f;
+	light.z = 0.0f;
+	light_dist = sqrt(light.x * light.x + light.y * light.y + light.z * light.z);
+	color.color = 0xffff00ff;
+	y = scene->screen_min.y;
+	while (y < scene->screen_max.y)
+	{
+		x = scene->screen_min.x;
+			while (x < scene->screen_max.x)
+			{
+				direction.x = ((float)x / (float)scene->screen_max.x) * 2.0f - 1.0f;
+				direction.y = ((float)y / (float)scene->screen_max.y) * 2.0f - 1.0f;
+				direction.z = -1.0f;
+				a = direction.x * direction.x + direction.y * direction.y + direction.z * direction.z;
+				b = 2.0f * (scene->camera.x * direction.x + scene->camera.y * direction.y + scene->camera.z * direction.z);
+				c = scene->camera.x * scene->camera.x + scene->camera.y * scene->camera.y + \
+						scene->camera.z * scene->camera.z - scene->radius * scene->radius;
+				discriminant = b * b - 4.0f * a * c;
+				if (discriminant >= 0.0f)
+				{
+					if (discriminant > 0.0f)
+					{
+						t0 = -b + sqrt(discriminant) / 2.0f * a;
+						t1 = -b - sqrt(discriminant) / 2.0f * a;
+							if (t1 < t0 && t1 > 1.0f)
+							t0 = t1;
+					}
+					else if (discriminant == 0.0f)
+					{
+						t0 = -b + sqrt(discriminant) / 2.0f * a;
+					}
+						intersection.x = light.x - (scene->camera.x + direction.x) * t0;
+					intersection.y = light.y - (scene->camera.y + direction.y) * t0;
+					intersection.z = light.z - (scene->camera.z + direction.z) * t0;
+					length = sqrt(intersection.x * intersection.x + intersection.y * intersection.y + \
+							intersection.z * intersection.z);
+					brightness = ft_norm(length, 0, light_dist);
+//					int	c = 0;
+//					while (c < 3)
+//						color.rgb[c++] *= brightness;
+					map.ptr[y][x] = color.color;
+				}
+				else
+					map.ptr[y][x] = 0x222222;
+				x++;
+			}
+			y++;
+	}
+	return (map);
+}
+
+				/*
+				length = sqrt(pow(temp.x, 2) + pow(temp.y, 2));
+				direction.x = temp.x/length;
+				direction.y = temp.y/length;
+				direction.z = -1.0f/lenght;
+				map[y][x] = ray_trace(scene, scene->camera, direction);
+				*/
