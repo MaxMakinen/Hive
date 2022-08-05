@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/04 23:24:50 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/05 08:29:39 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,41 @@ float	sphere_intersect(t_scene *scene, t_3vec *direction, t_object *object)
 		t0 = (-b - sqrt(discriminant)) / (2.0f * a);
 		if (discriminant > 0.0f)
 			t1 = (-b + sqrt(discriminant)) / (2.0f * a);
-		if (t0 > 0.0f)
+		if (t0 < 0.0f)
 		{
 			t0 = t1;
-			if (t0 > 0.0f)
+			if (t0 < 0.0f)
 				return(FALSE);
 		}
 		return (t0);
 	}
 	return (FALSE);
+}
+
+void	sphere_color(t_data *data, t_scene *scene, t_3vec intersection, int x, int y)
+{
+	t_rgb		color;
+	t_3vec		normal;
+	double		angle;
+
+	color.color = scene->object.color.color;
+	normal = vec_minus(intersection, scene->object.position);
+	normal = normalize(normal);
+	angle = get_angle(normal, scene->light);
+	angle = 1.0 - ft_norm(angle, 0.0f, 1.57079f);
+	if	(angle < 0)
+	{
+		color.rgb[0] += ((float)color.rgb[0]) * angle;
+		color.rgb[1] += ((float)color.rgb[1]) * angle;
+		color.rgb[2] += ((float)color.rgb[2]) * angle;
+	}
+	else
+	{
+		color.rgb[0] += (255.0f - (float)color.rgb[0]) * angle;
+		color.rgb[1] += (255.0f - (float)color.rgb[1]) * angle;
+		color.rgb[2] += (255.0f - (float)color.rgb[2]) * angle;
+	}
+	data->map.ptr[y][x] = color.color;
 }
 
 float	plane_intersect(t_scene *scene, t_3vec *direction, t_object *object)
@@ -100,7 +126,7 @@ float	plane_intersect(t_scene *scene, t_3vec *direction, t_object *object)
 	{
 		origin = vec_minus(object->origin, scene->camera);
 		intersect = dot_product(origin, object->normal) / denominator;
-		if (intersect >= 0)
+//		if (intersect >= 0)
 			return (intersect);
 	}
 	return (FALSE);
@@ -113,20 +139,16 @@ void	make_image(t_scene *scene, t_data *data)
 	float		length;
 	t_3vec		direction;
 	t_3vec		intersection;
-	t_3vec		normal;
 	float		a;
 	float		b;
 	float		c;
 	float		discriminant;
-	t_map		map;
-	int			*itemp;
 	float		t0;
 	float		t1;
 	t_3vec		origin;
-	t_rgb		color;
 	float		temp;
+	float		temp2;
 	float		aspect_ratio;
-	double		angle;
 
 	aspect_ratio = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;
 	int	q = 0;
@@ -141,6 +163,13 @@ void	make_image(t_scene *scene, t_data *data)
 				direction.y = ((float)y / (float)scene->screen_max.y) * 2.0f - 1.0f;
 				direction.z = -1.0f;
 				temp = plane_intersect(scene, &direction, &scene->object);
+				temp2 = sphere_intersect(scene, &direction, &scene->object);
+				while (q < 30 && temp < 0)
+				{
+					printf("plane = %f\n sphere = %f\n", temp, temp2);
+					q++;
+				}
+				/*
 				a = direction.x * direction.x + direction.y * direction.y + direction.z * direction.z;
 				b = 2.0f * (origin.x * direction.x + origin.y * direction.y + origin.z * direction.z);
 				c = origin.x * origin.x + origin.y * origin.y + \
@@ -157,6 +186,7 @@ void	make_image(t_scene *scene, t_data *data)
 					//	if (t0 < 0.0f)
 					//		t0 = 0.0f;
 					}
+					*/
 					//from camera
 					/*
 					intersection.x = ((1 - t0) * scene->camera.x) + t0 * direction.x;
@@ -164,11 +194,15 @@ void	make_image(t_scene *scene, t_data *data)
 					intersection.z = ((1 - t0) * scene->camera.z) + t0 * direction.z;
 					*/
 					//from zero
-					color.color = scene->object.color.color;
+					if (temp2 > 0.0f)
+					{
+					t0 = temp2;
 					intersection.x = scene->camera.x + t0 * direction.x;
 					intersection.y = scene->camera.y + t0 * direction.y;
 					intersection.z = scene->camera.z + t0 * direction.z;
 					//Do light version using dot product
+					sphere_color(data, scene, intersection, x, y);
+					/*
 					normal = vec_minus(intersection, scene->object.position);
 					normal = normalize(normal);
 					angle = get_angle(normal, scene->light);
@@ -186,13 +220,14 @@ void	make_image(t_scene *scene, t_data *data)
 						color.rgb[2] += (255.0f - (float)color.rgb[2]) * angle;
 					}
 					data->map.ptr[y][x] = color.color;
-				}
-				else if (temp < t0)
-				{
-					data->map.ptr[y][x] = scene->object.plane.color;
+					*/
 				}
 				else
 					data->map.ptr[y][x] = 0x222222;
+				if (temp < t0 && temp > 0)
+				{
+					data->map.ptr[y][x] = scene->object.plane.color;
+				}
 				x++;
 			}
 			y++;
