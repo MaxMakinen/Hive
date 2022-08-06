@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:08:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/04 22:51:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/05 09:28:39 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef	struct s_3vec
 
 typedef struct s_object
 {
-	t_3vec	position;
-	t_3vec	origin;
+	t_3vec	sphere_pos;
+	t_3vec	plane_orig;
 	t_3vec	normal;
 	t_rgb	color;
 	t_rgb	plane;
@@ -80,6 +80,7 @@ typedef	struct s_scene
 	t_ivec		screen_min;
 	t_ivec		screen_max;
 	t_3vec		light;
+	t_3vec		light_dir;
 	t_object	object;
 	int			max_objects;
 }	t_scene;
