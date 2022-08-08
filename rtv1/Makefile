@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/08/04 09:37:28 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/08/08 11:38:05 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SHELL =			/bin/sh
 .SUFFIXES =		
 .SUFFIXES =		.c .o .h
 CC =			clang
-FLAGS = 		-Wall -Wextra -Werror -O3
+FLAGS = 		-Wall -Wextra -Werror
 NAME =			rtv1
 SRC_DIR =		src
 INC_DIR =		include
@@ -31,10 +31,10 @@ OBJECTS =		$(addprefix $(OBJ_DIR)/, $(SRCS))
 all: $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) -c $(CFLAGS) -o $@ $< $(INCLUDES)
+	$(CC) -c $(CFLAGS) -g -o $@ $< $(INCLUDES)
 
 $(NAME): $(OBJECTS) $(LIB)
-	$(CC) $(FLAGS) $(INCLUDES) -o $@ $^ $(MAC_LIBS)
+	$(CC) $(FLAGS) -g $(INCLUDES) -o $@ $^ $(MAC_LIBS)
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)

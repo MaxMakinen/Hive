@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:08:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/05 09:28:39 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/08 11:48:06 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define TRUE 1
 # define FALSE 0
 
+typedef int	(*t_funcptr)();
+
 typedef union u_rgb
 {
 	unsigned int	color;
@@ -48,40 +50,53 @@ typedef	struct s_map
 	int	**ptr;
 }	t_map;
 
-typedef	struct s_ivec
+typedef	struct s_vec3i
 {
 	int	x;
 	int	y;
 	int	z;
-}	t_ivec;
+}	t_vec3i;
 
-typedef	struct s_3vec
+typedef	struct s_vec3f
 {
 	float	x;
 	float	y;
 	float	z;
-}	t_3vec;
+}	t_vec3f;
+
+typedef struct s_obj
+{
+	t_vec3f		position;
+	t_vec3f		normal;
+	t_rgb		color;
+	t_funcptr	func;
+	float		radius;
+	float		radius2;
+	struct s_obj		*next;
+}	t_obj;
 
 typedef struct s_object
 {
-	t_3vec	sphere_pos;
-	t_3vec	plane_orig;
-	t_3vec	normal;
-	t_rgb	color;
+	t_vec3f	sphere_pos;
+	t_vec3f	cylinder_pos;
+	t_vec3f	plane_orig;
+	t_vec3f	plane_normal;
+	t_rgb	sphere;
 	t_rgb	plane;
 	int		type;
 	float	radius;
 	float	radius2;
+	float	cylinder_radius;
+	float	cylinder_radius2;
 }	t_object;
 
 typedef	struct s_scene
 {
-	t_3vec		camera;
-	t_ivec		screen_min;
-	t_ivec		screen_max;
-	t_3vec		light;
-	t_3vec		light_dir;
+	t_vec3f		camera;
+	t_vec3f		light;
+	t_vec3f		light_dir;
 	t_object	object;
+	t_obj		*head;
 	int			max_objects;
 }	t_scene;
 
@@ -98,6 +113,11 @@ typedef struct s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	t_vec3i		screen_min;
+	t_vec3i		screen_max;
+	float		aspect_ratio;
+	float		fov;
+	float		scale;
 	t_img		*img;
 	t_map		map;
 }	t_data;
@@ -114,5 +134,8 @@ int	handle_keypress(int keysym, t_data *data);
 int	render(t_data *data);
 
 void	clean_exit(t_data *data);
+
+int	sphere_intersect(t_scene *scene, t_vec3f direction, t_object *object, float *t0);
+int	plane_intersect(t_scene *scene, t_vec3f direction, t_object *object, float *intersect);
 
 #endif
