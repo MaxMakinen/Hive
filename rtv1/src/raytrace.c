@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/08 11:49:30 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/09 11:28:29 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,16 @@ double	vec_len(t_vec3f vec)
 t_vec3f	normalize(t_vec3f vec)
 {
 	double	magnitude;
+	double	invert_len;
 
 	magnitude = vec_len(vec);
-	vec.x /= magnitude;
-	vec.y /= magnitude;
-	vec.z /= magnitude;
+	if (magnitude > 0)
+	{
+		invert_len = 1 / magnitude;
+		vec.x *= invert_len;
+		vec.y *= invert_len;
+		vec.z *= invert_len;
+	}
 	return (vec);
 }
 

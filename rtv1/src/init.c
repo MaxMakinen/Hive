@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/08 10:59:46 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/08 13:55:00 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_object(t_object *object)
 {
-	object->sphere_pos.x = 5.0f;
+	object->sphere_pos.x = -5.0f;
 	object->sphere_pos.y = 4.0f;
 	object->sphere_pos.z = 0.0f;
 	object->cylinder_pos.x = 0.0f;
