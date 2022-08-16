@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/08/08 11:38:05 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/08/16 12:41:07 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,13 @@ INCLUDES =		-I $(INC_DIR)/
 OBJECTS =		$(addprefix $(OBJ_DIR)/, $(SRCS))
 
 
-
 all: $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) -c $(CFLAGS) -g -o $@ $< $(INCLUDES)
 
 $(NAME): $(OBJECTS) $(LIB)
-	$(CC) $(FLAGS) -g $(INCLUDES) -o $@ $^ $(MAC_LIBS)
+	$(CC) $(FLAGS) $(INCLUDES) -o $@ $^ $(MAC_LIBS)
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
@@ -43,7 +42,7 @@ $(LIB):
 	@make -C libft/
 
 linux: $(OBJECTS) $(LIB)
-	@$(CC) $(FLAGS) $(INCLUDES) -o $(NAME) $^ $(LINUX_LIBS)
+	@$(CC) $(FLAGS) $(INCLUDES) -o $@ $^ $(LINUX_LIBS)
 
 debug: fclean $(OBJECTS) debug_libft
 	@$(CC) $(FLAGS) -o $(NAME) -g $(OBJECTS) $(LIB) $(INCLUDES)

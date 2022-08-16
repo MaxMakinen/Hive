@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/09 11:28:29 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/16 14:54:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,27 @@ t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, float distance)
 	return (intersect);
 }
 
+t_vec3f	vec_plus(t_vec3f vec1, t_vec3f vec2)
+{
+	vec1.x += vec2.x;
+	vec1.y += vec2.y;
+	vec1.z += vec2.z;
+	return (vec1);
+}
+
 t_vec3f	vec_minus(t_vec3f vec1, t_vec3f vec2)
 {
 	vec1.x -= vec2.x;
 	vec1.y -= vec2.y;
 	vec1.z -= vec2.z;
+	return (vec1);
+}
+
+t_vec3f	vec_mult(t_vec3f vec1, float mult)
+{
+	vec1.x *= mult;
+	vec1.y *= mult;
+	vec1.z *= mult;
 	return (vec1);
 }
 
@@ -130,7 +146,7 @@ void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y)
 	color.rgb[0] = (unsigned char)((normal.x * 0.5f + 0.5f) * 255.0);
 	color.rgb[1] = (unsigned char)((normal.y * 0.5f + 0.5f) * 255.0);
 	color.rgb[2] = (unsigned char)((normal.z * 0.5f + 0.5f) * 255.0);
-	color.rgb[3] = 0xff;
+	color.rgb[3] = 0;
 	data->map.ptr[y][x] = color.color;
 }
 
@@ -158,17 +174,13 @@ void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y,
 	data->map.ptr[y][x] = color.color;
 }
 
-int	plane_intersect(t_scene *scene, t_vec3f direction, t_object *object, float *intersect)
+int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *intersect)
 {
 	float	denominator;
-	t_vec3f	origin;
-	t_vec3f	normal;
 
-	normal = object->plane_normal;
 	denominator = dot_product(normal, direction);
 	if (fabs(denominator) > 0.000001f)
 	{
-		origin = vec_minus(object->plane_orig, scene->camera);
 		*intersect = dot_product(origin, normal) / denominator;
 		if (*intersect >= 0)
 			return (TRUE);
@@ -210,19 +222,18 @@ int	cylinder_intersect(t_scene *scene, t_vec3f direction, t_object *object, floa
 	return (FALSE);
 }
 
-int	sphere_intersect(t_scene *scene, t_vec3f direction, t_object *object, float *t0)
+/*MAKE FUNCTION FOR QUADRTIC FORMULA! many intersect formulas use it*/
+int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0)
 {
 	float		a;
 	float		b;
 	float		c;
 	float		t1;
 	float		discriminant;
-	t_vec3f		origin;
 
-	origin = vec_minus(scene->camera, object->sphere_pos);
 	a = dot_product(direction, direction);
 	b = 2.0f * dot_product(origin, direction);
-	c = dot_product(origin, origin) - object->radius2;
+	c = dot_product(origin, origin) - radius2;
 	discriminant = b * b - 4.0f * a * c;
 	if (discriminant >= 0.0f)
 	{
@@ -251,6 +262,18 @@ t_vec3f	get_direction(t_data *data, float x, float y)
 	return (direction);
 }
 
+/*Sohuld this be a generic vector math function?*/
+t_vec3f get_light_dir(t_vec3f origin, t_vec3f destination)
+{
+	t_vec3f direction;
+
+	direction.x = destination.x - origin.x;
+	direction.y = destination.y - origin.y;
+	direction.z = destination.z - origin.z;
+	
+	return (direction);
+}
+
 void	make_image(t_scene *scene, t_data *data)
 {
 	int			x;
@@ -258,6 +281,7 @@ void	make_image(t_scene *scene, t_data *data)
 	t_vec3f		direction;
 	t_vec3f		intersection;
 	t_vec3f		normal;
+	t_vec3f		hitpoint;
 	float		temp;
 	float		closest;
 	int 		type;
@@ -272,7 +296,7 @@ void	make_image(t_scene *scene, t_data *data)
 			{
 				closest = 0.0f;
 				direction = get_direction(data, (float)x, (float)y);
-				if (plane_intersect(scene, direction, &scene->object, &temp))
+				if (plane_intersect(scene, vec_minus(scene->object.plane_orig, scene->camera), direction, scene->object.plane_normal, &temp))
 				{
 					if (temp < closest || closest == 0.0f)
 					{
@@ -280,7 +304,7 @@ void	make_image(t_scene *scene, t_data *data)
 						type = 1;
 					}
 				}
-				if (sphere_intersect(scene, direction, &scene->object, &temp))
+				if (sphere_intersect(scene, vec_minus(scene->camera, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
 				{
 					if (temp < closest || closest == 0.0f)
 					{
@@ -301,9 +325,43 @@ void	make_image(t_scene *scene, t_data *data)
 					color = &scene->object.sphere;
 					normal = vec_minus(intersection, scene->object.sphere_pos);
 				}
+				int	shadow;
 				if (closest > 0.0f)
 				{
-					angle_color(data, scene, intersection, x, y, *color, normal);
+					shadow = 0;
+//					intersection = vec_plus(scene->camera, direction, closest));
+					direction = vec_minus(scene->light, intersection);
+					direction = normalize(direction);
+					if (type == 2)
+					{
+						if (plane_intersect(scene, vec_minus(scene->object.plane_orig, intersection), direction, scene->object.plane_normal, &temp))
+						{
+							/*
+							if (temp < closest || closest == 0.0f)
+							{
+								closest = temp;
+							}
+							*/
+							shadow = 1;
+							data->map.ptr[y][x] = 0;	
+						}
+					}
+					if (type == 1)
+					{
+						if (sphere_intersect(scene, vec_minus(intersection, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
+						{
+							/*
+							if (temp < closest || closest == 0.0f)
+							{
+								closest = temp;
+							}
+							*/
+							shadow = 2;
+							data->map.ptr[y][x] = 0;
+						}
+					}
+					if (shadow == 0)
+						angle_color(data, scene, intersection, x, y, *color, normal);
 				}
 				else
 					data->map.ptr[y][x] = 0x222222;

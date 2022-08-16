@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:08:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/12 16:53:09 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:45:28 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include <string.h>
-# include <pthread.h>
 
 # include "mlx.h"
 # include "libft.h"
@@ -135,7 +133,7 @@ int	render(t_data *data);
 
 void	clean_exit(t_data *data);
 
-int	sphere_intersect(t_scene *scene, t_vec3f direction, t_object *object, float *t0);
-int	plane_intersect(t_scene *scene, t_vec3f direction, t_object *object, float *intersect);
+int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0);
+int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *intersect);
 
 #endif

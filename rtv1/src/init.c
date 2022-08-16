@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/08 13:55:00 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/16 12:47:31 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	init_object(t_object *object)
 	object->cylinder_radius = 3.0f;
 	object->radius2 = object->radius * object->radius;
 	object->cylinder_radius2 = object->cylinder_radius * object->cylinder_radius;
-	object->sphere.color = 0xffff00ff;
-	object->plane.color = 0xff00ffff;
+	object->sphere.color = 0xff00ff;
+	object->plane.color = 0x00ffff;
 	object->type = 1;
 }
 
