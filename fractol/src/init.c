@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:23 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/01 09:53:42 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/01 11:42:33 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	set_function_pointers(t_data *data)
 	data->fractal[0] = &mandelbrot;
 	data->fractal[1] = &julia;
 	data->fractal[2] = &multibrot;
-	data->fractal[3] = &multithread;
 }
 
 void	init_data(t_data *data)
@@ -60,5 +59,4 @@ void	init_data(t_data *data)
 	data->multi = 2.0;
 	set_function_pointers(data);
 	data->function = -1;
-	data->thread = 0;
 }

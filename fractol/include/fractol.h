@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:57:49 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/01 09:53:01 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:05:43 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
 
 # define WINDOW_WIDTH 1200
 # define WINDOW_HEIGHT 600
-
-# define MAX_THREADS 2
 
 typedef void	(*t_funcptr)();
 
@@ -82,8 +80,6 @@ typedef struct s_data
 	int			mandel;
 	int			color;
 	int			function;
-	int			thread;
-	int			thread_size;
 	t_coord		julia;
 	double		scale;
 	t_mouse		mouse;
@@ -111,9 +107,7 @@ void	render_background(t_img *img, int color);
 void	mandelbrot(t_data *data);
 void	julia(t_data *data);
 void	multibrot(t_data *data);
-void	multithread(t_data *data);
 
-void	world_to_screen(t_data *data, t_coord world, t_screen *screen);
 void	screen_to_world(t_data *data, t_screen screen, t_coord *world);
 
 void	zoom(t_data *data, double zoom);
