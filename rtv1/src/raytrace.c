@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/17 14:18:34 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/17 15:25:26 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,11 @@ void	make_image(t_scene *scene, t_data *data)
 	t_vec3f		hitpoint;
 	float		temp;
 	float		closest;
+	float		closest_shadow;
 	int 		type;
 	t_rgb		*color;
 
+	int	tp = 0;
 	temp = 0.0f;
 	y = data->screen_min.y;
 	while (y < data->screen_max.y)
@@ -145,6 +147,7 @@ void	make_image(t_scene *scene, t_data *data)
 			while (x < data->screen_max.x)
 			{
 				closest = 0.0f;
+				closest_shadow = 0.0f;
 				direction = get_direction(data, (float)x, (float)y);
 				if (plane_intersect(scene, vec_minus(scene->object.plane_orig, scene->camera), direction, scene->object.plane_normal, &temp))
 				{
@@ -173,9 +176,19 @@ void	make_image(t_scene *scene, t_data *data)
 				}
 				else
 				{
+					if (tp == 0)
+					{
+						printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", closest, intersection.x, intersection.y, intersection.z);
+						tp = 2;
+					}
 					color = &scene->object.sphere;
 					normal = vec_minus(intersection, scene->object.sphere_pos);
 					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
+					if (tp == 2)
+					{
+						printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", closest, intersection.x, intersection.y, intersection.z);
+						tp = 3;
+					}
 				}
 				int	shadow;
 				if (closest > 0.0f)
@@ -184,16 +197,15 @@ void	make_image(t_scene *scene, t_data *data)
 //					intersection = vec_plus(scene->camera, direction, closest));
 					direction = vec_minus(scene->light, intersection);
 					direction = normalize(direction);
+					if (tp == 3)
+					{
+						printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", closest, intersection.x, intersection.y, intersection.z);
+						tp = 4;
+					}
 					if (type)
 					{
 						if (plane_intersect(scene, vec_minus(scene->object.plane_orig, intersection), direction, scene->object.plane_normal, &temp))
 						{
-							/*
-							if (temp < closest || closest == 0.0f)
-							{
-								closest = temp;
-							}
-							*/
 							shadow = 1;
 							data->map.ptr[y][x] = 0;	
 						}
@@ -202,12 +214,11 @@ void	make_image(t_scene *scene, t_data *data)
 					{
 						if (sphere_intersect(scene, vec_minus(intersection, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
 						{
-							/*
-							if (temp < closest || closest == 0.0f)
+							if (tp == 4 && temp < 2)
 							{
-								closest = temp;
+								printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", temp, intersection.x, intersection.y, intersection.z);
+								tp = 12;
 							}
-							*/
 							shadow = 2;
 							data->map.ptr[y][x] = 0;
 						}
