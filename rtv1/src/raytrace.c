@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/17 13:59:57 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/17 14:18:34 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float ra
 		*t0 = (-b - sqrt(discriminant)) / (2.0f * a);
 		if (discriminant > 0.0f)
 			t1 = (-b + sqrt(discriminant)) / (2.0f * a);
-		if (*t0 < 0.0f)
+		if (*t0 <= 0.0f)
 		{
 			*t0 = t1;
-			if (*t0 < 0.0f)
+			if (*t0 <= 0.0f)
 				return(FALSE);
 		}
 		return (*t0);
@@ -169,11 +169,13 @@ void	make_image(t_scene *scene, t_data *data)
 				{
 					color = &scene->object.plane;
 					normal = scene->object.plane_normal;
+					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
 				}
 				else
 				{
 					color = &scene->object.sphere;
 					normal = vec_minus(intersection, scene->object.sphere_pos);
+					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
 				}
 				int	shadow;
 				if (closest > 0.0f)
@@ -182,7 +184,7 @@ void	make_image(t_scene *scene, t_data *data)
 //					intersection = vec_plus(scene->camera, direction, closest));
 					direction = vec_minus(scene->light, intersection);
 					direction = normalize(direction);
-					if (type == 2)
+					if (type)
 					{
 						if (plane_intersect(scene, vec_minus(scene->object.plane_orig, intersection), direction, scene->object.plane_normal, &temp))
 						{
@@ -196,7 +198,7 @@ void	make_image(t_scene *scene, t_data *data)
 							data->map.ptr[y][x] = 0;	
 						}
 					}
-					if (type == 1)
+					if (type)
 					{
 						if (sphere_intersect(scene, vec_minus(intersection, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
 						{
@@ -210,7 +212,7 @@ void	make_image(t_scene *scene, t_data *data)
 							data->map.ptr[y][x] = 0;
 						}
 					}
-					if (shadow == 0)
+					if (!shadow)
 						angle_color(data, scene, intersection, x, y, *color, normal);
 				}
 				else

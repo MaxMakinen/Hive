@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:08:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/17 13:59:31 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/17 14:06:08 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define WINDOW_HEIGHT 800
 # define TRUE 1
 # define FALSE 0
+# define BIAS 1e-4
 
 typedef int	(*t_funcptr)();
 
