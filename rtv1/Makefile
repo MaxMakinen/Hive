@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/08/16 12:41:07 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/08/17 14:00:30 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ NAME =			rtv1
 SRC_DIR =		src
 INC_DIR =		include
 OBJ_DIR =		obj
-SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o
+SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
+				brightness.o vector_math.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread

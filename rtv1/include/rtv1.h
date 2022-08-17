@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:08:33 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/16 13:45:28 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/17 13:59:31 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,18 @@ void	clean_exit(t_data *data);
 
 int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0);
 int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *intersect);
+
+t_vec3f	vec_mult(t_vec3f vec1, float mult);
+t_vec3f	vec_minus(t_vec3f vec1, t_vec3f vec2);
+t_vec3f	vec_plus(t_vec3f vec1, t_vec3f vec2);
+float	get_angle(t_vec3f vec1, t_vec3f vec2);
+t_vec3f	cross_product(t_vec3f vec1, t_vec3f vec2);
+t_vec3f	normalize(t_vec3f vec);
+double	vec_len(t_vec3f vec);
+double	dot_product(t_vec3f vec1, t_vec3f vec2);
+
+void	angle_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal);
+void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y);
+void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y, t_rgb color, t_vec3f normal);
 
 #endif
