@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 09:47:35 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/08 11:22:37 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/26 14:24:44 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,16 @@ void	draw(t_data *data)
 		y++;
 	}
 }
-
+/*
 int	build_scene(t_scene *scene)
 {
 	t_obj	*temp_obj;
-
-	scene->camera.x = 0.0f;
-	scene->camera.y = 3.0f;
-	scene->camera.z = 30.0f;
-	scene->light.x = -10.0f;
+	scene->camera.pos = (t_vec3f){0.0, 3.0, 30.0};
+	scene->camera.dir = (t_vec3f){0.0, 0.0, -1.0};
+	scene->camera_to_world = (t_mat44f){{1.0,0.0,0.0,0.0},{0.0,1.0,0.0,0.0},{0.0,0.0,1.0,0.0},{0.0,3.0,20.0,1.0}};
+	scene->light.x = -40.0f;
 	scene->light.y = 10.0f;
-	scene->light.z = 10.0f;
+	scene->light.z = -10.0f;
 	scene->light_dir.x = 1.0f;
 	scene->light_dir.y = -1.0f;
 	scene->light_dir.z = 1.0f;
@@ -105,17 +104,18 @@ int	build_scene(t_scene *scene)
 	temp_obj->next = NULL;
 	return(TRUE);
 }
-
+*/
 int	main(int ac, char **av)
 {
 	t_data	data;
 	t_map	map;
 	t_scene	scene;
 
-	if (ac != 1)
-		exit_error("Usage: ./rtv1");
-	if (!build_scene(&scene))
-		exit_error("build scene error");
+	if (ac != 2)
+		exit_error("Usage: ./rtv1 <input file>");
+//	if (!build_scene(&scene))
+//		exit_error("build scene error");
+	read_input(data, av[1]);
 	init_data(&data, &scene);
 	create_img(&data, "scene");
 	make_image(&scene, &data);

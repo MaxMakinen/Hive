@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/08/17 14:00:30 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/08/26 08:49:29 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,12 @@ SHELL =			/bin/sh
 .SUFFIXES =		.c .o .h
 CC =			clang
 FLAGS = 		-Wall -Wextra -Werror
-NAME =			rtv1
+NAME =			RTv1
 SRC_DIR =		src
 INC_DIR =		include
 OBJ_DIR =		obj
 SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
-				brightness.o vector_math.o
+				brightness.o vector_math.o input.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread
@@ -43,7 +43,7 @@ $(LIB):
 	@make -C libft/
 
 linux: $(OBJECTS) $(LIB)
-	@$(CC) $(FLAGS) $(INCLUDES) -o $@ $^ $(LINUX_LIBS)
+	@$(CC) $(FLAGS) $(INCLUDES) -o $(NAME) -g $^ $(LINUX_LIBS)
 
 debug: fclean $(OBJECTS) debug_libft
 	@$(CC) $(FLAGS) -o $(NAME) -g $(OBJECTS) $(LIB) $(INCLUDES)

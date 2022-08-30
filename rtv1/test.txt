@@ -1,0 +1,30 @@
+scene { name { test	}
+
+	camera {
+		origin { 0.0 3.0 30.0 }
+	}
+
+	light {
+		origin { -40.0 10.0 -10.0 }
+	}
+
+	object { name { sphere }
+		type { sphere }
+		radius { 5.0 }
+		color { 0xff00ff }
+	}
+
+	object { name { sphere2 }
+		type { sphere }
+		radius { 10.0 }
+		origin { 20.0 0.0 0.0 }
+		color { 0x00ffff }
+	}
+
+	object { name { sphere3 }
+		type { sphere }
+		radius { 15.0 }
+		origin { -25.0 0.0 0.0 }
+		color { 0xffff00 }
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: mmakinen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:58:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/17 13:59:23 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/26 14:23:26 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,30 @@ void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y)
 	data->map.ptr[y][x] = color.color;
 }
 
-void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y, t_rgb color, t_vec3f normal)
+void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal)
 {
 	t_vec3f		lightdir;
+	t_vec3f		light;
 	double		angle;
 
+	light = vec_minus(scene->light, intersection);
 	normal = normalize(normal);
-	lightdir = normalize(scene->light);
+	lightdir = normalize(light);
 	angle = dot_product(normal, lightdir);
+	if (angle < 0.01f)
+		angle = -1;
 
-	if	(angle < 0)
-	{
+//	if	(angle < 0)
+//	{
 		color.rgb[0] += (unsigned char)((float)color.rgb[0]) * angle;
 		color.rgb[1] += (unsigned char)((float)color.rgb[1]) * angle;
 		color.rgb[2] += (unsigned char)((float)color.rgb[2]) * angle;
-	}
+/*	}
 	else
 	{
 		color.rgb[0] += (unsigned char)(255.0f - (float)color.rgb[0]) * angle;
 		color.rgb[1] += (unsigned char)(255.0f - (float)color.rgb[1]) * angle;
 		color.rgb[2] += (unsigned char)(255.0f - (float)color.rgb[2]) * angle;
 	}
-	data->map.ptr[y][x] = color.color;
+*/	data->map.ptr[y][x] = color.color;
 }

@@ -6,20 +6,11 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/26 11:19:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/25 10:07:38 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
-void	ft_swapf(float *a, float *b)
-{
-	float c;
-
-	c = *a;
-	*a = *b;
-	*b = c;
-}
 
 t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, float distance)
 {
@@ -84,73 +75,26 @@ int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f n
 	return (FALSE);
 }
 
-int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_object *object, float *t0)
+int	cylinder_intersect(t_scene *scene, t_vec3f direction, t_object *object, float *intersect)
 {
 	float		a;
 	float		b;
 	float		c;
-	float		*t1;
-	double		dir;
-	double		orig;
-	t_vec3f		normal;
+	float		t0;
+	float		t1;
+	float		discriminant;
+	t_vec3f		origin;
 
-	normal = normalize(object->cone_normal);
-	dir = dot_product(direction, normal);
-	orig = dot_product(origin, normal);
-	float	height = object->cone_height;
-	float	constant = object->cone_radius2 / (height * height);
-	float	dir2 = dir * dir;
-	float	orig2 = orig * orig;
-	float	dir_orig = dir * orig;
+	t0 = 0.0f;
+	origin = vec_minus(scene->camera, object->cylinder_pos);
+	a = direction.x * direction.x + direction.z * direction.z;
+	b = 2.0f * (origin.x * direction.x + origin.z * direction.z);
+	c = (origin.x * origin.x + origin.z * origin.z) - object->cylinder_radius2;
 
-	a = dot_product(direction, direction) - (constant * dir2) - dir2;
-	b = 2.0f * (dot_product(direction, origin) - (constant * dir_orig) - dir_orig);
-	c = dot_product(origin, origin) - constant * orig2 - orig2;
-	
-	if (!quadratic_formula(a, b, c, t0, t1))
+	if (!quadratic_formula(a, b, c, &t0, &t1))
 		return (FALSE);
-	if (*t0 > *t1)
-	{
-		ft_swapf(t0, t1);
-		if (*t0 < 0.0f)
-		{
-			*t0 = *t1;
-			if (*t0 < 0.0f)
-				return(FALSE);
-		}
-	}
-	return (TRUE);
-}
-
-int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_object *object, float *t0)
-{
-	float		a;
-	float		b;
-	float		c;
-	float		*t1;
-	double		dir;
-	double		orig;
-	t_vec3f		normal;
-
-	normal = normalize(object->cylinder_normal);
-	dir = dot_product(direction, normal);
-	orig = dot_product(origin, normal);
-	a = dot_product(direction, direction) - (dir * dir);
-	b = 2.0f * ((dot_product(direction, origin) - (dot_product(direction, normal) * orig)));
-	c = dot_product(origin, origin) - (orig * orig) - object->cylinder_radius2;
-	
-	if (!quadratic_formula(a, b, c, t0, t1))
-		return (FALSE);
-	if (*t0 > *t1)
-	{
-		ft_swapf(t0, t1);
-		if (*t0 < 0.0f)
-		{
-			*t0 = *t1;
-			if (*t0 < 0.0f)
-				return(FALSE);
-		}
-	}
+	if (t0 <= 0.0f)
+		return(FALSE);
 	return (TRUE);
 /*
 	discriminant = b * b - 4.0f * a * c;
@@ -171,6 +115,15 @@ int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obje
 	}
 	return (FALSE);
 */
+}
+
+void	ft_swapf(float *a, float *b)
+{
+	float c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
 }
 
 /*MAKE FUNCTION FOR QUADRTIC FORMULA! many intersect formulas use it*/
@@ -270,53 +223,19 @@ void	make_image(t_scene *scene, t_data *data)
 						type = 2;
 					}
 				}
-				if (cylinder_intersect(scene, vec_minus(scene->camera, scene->object.cylinder_pos), direction, &scene->object, &temp))
-				{
-					if (temp < closest || closest == 0.0f)
-					{
-						closest = temp;
-						type = 3;
-					}
-				}
-				if (cone_intersect(scene, vec_minus(scene->camera, scene->object.cone_pos), direction, &scene->object, &temp))
-				{
-					if (temp < closest || closest == 0.0f)
-					{
-						closest = temp;
-						type = 4;
-					}
-				}
+//				if (cylinder_intersect(scene, direction, &scene->object, &cylinder))
+//					hitpoint_cyl = get_intersect(scene->camera, direction, cylinder);
 				intersection = get_intersect(scene->camera, direction, closest);
 				if (type == 1)
 				{
 					color = &scene->object.plane;
 					normal = scene->object.plane_normal;
-					normal = normalize(normal);
 					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
 				}
-				else if (type == 2)
+				else
 				{
 					color = &scene->object.sphere;
 					normal = vec_minus(intersection, scene->object.sphere_pos);
-					normal = normalize(normal);
-					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
-				}
-				else if (type == 3)
-				{
-					color = &scene->object.cylinder;
-					normal = vec_minus(intersection, scene->object.cylinder_pos);
-					normal = normalize(normal);
-					normal.y = 0.0f;
-					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
-				}
-				else if (type == 4)
-				{
-					color = &scene->object.cone;
-					normal = vec_minus(intersection, scene->object.cone_pos);
-					normal.y = 0.0f;
-					normal = normalize(normal);
-					normal = vec_mult(normal, scene->object.cone_height / scene->object.cone_radius);
-					normal.y = scene->object.cone_radius / scene->object.cone_height;
 					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
 				}
 				int	shadow;
@@ -353,8 +272,8 @@ void	make_image(t_scene *scene, t_data *data)
 						}
 					}
 					if (!shadow)
-						norm_dot_color(data, scene, intersection, x, y, *color, normal);
-//						angle_color(data, scene, intersection, x, y, *color, normal);
+//						norm_dot_color(data, scene, intersection, x, y, *color, normal);
+						angle_color(data, scene, intersection, x, y, *color, normal);
 				}
 				else
 					data->map.ptr[y][x] = 0x222222;
