@@ -115,7 +115,7 @@ int	main(int ac, char **av)
 		exit_error("Usage: ./rtv1 <input file>");
 //	if (!build_scene(&scene))
 //		exit_error("build scene error");
-	read_input(data, av[1]);
+	read_input(&scene, av[1]);
 	init_data(&data, &scene);
 	create_img(&data, "scene");
 	make_image(&scene, &data);

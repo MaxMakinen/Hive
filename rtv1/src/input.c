@@ -17,7 +17,7 @@
 #define LIGHT 3
 #define OBJECT 4
 
-int	open_file(int *fd, const char **file_name)
+int	open_file(int *fd, const char *filename)
 {
 	*fd = open(filename, O_RDONLY);
 	if (*fd == -1)
@@ -49,30 +49,30 @@ float	ft_atof(char *str)
 	return (num);
 }
 
-int	get_vector(t_vec3f *vector, **words)
+int	get_vector(t_vec3f *vector, char **words)
 {
-	int	count;
-
-	count = 0;
 	words++;
-	while (**words != '}' && count < 3)
-	{
-		vector[count] = ft_atof(words);
-		words++;
-		count++;
-	}
+	vector->x = ft_atof(words[0]);
+	vector->y = ft_atof(words[1]);
+	vector->z = ft_atof(words[2]);
 	return (TRUE);
 }
 
-int get_float(float *num, **words)
+int get_float(float *num, char **words)
 {
-	num = atof(++*words);
+	*num = (float)atof(words[1]);
+	return (TRUE);
+}
+
+int get_name(char *name, char **words)
+{
+	name = ft_memcpy(name, *words, ft_strlen(*words));
 	return (TRUE);
 }
 
 int	get_color(t_rgb *color, char **words)
 {
-	color.color = ft_atoi(*words);
+	color->color = ft_atoi(*words);
 	return (TRUE);
 }
 
@@ -99,13 +99,25 @@ t_obj	*get_current_obj(t_scene *scene)
 	return (temp);
 }
 
-int	get_object(t_scene *scene, char **words)
+t_obj	*init_object(t_scene *scene)
+{
+	t_obj	*temp;
+
+	if (scene->obj == NULL)
+		temp = scene->obj;
+	else
+		temp = get_current_obj(scene);
+	temp = ft_calloc(sizeof(t_obj), 1);
+	return (temp);
+}
+
+int	get_object(t_scene *scene, char **words, int *flags)
 {
 	t_obj	*temp_obj;
 
 	if (ft_strncmp(*words, "object", 6))
 	{
-		flags |= ft_bit(OBJECT);
+		*flags |= ft_bit(OBJECT);
 		temp_obj = init_object(scene);
 		if (ft_strncmp(*words, "name", 4))
 			get_name(temp_obj->name, ++words);
@@ -114,45 +126,54 @@ int	get_object(t_scene *scene, char **words)
 	else
 		temp_obj = get_current_obj(scene);
 	if (words[0][0] == '}')
-		flags &= ~(ft_bit(OBJECT));
+		*flags &= ~(ft_bit(OBJECT));
 	else if (ft_strncmp(*words, "type", 10))
-		get_type(temp_obj->type, ++words);
+		get_type(temp_obj, ++words);
 	else if (ft_strncmp(*words, "radius", 6))
-		get_float(temp_obj->radius, ++words);
+		get_float(&temp_obj->radius, ++words);
 	else if (ft_strncmp(*words, "height", 10))
-		get_float(temp_obj->height, ++words);
+		get_float(&temp_obj->height, ++words);
 	else if (ft_strncmp(*words, "origin", 6))
-		get_vector(temp_obj->pos, ++words);
+		get_vector(&temp_obj->pos, ++words);
 	else if (ft_strncmp(*words, "direction", 9))
-		get_vector(temp_obj->dir, ++words);
+		get_vector(&temp_obj->dir, ++words);
 	else if (ft_strncmp(*words, "color", 10))
-		get_color(temp_obj->color, ++words);
+		get_color(&temp_obj->color, ++words);
 	return (TRUE);
 }
 
 int	get_camera(t_scene *scene, char **words, int *flags)
 {
 	if (words[0][0] == '}')
-		flags &= ~(ft_bit(CAMERA));
+		*flags &= ~(ft_bit(CAMERA));
 	else if (ft_strncmp(*words, "camera", 6))
-		flags |= ft_bit(CAMERA);
+		*flags |= ft_bit(CAMERA);
 	else if (ft_strncmp(*words, "origin", 6))
-		get_vector(scene->camera.pos, ++words);
+		get_vector(&scene->camera.pos, ++words);
 	else if (ft_strncmp(*words, "direction", 9))
-		get_vector(scene->camera.dir, ++words);
+		get_vector(&scene->camera.dir, ++words);
 	return (TRUE);
 }
 
-int	get_light(t_scene *scene, char **str)
+int	init_light(t_scene *scene)
+{
+	if (scene->light == NULL)
+	{
+		scene->light = ft_calloc(sizeof(t_light), 1);
+	}
+	return (TRUE);
+}
+
+int	get_light(t_scene *scene, char **words, int *flags)
 {
 	if (words[0][0] == '}')
-		flags &= ~(ft_bit(LIGHT));
+		*flags &= ~(ft_bit(LIGHT));
 	else if (ft_strncmp(*words, "light", 6))
-		flags |= ft_bit(LIGHT);
+		*flags |= ft_bit(LIGHT);
 	else if (ft_strncmp(*words, "origin", 6))
-		get_vector(scene->light.pos, ++words);
+		get_vector(&scene->light->pos, words + 1);
 	else if (ft_strncmp(*words, "color", 5))
-		get_color(scene->light.color, ++words);
+		get_color(&scene->light->color, words + 1);
 	return (TRUE);
 }
 
@@ -186,17 +207,17 @@ int	init_scene(t_scene *scene, char **words, int *flags)
 		}
 	}
 	else
-		name = ft_strnew("Default")
+		name = ft_strcpy(ft_strnew(7), "Default");
 	scene->name = name;
-	scene->camera.pos = {0.0, 0.0, 0.0};
-	scene->camera.dir = {0.0, 0.0, -1.0};
+	scene->camera.pos = (t_vec3f){0.0, 0.0, 0.0};
+	scene->camera.dir = (t_vec3f){0.0, 0.0, -1.0};
 	scene->light = NULL;
 	scene->obj = NULL;
 	*flags |= ft_bit(SCENE);
 	return(TRUE);
 }
 
-int	parse_file(t_data *data, int fd)
+int	parse_file(t_scene *scene, int fd)
 {
 	char	*line;
 	char	**words;
@@ -206,39 +227,41 @@ int	parse_file(t_data *data, int fd)
 	while (get_next_line(fd, &line))
 	{
 		words = ft_strsplit(line, ' ');
+		if (words == NULL || words[0] == NULL)
+			continue;
 		if (ft_strncmp(words[0], "scene", 5) && flags == 0)
-			init_scene(data->scene, words, &flags);
+			init_scene(scene, words, &flags);
 		else if (ft_strncmp(words[0], "camera", 6) || flags & ft_bit(CAMERA)) //check state and flags?
-			get_camera(data->scene, words, &flags);
+			get_camera(scene, words, &flags);
 		else if (ft_strncmp(words[0], "light", 5) || flags & ft_bit(LIGHT)) //check state and flags?
 		{
 			if (!(flags & ft_bit(LIGHT)))
-				init_light(data->scene);
-			get_light(data->scene, words, &flags);
+				init_light(scene);
+			get_light(scene, words, &flags);
 		}
 		else if (ft_strncmp(words[0], "object", 6) || flags & ft_bit(OBJECT)) //check state and flags?
 		{
-			if (!(flags & ft_bit(OBJECT)))
-				init_object(data->scene);
-			get_light(data->scene, words, &flags);
+/*			if (!(flags & ft_bit(OBJECT)))
+				init_object(scene);
+*/			get_object(scene, words, &flags);
 		}
 		else if (words[0][0] == '}')
 			flags &= ~(ft_bit(SCENE));
 		free(line);
 		ft_arrfree(words);
 	}
-	free (line);
+	//free (line);
 	if (flags == 0)
 		return (TRUE);
 	return (FALSE);
 }
 
-int	read_input(t_data *data, const char **file_name)
+int	read_input(t_scene *scene, const char *file_name)
 {
 	int fd;
 
 	open_file(&fd, file_name);
-	parse_file(data, fd);
+	parse_file(scene, fd);
 	close_file(fd);
 	return (TRUE);
 }

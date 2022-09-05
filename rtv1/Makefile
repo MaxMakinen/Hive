@@ -6,7 +6,7 @@
 #    By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 10:28:04 by mmakinen          #+#    #+#              #
-#    Updated: 2022/08/26 08:49:29 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/09/01 10:46:23 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,13 @@ SHELL =			/bin/sh
 .SUFFIXES =		
 .SUFFIXES =		.c .o .h
 CC =			clang
-FLAGS = 		-Wall -Wextra -Werror
+FLAGS = 		-Wall -Wextra -Werror -g
 NAME =			RTv1
 SRC_DIR =		src
 INC_DIR =		include
 OBJ_DIR =		obj
 SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
-				brightness.o vector_math.o input.o
+				brightness.o vector_math.o input.o ft_bit.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread

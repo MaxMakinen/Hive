@@ -91,8 +91,8 @@ typedef struct s_obj
 {
 	char			*name;
 	enum e_type		type;
-	t_vec3f			position;
-	t_vec3f			normal;
+	t_vec3f			pos;
+	t_vec3f			dir;
 	t_rgb			color;
 	float			radius;
 	float			radius2;
@@ -197,5 +197,10 @@ double	dot_product(t_vec3f vec1, t_vec3f vec2);
 void	angle_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal);
 void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y);
 void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y, t_rgb color, t_vec3f normal);
+
+int	read_input(t_scene *scene, const char *file_name);
+int	ft_bit(int step);
+t_obj	*init_object(t_scene *scene);
+
 
 #endif

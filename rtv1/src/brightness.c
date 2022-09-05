@@ -6,7 +6,7 @@
 /*   By: mmakinen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:58:05 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/26 14:23:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:46:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	angle_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int 
 	float	midway;
 	t_vec3f	light;
 
-	light = vec_minus(scene->light, intersection);
+	light = vec_minus(scene->light->pos, intersection);
 	normal = normalize(normal);
 	angle = get_angle(normal, light);
 	angle = fabs(angle);
@@ -67,7 +67,7 @@ void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, i
 	t_vec3f		light;
 	double		angle;
 
-	light = vec_minus(scene->light, intersection);
+	light = vec_minus(scene->light->pos, intersection);
 	normal = normalize(normal);
 	lightdir = normalize(light);
 	angle = dot_product(normal, lightdir);

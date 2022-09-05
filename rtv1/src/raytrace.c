@@ -6,7 +6,7 @@
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:13:09 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/08/26 11:19:26 by mmakinen         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:40:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ void	make_image(t_scene *scene, t_data *data)
 				closest = 0.0f;
 				closest_shadow = 0.0f;
 				direction = get_direction(data, (float)x, (float)y);
-				if (plane_intersect(scene, vec_minus(scene->object.plane_orig, scene->camera), direction, scene->object.plane_normal, &temp))
+				if (plane_intersect(scene, vec_minus(scene->object.plane_orig, scene->camera.pos), direction, scene->object.plane_normal, &temp))
 				{
 					if (temp < closest || closest == 0.0f)
 					{
@@ -262,7 +262,7 @@ void	make_image(t_scene *scene, t_data *data)
 						type = 1;
 					}
 				}
-				if (sphere_intersect(scene, vec_minus(scene->camera, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
+				if (sphere_intersect(scene, vec_minus(scene->camera.pos, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
 				{
 					if (temp < closest || closest == 0.0f)
 					{
@@ -270,7 +270,7 @@ void	make_image(t_scene *scene, t_data *data)
 						type = 2;
 					}
 				}
-				if (cylinder_intersect(scene, vec_minus(scene->camera, scene->object.cylinder_pos), direction, &scene->object, &temp))
+				if (cylinder_intersect(scene, vec_minus(scene->camera.pos, scene->object.cylinder_pos), direction, &scene->object, &temp))
 				{
 					if (temp < closest || closest == 0.0f)
 					{
@@ -278,7 +278,7 @@ void	make_image(t_scene *scene, t_data *data)
 						type = 3;
 					}
 				}
-				if (cone_intersect(scene, vec_minus(scene->camera, scene->object.cone_pos), direction, &scene->object, &temp))
+				if (cone_intersect(scene, vec_minus(scene->camera.pos, scene->object.cone_pos), direction, &scene->object, &temp))
 				{
 					if (temp < closest || closest == 0.0f)
 					{
@@ -286,7 +286,7 @@ void	make_image(t_scene *scene, t_data *data)
 						type = 4;
 					}
 				}
-				intersection = get_intersect(scene->camera, direction, closest);
+				intersection = get_intersect(scene->camera.pos, direction, closest);
 				if (type == 1)
 				{
 					color = &scene->object.plane;
@@ -323,8 +323,8 @@ void	make_image(t_scene *scene, t_data *data)
 				if (closest > 0.0f)
 				{
 					shadow = 0;
-//					intersection = vec_plus(scene->camera, direction, closest));
-					direction = vec_minus(scene->light, intersection);
+//					intersection = vec_plus(scene->camera.pos, direction, closest));
+					direction = vec_minus(scene->light->pos, intersection);
 					direction = normalize(direction);
 					if (tp == 3)
 					{
@@ -369,5 +369,5 @@ void	make_image(t_scene *scene, t_data *data)
 				direction.x = temp.x/length;
 				direction.y = temp.y/length;
 				direction.z = -1.0f/lenght;
-				map[y][x] = ray_trace(scene, scene->camera, direction);
+				map[y][x] = ray_trace(scene, scene->camera.pos, direction);
 				*/

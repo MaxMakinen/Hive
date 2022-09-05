@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
+/*
 void	init_object(t_object *object)
 {
 	object->sphere_pos.x = -15.0f;
@@ -48,7 +48,7 @@ void	init_object(t_object *object)
 	object->cone.color = 0x00ff00;
 	object->type = 1;
 }
-
+*/
 void	init_map(t_map *map)
 {
 	int	*itemp;
@@ -80,6 +80,6 @@ void	init_data(t_data *data, t_scene *scene)
 	data->screen_max.x = WINDOW_WIDTH;
 	data->screen_max.y = WINDOW_HEIGHT;
 	data->screen_max.z = 0;
-	init_object(&scene->object);
+//	init_object(&scene->object);
 	init_map(&data->map);
 }
