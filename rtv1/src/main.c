@@ -142,10 +142,15 @@ void	print_scene(t_scene *scene)
 	ft_putstr("camera dir : \n");
 	print_vec(&scene->camera.dir);
 	ft_putstr("light pos : \n");
-	print_vec(&scene->light->pos);
-	printf("color = %d\n", scene->light->color.color);
-	printf("brightness = %f\n", scene->light->brightness);
-	while (scene->obj)
+	if (scene->light)
+	{
+		print_vec(&scene->light->pos);
+		printf("color = %d\n", scene->light->color.color);
+		printf("brightness = %f\n", scene->light->brightness);
+	}
+	else
+		printf("no light\n");
+	while (scene->obj != NULL)
 	{
 		ft_putstr("name : ");
 		ft_putendl(scene->obj->name);
@@ -158,8 +163,10 @@ void	print_scene(t_scene *scene)
 		printf("radius = %f\n", scene->obj->radius);
 		printf("radius2 = %f\n", scene->obj->radius2);
 		printf("height = %f\n", scene->obj->height);
-
-		scene->obj = scene->obj->next;
+		if (scene->obj->next != NULL)
+			scene->obj = scene->obj->next;
+		else
+			scene->obj = NULL;
 	}
 }
 
