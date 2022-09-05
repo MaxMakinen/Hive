@@ -105,6 +105,64 @@ int	build_scene(t_scene *scene)
 	return(TRUE);
 }
 */
+/*
+	char		*name;
+	t_camera	camera;
+	t_mat44f	camera_to_world;
+	t_light		*light;
+	t_object	object;
+	t_obj		*obj;
+	int			max_objects;
+typedef struct s_obj
+{
+	char			*name;
+	enum e_type		type;
+	t_vec3f			pos;
+	t_vec3f			dir;
+	t_rgb			color;
+	float			radius;
+	float			radius2;
+	float			height;
+	struct s_obj	*next;
+}	t_obj;
+	*/
+void	print_vec(t_vec3f *vec)
+{
+	printf("vec.x = %f\n",vec->x);
+	printf("vec.y = %f\n",vec->y);
+	printf("vec.z = %f\n",vec->z);
+}
+
+void	print_scene(t_scene *scene)
+{
+	ft_putstr("name : ");
+	ft_putendl(scene->name);
+	ft_putstr("camera pos : \n");
+	print_vec(&scene->camera.pos);
+	ft_putstr("camera dir : \n");
+	print_vec(&scene->camera.dir);
+	ft_putstr("light pos : \n");
+	print_vec(&scene->light->pos);
+	printf("color = %d\n", scene->light->color.color);
+	printf("brightness = %f\n", scene->light->brightness);
+	while (scene->obj)
+	{
+		ft_putstr("name : ");
+		ft_putendl(scene->obj->name);
+		printf("type = %d\n", scene->obj->type);
+		ft_putstr("pos : \n");
+		print_vec(&scene->obj->pos);
+		ft_putstr("dir : \n");
+		print_vec(&scene->obj->dir);
+		printf("color = %d\n", scene->obj->color.color);
+		printf("radius = %f\n", scene->obj->radius);
+		printf("radius2 = %f\n", scene->obj->radius2);
+		printf("height = %f\n", scene->obj->height);
+
+		scene->obj = scene->obj->next;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -120,6 +178,7 @@ int	main(int ac, char **av)
 	create_img(&data, "scene");
 	make_image(&scene, &data);
 	draw(&data);
+	print_scene(&scene);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, \
 			data.img->mlx_img, 0, 0);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
