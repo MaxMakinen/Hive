@@ -135,13 +135,13 @@ void	print_vec(t_vec3f *vec)
 
 void	print_scene(t_scene *scene)
 {
-	ft_putstr("name : ");
+	ft_putstr("\nname : ");
 	ft_putendl(scene->name);
 	ft_putstr("camera pos : \n");
 	print_vec(&scene->camera.pos);
 	ft_putstr("camera dir : \n");
 	print_vec(&scene->camera.dir);
-	ft_putstr("light pos : \n");
+	ft_putstr("\nlight pos : \n");
 	if (scene->light)
 	{
 		print_vec(&scene->light->pos);
@@ -150,11 +150,15 @@ void	print_scene(t_scene *scene)
 	}
 	else
 		printf("no light\n");
+	if (scene->obj == NULL)
+		printf("\nno obj\n");
 	while (scene->obj != NULL)
 	{
-		ft_putstr("name : ");
-		ft_putendl(scene->obj->name);
-		printf("type = %d\n", scene->obj->type);
+	//	printf("name = %s\n", scene->obj->name);
+//		ft_putstr("name : ");
+//		if (scene->obj->name != 0 || scene->obj->name[0] != 0)
+//			ft_putendl(scene->obj->name);
+		printf("\ntype = %d\n", scene->obj->type);
 		ft_putstr("pos : \n");
 		print_vec(&scene->obj->pos);
 		ft_putstr("dir : \n");
@@ -163,10 +167,10 @@ void	print_scene(t_scene *scene)
 		printf("radius = %f\n", scene->obj->radius);
 		printf("radius2 = %f\n", scene->obj->radius2);
 		printf("height = %f\n", scene->obj->height);
-		if (scene->obj->next != NULL)
+		if (scene->obj->next && scene->obj->next != NULL)
 			scene->obj = scene->obj->next;
 		else
-			scene->obj = NULL;
+			break;
 	}
 }
 
@@ -180,6 +184,7 @@ int	main(int ac, char **av)
 		exit_error("Usage: ./rtv1 <input file>");
 //	if (!build_scene(&scene))
 //		exit_error("build scene error");
+	scene.name = "default";
 	read_input(&scene, av[1]);
 	init_data(&data, &scene);
 	create_img(&data, "scene");
