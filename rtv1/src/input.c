@@ -234,53 +234,6 @@ int	init_scene(t_scene *scene, char **words, int *flags)
 	return(TRUE);
 }
 
-int	parse_file(t_scene *scene, int fd)
-{
-	char	*line;
-	char	**words;
-	int		flags;
-
-	flags = 0;
-	while (get_next_line(fd, &line))
-	{
-		words = ft_strsplit(line, ' ');
-		if (words == NULL || words[0] == NULL || !**words)
-		{
-			printf("		EMPTY LINE\n");
-			flags |= ft_bit(SCENE);
-			free(line);
-			ft_arrfree(words);
-			continue;
-		}
-		if (ft_strncmp(words[0], "scene", 5) == 0 && flags == 0)
-			init_scene(scene, words, &flags);
-		else if (ft_strncmp(words[0], "camera", 6) == 0 || flags & ft_bit(CAMERA)) //check state and flags?
-			get_camera(scene, words, &flags);
-		else if (ft_strncmp(words[0], "light", 5) == 0 || flags & ft_bit(LIGHT)) //check state and flags?
-		{
-			//if (!(flags & ft_bit(LIGHT)))
-			if (ft_strncmp(words[0], "light", 5))
-				init_light(scene);
-			get_light(scene, words, &flags);
-		}
-		else if (ft_strncmp(words[0], "object", 6) == 0|| flags & ft_bit(OBJECT)) //check state and flags?
-		{
-/*			if (!(flags & ft_bit(OBJECT)))
-				init_object(scene);
-*/			get_object(scene, words, &flags);
-		}
-		else if (words[0][0] == '}')
-			flags = 0;
-			//flags &= ~(ft_bit(SCENE));
-		free(line);
-		ft_arrfree(words);
-	}
-	//free (line);
-	if (flags == 0)
-		return (TRUE);
-	return (FALSE);
-}
-
 void	parse(t_scene *scene, const int fd)
 {
 	char	*line;
@@ -409,6 +362,7 @@ void	parse(t_scene *scene, const int fd)
 				else if (ft_strncmp(words[1], "radius", 6) == 0)
 				{
 					scene->obj->radius = ft_atoi(words[2]);
+					scene->obj->radius2 = scene->obj->radius * scene->obj->radius;
 				}
 			}
 /*			if (*words && (flags & ft_bit(PLANE)))
@@ -440,7 +394,6 @@ int	read_input(t_scene *scene, const char *file_name)
 	int fd;
 
 	open_file(&fd, file_name);
-//	parse_file(scene, fd);
 	parse(scene, fd);
 	close_file(fd);
 	return (TRUE);

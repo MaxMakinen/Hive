@@ -262,7 +262,7 @@ void	make_image(t_scene *scene, t_data *data)
 						type = 1;
 					}
 				}
-				if (sphere_intersect(scene, vec_minus(scene->camera.pos, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
+				if (sphere_intersect(scene, vec_minus(scene->camera.pos, scene->obj->pos), direction, scene->obj->radius2, &temp))
 				{
 					if (temp < closest || closest == 0.0f)
 					{
@@ -296,8 +296,8 @@ void	make_image(t_scene *scene, t_data *data)
 				}
 				else if (type == 2)
 				{
-					color = &scene->object.sphere;
-					normal = vec_minus(intersection, scene->object.sphere_pos);
+					color = &scene->obj->color;
+					normal = vec_minus(intersection, scene->obj->pos);
 					normal = normalize(normal);
 					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
 				}
@@ -341,7 +341,7 @@ void	make_image(t_scene *scene, t_data *data)
 					}
 					if (type)
 					{
-						if (sphere_intersect(scene, vec_minus(intersection, scene->object.sphere_pos), direction, scene->object.radius2, &temp))
+						if (sphere_intersect(scene, vec_minus(intersection, scene->obj->pos), direction, scene->obj->radius2, &temp))
 						{
 							if (tp == 4 && temp < 2)
 							{
