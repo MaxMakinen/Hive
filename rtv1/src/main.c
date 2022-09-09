@@ -188,9 +188,10 @@ int	main(int ac, char **av)
 	read_input(&scene, av[1]);
 	init_data(&data, &scene);
 	create_img(&data, "scene");
-	make_image(&scene, &data);
+	render_scene(&scene, &data);
+	//make_image(&scene, &data);
 	draw(&data);
-	print_scene(&scene);
+//	print_scene(&scene);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, \
 			data.img->mlx_img, 0, 0);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);

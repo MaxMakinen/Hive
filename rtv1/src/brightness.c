@@ -61,15 +61,15 @@ void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y)
 	data->map.ptr[y][x] = color.color;
 }
 
-void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal)
+void	norm_dot_color(t_data *data, t_vec3f *light, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal)
 {
 	t_vec3f		lightdir;
-	t_vec3f		light;
+	t_vec3f		lightpos;
 	double		angle;
 
-	light = vec_minus(scene->light->pos, intersection);
+	lightpos = vec_minus(*light, intersection);
 	normal = normalize(normal);
-	lightdir = normalize(light);
+	lightdir = normalize(*light);
 	angle = dot_product(normal, lightdir);
 	if (angle < 0.01f)
 		angle = -1;

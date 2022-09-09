@@ -92,13 +92,13 @@ int	get_color(t_rgb *color, char **words)
 int	get_type(t_obj *obj, char **words)
 {	
 	if (ft_strncmp(*words, "sphere", 6) == 0)
-		obj->type = sphere;
+		obj->type = e_sphere;
 	else if (ft_strncmp(*words, "plane", 5) == 0)
-		obj->type = plane;
+		obj->type = e_plane;
 	else if (ft_strncmp(*words, "cylinder", 8) == 0)
-		obj->type = cylinder;
+		obj->type = e_cylinder;
 	else if (ft_strncmp(*words, "cone", 54) == 0)
-		obj->type = cone;
+		obj->type = e_cone;
 	return (TRUE);
 }
 
@@ -233,22 +233,61 @@ int	init_scene(t_scene *scene, char **words, int *flags)
 	*flags |= ft_bit(SCENE);
 	return(TRUE);
 }
+/*
+if first line = malloc obj
+if empty line = malloc obj
+*/
+
+t_obj	*init_obj(void)
+{
+	t_obj	*new;
+
+	new = ft_calloc(sizeof(t_obj), 1);
+	if (new)
+	{
+		new->next = NULL;
+		new->name = NULL;
+	}
+	return (new);
+}
+
+t_obj	*get_last(t_obj *head)
+{
+	t_obj	*temp;
+
+	temp = head;
+	while (temp->next != NULL)
+		temp = temp->next;
+	return (temp);
+}
+
+char	*str_insert(char *str)
+{
+	char	*new;
+
+	new = ft_calloc(ft_strlen(str), sizeof(char));
+	if (!new)
+		exit_error("str_insert error");
+	return (new);
+}
 
 void	parse(t_scene *scene, const int fd)
 {
 	char	*line;
 	char	**words;
 	int		flags;
-	t_light	*light;
 	t_obj	*obj;
+	t_obj	*temp;
 
 	flags = 0;
 	scene->light = NULL;
-	scene->obj = NULL;
+	scene->obj = init_obj();
 	while (get_next_line(fd, &line))
 	{
+		temp = get_last(scene->obj);
 		if (*line == 0)
 		{
+			temp->next = init_obj();
 			flags = 0;
 			continue;
 		}
@@ -263,46 +302,34 @@ void	parse(t_scene *scene, const int fd)
 					printf("word = %s\n", words[0]);
 					printf("flags = %d\n", flags);
 					flags |= ft_bit(CAMERA);
+					temp->type = e_camera;
 					printf("flags camera = %d\n", flags);
 					continue;
 				}
 				else if (ft_strncmp(words[0], "light", 4) == 0)
 				{
 					flags |= ft_bit(LIGHT);
+					temp->type = e_light;
 					printf("word = %s\n", words[0]);
-					light = scene->light;
-/*					if (light != NULL)
-					{
-						while (light->next != NULL)
-						light = scene->light;
-					}
-					else
-					{
-						while 
-					}*/
-					scene->light = ft_calloc(sizeof(t_light), 1);
 					printf("flags light = %d\n", flags);
 					continue;
 				}
 				else if (ft_strncmp(words[0], "sphere", 6) == 0)
 				{
 					flags |= ft_bit(SPHERE);
-					scene->obj = ft_calloc(sizeof(t_obj), 1);
-					scene->obj->type = sphere;
-					scene->obj->next = NULL;
+					temp->type = e_sphere;
 					printf("flags sphere= %d\n", flags);
 					continue;
 				}
 				else if (ft_strncmp(words[0], "plane", 6) == 0)
 				{
 					flags |= ft_bit(PLANE);
-					scene->obj = ft_calloc(sizeof(t_obj), 1);
-					scene->obj->type = plane;
+					temp->type = e_plane;
 					printf("flags plane= %d\n", flags);
 					continue;
 				}
 			}
-			if (*words && (flags & ft_bit(CAMERA)))
+			if (*words && temp)
 			{
 				if (words[0][0] != '-')
 				{
@@ -311,81 +338,39 @@ void	parse(t_scene *scene, const int fd)
 					flags = 0;
 					continue;
 				}
+				if (ft_strncmp(words[1], "name", 3) == 0)
+				{
+					temp->name = str_insert(words[2]);
+				}
 				if (ft_strncmp(words[1], "pos", 3) == 0)
 				{
-					get_vector(&scene->camera.pos, &words[2]);
+					get_vector(&temp->pos, &words[2]);
 				}
 				else if (ft_strncmp(words[1], "dir", 3) == 0)
 				{
-					get_vector(&scene->camera.dir, &words[2]);
-				}
-			}
-			if (*words && (flags & ft_bit(LIGHT)))
-			{
-				if (words[0][0] != '-')
-				{
-					free(line);
-					ft_arrfree(words);
-					flags = 0;
-					continue;
-				}
-				if (ft_strncmp(words[1], "pos", 3) == 0)
-				{
-					get_vector(&scene->light->pos, &words[2]);
+					get_vector(&temp->dir, &words[2]);
 				}
 				else if (ft_strncmp(words[1], "color", 5) == 0)
 				{
-					scene->light->color.color = ft_atoi(words[2]);
-				}
-			}
-			if (*words && (flags & ft_bit(SPHERE)))
-			{
-				if (words[0][0] != '-')
-				{
-					free(line);
-					ft_arrfree(words);
-					flags = 0;
-					continue;
-				}
-				if (ft_strncmp(words[1], "pos", 3) == 0)
-				{
-					get_vector(&scene->obj->pos, &words[2]);
-				}
-				else if (ft_strncmp(words[1], "dir", 3) == 0)
-				{
-					get_vector(&scene->obj->dir, &words[2]);
-				}
-				else if (ft_strncmp(words[1], "color", 5) == 0)
-				{
-					scene->obj->color.color = ft_atoi(words[2]);
+					temp->color.color = ft_atoi(words[2]);
 				}
 				else if (ft_strncmp(words[1], "radius", 6) == 0)
 				{
-					scene->obj->radius = ft_atoi(words[2]);
-					scene->obj->radius2 = scene->obj->radius * scene->obj->radius;
+					temp->radius = ft_atoi(words[2]);
+					temp->radius2 = temp->radius * temp->radius;
 				}
-			}
-/*			if (*words && (flags & ft_bit(PLANE)))
-			{
-				if (words[0][0] != '-')
+				else if (ft_strncmp(words[1], "height", 6) == 0)
 				{
-					free(line);
-					ft_arrfree(words);
-					flags = 0;
-					continue;
+					temp->height = ft_atoi(words[2]);
 				}
-				if (ft_strncmp(words[1], "pos", 3) == 0)
+				else if (ft_strncmp(words[1], "brightness", 6) == 0)
 				{
-					get_vector(&scene->light->pos, &words[2]);
+					temp->brightness = ft_atoi(words[2]);
 				}
-				else if (ft_strncmp(words[1], "color", 3) == 0)
-				{
-					scene->light->color.color = ft_atoi(words[2]);
-				}
-			}*/
 			ft_arrfree(words);
+			}
 		}
-		free(line);
+	free(line);
 	}
 }
 

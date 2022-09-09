@@ -84,7 +84,7 @@ int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f n
 	return (FALSE);
 }
 
-int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_object *object, float *t0)
+int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0)
 {
 	float		a;
 	float		b;
@@ -94,11 +94,11 @@ int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_object *
 	double		orig;
 	t_vec3f		normal;
 
-	normal = normalize(object->cone_normal);
+	normal = normalize(object->dir);
 	dir = dot_product(direction, normal);
 	orig = dot_product(origin, normal);
-	float	height = object->cone_height;
-	float	constant = object->cone_radius2 / (height * height);
+	float	height = object->height;
+	float	constant = object->radius2 / (height * height);
 	float	dir2 = dir * dir;
 	float	orig2 = orig * orig;
 	float	dir_orig = dir * orig;
@@ -122,7 +122,7 @@ int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_object *
 	return (TRUE);
 }
 
-int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_object *object, float *t0)
+int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0)
 {
 	float		a;
 	float		b;
@@ -132,12 +132,12 @@ int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obje
 	double		orig;
 	t_vec3f		normal;
 
-	normal = normalize(object->cylinder_normal);
+	normal = normalize(object->dir);
 	dir = dot_product(direction, normal);
 	orig = dot_product(origin, normal);
 	a = dot_product(direction, direction) - (dir * dir);
 	b = 2.0f * ((dot_product(direction, origin) - (dot_product(direction, normal) * orig)));
-	c = dot_product(origin, origin) - (orig * orig) - object->cylinder_radius2;
+	c = dot_product(origin, origin) - (orig * orig) - object->radius2;
 	
 	if (!quadratic_formula(a, b, c, t0, t1))
 		return (FALSE);
@@ -229,6 +229,129 @@ t_vec3f	get_direction(t_data *data, float x, float y)
 	return (direction);
 }
 
+float	check_intersect(t_scene *scene, t_obj *obj, t_obj *camera, t_vec3f *direction, float *temp)
+{
+
+	*temp = 0.0f;
+	if (obj->type == e_sphere)
+	{
+		if(!(sphere_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj->radius2, temp)))
+			return (0.0f);
+	}
+	if (obj->type == e_plane)
+	{
+		if(!(plane_intersect(scene, vec_minus(obj->pos, camera->pos), *direction, obj->dir, temp)))
+			return (0.0f);
+	}
+	if (obj->type == e_cylinder)
+	{
+		if(!(cylinder_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj, temp)))
+			return (0.0f);
+	}
+	if (obj->type == e_cone)
+	{
+		if(!(cone_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj, temp)))
+			return (0.0f);
+	}
+	return (*temp);
+}
+
+t_vec3f	get_normal(t_obj *object, t_vec3f *intersection)
+{
+	t_vec3f	normal;
+
+	if (object->type == e_plane)
+	{
+		normal = normalize(object->dir);
+		*intersection = vec_plus(*intersection, vec_mult(normal, BIAS));
+	}
+	else if (object->type == e_sphere)
+	{
+		normal = vec_minus(*intersection, object->pos);
+		normal = normalize(normal);
+		*intersection = vec_plus(*intersection, vec_mult(normal, BIAS));
+	}
+	else if (object->type == e_cylinder)
+	{
+		normal = vec_minus(*intersection, object->pos);
+		normal = normalize(normal);
+		normal.y = 0.0f;
+		*intersection = vec_plus(*intersection, vec_mult(normal, BIAS));
+	}
+	else if (object->type == e_cone)
+	{
+		normal = vec_minus(*intersection, object->pos);
+		normal.y = 0.0f;
+		normal = normalize(normal);
+		normal = vec_mult(normal, object->height / object->radius);
+		normal.y = object->radius / object->height;
+		*intersection = vec_plus(*intersection, vec_mult(normal, BIAS));
+	}
+	return (normal);
+}
+
+
+void	render_scene(t_scene *scene, t_data *data)
+{
+	int			x;
+	int			y;
+	t_vec3f		direction;
+	t_vec3f		intersection;
+	float		closest;
+	float		temp;
+	t_obj		*camera;
+	t_obj		*light;
+	t_obj		*object;
+	t_obj		*closest_obj;
+	
+	camera = scene->obj;
+	while (camera->type != e_camera)
+		camera = camera->next;
+	light = scene->obj;
+	while (light->type != e_light)
+		light = light->next;
+	object = scene->obj;
+	closest = 0.0f;
+	y = data->screen_min.y;
+	while (y < data->screen_max.y)
+	{
+		x = data->screen_min.x;
+		while (x < data->screen_max.x)
+		{
+			closest = 0.0f;
+			direction = get_direction(data, (float)x, (float)y);
+			while (object)
+			{
+				if (object->type > e_light)
+				{
+					if (check_intersect(scene, object, camera, &direction, &temp))
+					{
+						if (temp < closest || closest == 0.0f || temp == 0.0f)
+						{
+							closest = temp;
+							closest_obj = object;
+						}
+					}
+				}
+				object = object->next;
+			}
+			object = scene->obj;
+			intersection = get_intersect(camera->pos, direction, closest);
+			if (closest > 0.0f)
+			{
+				direction = vec_minus(light->pos, intersection);
+				direction = normalize(direction);
+				norm_dot_color(data, &light->pos, intersection, x, y, closest_obj->color, get_normal(closest_obj, &intersection));
+			}
+			else
+				data->map.ptr[y][x] = 0x222222;
+			x++;
+		}
+		y++;
+	}
+	
+}
+/*
 void	make_image(t_scene *scene, t_data *data)
 {
 	int			x;
@@ -249,121 +372,121 @@ void	make_image(t_scene *scene, t_data *data)
 	while (y < data->screen_max.y)
 	{
 		x = data->screen_min.x;
-			while (x < data->screen_max.x)
+		while (x < data->screen_max.x)
+		{
+			closest = 0.0f;
+			closest_shadow = 0.0f;
+			direction = get_direction(data, (float)x, (float)y);
+			if (plane_intersect(scene, vec_minus(scene->object.plane_orig, scene->camera.pos), direction, scene->object.plane_normal, &temp))
 			{
-				closest = 0.0f;
-				closest_shadow = 0.0f;
-				direction = get_direction(data, (float)x, (float)y);
-				if (plane_intersect(scene, vec_minus(scene->object.plane_orig, scene->camera.pos), direction, scene->object.plane_normal, &temp))
+				if (temp < closest || closest == 0.0f)
 				{
-					if (temp < closest || closest == 0.0f)
-					{
-						closest = temp;
-						type = 1;
-					}
+					closest = temp;
+					type = 1;
 				}
-				if (sphere_intersect(scene, vec_minus(scene->camera.pos, scene->obj->pos), direction, scene->obj->radius2, &temp))
-				{
-					if (temp < closest || closest == 0.0f)
-					{
-						closest = temp;
-						type = 2;
-					}
-				}
-				if (cylinder_intersect(scene, vec_minus(scene->camera.pos, scene->object.cylinder_pos), direction, &scene->object, &temp))
-				{
-					if (temp < closest || closest == 0.0f)
-					{
-						closest = temp;
-						type = 3;
-					}
-				}
-				if (cone_intersect(scene, vec_minus(scene->camera.pos, scene->object.cone_pos), direction, &scene->object, &temp))
-				{
-					if (temp < closest || closest == 0.0f)
-					{
-						closest = temp;
-						type = 4;
-					}
-				}
-				intersection = get_intersect(scene->camera.pos, direction, closest);
-				if (type == 1)
-				{
-					color = &scene->object.plane;
-					normal = scene->object.plane_normal;
-					normal = normalize(normal);
-					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
-				}
-				else if (type == 2)
-				{
-					color = &scene->obj->color;
-					normal = vec_minus(intersection, scene->obj->pos);
-					normal = normalize(normal);
-					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
-				}
-				else if (type == 3)
-				{
-					color = &scene->object.cylinder;
-					normal = vec_minus(intersection, scene->object.cylinder_pos);
-					normal = normalize(normal);
-					normal.y = 0.0f;
-					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
-				}
-				else if (type == 4)
-				{
-					color = &scene->object.cone;
-					normal = vec_minus(intersection, scene->object.cone_pos);
-					normal.y = 0.0f;
-					normal = normalize(normal);
-					normal = vec_mult(normal, scene->object.cone_height / scene->object.cone_radius);
-					normal.y = scene->object.cone_radius / scene->object.cone_height;
-					intersection = vec_plus(intersection, vec_mult(normal, BIAS));
-				}
-				int	shadow;
-				if (closest > 0.0f)
-				{
-					shadow = 0;
-//					intersection = vec_plus(scene->camera.pos, direction, closest));
-					direction = vec_minus(scene->light->pos, intersection);
-					direction = normalize(direction);
-					if (tp == 3)
-					{
-						printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", closest, intersection.x, intersection.y, intersection.z);
-						tp = 4;
-					}
-					if (type)
-					{
-						if (plane_intersect(scene, vec_minus(scene->object.plane_orig, intersection), direction, scene->object.plane_normal, &temp))
-						{
-							shadow = 1;
-							data->map.ptr[y][x] = 0;	
-						}
-					}
-					if (type)
-					{
-						if (sphere_intersect(scene, vec_minus(intersection, scene->obj->pos), direction, scene->obj->radius2, &temp))
-						{
-							if (tp == 4 && temp < 2)
-							{
-								printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", temp, intersection.x, intersection.y, intersection.z);
-								tp = 12;
-							}
-							shadow = 0;
-							data->map.ptr[y][x] = 0;
-						}
-					}
-					if (!shadow)
-						norm_dot_color(data, scene, intersection, x, y, *color, normal);
-//						angle_color(data, scene, intersection, x, y, *color, normal);
-				}
-				else
-					data->map.ptr[y][x] = 0x222222;
-				x++;
 			}
-			y++;
+			if (sphere_intersect(scene, vec_minus(scene->camera.pos, scene->obj->pos), direction, scene->obj->radius2, &temp))
+			{
+				if (temp < closest || closest == 0.0f)
+				{
+					closest = temp;
+					type = 2;
+				}
+			}
+			if (cylinder_intersect(scene, vec_minus(scene->camera.pos, scene->object.cylinder_pos), direction, &scene->object, &temp))
+			{
+				if (temp < closest || closest == 0.0f)
+				{
+					closest = temp;
+					type = 3;
+				}
+			}
+			if (cone_intersect(scene, vec_minus(scene->camera.pos, scene->object.cone_pos), direction, &scene->object, &temp))
+			{
+				if (temp < closest || closest == 0.0f)
+				{
+					closest = temp;
+					type = 4;
+				}
+			}
+			intersection = get_intersect(scene->camera.pos, direction, closest);
+			if (type == 1)
+			{
+				color = &scene->object.plane;
+				normal = scene->object.plane_normal;
+				normal = normalize(normal);
+				intersection = vec_plus(intersection, vec_mult(normal, BIAS));
+			}
+			else if (type == 2)
+			{
+				color = &scene->obj->color;
+				normal = vec_minus(intersection, scene->obj->pos);
+				normal = normalize(normal);
+				intersection = vec_plus(intersection, vec_mult(normal, BIAS));
+			}
+			else if (type == 3)
+			{
+				color = &scene->object.cylinder;
+				normal = vec_minus(intersection, scene->object.cylinder_pos);
+				normal = normalize(normal);
+				normal.y = 0.0f;
+				intersection = vec_plus(intersection, vec_mult(normal, BIAS));
+			}
+			else if (type == 4)
+			{
+				color = &scene->object.cone;
+				normal = vec_minus(intersection, scene->object.cone_pos);
+				normal.y = 0.0f;
+				normal = normalize(normal);
+				normal = vec_mult(normal, scene->object.cone_height / scene->object.cone_radius);
+				normal.y = scene->object.cone_radius / scene->object.cone_height;
+				intersection = vec_plus(intersection, vec_mult(normal, BIAS));
+			}
+			int	shadow;
+			if (closest > 0.0f)
+			{
+				shadow = 0;
+//					intersection = vec_plus(scene->camera.pos, direction, closest));
+				direction = vec_minus(scene->light->pos, intersection);
+				direction = normalize(direction);
+				if (tp == 3)
+				{
+					printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", closest, intersection.x, intersection.y, intersection.z);
+						tp = 4;
+				}
+				if (type)
+				{
+					if (plane_intersect(scene, vec_minus(scene->object.plane_orig, intersection), direction, scene->object.plane_normal, &temp))
+					{
+						shadow = 1;
+						data->map.ptr[y][x] = 0;	
+					}
+				}
+				if (type)
+				{
+					if (sphere_intersect(scene, vec_minus(intersection, scene->obj->pos), direction, scene->obj->radius2, &temp))
+					{
+						if (tp == 4 && temp < 2)
+						{
+							printf("shadow intersect = %f\nintersection.x = %f\nintersection.y = %f\nintersection.z = %f\n", temp, intersection.x, intersection.y, intersection.z);
+							tp = 12;
+						}
+						shadow = 0;
+						data->map.ptr[y][x] = 0;
+					}
+				}
+				if (!shadow)
+					norm_dot_color(data, scene, intersection, x, y, *color, normal);
+//						angle_color(data, scene, intersection, x, y, *color, normal);
+			}
+			else
+				data->map.ptr[y][x] = 0x222222;
+			x++;
+		}
+		y++;
 	}
 }
-
+*/
 				/*
 				length = sqrt(pow(temp.x, 2) + pow(temp.y, 2));
 				direction.x = temp.x/length;

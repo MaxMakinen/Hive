@@ -45,10 +45,13 @@ typedef union u_rgb
 
 enum e_type
 {
-	sphere,
-	plane,
-	cylinder,
-	cone
+	e_none,
+	e_camera,
+	e_light,
+	e_sphere,
+	e_plane,
+	e_cylinder,
+	e_cone
 };
 
 typedef	struct s_map
@@ -97,6 +100,7 @@ typedef struct s_obj
 	float			radius;
 	float			radius2;
 	float			height;
+	float			brightness;
 	struct s_obj	*next;
 }	t_obj;
 
@@ -169,6 +173,8 @@ typedef struct s_data
 	t_map		map;
 }	t_data;
 
+void	render_scene(t_scene *scene, t_data *data);
+
 void	make_image(t_scene *scene, t_data *data);
 void	exit_error(char *str);
 void	init_data(t_data *data, t_scene *scene);
@@ -196,7 +202,7 @@ double	dot_product(t_vec3f vec1, t_vec3f vec2);
 
 void	angle_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal);
 void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y);
-void	norm_dot_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y, t_rgb color, t_vec3f normal);
+void	norm_dot_color(t_data *data, t_vec3f *light, t_vec3f hit_pos, int x, int y, t_rgb color, t_vec3f normal);
 
 int	read_input(t_scene *scene, const char *file_name);
 int	ft_bit(int step);
