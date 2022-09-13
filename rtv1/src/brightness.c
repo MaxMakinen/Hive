@@ -68,8 +68,8 @@ void	norm_dot_color(t_data *data, t_vec3f *light, t_vec3f intersection, int x, i
 	double		angle;
 
 	lightpos = vec_minus(*light, intersection);
-	normal = normalize(normal);
-	lightdir = normalize(*light);
+	//normal = normalize(normal);
+	lightdir = normalize(lightpos);
 	angle = dot_product(normal, lightdir);
 	if (angle < 0.01f)
 		angle = -1;

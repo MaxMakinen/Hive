@@ -196,24 +196,6 @@ int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float ra
 		}
 	}
 	return (TRUE);
-
-/*	
-	discriminant = b * b - 4.0f * a * c;
-	if (discriminant >= 0.0f)
-	{
-		*t0 = (-b - sqrtf(discriminant)) / (2.0f * a);
-		if (discriminant > 0.0f)
-			t1 = (-b + sqrtf(discriminant)) / (2.0f * a);
-		if (*t0 <= 0.0f)
-		{
-			*t0 = t1;
-			if (*t0 <= 0.0f)
-				return(FALSE);
-		}
-		return (*t0);
-	}
-	return (FALSE);
-*/	
 }
 
 t_vec3f	get_direction(t_data *data, float x, float y)
