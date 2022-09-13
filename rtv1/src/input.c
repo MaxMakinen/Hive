@@ -18,6 +18,8 @@
 #define OBJECT 4
 #define SPHERE 5
 #define PLANE 6
+#define CYLINDER 7
+#define CONE 8
 
 int	open_file(int *fd, const char *filename)
 {
@@ -328,7 +330,20 @@ void	parse(t_scene *scene, const int fd)
 					printf("flags plane= %d\n", flags);
 					continue;
 				}
-			}
+				else if (ft_strncmp(words[0], "cylinder", 6) == 0)
+				{
+					flags |= ft_bit(CYLINDER);
+					temp->type = e_cylinder;
+					printf("flags cylinder= %d\n", flags);
+					continue;
+				}
+				else if (ft_strncmp(words[0], "cone", 6) == 0)
+				{
+					flags |= ft_bit(CONE);
+					temp->type = e_cone;
+					printf("flags cone= %d\n", flags);
+					continue;
+				}			}
 			if (*words && temp)
 			{
 				if (words[0][0] != '-')

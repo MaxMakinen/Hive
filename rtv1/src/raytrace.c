@@ -70,10 +70,11 @@ int	quadratic_formula(float a, float b, float c, float *t0, float *t1)
 	//b = 2.0f * (origin.x * direction.x + origin.y * direction.y + origin.z * direction.z);
 	//c = origin.x * origin.x + origin.y * origin.y + origin.z * origin.z - object->radius2;
 
-int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *intersect)
+int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *intersect, float *t1)
 {
 	float	denominator;
 
+	*t1 = 0.0f;
 	denominator = dot_product(normal, direction);
 	if (fabs(denominator) > 0.000001f)
 	{
@@ -84,12 +85,11 @@ int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f n
 	return (FALSE);
 }
 
-int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0)
+int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1)
 {
 	float		a;
 	float		b;
 	float		c;
-	float		*t1;
 	double		dir;
 	double		orig;
 	t_vec3f		normal;
@@ -122,12 +122,11 @@ int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *obj
 	return (TRUE);
 }
 
-int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0)
+int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1)
 {
 	float		a;
 	float		b;
 	float		c;
-	float		*t1;
 	double		dir;
 	double		orig;
 	t_vec3f		normal;
@@ -174,12 +173,11 @@ int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj 
 }
 
 /*MAKE FUNCTION FOR QUADRTIC FORMULA! many intersect formulas use it*/
-int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0)
+int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0, float *t1)
 {
 	float		a;
 	float		b;
 	float		c;
-	float		*t1;
 
 	a = dot_product(direction, direction);
 	b = 2.0f * dot_product(origin, direction);
@@ -229,31 +227,30 @@ t_vec3f	get_direction(t_data *data, float x, float y)
 	return (direction);
 }
 
-float	check_intersect(t_scene *scene, t_obj *obj, t_obj *camera, t_vec3f *direction, float *temp)
+int	check_intersect(t_scene *scene, t_obj *obj, t_obj *camera, t_vec3f *direction, float *temp, float *t1)
 {
 
-	*temp = 0.0f;
 	if (obj->type == e_sphere)
 	{
-		if(!(sphere_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj->radius2, temp)))
-			return (0.0f);
+		if(!(sphere_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj->radius2, temp, t1)))
+			return (FALSE);
 	}
-	if (obj->type == e_plane)
+	else if (obj->type == e_plane)
 	{
-		if(!(plane_intersect(scene, vec_minus(obj->pos, camera->pos), *direction, obj->dir, temp)))
-			return (0.0f);
+		if(!(plane_intersect(scene, vec_minus(obj->pos, camera->pos), *direction, obj->dir, temp, t1)))
+			return (FALSE);
 	}
-	if (obj->type == e_cylinder)
+	else if (obj->type == e_cylinder)
 	{
-		if(!(cylinder_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj, temp)))
-			return (0.0f);
+		if(!(cylinder_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj, temp, t1)))
+			return (FALSE);
 	}
-	if (obj->type == e_cone)
+	else if (obj->type == e_cone)
 	{
-		if(!(cone_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj, temp)))
-			return (0.0f);
+		if(!(cone_intersect(scene, vec_minus(camera->pos, obj->pos), *direction, obj, temp, t1)))
+			return (FALSE);
 	}
-	return (*temp);
+	return (TRUE);
 }
 
 t_vec3f	get_normal(t_obj *object, t_vec3f *intersection)
@@ -298,7 +295,8 @@ void	render_scene(t_scene *scene, t_data *data)
 	t_vec3f		direction;
 	t_vec3f		intersection;
 	float		closest;
-	float		temp;
+	float		t0;
+	float		t1;
 	t_obj		*camera;
 	t_obj		*light;
 	t_obj		*object;
@@ -308,6 +306,7 @@ void	render_scene(t_scene *scene, t_data *data)
 	while (camera->type != e_camera)
 		camera = camera->next;
 	light = scene->obj;
+	//MAKE LIGHT LINKED LISTT IN STRUCT
 	while (light->type != e_light)
 		light = light->next;
 	object = scene->obj;
@@ -320,20 +319,23 @@ void	render_scene(t_scene *scene, t_data *data)
 		{
 			closest = 0.0f;
 			direction = get_direction(data, (float)x, (float)y);
-			while (object)
+			while (object != NULL && object)
 			{
 				if (object->type > e_light)
 				{
-					if (check_intersect(scene, object, camera, &direction, &temp))
+					if (check_intersect(scene, object, camera, &direction, &t0, &t1))
 					{
-						if (temp < closest || closest == 0.0f || temp == 0.0f)
+						if (t0 < closest || closest == 0.0f || t0 == 0.0f)
 						{
-							closest = temp;
+							closest = t0;
 							closest_obj = object;
 						}
 					}
 				}
-				object = object->next;
+				if (object->next != NULL)
+					object = object->next;
+				else
+					break;
 			}
 			object = scene->obj;
 			intersection = get_intersect(camera->pos, direction, closest);

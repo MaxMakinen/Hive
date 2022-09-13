@@ -188,8 +188,8 @@ int	render(t_data *data);
 
 void	clean_exit(t_data *data);
 
-int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0);
-int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *intersect);
+int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0, float *t1);
+int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *t0, float *t1);
 
 t_vec3f	vec_mult(t_vec3f vec1, float mult);
 t_vec3f	vec_minus(t_vec3f vec1, t_vec3f vec2);

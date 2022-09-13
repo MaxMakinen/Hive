@@ -1,15 +1,26 @@
 camera
-- pos 0.0 3.0 30.0
+- pos 0.0 30.0 300.0
 - dir 0.0 0.0 -1.0
 
 light
-- pos -40.0 10.0 -10.0
+- pos -20.0 50.0 20.0
 
 sphere
-- radius 5.0
+- radius 10.0
 - color 0xff00ff
 
 sphere
-- pos 10.0 0.0 -15.0
-- radius 8.0
+- pos 30.0 0.0 -50.0
+- radius 20.0
 - color 0xffff00
+
+plane
+- pos 0.0 -5.0 0.0
+- dir 0.0 1.0 0.0
+- color 0x00ffff
+
+cylinder
+- pos 0.0 50.0 -50.0
+- dir 0.0 1.0 0.0
+- color 0x8866ff
+- radius 15.0
