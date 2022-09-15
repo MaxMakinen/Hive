@@ -209,6 +209,19 @@ t_vec3f	get_direction(t_data *data, float x, float y)
 	return (direction);
 }
 
+t_vec3f	get_direction2(t_data *data, float x, float y, t_scene *scene)
+{
+	t_vec3f	direction;
+
+	x /= (data->screen_max.x - 1.0);
+	y /= (data->screen_max.y - 1.0);
+//	return ray(origin, lower_left_corner + s*horizontal + t*vertical - origin);
+	direction = vec_minus(vec_plus(vec_plus(scene->top_left, vec_mult(scene->horizontal, x)), \
+	vec_mult(scene->vertical, y)), scene->cam->dir);
+//	direction = normalize(direction);
+	return (direction);
+}
+
 int	check_intersect(t_scene *scene, t_obj *obj, t_obj *camera, t_vec3f *direction, float *temp, float *t1)
 {
 
@@ -300,7 +313,8 @@ void	render_scene(t_scene *scene, t_data *data)
 		while (x < data->screen_max.x)
 		{
 			closest = 0.0f;
-			direction = get_direction(data, (float)x, (float)y);
+//			direction = get_direction(data, (float)x, (float)y);
+			direction = get_direction2(data, (float)x, (float)y, scene);
 			while (object != NULL && object)
 			{
 				if (object->type > e_light)

@@ -22,6 +22,17 @@ double	vec_len(t_vec3f vec)
 	return (sqrt(dot_product(vec, vec)));
 }
 
+t_vec3f	unit_vec(t_vec3f vec)
+{
+	double	magnitude;
+
+	magnitude = vec_len(vec);
+	vec.x /= magnitude;
+	vec.y /= magnitude;
+	vec.z /= magnitude;
+	return (vec);
+}
+
 t_vec3f	normalize(t_vec3f vec)
 {
 	double	magnitude;

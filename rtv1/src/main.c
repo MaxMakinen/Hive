@@ -139,9 +139,15 @@ void	print_scene(t_scene *scene)
 	ft_putendl(scene->name);
 	ft_putstr("camera pos : \n");
 	print_vec(&scene->camera.pos);
-	ft_putstr("camera dir : \n");
+	ft_putstr("amera dir : \n");
 	print_vec(&scene->camera.dir);
 	ft_putstr("\nlight pos : \n");
+	printf("\n	Horizontal :\n");
+	print_vec(&scene->horizontal);
+	printf("\n	Vertical :\n");
+	print_vec(&scene->vertical);
+	printf("\n	Top_left :\n");
+	print_vec(&scene->top_left);
 	if (scene->light)
 	{
 		print_vec(&scene->light->pos);
@@ -191,7 +197,7 @@ int	main(int ac, char **av)
 	render_scene(&scene, &data);
 	//make_image(&scene, &data);
 	draw(&data);
-//	print_scene(&scene);
+	print_scene(&scene);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, \
 			data.img->mlx_img, 0, 0);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);

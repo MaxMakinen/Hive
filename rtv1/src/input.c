@@ -361,6 +361,10 @@ void	parse(t_scene *scene, const int fd)
 				{
 					get_vector(&temp->pos, &words[2]);
 				}
+				else if (ft_strncmp(words[1], "up", 3) == 0)
+				{
+					get_vector(&temp->up, &words[2]);
+				}
 				else if (ft_strncmp(words[1], "dir", 3) == 0)
 				{
 					get_vector(&temp->dir, &words[2]);

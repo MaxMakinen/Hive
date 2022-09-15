@@ -90,12 +90,21 @@ typedef	struct s_mat44f
 	t_vec4f translate;
 }	t_mat44f;
 
+//A STRUCT FOR THE RAY INFORMATION --- IS IT ANY USE?
+typedef struct s_ray
+{
+	t_vec3f	pos;
+	t_vec3f	dir;
+}	t_ray;
+
 typedef struct s_obj
 {
 	char			*name;
 	enum e_type		type;
 	t_vec3f			pos;
 	t_vec3f			dir;
+	t_vec3f			up;
+	t_vec3f			right;
 	t_rgb			color;
 	float			radius;
 	float			radius2;
@@ -145,9 +154,15 @@ typedef	struct s_scene
 	char		*name;
 	t_camera	camera;
 	t_mat44f	camera_to_world;
+	t_vec3f		horizontal;
+	t_vec3f		vertical;
+	t_vec3f		top_left;
+	double		view_height;
+	double		view_width;
 	t_light		*light;
 	t_object	object;
 	t_obj		*obj;
+	t_obj		*cam;
 	int			max_objects;
 }	t_scene;
 
@@ -197,6 +212,7 @@ t_vec3f	vec_plus(t_vec3f vec1, t_vec3f vec2);
 float	get_angle(t_vec3f vec1, t_vec3f vec2);
 t_vec3f	cross_product(t_vec3f vec1, t_vec3f vec2);
 t_vec3f	normalize(t_vec3f vec);
+t_vec3f	unit_vec(t_vec3f vec);
 double	vec_len(t_vec3f vec);
 double	dot_product(t_vec3f vec1, t_vec3f vec2);
 
