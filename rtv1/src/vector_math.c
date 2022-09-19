@@ -87,3 +87,8 @@ t_vec3f	vec_mult(t_vec3f vec1, float mult)
 	vec1.z *= mult;
 	return (vec1);
 }
+
+t_vec3f vec_div(t_vec3f vec, double div)
+{
+	return(vec_mult(vec, 1/div));
+}

@@ -146,8 +146,8 @@ void	print_scene(t_scene *scene)
 	print_vec(&scene->horizontal);
 	printf("\n	Vertical :\n");
 	print_vec(&scene->vertical);
-	printf("\n	Top_left :\n");
-	print_vec(&scene->top_left);
+	printf("\n	Lower_left :\n");
+	print_vec(&scene->lower_left);
 	if (scene->light)
 	{
 		print_vec(&scene->light->pos);
@@ -157,7 +157,7 @@ void	print_scene(t_scene *scene)
 	else
 		printf("no light\n");
 	if (scene->obj == NULL)
-		printf("\nno obj\n");
+		printf("\nno obj\n");/*
 	while (scene->obj != NULL)
 	{
 	//	printf("name = %s\n", scene->obj->name);
@@ -177,7 +177,7 @@ void	print_scene(t_scene *scene)
 			scene->obj = scene->obj->next;
 		else
 			break;
-	}
+	}*/
 }
 
 int	main(int ac, char **av)

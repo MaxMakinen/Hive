@@ -323,21 +323,21 @@ void	parse(t_scene *scene, const int fd)
 					printf("flags sphere= %d\n", flags);
 					continue;
 				}
-				else if (ft_strncmp(words[0], "plane", 6) == 0)
+				else if (ft_strncmp(words[0], "plane", 5) == 0)
 				{
 					flags |= ft_bit(PLANE);
 					temp->type = e_plane;
 					printf("flags plane= %d\n", flags);
 					continue;
 				}
-				else if (ft_strncmp(words[0], "cylinder", 6) == 0)
+				else if (ft_strncmp(words[0], "cylinder", 8) == 0)
 				{
 					flags |= ft_bit(CYLINDER);
 					temp->type = e_cylinder;
 					printf("flags cylinder= %d\n", flags);
 					continue;
 				}
-				else if (ft_strncmp(words[0], "cone", 6) == 0)
+				else if (ft_strncmp(words[0], "cone", 4) == 0)
 				{
 					flags |= ft_bit(CONE);
 					temp->type = e_cone;

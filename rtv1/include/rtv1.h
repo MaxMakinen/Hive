@@ -101,6 +101,7 @@ typedef struct s_obj
 {
 	char			*name;
 	enum e_type		type;
+	double			vfov;
 	t_vec3f			pos;
 	t_vec3f			dir;
 	t_vec3f			up;
@@ -156,9 +157,10 @@ typedef	struct s_scene
 	t_mat44f	camera_to_world;
 	t_vec3f		horizontal;
 	t_vec3f		vertical;
-	t_vec3f		top_left;
+	t_vec3f		lower_left;
 	double		view_height;
 	double		view_width;
+//	int			samples_per_pixel;
 	t_light		*light;
 	t_object	object;
 	t_obj		*obj;
@@ -181,9 +183,9 @@ typedef struct s_data
 	void		*win_ptr;
 	t_vec3i		screen_min;
 	t_vec3i		screen_max;
-	float		aspect_ratio;
-	float		fov;
-	float		scale;
+	double		aspect_ratio;
+	double		fov;
+	double		scale;
 	t_img		*img;
 	t_map		map;
 }	t_data;
@@ -207,6 +209,7 @@ int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float ra
 int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *t0, float *t1);
 
 t_vec3f	vec_mult(t_vec3f vec1, float mult);
+t_vec3f vec_div(t_vec3f vec, double div);
 t_vec3f	vec_minus(t_vec3f vec1, t_vec3f vec2);
 t_vec3f	vec_plus(t_vec3f vec1, t_vec3f vec2);
 float	get_angle(t_vec3f vec1, t_vec3f vec2);
@@ -222,6 +225,7 @@ void	norm_dot_color(t_data *data, t_vec3f *light, t_vec3f hit_pos, int x, int y,
 
 int	read_input(t_scene *scene, const char *file_name);
 int	ft_bit(int step);
+double  ft_clamp(double num, double min, double max);
 t_obj	*init_object(t_scene *scene);
 
 

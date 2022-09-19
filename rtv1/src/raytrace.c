@@ -215,10 +215,8 @@ t_vec3f	get_direction2(t_data *data, float x, float y, t_scene *scene)
 
 	x /= (data->screen_max.x - 1.0);
 	y /= (data->screen_max.y - 1.0);
-//	return ray(origin, lower_left_corner + s*horizontal + t*vertical - origin);
-	direction = vec_minus(vec_plus(vec_plus(scene->top_left, vec_mult(scene->horizontal, x)), \
-	vec_mult(scene->vertical, y)), scene->cam->dir);
-//	direction = normalize(direction);
+	direction = vec_minus(vec_plus(vec_plus(scene->lower_left, vec_mult(scene->horizontal, x)), \
+	vec_mult(scene->vertical, y)), scene->cam->pos);
 	return (direction);
 }
 
@@ -289,6 +287,7 @@ void	render_scene(t_scene *scene, t_data *data)
 	int			y;
 	t_vec3f		direction;
 	t_vec3f		intersection;
+	t_vec3f		color;
 	float		closest;
 	float		t0;
 	float		t1;
@@ -313,6 +312,7 @@ void	render_scene(t_scene *scene, t_data *data)
 		while (x < data->screen_max.x)
 		{
 			closest = 0.0f;
+			color = (t_vec3f){0.0, 0.0, 0.0};
 //			direction = get_direction(data, (float)x, (float)y);
 			direction = get_direction2(data, (float)x, (float)y, scene);
 			while (object != NULL && object)
@@ -333,6 +333,7 @@ void	render_scene(t_scene *scene, t_data *data)
 				else
 					break;
 			}
+			y = data->screen_max.y - y - 1;
 			object = scene->obj;
 			intersection = get_intersect(camera->pos, direction, closest);
 			if (closest > 0.0f)

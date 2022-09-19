@@ -11,44 +11,12 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-/*
-void	init_object(t_object *object)
+
+double	degrees_to_rad(double degrees)
 {
-	object->sphere_pos.x = -15.0f;
-	object->sphere_pos.y = 5.0f;
-	object->sphere_pos.z = -45.0f;
-	object->cylinder_pos.x = -30.0f;
-	object->cylinder_pos.y = 0.0f;
-	object->cylinder_pos.z = -40.0f;
-	object->plane_orig.x = 0.0f;
-	object->plane_orig.y = -10.0f;
-	object->plane_orig.z = 0.0f;
-	object->cone_pos.x = 6.0f;
-	object->cone_pos.y = 10.0f;
-	object->cone_pos.z = -30.0f;
-	object->plane_normal.x = 0.0f;
-	object->plane_normal.y = 1.0f;
-	object->plane_normal.z = 0.0f;
-	object->cylinder_normal.x = 0.0f;
-	object->cylinder_normal.y = 1.0f;
-	object->cylinder_normal.z = 0.0f;
-	object->cone_normal.x = 0.0f;
-	object->cone_normal.y = 1.0f;
-	object->cone_normal.z = 0.0f;
-	object->radius = 5.0f;
-	object->cylinder_radius = 3.0f;
-	object->cone_radius = 2.0f;
-	object->cone_height = 5.0f;
-	object->radius2 = object->radius * object->radius;
-	object->cylinder_radius2 = object->cylinder_radius * object->cylinder_radius;
-	object->cone_radius2 = object->cone_radius * object->cone_radius;
-	object->sphere.color = 0xff00ff;
-	object->plane.color = 0x00ffff;
-	object->cylinder.color = 0xffff00;
-	object->cone.color = 0x00ff00;
-	object->type = 1;
+	return (degrees * M_PI / 180.0);
 }
-*/
+
 void	init_map(t_map *map)
 {
 	int	*itemp;
@@ -66,10 +34,11 @@ void	init_map(t_map *map)
 	}
 }
 
-int init_camera(t_scene *scene)
+int init_camera(t_scene *scene, double vfov, double aspect_ratio)
 {
 	t_obj	*temp;
 	t_vec3f	unit_dir;
+	double vert_temp;
 
 	temp = scene->obj;
 	while (temp)
@@ -80,24 +49,59 @@ int init_camera(t_scene *scene)
 			return (FALSE);
 		temp = temp->next;
 	}
+	scene->cam = temp;
 	if (temp->up.x == 0.0 && temp->up.y == 0.0 && temp->up.z == 0.0)
 		temp->up = (t_vec3f){0.0, 1.0, 0.0};
-	unit_dir = unit_vec(temp->dir);
-	scene->cam = temp;
-	scene->horizontal = unit_vec(cross_product(temp->up, temp->dir));
-	scene->vertical = unit_vec(cross_product(temp->dir, temp->up));
-	scene->horizontal = vec_mult(scene->horizontal, scene->view_width);
-	scene->vertical = vec_mult(scene->vertical, scene->view_height);
-	//lower_left_corner = origin - horizontal/2 - vertical/2 - w;
-	scene->top_left = vec_minus(vec_minus(vec_minus(temp->pos, vec_mult(scene->horizontal, 0.5)), \
-	vec_mult(scene->vertical, 0.5)), temp->dir);
+	/*
+    public:
+        camera(
+            point3 lookfrom,
+            point3 lookat,
+            vec3   vup,
+            double vfov, // vertical field-of-view in degrees
+            double aspect_ratio
+        ) {
+            auto theta = degrees_to_radians(vfov);
+            auto h = tan(theta/2);
+            auto viewport_height = 2.0 * h;
+            auto viewport_width = aspect_ratio * viewport_height;
+
+            auto w = unit_vector(lookfrom - lookat);
+            auto u = unit_vector(cross(vup, w));
+            auto v = cross(w, u);
+
+            origin = lookfrom;
+            horizontal = viewport_width * u;
+            vertical = viewport_height * v;
+            lower_left_corner = origin - horizontal/2 - vertical/2 - w;
+	*/
+	vert_temp = degrees_to_rad(vfov);
+	vert_temp = tan(vert_temp/2.0);
+	scene->view_height = 2.0 * vert_temp;
+	scene->view_width = aspect_ratio * scene->view_height;
+
+	t_vec3f w, u, v, origin, horiz2, vert2;
+	origin = temp->pos;
+	w = normalize(vec_minus(temp->pos, temp->dir));
+	u = normalize(cross_product(temp->up, w));
+	v = cross_product(w, u);
+
+	scene->horizontal = (vec_mult(u, scene->view_width));
+	scene->vertical = (vec_mult(v, scene->view_height));
+	/*
+	scene->horizontal = (t_vec3f){scene->view_width, 0.0, 0.0};
+	scene->vertical = (t_vec3f){0.0, scene->view_height, 0.0};
+	*/
+	horiz2 = vec_mult(scene->horizontal, 0.5);
+	vert2 = vec_mult(scene->vertical, 0.5);
+//	scene->lower_left = vec_minus(vec_minus(vec_minus(origin, horiz2), vert2), w);
+
+	scene->lower_left = (vec_minus(vec_minus(vec_minus(temp->pos, vec_mult(scene->horizontal, 0.5)), \
+	vec_mult(scene->vertical, 0.5)), w));
+	
 	return (TRUE);
 }
 
-double	degrees_to_rad(double degrees)
-{
-	return (degrees * M_PI / 180.0);
-}
 
 void	init_data(t_data *data, t_scene *scene)
 {
@@ -107,22 +111,9 @@ void	init_data(t_data *data, t_scene *scene)
 	data->img = (t_img *)ft_calloc(sizeof(t_img), 1);
 	if (data->img == NULL)
 		exit_error("img init failed");
-	data->aspect_ratio = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;
+	data->aspect_ratio = (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT;
 	data->fov = 39.6f; //40 degrees works. Current number allegedly copied from blender.
 	data->scale = tan(((data->fov * 0.5f) * (M_PI / 180)));
-/*
-            double vfov, // vertical field-of-view in degrees
-            double aspect_ratio
-        ) {
-            auto theta = degrees_to_radians(vfov);
-            auto h = tan(theta/2);
-            auto viewport_height = 2.0 * h;
-            auto viewport_width = aspect_ratio * viewport_height;
-			*/
-	vert_temp = degrees_to_rad(40);
-	vert_temp = tan(vert_temp/2);
-	scene->view_height = 2 * vert_temp;
-	scene->view_width = data->aspect_ratio * scene->view_height;
 	data->screen_min.x = 0;
 	data->screen_min.y = 0;
 	data->screen_min.z = 0;
@@ -130,7 +121,7 @@ void	init_data(t_data *data, t_scene *scene)
 	data->screen_max.y = WINDOW_HEIGHT;
 	data->screen_max.z = 0;
 //	init_object(&scene->object);
-	if (!(init_camera(scene)))
+	if (!(init_camera(scene, 90.0, data->aspect_ratio)))
 		exit_error("camera init failed");
 	init_map(&data->map);
 }
