@@ -20,7 +20,8 @@ SRC_DIR =		src
 INC_DIR =		include
 OBJ_DIR =		obj
 SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
-				brightness.o vector_math.o input.o ft_bit.o ft_clamp.o
+				brightness.o vector_math.o input.o ft_bit.o ft_clamp.o ft_swapf.o\
+				cone_intersect.o cylinder_intersect.o sphere_intersect.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread

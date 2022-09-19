@@ -207,6 +207,8 @@ void	clean_exit(t_data *data);
 
 int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0, float *t1);
 int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *t0, float *t1);
+int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1);
+int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1);
 
 t_vec3f	vec_mult(t_vec3f vec1, float mult);
 t_vec3f vec_div(t_vec3f vec, double div);
@@ -218,6 +220,8 @@ t_vec3f	normalize(t_vec3f vec);
 t_vec3f	unit_vec(t_vec3f vec);
 double	vec_len(t_vec3f vec);
 double	dot_product(t_vec3f vec1, t_vec3f vec2);
+int	quadratic_formula(float a, float b, float c, float *t0, float *t1);
+
 
 void	angle_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal);
 void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y);
@@ -226,6 +230,7 @@ void	norm_dot_color(t_data *data, t_vec3f *light, t_vec3f hit_pos, int x, int y,
 int	read_input(t_scene *scene, const char *file_name);
 int	ft_bit(int step);
 double  ft_clamp(double num, double min, double max);
+void	ft_swapf(float *a, float *b);
 t_obj	*init_object(t_scene *scene);
 
 

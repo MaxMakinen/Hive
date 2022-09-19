@@ -9,7 +9,7 @@ light
 sphere
 - radius 3.0
 - pos 0.0 0.0 0.0
-- color 0xff00ff
+- color 0xf0f0f0
 
 sphere
 - pos 8.0 0.0 0.0

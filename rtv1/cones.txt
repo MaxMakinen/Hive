@@ -1,26 +1,30 @@
 camera
-- pos 0.0 0.0 60.0
+- pos 0.0 0.0 90.0
 - dir 0.0 0.0 0.0
 - up 0.0 1.0 0.0
 
 light
--pos 30.0 30.0 -80.0
+- pos 0.0 0.0 100.0
 
 cone
 - pos 0.0 0.0 0.0
-- dir 1.0 1.0 1.0
+- dir 0.0 1.0 1.0
 - height 5.0
-- radius 5.0
+- radius 2.0
 - color 0xff0000
 
 cone
-- pos 0.0 0.0 0.0
-- dir 0.0 1.0 0.0
+- pos 10.0 -5.0 -5.0
+- dir 1.0 1.0 0.0
+- height 5.0
+- radius 2.0
 - color 0x00ff00
 
 cone
-- pos 0.0 0.0 0.0
-- dir 0.0 0.0 1.0
+- pos -10.0 -5.0 -10.0
+- dir -1.0 1.0 0.0
+- height 5.0
+- radius 2.0
 - color 0x0000ff
 
 sphere

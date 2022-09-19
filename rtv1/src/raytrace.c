@@ -12,14 +12,6 @@
 
 #include "rtv1.h"
 
-void	ft_swapf(float *a, float *b)
-{
-	float c;
-
-	c = *a;
-	*a = *b;
-	*b = c;
-}
 
 t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, float distance)
 {
@@ -85,7 +77,7 @@ int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f n
 	return (FALSE);
 }
 
-int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1)
+int	cone_intersect_OLD(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1)
 {
 	float		a;
 	float		b;
@@ -122,7 +114,7 @@ int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *obj
 	return (TRUE);
 }
 
-int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1)
+int	cylinder_intersect_OLD(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1)
 {
 	float		a;
 	float		b;
@@ -173,7 +165,7 @@ int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj 
 }
 
 /*MAKE FUNCTION FOR QUADRTIC FORMULA! many intersect formulas use it*/
-int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0, float *t1)
+int	sphere_intersect_OLD(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0, float *t1)
 {
 	float		a;
 	float		b;
@@ -265,16 +257,19 @@ t_vec3f	get_normal(t_obj *object, t_vec3f *intersection)
 	{
 		normal = vec_minus(*intersection, object->pos);
 		normal = normalize(normal);
-		normal.y = 0.0f;
+		//normal.y = 0.0f;
 		*intersection = vec_plus(*intersection, vec_mult(normal, BIAS));
 	}
 	else if (object->type == e_cone)
 	{
+		double tempy;
+
 		normal = vec_minus(*intersection, object->pos);
-		normal.y = 0.0f;
+		//normal.y = 0.0f;
 		normal = normalize(normal);
+		tempy = normal.y * object->radius / object->height;
 		normal = vec_mult(normal, object->height / object->radius);
-		normal.y = object->radius / object->height;
+		normal.y = tempy;
 		*intersection = vec_plus(*intersection, vec_mult(normal, BIAS));
 	}
 	return (normal);
