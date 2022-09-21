@@ -241,6 +241,7 @@ int	check_intersect(t_scene *scene, t_obj *obj, t_obj *camera, t_vec3f *directio
 t_vec3f	get_normal(t_obj *object, t_vec3f *intersection)
 {
 	t_vec3f	normal;
+	t_vec3f	forward;
 
 	if (object->type == e_plane)
 	{
@@ -255,8 +256,10 @@ t_vec3f	get_normal(t_obj *object, t_vec3f *intersection)
 	}
 	else if (object->type == e_cylinder)
 	{
-		normal = vec_minus(*intersection, object->pos);
-		normal = normalize(normal);
+		normal = normalize(vec_minus(*intersection, object->pos));
+		forward = cross_product(normal, object->dir);
+		normal = cross_product(object->dir, forward);
+	//	normal = vec_mult(normal, -1.0);
 		//normal.y = 0.0f;
 		*intersection = vec_plus(*intersection, vec_mult(normal, BIAS));
 	}

@@ -15,11 +15,13 @@
 t_vec3f	mult_vec_matrix(t_vec3f vec, t_mat44f matrix)
 {
 	t_vec3f	new_vec;
+	double	w;
 
-	new_vec.x = vec.x * matrix.right.x + vec.y * matrix.up.x + vex.z * matrix.forward.x + matrix.translate.x;
-	new_vec.y = vec.x * matrix.right.y + vec.y * matrix.up.y + vex.z * matrix.forward.y + matrix.translate.y;
-	new_vec.z = vec.x * matrix.right.z + vec.y * matrix.up.z + vex.z * matrix.forward.z + matrix.translate.z;
-	}
+	new_vec.x = vec.x * matrix.right.x + vec.y * matrix.up.x + vec.z * matrix.forward.x + matrix.translate.x;
+	new_vec.y = vec.x * matrix.right.y + vec.y * matrix.up.y + vec.z * matrix.forward.y + matrix.translate.y;
+	new_vec.z = vec.x * matrix.right.z + vec.y * matrix.up.z + vec.z * matrix.forward.z + matrix.translate.z;
+	w = vec.x * matrix.right.w + vec.y * matrix.up.w + vec.z * matrix.forward.w + matrix.translate.w;
+	new_vec = vec_div(new_vec, w);
 	return (new_vec);
 }
 
@@ -27,20 +29,19 @@ t_vec3f	mult_dir_matrix(t_vec3f vec, t_mat44f matrix)
 {
 	t_vec3f	new_dir;
 
-	new_dir.x = vec.x * matrix.right.x + vec.y * matrix.up.x + vex.z * matrix.forward.x;
-	new_dir.y = vec.x * matrix.right.y + vec.y * matrix.up.y + vex.z * matrix.forward.y;
-	new_dir.z = vec.x * matrix.right.z + vec.y * matrix.up.z + vex.z * matrix.forward.z;
-	}
+	new_dir.x = vec.x * matrix.right.x + vec.y * matrix.up.x + vec.z * matrix.forward.x;
+	new_dir.y = vec.x * matrix.right.y + vec.y * matrix.up.y + vec.z * matrix.forward.y;
+	new_dir.z = vec.x * matrix.right.z + vec.y * matrix.up.z + vec.z * matrix.forward.z;
 	return (new_dir);
 }
 
 t_mat44f	invert_look_at(t_mat44f look)
 {
-	t_mat44f = matrix;
+	t_mat44f matrix;
 
-	matrix.forrward.x = look.forward.x;
-	matrix.forrward.y = look.right.x;
-	matrix.forrward.z = look.up.x;
+	matrix.forward.x = look.forward.x;
+	matrix.forward.y = look.right.x;
+	matrix.forward.z = look.up.x;
 	matrix.right.x = look.forward.y;
 	matrix.right.y = look.right.y;
 	matrix.right.z = look.up.y;
