@@ -1,20 +1,23 @@
 #include "rtv1.h"
 
-int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1)
+int	cylinder_intersect(t_scene *scene, t_ray *ray, t_obj *obj, double *t0, double *t1)
 {
-	float		a;
-	float		b;
-	float		c;
+	double		a;
+	double		b;
+	double		c;
 	double		dir;
 	double		orig;
 	t_vec3f		normal;
+	t_vec3f		origin;
 
-	normal = normalize(object->dir);
-	dir = dot_product(direction, normal);
+	origin = vec_minus(ray->orig, obj->pos);
+
+	normal = normalize(obj->dir);
+	dir = dot_product(ray->dir, normal);
 	orig = dot_product(origin, normal);
-	a = dot_product(direction, direction) - (dir * dir);
-	b = 2.0f * ((dot_product(direction, origin) - (dot_product(direction, normal) * orig)));
-	c = dot_product(origin, origin) - (orig * orig) - object->radius2;
+	a = dot_product(ray->dir, ray->dir) - (dir * dir);
+	b = 2.0f * ((dot_product(ray->dir, origin) - (dot_product(ray->dir, normal) * orig)));
+	c = dot_product(origin, origin) - (orig * orig) - obj->radius2;
 	
 	if (!quadratic_formula(a, b, c, t0, t1))
 		return (FALSE);

@@ -22,6 +22,11 @@ double	vec_len(t_vec3f vec)
 	return (sqrt(dot_product(vec, vec)));
 }
 
+int	vec_compare(t_vec3f vec1, t_vec3f vec2)
+{
+	return (vec1.x == vec2.x && vec1.y == vec2.y && vec1.z == vec2.z);
+}
+
 t_vec3f	unit_vec(t_vec3f vec)
 {
 	double	magnitude;
@@ -59,7 +64,7 @@ t_vec3f	cross_product(t_vec3f vec1, t_vec3f vec2)
 	return (answer);
 }
 
-float	get_angle(t_vec3f vec1, t_vec3f vec2)
+double	get_angle(t_vec3f vec1, t_vec3f vec2)
 {
 	return (acos(dot_product(vec1, vec2) / (vec_len(vec1) * vec_len(vec2))));
 }
@@ -80,7 +85,7 @@ t_vec3f	vec_minus(t_vec3f vec1, t_vec3f vec2)
 	return (vec1);
 }
 
-t_vec3f	vec_mult(t_vec3f vec1, float mult)
+t_vec3f	vec_mult(t_vec3f vec1, double mult)
 {
 	vec1.x *= mult;
 	vec1.y *= mult;

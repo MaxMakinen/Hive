@@ -1,7 +1,8 @@
 camera
-- pos 10.0 25.0 30.0
+- pos 20.0 60.0 30.0
 - dir 0.0 0.0 0.0
 - up 0.0 1.0 0.0
+- vfov 40
 
 light
 - pos -50.0 50.0 20.0
@@ -14,39 +15,40 @@ sphere
 sphere
 - pos 8.0 0.0 0.0
 - radius 3.0
+- dir 1.0 0.0 0.0
 - color 0xff0000
 
 sphere
 - pos 0.0 8.0 0.0
+- dir 0.0 1.0 0.0
 - radius 3.0
 - color 0x00ff00
 
 sphere
 - pos 0.0 0.0 8.0
+- dir 0.0 0.0 1.0
 - radius 3.0
 - color 0x0000ff
 
 sphere
 - pos 10.0 0.0 0.0
+- dir 1.0 0.0 0.0
 - radius 2.0
 - color 0xff0000
 
 sphere
 - pos 0.0 10.0 0.0
+- dir 0.0 1.0 0.0
 - radius 2.0
 - color 0x00ff00
 
 sphere
 - pos 0.0 0.0 10.0
+- dir 0.0 0.0 1.0
 - radius 2.0
 - color 0x0000ff
 
 plane
-- pos 0.0 -50.0 0.0
+- pos 0.0 -4.0 0.0
 - dir 0.0 1.0 0.0
 - color 0x00ffff
-
-cone
-- pos 0.0 0.0 0.0
-- dir 0.0 0.0 1.0
-- color 0xf0f0f0

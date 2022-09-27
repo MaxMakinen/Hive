@@ -21,7 +21,8 @@ INC_DIR =		include
 OBJ_DIR =		obj
 SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
 				brightness.o vector_math.o input.o ft_bit.o ft_clamp.o ft_swapf.o\
-				cone_intersect.o cylinder_intersect.o sphere_intersect.o
+				cone_intersect.o cylinder_intersect.o sphere_intersect.o quaternion.o\
+				get_surface.o plane.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread
@@ -32,7 +33,7 @@ OBJECTS =		$(addprefix $(OBJ_DIR)/, $(SRCS))
 all: $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) -c $(CFLAGS) -g -o $@ $< $(INCLUDES)
+	@$(CC) -c $(CFLAGS) -g -o $@ $< $(INCLUDES)
 
 $(NAME): $(OBJECTS) $(LIB)
 	$(CC) $(FLAGS) $(INCLUDES) -o $@ $^ $(MAC_LIBS)

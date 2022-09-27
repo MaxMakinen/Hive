@@ -42,9 +42,9 @@ int	close_file(int fd)
 	return (TRUE);
 }
 
-float	ft_atof(char *str)
+double	ft_atof(char *str)
 {
-	float	num;
+	double	num;
 	char	**temp;
 
 	num = 0.0f;
@@ -53,8 +53,8 @@ float	ft_atof(char *str)
 		temp = ft_strsplit(str, '.');
 		if (temp && *temp)
 		{
-			num = (float)ft_atoi(temp[1]) / powf(10.0f, (float)ft_strlen(temp[1]));
-			num += (float)ft_atoi(temp[0]);
+			num = (double)ft_atoi(temp[1]) / powf(10.0f, (double)ft_strlen(temp[1]));
+			num += (double)ft_atoi(temp[0]);
 		}
 	}
 	return (num);
@@ -62,20 +62,16 @@ float	ft_atof(char *str)
 
 int	get_vector(t_vec3f *vector, char **words)
 {
-	printf("get vec %s\n", words[0]);
 	vector->x = ft_atof(words[0]);
-	printf("vec x = %f\n", vector->x);
 	vector->y = ft_atof(words[1]);
-	printf("vec y = %f\n", vector->y);
 	vector->z = ft_atof(words[2]);
-	printf("vec z = %f\n", vector->z);
 
 	return (TRUE);
 }
 
-int get_float(float *num, char **words)
+int get_double(double *num, char **words)
 {
-	*num = (float)atof(words[1]);
+	*num = (double)atof(words[1]);
 	return (TRUE);
 }
 
@@ -145,9 +141,9 @@ int	get_object(t_scene *scene, char **words, int *flags)
 	else if (ft_strncmp(*words, "type", 10) == 0)
 		get_type(temp_obj, ++words);
 	else if (ft_strncmp(*words, "radius", 6) == 0)
-		get_float(&temp_obj->radius, ++words);
+		get_double(&temp_obj->radius, ++words);
 	else if (ft_strncmp(*words, "height", 10) == 0)
-		get_float(&temp_obj->height, ++words);
+		get_double(&temp_obj->height, ++words);
 	else if (ft_strncmp(*words, "origin", 6) == 0)
 		get_vector(&temp_obj->pos, ++words);
 	else if (ft_strncmp(*words, "direction", 9) == 0)
@@ -159,7 +155,6 @@ int	get_object(t_scene *scene, char **words, int *flags)
 
 int	get_camera(t_scene *scene, char **words, int *flags)
 {
-	printf("	CAMERA\n");
 	if (words[0][0] == '}')
 		*flags &= ~(ft_bit(CAMERA));
 //	else if (ft_strncmp(*words, "}", 1))
@@ -184,7 +179,6 @@ int	init_light(t_scene *scene)
 
 int	get_light(t_scene *scene, char **words, int *flags)
 {
-	printf("	LIGHT\n");
 	if (words[0][0] == '}')
 		*flags &= ~(ft_bit(LIGHT));
 	else if (ft_strncmp(*words, "light", 6) == 0)
@@ -247,8 +241,10 @@ t_obj	*init_obj(void)
 	new = ft_calloc(sizeof(t_obj), 1);
 	if (new)
 	{
+		ft_bzero(new, sizeof(new));
 		new->next = NULL;
 		new->name = NULL;
+		new->dir = (t_vec3f){0.0, 1.0, 0.0};
 	}
 	return (new);
 }
@@ -295,53 +291,44 @@ void	parse(t_scene *scene, const int fd)
 		}
 		if (line && *line)
 		{
-			printf("%s\n", line);
 			words = ft_strsplit(line, ' ');
 			if (words)
 			{
 				if (ft_strncmp(words[0], "camera", 6) == 0)
 				{
-					printf("word = %s\n", words[0]);
-					printf("flags = %d\n", flags);
 					flags |= ft_bit(CAMERA);
 					temp->type = e_camera;
-					printf("flags camera = %d\n", flags);
+					temp->vfov = VFOV;
 					continue;
 				}
 				else if (ft_strncmp(words[0], "light", 4) == 0)
 				{
 					flags |= ft_bit(LIGHT);
 					temp->type = e_light;
-					printf("word = %s\n", words[0]);
-					printf("flags light = %d\n", flags);
 					continue;
 				}
 				else if (ft_strncmp(words[0], "sphere", 6) == 0)
 				{
 					flags |= ft_bit(SPHERE);
 					temp->type = e_sphere;
-					printf("flags sphere= %d\n", flags);
 					continue;
 				}
 				else if (ft_strncmp(words[0], "plane", 5) == 0)
 				{
 					flags |= ft_bit(PLANE);
 					temp->type = e_plane;
-					printf("flags plane= %d\n", flags);
 					continue;
 				}
 				else if (ft_strncmp(words[0], "cylinder", 8) == 0)
 				{
 					flags |= ft_bit(CYLINDER);
 					temp->type = e_cylinder;
-					printf("flags cylinder= %d\n", flags);
 					continue;
 				}
 				else if (ft_strncmp(words[0], "cone", 4) == 0)
 				{
 					flags |= ft_bit(CONE);
 					temp->type = e_cone;
-					printf("flags cone= %d\n", flags);
 					continue;
 				}			}
 			if (*words && temp)
@@ -368,10 +355,16 @@ void	parse(t_scene *scene, const int fd)
 				else if (ft_strncmp(words[1], "dir", 3) == 0)
 				{
 					get_vector(&temp->dir, &words[2]);
+					temp->dir = normalize(temp->dir);
 				}
 				else if (ft_strncmp(words[1], "color", 5) == 0)
 				{
 					temp->color.color = ft_atoi(words[2]);
+				}
+				else if (ft_strncmp(words[1], "vfov", 5) == 0)
+				{
+				//	get_double(temp->vfov, words[2]);
+					temp->vfov = ft_atoi(words[2]);
 				}
 				else if (ft_strncmp(words[1], "radius", 6) == 0)
 				{

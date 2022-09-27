@@ -1,8 +1,8 @@
 #include "rtv1.h"
 
-void	ft_swapf(float *a, float *b)
+void	ft_swapf(double *a, double *b)
 {
-	float c;
+	double c;
 
 	c = *a;
 	*a = *b;

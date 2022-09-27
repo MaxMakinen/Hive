@@ -23,6 +23,9 @@
 # include "libft.h"
 # include "color.h"
 
+# include "vector.h"
+# include "quaternion.h"
+
 # if defined(__linux__)
 #  include "linux_keys.h"
 # else
@@ -34,6 +37,7 @@
 # define TRUE 1
 # define FALSE 0
 # define BIAS 1e-4
+# define VFOV 90
 
 typedef int	(*t_funcptr)();
 
@@ -54,33 +58,17 @@ enum e_type
 	e_cone
 };
 
+typedef struct s_ray
+{
+	t_vec3f	orig;
+	t_vec3f	dir;
+}	t_ray;
+
 typedef	struct s_map
 {
 	int	*pool;
 	int	**ptr;
 }	t_map;
-
-typedef	struct s_vec3i
-{
-	int	x;
-	int	y;
-	int	z;
-}	t_vec3i;
-
-typedef	struct s_vec3f
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_vec3f;
-
-typedef	struct s_vec4f
-{
-	float	x;
-	float	y;
-	float	z;
-	float	w;
-}	t_vec4f;
 
 typedef	struct s_mat44f
 {
@@ -89,13 +77,6 @@ typedef	struct s_mat44f
 	t_vec4f forward;
 	t_vec4f translate;
 }	t_mat44f;
-
-//A STRUCT FOR THE RAY INFORMATION --- IS IT ANY USE?
-typedef struct s_ray
-{
-	t_vec3f	pos;
-	t_vec3f	dir;
-}	t_ray;
 
 typedef struct s_obj
 {
@@ -107,35 +88,14 @@ typedef struct s_obj
 	t_vec3f			up;
 	t_vec3f			right;
 	t_rgb			color;
-	float			radius;
-	float			radius2;
-	float			height;
-	float			brightness;
+	double			radius;
+	double			radius2;
+	double			height;
+	double			brightness;
 	struct s_obj	*next;
 }	t_obj;
 
-typedef struct s_object
-{
-	t_vec3f	sphere_pos;
-	t_vec3f	cylinder_pos;
-	t_vec3f	plane_orig;
-	t_vec3f	cone_pos;
-	t_vec3f	plane_normal;
-	t_vec3f	cylinder_normal;
-	t_vec3f	cone_normal;
-	t_rgb	sphere;
-	t_rgb	plane;
-	t_rgb	cylinder;
-	t_rgb	cone;
-	int		type;
-	float	radius;
-	float	radius2;
-	float	cylinder_radius;
-	float	cylinder_radius2;
-	float	cone_radius;
-	float	cone_radius2;
-	float	cone_height;
-}	t_object;
+
 
 typedef	struct s_camera
 {
@@ -147,7 +107,7 @@ typedef	struct s_light
 {
 	t_vec3f	pos;
 	t_rgb	color;
-	float	brightness;
+	double	brightness;
 }	t_light;
 
 typedef	struct s_scene
@@ -162,7 +122,6 @@ typedef	struct s_scene
 	double		view_width;
 //	int			samples_per_pixel;
 	t_light		*light;
-	t_object	object;
 	t_obj		*obj;
 	t_obj		*cam;
 	int			max_objects;
@@ -188,7 +147,25 @@ typedef struct s_data
 	double		scale;
 	t_img		*img;
 	t_map		map;
+	int			flag;
 }	t_data;
+
+typedef struct s_pattern
+{
+	double	width;
+	double	height;
+	t_rgb	color1;
+	t_rgb	color2;
+}	t_pattern;
+
+typedef struct	s_hit
+{
+	t_vec3f	pos;
+	t_vec3f	normal;
+	t_vec2f	surface;
+	t_vec3f	rotated;
+	t_obj	*obj;
+}	t_hit;
 
 void	render_scene(t_scene *scene, t_data *data);
 
@@ -205,33 +182,29 @@ int	render(t_data *data);
 
 void	clean_exit(t_data *data);
 
-int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0, float *t1);
-int	plane_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_vec3f normal, float *t0, float *t1);
-int	cylinder_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1);
-int	cone_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, t_obj *object, float *t0, float *t1);
+int	check_intersect(t_scene *scene, t_obj *obj, t_ray *ray, double *temp, double *t1);
 
-t_vec3f	vec_mult(t_vec3f vec1, float mult);
-t_vec3f vec_div(t_vec3f vec, double div);
-t_vec3f	vec_minus(t_vec3f vec1, t_vec3f vec2);
-t_vec3f	vec_plus(t_vec3f vec1, t_vec3f vec2);
-float	get_angle(t_vec3f vec1, t_vec3f vec2);
-t_vec3f	cross_product(t_vec3f vec1, t_vec3f vec2);
-t_vec3f	normalize(t_vec3f vec);
-t_vec3f	unit_vec(t_vec3f vec);
-double	vec_len(t_vec3f vec);
-double	dot_product(t_vec3f vec1, t_vec3f vec2);
-int	quadratic_formula(float a, float b, float c, float *t0, float *t1);
+int	sphere_intersect(t_scene *scene, t_ray *ray, t_obj *obj, double *t0, double *t1);
+int	cylinder_intersect(t_scene *scene, t_ray *ray, t_obj *object, double *t0, double *t1);
+int	cone_intersect(t_scene *scene, t_ray *ray, t_obj *object, double *t0, double *t1);
+int	plane_intersect(t_scene *scene, t_ray *ray, t_obj *object, double *t0, double *t1);
+
+t_rgb	color_mult(t_rgb color, double num);
+
+t_hit	*get_normal(t_obj *object, t_hit *hit);
 
 
-void	angle_color(t_data *data, t_scene *scene, t_vec3f intersection, int x, int y, t_rgb color, t_vec3f normal);
-void	norm_color(t_data *data, t_scene *scene, t_vec3f hit_pos, int x, int y);
-void	norm_dot_color(t_data *data, t_vec3f *light, t_vec3f hit_pos, int x, int y, t_rgb color, t_vec3f normal);
+double	get_angle(t_vec3f vec1, t_vec3f vec2);
+int	quadratic_formula(double a, double b, double c, double *t0, double *t1);
+
+void	norm_dot_color(t_data *data, t_vec3f *light, int x, int y, t_hit *hit);
 
 int	read_input(t_scene *scene, const char *file_name);
 int	ft_bit(int step);
 double  ft_clamp(double num, double min, double max);
-void	ft_swapf(float *a, float *b);
+void	ft_swapf(double *a, double *b);
 t_obj	*init_object(t_scene *scene);
 
+int ft_floor(double num);
 
 #endif

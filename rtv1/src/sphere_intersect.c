@@ -1,15 +1,18 @@
 
 #include "rtv1.h"
 
-int	sphere_intersect(t_scene *scene, t_vec3f origin, t_vec3f direction, float radius2, float *t0, float *t1)
+int	sphere_intersect(t_scene *scene, t_ray *ray, t_obj *obj, double *t0, double *t1)
 {
-	float		a;
-	float		b;
-	float		c;
+	double		a;
+	double		b;
+	double		c;
+	t_vec3f		origin;
 
-	a = dot_product(direction, direction);
-	b = 2.0f * dot_product(origin, direction);
-	c = dot_product(origin, origin) - radius2;
+	origin = vec_minus(ray->orig, obj->pos);
+
+	a = dot_product(ray->dir, ray->dir);
+	b = 2.0f * dot_product(origin, ray->dir);
+	c = dot_product(origin, origin) - obj->radius2;
 	
 	if (!quadratic_formula(a, b, c, t0, t1))
 		return (FALSE);

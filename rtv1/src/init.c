@@ -34,7 +34,7 @@ void	init_map(t_map *map)
 	}
 }
 
-int init_camera(t_scene *scene, double vfov, double aspect_ratio)
+int init_camera(t_scene *scene, double aspect_ratio)
 {
 	t_obj	*temp;
 	t_vec3f	unit_dir;
@@ -75,26 +75,24 @@ int init_camera(t_scene *scene, double vfov, double aspect_ratio)
             vertical = viewport_height * v;
             lower_left_corner = origin - horizontal/2 - vertical/2 - w;
 	*/
-	vert_temp = degrees_to_rad(vfov);
-	vert_temp = tan(vert_temp/2.0);
-	scene->view_height = 2.0 * vert_temp;
+	vert_temp = degrees_to_rad(scene->cam->vfov / 2.0);
+	vert_temp = tan(vert_temp);
+	scene->view_height = vert_temp;
 	scene->view_width = aspect_ratio * scene->view_height;
 
 	t_vec3f w, u, v, origin, horiz2, vert2;
 	origin = temp->pos;
 	w = normalize(vec_minus(temp->pos, temp->dir));
+	if (vec_compare(w, temp->up))
+		w.z += 0.0000001;
 	u = normalize(cross_product(temp->up, w));
 	v = cross_product(w, u);
 
 	scene->horizontal = (vec_mult(u, scene->view_width));
 	scene->vertical = (vec_mult(v, scene->view_height));
-	/*
-	scene->horizontal = (t_vec3f){scene->view_width, 0.0, 0.0};
-	scene->vertical = (t_vec3f){0.0, scene->view_height, 0.0};
-	*/
+
 	horiz2 = vec_mult(scene->horizontal, 0.5);
 	vert2 = vec_mult(scene->vertical, 0.5);
-//	scene->lower_left = vec_minus(vec_minus(vec_minus(origin, horiz2), vert2), w);
 
 	scene->lower_left = (vec_minus(vec_minus(vec_minus(temp->pos, vec_mult(scene->horizontal, 0.5)), \
 	vec_mult(scene->vertical, 0.5)), w));
@@ -120,8 +118,9 @@ void	init_data(t_data *data, t_scene *scene)
 	data->screen_max.x = WINDOW_WIDTH;
 	data->screen_max.y = WINDOW_HEIGHT;
 	data->screen_max.z = 0;
+	data->flag = 0;
 //	init_object(&scene->object);
-	if (!(init_camera(scene, 90.0, data->aspect_ratio)))
+	if (!(init_camera(scene, data->aspect_ratio)))
 		exit_error("camera init failed");
 	init_map(&data->map);
 }
