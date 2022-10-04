@@ -1,0 +1,1 @@
+SELECT title, summary FROM film WHERE LOWER(film.summary) LIKE '%vincent%' ORDER BY id_film ASC;

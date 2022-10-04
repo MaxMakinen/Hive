@@ -1,0 +1,660 @@
+<!-- *********************************************************************** -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!-- mendeleev.html                                     :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!-- By: mmakinen <marvin@42.fr>                    +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!-- Created: 2022/09/27 10:45:16 by mmakinen          #+#    #+#            -->
+<!-- Updated: 2022/09/27 10:45:18 by mmakinen         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- *********************************************************************** -->
+
+<!DOCTYPE html>
+<HTML>
+    <HEAD>
+        <TITLE>Periodic Table</TITLE>
+        <STYLE>
+            .PERIODIC_TABLE {
+                width: 90%;
+                display: inline-grid;
+                grid-template-columns: repeat(18, auto);
+                grid-template-rows: repeat(9, auto);
+                background-color: #d7ffe1;
+                grid-auto-rows: 4.25fr;
+                padding: 1vw;
+                background-image: url(https://media.socastsrm.com/wordpress/wp-content/blogs.dir/2313/files/2020/06/yeah-science-1.jpg);
+            }
+            .CELL {  
+                position: relative;
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                font-size: 2vw;
+                text-align: center;
+                padding: 1vw 1vw 1vw;
+
+            }
+            .EMPTY_CELL {  
+                position: relative;
+                background-color: #d7ffe100;
+                border: 1px solid #d7ffe100;
+
+            }
+            .P_WEIGHT {
+                font-size: 0.5vw;
+                position: absolute;
+                right: 5;
+                bottom: 0;
+            }
+            .P_NUMBER {
+                position: absolute;
+                left: 5;
+                bottom: 0;
+                font-size: 0.5vw;
+            }
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <h1 STYLE="text-align: center;">Periodic Table</h1>
+ 
+        <DIV CLASS="PERIODIC_TABLE">
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>H</B>
+                <DIV><P CLASS="P_WEIGHT">1.008</P></DIV>
+                <DIV><P CLASS="P_NUMBER">1</P></DIV>
+            </DIV>
+            <DIV CLASS="EMPTY_CELL" STYLE="grid-column:2/18;"> </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>He</B>
+                <DIV><P CLASS="P_WEIGHT">1.008</P></DIV>
+                <DIV><P CLASS="P_NUMBER">2</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Li</B>
+                <DIV><P CLASS="P_WEIGHT">4.0026</P></DIV>
+                <DIV><P CLASS="P_NUMBER">3</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Be</B>
+                <DIV><P CLASS="P_WEIGHT">9.0122</P></DIV>
+                <DIV><P CLASS="P_NUMBER">4</P></DIV>
+            </DIV>
+            <DIV CLASS="EMPTY_CELL" STYLE="grid-column:3/13;"> </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>B</B>
+                <DIV><P CLASS="P_WEIGHT">10.810</P></DIV>
+                <DIV><P CLASS="P_NUMBER">5</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>C</B>
+                <DIV><P CLASS="P_WEIGHT">12.011</P></DIV>
+                <DIV><P CLASS="P_NUMBER">6</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>N</B>
+                <DIV><P CLASS="P_WEIGHT">14.007</P></DIV>
+                <DIV><P CLASS="P_NUMBER">7</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>O</B>
+                <DIV><P CLASS="P_WEIGHT">15.999</P></DIV>
+                <DIV><P CLASS="P_NUMBER">8</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>F</B>
+                <DIV><P CLASS="P_WEIGHT">18.998</P></DIV>
+                <DIV><P CLASS="P_NUMBER">9</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Ne</B>
+                <DIV><P CLASS="P_WEIGHT">20.180</P></DIV>
+                <DIV><P CLASS="P_NUMBER">10</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Na</B>
+                <DIV><P CLASS="P_WEIGHT">22.990</P></DIV>
+                <DIV><P CLASS="P_NUMBER">11</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Mg</B>
+                <DIV><P CLASS="P_WEIGHT">24.305</P></DIV>
+                <DIV><P CLASS="P_NUMBER">12</P></DIV>
+            </DIV>
+            <DIV CLASS="EMPTY_CELL" STYLE="grid-column:3/13;"> </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Al</B>
+                <DIV><P CLASS="P_WEIGHT">26.982</P></DIV>
+                <DIV><P CLASS="P_NUMBER">13</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Si</B>
+                <DIV><P CLASS="P_WEIGHT">28.085</P></DIV>
+                <DIV><P CLASS="P_NUMBER">14</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>P</B>
+                <DIV><P CLASS="P_WEIGHT">30.974</P></DIV>
+                <DIV><P CLASS="P_NUMBER">15</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>S</B>
+                <DIV><P CLASS="P_WEIGHT">32.060</P></DIV>
+                <DIV><P CLASS="P_NUMBER">16</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Cl</B>
+                <DIV><P CLASS="P_WEIGHT">35.450</P></DIV>
+                <DIV><P CLASS="P_NUMBER">17</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Ar</B>
+                <DIV><P CLASS="P_WEIGHT">29.950</P></DIV>
+                <DIV><P CLASS="P_NUMBER">18</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>K</B>
+                <DIV><P CLASS="P_WEIGHT">239.098</P></DIV>
+                <DIV><P CLASS="P_NUMBER">19</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Ca</B>
+                <DIV><P CLASS="P_WEIGHT">39.098</P></DIV>
+                <DIV><P CLASS="P_NUMBER">20</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Sc</B>
+                <DIV><P CLASS="P_WEIGHT">44.956</P></DIV>
+                <DIV><P CLASS="P_NUMBER">21</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Ti</B>
+                <DIV><P CLASS="P_WEIGHT">47.867</P></DIV>
+                <DIV><P CLASS="P_NUMBER">22</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>V</B>
+                <DIV><P CLASS="P_WEIGHT">50.942</P></DIV>
+                <DIV><P CLASS="P_NUMBER">23</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Cr</B>
+                <DIV><P CLASS="P_WEIGHT">51.996</P></DIV>
+                <DIV><P CLASS="P_NUMBER">24</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Mn</B>
+                <DIV><P CLASS="P_WEIGHT">54.938</P></DIV>
+                <DIV><P CLASS="P_NUMBER">25</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Fe</B>
+                <DIV><P CLASS="P_WEIGHT">55.845</P></DIV>
+                <DIV><P CLASS="P_NUMBER">26</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Co</B>
+                <DIV><P CLASS="P_WEIGHT">58.933</P></DIV>
+                <DIV><P CLASS="P_NUMBER">27</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Ni</B>
+                <DIV><P CLASS="P_WEIGHT">58.693</P></DIV>
+                <DIV><P CLASS="P_NUMBER">28</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Cu</B>
+                <DIV><P CLASS="P_WEIGHT">63.546</P></DIV>
+                <DIV><P CLASS="P_NUMBER">29</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.6);">
+                <B>Zn</B>
+                <DIV><P CLASS="P_WEIGHT">63.546</P></DIV>
+                <DIV><P CLASS="P_NUMBER">30</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Ga</B>
+                <DIV><P CLASS="P_WEIGHT">69.723</P></DIV>
+                <DIV><P CLASS="P_NUMBER">31</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Ge</B>
+                <DIV><P CLASS="P_WEIGHT">72.630</P></DIV>
+                <DIV><P CLASS="P_NUMBER">32</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>As</B>
+                <DIV><P CLASS="P_WEIGHT">74.922</P></DIV>
+                <DIV><P CLASS="P_NUMBER">33</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Se</B>
+                <DIV><P CLASS="P_WEIGHT">78.971</P></DIV>
+                <DIV><P CLASS="P_NUMBER">34</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Br</B>
+                <DIV><P CLASS="P_WEIGHT">79.904</P></DIV>
+                <DIV><P CLASS="P_NUMBER">35</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Kr</B>
+                <DIV><P CLASS="P_WEIGHT">83.798</P></DIV>
+                <DIV><P CLASS="P_NUMBER">36</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Rb</B>
+                <DIV><P CLASS="P_WEIGHT">85.468</P></DIV>
+                <DIV><P CLASS="P_NUMBER">37</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Sr</B>
+                <DIV><P CLASS="P_WEIGHT">87.620</P></DIV>
+                <DIV><P CLASS="P_NUMBER">38</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Y</B>
+                <DIV><P CLASS="P_WEIGHT">88.906</P></DIV>
+                <DIV><P CLASS="P_NUMBER">39</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Zr</B>
+                <DIV><P CLASS="P_WEIGHT">91.224</P></DIV>
+                <DIV><P CLASS="P_NUMBER">40</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Nb</B>
+                <DIV><P CLASS="P_WEIGHT">92.906</P></DIV>
+                <DIV><P CLASS="P_NUMBER">41</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Mo</B>
+                <DIV><P CLASS="P_WEIGHT">95.950</P></DIV>
+                <DIV><P CLASS="P_NUMBER">42</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Tc</B>
+                <DIV><P CLASS="P_WEIGHT">97</P></DIV>
+                <DIV><P CLASS="P_NUMBER">43</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Ru</B>
+                <DIV><P CLASS="P_WEIGHT">101.07</P></DIV>
+                <DIV><P CLASS="P_NUMBER">44</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Rh</B>
+                <DIV><P CLASS="P_WEIGHT">102.91</P></DIV>
+                <DIV><P CLASS="P_NUMBER">45</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Pd</B>
+                <DIV><P CLASS="P_WEIGHT">106.42</P></DIV>
+                <DIV><P CLASS="P_NUMBER">46</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Ag</B>
+                <DIV><P CLASS="P_WEIGHT">107.87</P></DIV>
+                <DIV><P CLASS="P_NUMBER">47</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Cd</B>
+                <DIV><P CLASS="P_WEIGHT">112.41</P></DIV>
+                <DIV><P CLASS="P_NUMBER">48</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>In</B>
+                <DIV><P CLASS="P_WEIGHT">114.82</P></DIV>
+                <DIV><P CLASS="P_NUMBER">49</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Sn</B>
+                <DIV><P CLASS="P_WEIGHT">118.71</P></DIV>
+                <DIV><P CLASS="P_NUMBER">50</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Sb</B>
+                <DIV><P CLASS="P_WEIGHT">121.76</P></DIV>
+                <DIV><P CLASS="P_NUMBER">51</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Te</B>
+                <DIV><P CLASS="P_WEIGHT">127.60</P></DIV>
+                <DIV><P CLASS="P_NUMBER">52</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>I</B>
+                <DIV><P CLASS="P_WEIGHT">126.90</P></DIV>
+                <DIV><P CLASS="P_NUMBER">53</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Xe</B>
+                <DIV><P CLASS="P_WEIGHT">131.29</P></DIV>
+                <DIV><P CLASS="P_NUMBER">54</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Cs</B>
+                <DIV><P CLASS="P_WEIGHT">132.91</P></DIV>
+                <DIV><P CLASS="P_NUMBER">55</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Ba</B>
+                <DIV><P CLASS="P_WEIGHT">137.33</P></DIV>
+                <DIV><P CLASS="P_NUMBER">56</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Lu</B>
+                <DIV><P CLASS="P_WEIGHT">174.97</P></DIV>
+                <DIV><P CLASS="P_NUMBER">71</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Hf</B>
+                <DIV><P CLASS="P_WEIGHT">178.49</P></DIV>
+                <DIV><P CLASS="P_NUMBER">72</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Ta</B>
+                <DIV><P CLASS="P_WEIGHT">180.95</P></DIV>
+                <DIV><P CLASS="P_NUMBER">73</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>W</B>
+                <DIV><P CLASS="P_WEIGHT">183.84</P></DIV>
+                <DIV><P CLASS="P_NUMBER">74</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Re</B>
+                <DIV><P CLASS="P_WEIGHT">186.21</P></DIV>
+                <DIV><P CLASS="P_NUMBER">75</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Os</B>
+                <DIV><P CLASS="P_WEIGHT">190.23</P></DIV>
+                <DIV><P CLASS="P_NUMBER">76</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Ir</B>
+                <DIV><P CLASS="P_WEIGHT">192.22</P></DIV>
+                <DIV><P CLASS="P_NUMBER">77</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Pt</B>
+                <DIV><P CLASS="P_WEIGHT">195.08</P></DIV>
+                <DIV><P CLASS="P_NUMBER">78</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Au</B>
+                <DIV><P CLASS="P_WEIGHT">196.97</P></DIV>
+                <DIV><P CLASS="P_NUMBER">79</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Hg</B>
+                <DIV><P CLASS="P_WEIGHT">200.59</P></DIV>
+                <DIV><P CLASS="P_NUMBER">80</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Ti</B>
+                <DIV><P CLASS="P_WEIGHT">204.38</P></DIV>
+                <DIV><P CLASS="P_NUMBER">81</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Pb</B>
+                <DIV><P CLASS="P_WEIGHT">207.20</P></DIV>
+                <DIV><P CLASS="P_NUMBER">82</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Bi</B>
+                <DIV><P CLASS="P_WEIGHT">208.98</P></DIV>
+                <DIV><P CLASS="P_NUMBER">83</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Po</B>
+                <DIV><P CLASS="P_WEIGHT">209</P></DIV>
+                <DIV><P CLASS="P_NUMBER">84</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>At</B>
+                <DIV><P CLASS="P_WEIGHT">210</P></DIV>
+                <DIV><P CLASS="P_NUMBER">85</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Rn</B>
+                <DIV><P CLASS="P_WEIGHT">222</P></DIV>
+                <DIV><P CLASS="P_NUMBER">86</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Fr</B>
+                <DIV><P CLASS="P_WEIGHT">223</P></DIV>
+                <DIV><P CLASS="P_NUMBER">87</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 100, 100, 0.7);">
+                <B>Ra</B>
+                <DIV><P CLASS="P_WEIGHT">226</P></DIV>
+                <DIV><P CLASS="P_NUMBER">88</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Lr</B>
+                <DIV><P CLASS="P_WEIGHT">266</P></DIV>
+                <DIV><P CLASS="P_NUMBER">103</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Rf</B>
+                <DIV><P CLASS="P_WEIGHT">267</P></DIV>
+                <DIV><P CLASS="P_NUMBER">104</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Db</B>
+                <DIV><P CLASS="P_WEIGHT">268</P></DIV>
+                <DIV><P CLASS="P_NUMBER">105</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Sg</B>
+                <DIV><P CLASS="P_WEIGHT">269</P></DIV>
+                <DIV><P CLASS="P_NUMBER">106</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Bh</B>
+                <DIV><P CLASS="P_WEIGHT">270</P></DIV>
+                <DIV><P CLASS="P_NUMBER">107</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Hs</B>
+                <DIV><P CLASS="P_WEIGHT">269</P></DIV>
+                <DIV><P CLASS="P_NUMBER">108</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Mt</B>
+                <DIV><P CLASS="P_WEIGHT">278</P></DIV>
+                <DIV><P CLASS="P_NUMBER">109</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Ds</B>
+                <DIV><P CLASS="P_WEIGHT">281</P></DIV>
+                <DIV><P CLASS="P_NUMBER">110</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Rg</B>
+                <DIV><P CLASS="P_WEIGHT">282</P></DIV>
+                <DIV><P CLASS="P_NUMBER">111</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 100, 255, 0.7);">
+                <B>Cn</B>
+                <DIV><P CLASS="P_WEIGHT">285</P></DIV>
+                <DIV><P CLASS="P_NUMBER">112</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Nh</B>
+                <DIV><P CLASS="P_WEIGHT">286</P></DIV>
+                <DIV><P CLASS="P_NUMBER">113</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Fl</B>
+                <DIV><P CLASS="P_WEIGHT">289</P></DIV>
+                <DIV><P CLASS="P_NUMBER">114</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Mc</B>
+                <DIV><P CLASS="P_WEIGHT">290</P></DIV>
+                <DIV><P CLASS="P_NUMBER">115</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Lv</B>
+                <DIV><P CLASS="P_WEIGHT">293</P></DIV>
+                <DIV><P CLASS="P_NUMBER">116</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Ts</B>
+                <DIV><P CLASS="P_WEIGHT">294</P></DIV>
+                <DIV><P CLASS="P_NUMBER">117</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(255, 255, 100, 0.7);">
+                <B>Og</B>
+                <DIV><P CLASS="P_WEIGHT">294</P></DIV>
+                <DIV><P CLASS="P_NUMBER">118</P></DIV>
+            </DIV>
+            <DIV CLASS="EMPTY_CELL" STYLE="grid-column:1/3;"> </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>La</B>
+                <DIV><P CLASS="P_WEIGHT">138.91</P></DIV>
+                <DIV><P CLASS="P_NUMBER">57</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Ce</B>
+                <DIV><P CLASS="P_WEIGHT">140.12</P></DIV>
+                <DIV><P CLASS="P_NUMBER">58</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Pr</B>
+                <DIV><P CLASS="P_WEIGHT">140.91</P></DIV>
+                <DIV><P CLASS="P_NUMBER">59</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Nd</B>
+                <DIV><P CLASS="P_WEIGHT">144.24</P></DIV>
+                <DIV><P CLASS="P_NUMBER">60</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Pm</B>
+                <DIV><P CLASS="P_WEIGHT">145</P></DIV>
+                <DIV><P CLASS="P_NUMBER">61</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Sm</B>
+                <DIV><P CLASS="P_WEIGHT">150.36</P></DIV>
+                <DIV><P CLASS="P_NUMBER">62</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Eu</B>
+                <DIV><P CLASS="P_WEIGHT">151.96</P></DIV>
+                <DIV><P CLASS="P_NUMBER">63</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Gd</B>
+                <DIV><P CLASS="P_WEIGHT">157.25</P></DIV>
+                <DIV><P CLASS="P_NUMBER">64</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Tb</B>
+                <DIV><P CLASS="P_WEIGHT">158.93</P></DIV>
+                <DIV><P CLASS="P_NUMBER">65</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Dy</B>
+                <DIV><P CLASS="P_WEIGHT">162.50</P></DIV>
+                <DIV><P CLASS="P_NUMBER">66</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Ho</B>
+                <DIV><P CLASS="P_WEIGHT">164.93</P></DIV>
+                <DIV><P CLASS="P_NUMBER">67</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Er</B>
+                <DIV><P CLASS="P_WEIGHT">167.26</P></DIV>
+                <DIV><P CLASS="P_NUMBER">68</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Tm</B>
+                <DIV><P CLASS="P_WEIGHT">168.93</P></DIV>
+                <DIV><P CLASS="P_NUMBER">69</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Yb</B>
+                <DIV><P CLASS="P_WEIGHT">173.05</P></DIV>
+                <DIV><P CLASS="P_NUMBER">70</P></DIV>
+            </DIV>
+            <DIV CLASS="EMPTY_CELL" STYLE="grid-column:17/19;"> </DIV>
+            <DIV CLASS="EMPTY_CELL" STYLE="grid-column:1/3;"> </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Ac</B>
+                <DIV><P CLASS="P_WEIGHT">227</P></DIV>
+                <DIV><P CLASS="P_NUMBER">89</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Th</B>
+                <DIV><P CLASS="P_WEIGHT">232.04</P></DIV>
+                <DIV><P CLASS="P_NUMBER">90</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Pa</B>
+                <DIV><P CLASS="P_WEIGHT">231.04</P></DIV>
+                <DIV><P CLASS="P_NUMBER">91</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>U</B>
+                <DIV><P CLASS="P_WEIGHT">238.03</P></DIV>
+                <DIV><P CLASS="P_NUMBER">92</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Np</B>
+                <DIV><P CLASS="P_WEIGHT">237</P></DIV>
+                <DIV><P CLASS="P_NUMBER">93</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Pu</B>
+                <DIV><P CLASS="P_WEIGHT">244</P></DIV>
+                <DIV><P CLASS="P_NUMBER">94</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Am</B>
+                <DIV><P CLASS="P_WEIGHT">243</P></DIV>
+                <DIV><P CLASS="P_NUMBER">95</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Cm</B>
+                <DIV><P CLASS="P_WEIGHT">247</P></DIV>
+                <DIV><P CLASS="P_NUMBER">96</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Bk</B>
+                <DIV><P CLASS="P_WEIGHT">247</P></DIV>
+                <DIV><P CLASS="P_NUMBER">97</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Cf</B>
+                <DIV><P CLASS="P_WEIGHT">251</P></DIV>
+                <DIV><P CLASS="P_NUMBER">98</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Es</B>
+                <DIV><P CLASS="P_WEIGHT">252</P></DIV>
+                <DIV><P CLASS="P_NUMBER">99</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Fm</B>
+                <DIV><P CLASS="P_WEIGHT">257</P></DIV>
+                <DIV><P CLASS="P_NUMBER">100</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>Md</B>
+                <DIV><P CLASS="P_WEIGHT">258</P></DIV>
+                <DIV><P CLASS="P_NUMBER">101</P></DIV>
+            </DIV>
+            <DIV CLASS="CELL" STYLE="background-color: rgba(100, 255, 100, 0.7);">
+                <B>No</B>
+                <DIV><P CLASS="P_WEIGHT">259</P></DIV>
+                <DIV><P CLASS="P_NUMBER">102</P></DIV>
+            </DIV>
+            <DIV CLASS="EMPTY_CELL" STYLE="grid-column:17/19;"> </DIV>
+        </DIV>
+    </BODY>
+</HTML>

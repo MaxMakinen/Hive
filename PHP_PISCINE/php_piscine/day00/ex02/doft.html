@@ -1,0 +1,59 @@
+<!-- *********************************************************************** -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!-- doft.html                                          :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!-- By: mmakinen <marvin@42.fr>                    +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!-- Created: 2022/09/27 11:01:59 by mmakinen          #+#    #+#            -->
+<!-- Updated: 2022/09/27 11:02:02 by mmakinen         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- *********************************************************************** -->
+
+
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>Day of the 42</TITLE>
+        <LINK rel="stylesheet" href="doft.css">
+    </HEAD>
+    <BODY>
+        <DIV class="container">
+            <HEADER class="box">
+                <IMG class="logo" src="resources/day_of_the_42.png" alt="42 logo">
+                <IMG class="loupe" src="resources/loupe.png" alt="magnifying glass">
+                <A href="http://www.relaischateaux.com"><IMG class="small_square close" src="resources/close.gif" alt="Disconnect" title="Disconnect"></A>
+                <A href="http://www.disney.com"><IMG class="small_square reload" src="resources/reload.png" alt="Start from the begnning" title="Start from the begnning"></A>
+            </HEADER>
+            <DIV class="box side_menu">
+                <IMG class="menu_img" src="resources/arrow.png" alt="move" title="move">
+                <IMG class="menu_img" src="resources/main.png" alt="take" title="take">
+                <IMG class="menu_img" src="resources/oeil.png" alt="look" title="look" style="border: 5px solid red;border-radius: 5px;">
+                <IMG class="menu_img" src="resources/outil.png" alt="use" title="use">
+                <IMG class="menu_img" src="resources/chat-icon.png" alt="speak" title="speak">
+            </DIV>
+            <DIV class="box main">
+                <IMG class="main_img" src="resources/cluster.jpg" alt="cluster" title="cluster" usemap="#cluster">
+                <MAP name="cluster">
+                    <AREA shape="rect" coords="330,327,414,466" href="http://www.ikea.com" alt="Ikea">
+                    <AREA shape="rect" coords="791,296,976,466" href="http://www.apple.com" alt="Apple">
+                    </MAP>
+                <DIV class="form" title="form">
+                    Vous <SPAN class="big">entrez</SPAN> alors dans une grande piece remplie<BR />
+                    d'<SPAN class="shadow">ordinateurs</SPAN>...<BR />
+                    <FORM>
+                        <label for="response" style="font-style:italic;">- Bonjour, vous êtes nouveau ici ?</label>
+                        <input type="text" id="response">
+                        <input type="submit" value="Repondre">
+                    </FORM>
+                </DIV>
+            </DIV>
+            <DIV class="box side_menu right_menu">
+                <IMG class="menu_img" src="resources/book.png" alt="book" title="book">
+                <IMG class="menu_img" src="resources/towel.png" alt="towel" title="towel">
+                <DIV class="brick" alt="brick" title="brick"></DIV>
+            </DIV>
+
+        </DIV>
+    </BODY>
+</HTML>
