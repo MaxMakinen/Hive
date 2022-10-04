@@ -1,0 +1,5 @@
+fractol
+a.out
+obj/
+*.o
+*.a
