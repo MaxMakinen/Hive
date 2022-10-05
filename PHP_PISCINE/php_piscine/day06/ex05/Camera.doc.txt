@@ -1,0 +1,24 @@
+
+<- Camera ----------------------------------------------------------------------
+The Camera class creates camera object that transforms vertices from worldspace
+to viewable coordinates.
+
+An instance can be constructed with an array with the key value pairs:
+array(
+'origin' => (Vertex)camera_position,
+'orientation' => (Matrix)rotation_matrix,
+'width' => (float)view_screen_width,
+'height' => (float)view_screen_height,
+'fov' => (float)field_of_view_in_degrees,
+'near' => (float)near_clipping_plane,
+'far' => (float)far_clipping_plane);
+
+A camera creates all necessary transformations and calculations to create
+the desired transormation matrix from the input.
+
+The class provides the following methods :
+
+Vertex watchVertex( Vertex $worldVertex );
+Transforms ”world” coordinates vertex into a ”screen” coordinates vertex (a
+pixel basically).
+---------------------------------------------------------------------- Camera ->

@@ -1,3 +1,14 @@
+
 <- Vertex ----------------------------------------------------------------------
-Your documentation here.
+The Vertex class handles points in space.
+
+An instance can be contructed from either an array of x, y, z, w and color(RGB) 
+values: 
+
+new Vertex( array( 'x' => 1.0, 'y' => 1.0, 'z' => 1.0, 'x' => 1.0, $Color)) 
+
+Or just x, y and z values where w is defaulted to 1 and the color to white.
+
+The class provides the following methods :
+Setters and getters for all values.
 ---------------------------------------------------------------------- Vertex ->

@@ -1,4 +1,6 @@
 <?PHP
+
+require_once 'Color.class.php';
 require_once 'Vertex.class.php';
 
 class Vector
@@ -34,11 +36,7 @@ class Vector
         return;
     }
     public function __toString() {
-        $str = sprintf( "Vector( x:%.2f, y:%.2f, z:%.2f, w:%.2f", $this->_x, $this->_y, $this->_z, $this->_w );
-        if ( self::$verbose === TRUE )
-#            $str = $str.", ".$this->_color->__toString();
-        return $str." )";
-
+        return sprintf( "Vector( x:%.2f, y:%.2f, z:%.2f, w:%.2f )", $this->_x, $this->_y, $this->_z, $this->_w );
     }
     public static function doc(){
         if ( file_exists( "Vector.doc.txt" ) ) {
@@ -47,24 +45,24 @@ class Vector
     }
 	public function __get($att) {
 		if ($att == '_x')
-			return $this->getX();
+			return $this->_getX();
 		if ($att == '_y')
-			return $this->getY();
+			return $this->_getY();
 		if ($att == '_z')
-			return $this->getZ();
+			return $this->_getZ();
 		if ($att == '_w')
-			return $this->getW();
+			return $this->_getW();
 	}
-	private	 function getX() {
+	private	 function _getX() {
 		return $this->_x;
 	}
-	private function getY() {
+	private function _getY() {
 		return $this->_y;
 	}
-	private function getZ() {
+	private function _getZ() {
 		return $this->_z;
 	}
-	private function getW() {
+	private function _getW() {
 		return $this->_w;
 	}
 	public function magnitude() {

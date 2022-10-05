@@ -1,3 +1,44 @@
+
 <- Vector ----------------------------------------------------------------------
-Your documentation here.
+The Vector class handles directions in space.
+
+An instance can be constructed from a Vertex 'dest', and an optional Vertex 
+'origin': 
+ 
+new Vector( array( 'dest' => Vertex dest, [Optional]'orig' => Vertex)
+
+If 'origin' not provided origin is assumed to be (x = 0, y = 0, z = 0):
+The input origin will be minused from dest to get a direction based on origin 0. 
+
+
+The class provides the following methods :
+
+Ffloat magnitude() : returns the vector’s length (or ”norm”).
+
+Vector normalize() : returns a normalized version of the vector.
+If the vector is already normalized, returns a fresh copy of
+the vector.
+
+Vector add( Vector $rhs );
+Returns the sum vector of both vectors.
+
+Vector sub( Vector $rhs );
+Returns the difference vector of both vectors.
+
+Vector opposite();
+Returns the opposite vector.
+
+Vector scalarProduct( $k );
+Returns the multiplication of the vector with a scalar.
+
+float dotProduct( Vector $rhs );
+Returns the scalar multiplication of both vectors.
+
+float cos( Vector $rhs );
+Returns the angle’sAppendix cosine between both vectors.
+
+Vector crossProduct( Vector $rhs );
+Returns the cross multiplication of both vectors (right-hand mark!)
+
+Getters for all values.
 ---------------------------------------------------------------------- Vector ->
