@@ -19,17 +19,18 @@ class Matrix {
 	const RZ = "Oz ROTATION";
 	const TRANSLATION = "TRANSLATION";
 	const PROJECTION = "PROJECTION";
+	const NEW = "NEW";
 
     public function __construct( array $kwargs ) {
 		if (isset($kwargs['preset'])){
 			if ($kwargs['preset'] == self::IDENTITY){
-				$this->init_matrix(1.0);
+				$this->_matrix = $this->init_matrix(1.0);
 			}
 			else if ($kwargs['preset'] == self::SCALE){
-				$this->init_matrix($kwargs['scale']);
+				$this->_matrix = $this->init_matrix($kwargs['scale']);
 			}
 			else if ($kwargs['preset'] == self::RX){
-				$this->init_matrix(1.0);
+				$this->_matrix = $this->init_matrix(1.0);
 				$cos = cos($kwargs['angle']);
 				$sin = sin($kwargs['angle']);
 				$this->_matrix['y']['y'] = $cos;
@@ -38,7 +39,7 @@ class Matrix {
 				$this->_matrix['z']['z'] = $cos;
 			}
 			else if ($kwargs['preset'] == self::RY){
-				$this->init_matrix(1.0);
+				$this->_matrix = $this->init_matrix(1.0);
 				$cos = cos($kwargs['angle']);
 				$sin = sin($kwargs['angle']);
 				$this->_matrix['x']['x'] = $cos;
@@ -48,7 +49,7 @@ class Matrix {
 
 			}
 			else if ($kwargs['preset'] == self::RZ){
-				$this->init_matrix(1.0);
+				$this->_matrix = $this->init_matrix(1.0);
 				$cos = cos($kwargs['angle']);
 				$sin = sin($kwargs['angle']);
 				$this->_matrix['x']['x'] = $cos;
@@ -57,13 +58,13 @@ class Matrix {
 				$this->_matrix['y']['y'] = $cos;
 			}
 			else if ($kwargs['preset'] == self::TRANSLATION){
-				$this->init_matrix(1.0);
+				$this->_matrix = $this->init_matrix(1.0);
 				$this->_matrix['x']['w'] = $kwargs['vtc']->_x;
 				$this->_matrix['y']['w'] = $kwargs['vtc']->_y;
 				$this->_matrix['z']['w'] = $kwargs['vtc']->_z;
 			}
 			else if ($kwargs['preset'] == self::PROJECTION){
-				$this->init_matrix(0.0);
+				$this->_matrix = $this->init_matrix(0.0);
 				$fov = 1 / tan(0.5 * deg2rad($kwargs['fov']));
 				$viewDiff = $kwargs['far'] - $kwargs['near'];
 				$this->_matrix['x']['x'] = $fov / $kwargs['ratio'];
@@ -73,11 +74,16 @@ class Matrix {
 				$this->_matrix['w']['z'] = -1.0;
 				$this->_matrix['w']['w'] = 0.0;
 			}
-			if ( self::$verbose === TRUE ) {
-				$str = "Matrix ".$kwargs['preset'];
+			else if ($kwargs['preset'] == self::NEW) {
+				$this->_matrix = $kwargs['matrix'];
+			}
+			if ( self::$verbose === TRUE) {
+				$str = "";
+				if ($kwargs['preset'] !== self::NEW)
+					$str = $kwargs['preset'];
 				if ($kwargs['preset'] !== self::IDENTITY)
 					$str = $str." preset";
-				print($str." instance constructed" . PHP_EOL);
+				print("Matrix ".$str." instance constructed" . PHP_EOL);
 			}
 		}
 		return;
@@ -100,14 +106,43 @@ class Matrix {
         }
     }
 	private function init_matrix( $num ){
-		$this->_matrix = array(
+		$matrix = array(
 			'x' => array('x' => $num, 'y' => 0.0, 'z' => 0.0, 'w' => 0.0),
 			'y' => array('x' => 0.0, 'y' => $num, 'z' => 0.0, 'w' => 0.0),
 			'z' => array('x' => 0.0, 'y' => 0.0, 'z' => $num, 'w' => 0.0),
 			'w' => array('x' => 0.0, 'y' => 0.0, 'z' => 0.0, 'w' => 1.0));
+			return $matrix;
 	}
-	public function mult(){
-		
+	public function mult( Matrix $rhs){
+		if ($this->isValid($rhs)){
+			$matrix = $this->init_matrix(0.0);
+			$keys = array('x', 'y', 'z', 'w');
+			for ($ar1 = 0; $ar1 < 4; $ar1++) {
+				for ($ar2 = 0; $ar2 < 4; $ar2++){
+					$sum = 0;
+					for ($index = 0; $index < 4; $index++){
+						$sum += $this->_matrix[$keys[$ar1]][$keys[$index]] * 
+						$rhs->_matrix[$keys[$index]][$keys[$ar2]];
+					}
+					$matrix[$keys[$ar1]][$keys[$ar2]] = $sum;
+				}
+			}
+			return new Matrix(array('preset' => self::NEW, 'matrix' => $matrix));
+		}
+	}
+	public function transformVertex (Vertex $vtx){
+		$x = $this->_matrix['x']['x'] * $vtx->x + $this->_matrix['x']['y'] * $vtx->y + $this->_matrix['x']['z'] * $vtx->z + $this->_matrix['x']['w'] * $vtx->w;
+		$y = $this->_matrix['y']['x'] * $vtx->x + $this->_matrix['y']['y'] * $vtx->y + $this->_matrix['y']['z'] * $vtx->z + $this->_matrix['y']['w'] * $vtx->w;
+		$z = $this->_matrix['z']['x'] * $vtx->x + $this->_matrix['z']['y'] * $vtx->y + $this->_matrix['z']['z'] * $vtx->z + $this->_matrix['z']['w'] * $vtx->w;
+		$w = $this->_matrix['w']['x'] * $vtx->x + $this->_matrix['w']['y'] * $vtx->y + $this->_matrix['w']['z'] * $vtx->z + $this->_matrix['w']['w'] * $vtx->w;
+		return new Vertex(array('x' => $x, 'y' => $y,'z' => $z,'w' => $w));
+	}
+	private function isValid( Matrix $matrix) {
+		if (array_key_exists('x', $matrix->_matrix) && array_key_exists('y', $matrix->_matrix) && array_key_exists('z', $matrix->_matrix)){
+			if (array_key_exists('x', $matrix->_matrix) && array_key_exists('y', $matrix->_matrix) && array_key_exists('z', $matrix->_matrix))
+				return (TRUE);
+		}
+		return (FALSE);
 	}
 }
 ?>
