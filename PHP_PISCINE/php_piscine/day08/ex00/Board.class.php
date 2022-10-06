@@ -13,10 +13,14 @@ class Board{
     function __construct()
     {
         $this->_board = array_fill(0, 100, array_fill(0, 150 , 0));
-        $this->_populateBoard(20);
+        $this->_createObstacles(20);
         $this->_players[] = new Player( array('name' => 'Player1', 'fleet' => 1, 'start' => array('x' => 50, 'y' => 50)));
         $this->_players[] = new Player( array('name' => 'Player2', 'fleet' => 1, 'start' => array('x' => 50, 'y' => 100)));
+		$this->_addFleets();
+        $this->_populateBoard();
         print($this);
+	#	print_r($this->_boardObjects);
+
     }
     function __destruct(){}
     private function _rollDice($num) {
@@ -28,13 +32,37 @@ class Board{
         }
         return $dice;
     }
-    private function _populateBoard($num){
-        while ($num > 0) {
-            $x = rand(0, 100);
-            $y = rand(0, 150);
-            $this->_board[$x][$y] = 'obstacle';
-            $this->_boardObjects[] = array( 'obstacle' => array($x, $y));
+    private function _createObstacles($num){
+		while ($num > 0) {
+            $x = rand(0, 99);
+            $y = rand(0, 149);
+            $this->_boardObjects[] = array(
+				'type' => 'obstacle', 
+				'position' => array('x' => $x, 'y' => $y), 
+				'symbol' => 'A');
             $num--;
+		}
+	}
+	private function _addFleets() {
+		foreach ($this->_players as $player) {
+			$this->_boardObjects = array_merge($this->_boardObjects, $player->getShips());
+		}
+	}
+	private function _populateBoard(){
+		foreach ($this->_boardObjects as $item) {
+			if ($item['type'] === 'obstacle') {
+				$x = $item['position']['x'];
+				$y = $item['position']['y'];
+				$this->_board[$x][$y] = $item['symbol'];
+			}
+			else if ($item['type'] === 'ship') {
+				foreach ($item['fill'] as $pos) {
+					$this->_board[$pos['x']][$pos['y']] = $item['symbol'];
+				}
+#				$x = $item['position']['x'];
+#				$y = $item['position']['y'];
+#				$this->_board[$x][$y] = $item['symbol'];
+			}
         }
     }
     public function checkWin(){
@@ -53,7 +81,13 @@ class Board{
     {
         $str = "";
         foreach ($this->_board as $line){
-            $str = $str.implode(" ",$line).PHP_EOL;
+			foreach ($line as $key) {
+				if ($key === 0)
+					$str = $str.'.';
+				else
+					$str = $str.$key;
+			}
+			$str = $str.PHP_EOL;
         }
         return $str;
     }

@@ -15,5 +15,6 @@ interface IShip {
     function getWeapons();
     function setPosition( array $pos);
     function getPosition();
+	function getName();
 }
 ?>

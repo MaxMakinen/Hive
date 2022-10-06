@@ -2,14 +2,15 @@
 
 require_once 'Board.class.php';
 
-class Ironclad extends Board implements IShip {
+class Ironclad implements IShip {
     
     use Ship;
     
     public function __construct(array $kvars)
     {
+		$this->_player = $kvars['player'];
         $this->_name = $kvars['name'];
-        $this->position = $kvars['position'];
+        $this->_position = $kvars['position'];
         $this->_size = array('len' => 7, 'width' => 2);
         $this->_sprite = 'X';
         $this->_sprite = 'x';
@@ -20,6 +21,8 @@ class Ironclad extends Board implements IShip {
         $this->_handling = 5;
         $this->_shield = 2;
         $this->_weapons = ['NL', 'NL'];
+		$this->setFacing($kvars['facing']);
+		$this->setFill();
     }
     function __destruct(){}
 }
