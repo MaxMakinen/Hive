@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h2 {
+            text-align: center;
+        }
+        *{
+            box-sizing: border-box;
+        }
+        .header {
+            background-color: aquamarine;
+            margin: 30px 50px;
+            padding: 10px;
+            color: darkslategray;
+            text-align: center;
+        }
+        .task {
+            cursor: pointer;
+            position: relative;
+            padding: 12px 8px 12px 40px;
+            margin: 10px;
+            background-color: lightskyblue;
+            font-size: 18px;
+            transition: 0.2s;
+            width: 90%;
+        }
+
+        .task:nth-child(odd) {
+            background: lightgrey;
+        }
+
+        .task:hover {
+            background: lightslategray;
+        }
+        .container {
+            display: block;
+            background-color: aquamarine;
+            border-radius: 3%;
+            box-shadow: 10px 10px 10px aqua;
+            width: 500px;
+            height: 80vh;
+            position: relative;
+        }
+        .list {
+            background-color: aquamarine;
+            width: 100%;
+            padding: 12px 8px 12px 40px;
+            position: relative;
+        }
+        .button {
+            cursor: pointer;
+            background-color: rgb(203, 223, 223);
+            position: relative;
+            bottom: 0;
+            margin: 0;
+            border: none;
+            width: 75%;
+            border-radius: 0;
+            padding: 10px;
+            justify-self: center;
+            font-size: 16px;
+
+        }
+        .button:hover {
+            background-color: skyblue;
+        }
+    </style>
+    <title>Todo</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>My to do list</h2>
+            <span class="button" onclick="newTask()">New</span>
+        </div>
+        <div class="list" id="ft_list"></div>
+        <script src="todo.js"></script>
+</body>
+
+</html>

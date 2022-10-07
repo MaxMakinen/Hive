@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon</title>
+    <style>
+        .balloon{
+            border-radius: 50%;
+            background-color: red;
+            width: 200px;
+            height: 200px;
+            min-width: 200px;
+            min-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var colCount = 0;
+        var color = ["red", "green", "blue"];
+        function inflate(x, value) {
+            x.style.width = x.offsetWidth + 10 + "px";
+            x.style.height = x.offsetHeight + 10 + "px";
+            console.log(x.offsetWidth);
+            if (colCount < 2)
+                colCount++;
+            else
+                colCount = 0;
+            x.style.backgroundColor = color[colCount];
+            if (x.offsetWidth > 420){
+                x.style.width = 200 + "px";
+                x.style.height = 200 + "px";
+                x.style.backgroundColor = 'red';
+            }
+        }
+        function deflate(x){
+            x.style.width = x.offsetWidth - 5 + "px";
+            x.style.height = x.offsetHeight - 5 + "px";
+            if (x.offsetWidth > 200){
+            if (colCount > 0)
+                colCount--;
+            else
+                colCount = 2;
+            x.style.backgroundColor = color[colCount];
+            }
+        }
+    </script>
+    <div class="balloon" onmousedown="inflate(this)" onmouseleave="deflate(this)">
+    </div>
+</body>
+</html>
