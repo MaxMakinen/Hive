@@ -105,7 +105,7 @@ t_vec2f	get_cylindrical(t_vec3f rotated)
 	return (polar);
 }
 
-t_hit	*get_normal(t_obj *object, t_hit *hit)
+t_hit	*get_normal(t_obj *object, t_hit *hit, t_ray *ray)
 {
 	t_vec3f	temp;
 	t_vec3f	temp2;
@@ -113,6 +113,8 @@ t_hit	*get_normal(t_obj *object, t_hit *hit)
 	double	len;
 	t_vec3f	axis;
 	t_quat	quat;
+	t_vec3f temp_normal;
+
 
 //	object->dir = normalize(object->dir);
 	ft_bzero(&quat, sizeof(quat));
@@ -120,6 +122,8 @@ t_hit	*get_normal(t_obj *object, t_hit *hit)
 	temp2 = vec_minus(hit->pos, object->pos);
 	temp = temp2;
 	len = vec_len(temp2);
+	temp_normal = object->dir;
+
 //	temp2 = normalize(temp2);
 //	temp2 = hit->pos;
 //	MAKE FUNCTION TO COMPARE VECTORS TO AVOIS UNNECCESARY ROTATION
@@ -136,14 +140,13 @@ t_hit	*get_normal(t_obj *object, t_hit *hit)
 	{
 		hit->surface = get_planar(temp);
 		hit->normal = normalize(object->dir);
-		hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));
+		
 		temp = hit->pos;
 	}
 	else if (object->type == e_sphere)
 	{
 		hit->normal = normalize(vec_minus(hit->pos, object->pos));
 		hit->surface = get_spherical(object, temp);
-		hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));
 	}
 	else if (object->type == e_cylinder)
 	{
@@ -151,20 +154,24 @@ t_hit	*get_normal(t_obj *object, t_hit *hit)
 		hit->normal = normalize(vec_minus(hit->pos, object->pos));
 		temp = normalize(cross_product(hit->normal, object->dir));
 		hit->normal = normalize(cross_product(object->dir, temp));
-		hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));
 	}
 	else if (object->type == e_cone)
 	{
 		double tempy;
-		t_vec3f temp_cone;
+		double side;
 
 		hit->surface = get_cylindrical(temp);
-		temp_cone = temp;
+		temp_normal = object->dir;
 		hit->normal = normalize(vec_minus(hit->pos, object->pos));
-		temp = normalize(cross_product(hit->normal, object->dir));
-		hit->normal = normalize(cross_product(object->dir, temp));
+		temp = normalize(cross_product(hit->normal, temp_normal));
+		hit->normal = normalize(cross_product(temp_normal, temp));
 		hit->normal.y *= object->radius / object->height;
-		hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));
 	}
+	if (dot_product(hit->normal, ray->dir) > 0)
+	{
+		hit->normal = vec_mult(hit->normal, -1.0);
+		hit->inside = 1;
+	}
+	hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));
 	return (hit);
 }

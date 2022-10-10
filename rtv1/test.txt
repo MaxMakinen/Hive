@@ -1,14 +1,23 @@
 camera
-- pos 0.0 10.0 50.0
+- pos -20.0 10.0 60.0
 - dir 0.0 0.0 0.0
 - up 0.0 1.0 0.0
 - vfov 60
 
-light
-- pos 10.0 30.0 0.0
+#light
+#- pos 10.0 30.0 0.0
+#- brightness 5
+#- color 0xFF0000
 
 light
 - pos -10.0 30.0 0.0
+- brightness 5
+- color 0x00FF00
+
+light
+- pos 0.0 30.0 10.0
+- brightness 5
+- color 0x0000FF
 
 sphere
 - radius 3.0

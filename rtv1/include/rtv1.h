@@ -95,34 +95,17 @@ typedef struct s_obj
 	struct s_obj	*next;
 }	t_obj;
 
-
-
-typedef	struct s_camera
-{
-	t_vec3f	pos;
-	t_vec3f	dir;
-}	t_camera;
-
-typedef	struct s_light
-{
-	t_vec3f	pos;
-	t_rgb	color;
-	double	brightness;
-}	t_light;
-
 typedef	struct s_scene
 {
 	char		*name;
-	t_camera	camera;
 	t_mat44f	camera_to_world;
 	t_vec3f		horizontal;
 	t_vec3f		vertical;
 	t_vec3f		lower_left;
 	double		view_height;
 	double		view_width;
-//	int			samples_per_pixel;
-	t_light		*light;
 	t_obj		*obj;
+	t_obj		*light;
 	t_obj		*cam;
 	int			max_objects;
 }	t_scene;
@@ -165,6 +148,9 @@ typedef struct	s_hit
 	t_vec2f	surface;
 	t_vec3f	rotated;
 	t_obj	*obj;
+	t_rgb	color;
+	t_vec3f	color3;
+	int		inside;
 }	t_hit;
 
 void	render_scene(t_scene *scene, t_data *data);
@@ -191,7 +177,7 @@ int	plane_intersect(t_scene *scene, t_ray *ray, t_obj *object, double *t0, doubl
 
 t_rgb	color_mult(t_rgb color, double num);
 
-t_hit	*get_normal(t_obj *object, t_hit *hit);
+t_hit	*get_normal(t_obj *object, t_hit *hit, t_ray *ray);
 
 
 double	get_angle(t_vec3f vec1, t_vec3f vec2);
@@ -206,5 +192,9 @@ void	ft_swapf(double *a, double *b);
 t_obj	*init_object(t_scene *scene);
 
 int ft_floor(double num);
+t_obj *get_obj(t_obj* head, enum e_type type);
+int	shade_ray(t_scene *scene, t_ray *ray, t_hit *hit, t_rgb *color);
+t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, double distance);
+void	print_vec(t_vec3f *vec);
 
 #endif

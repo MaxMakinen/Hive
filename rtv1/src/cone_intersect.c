@@ -28,7 +28,7 @@ int	cone_intersect(t_scene *scene, t_ray *ray, t_obj *obj, double *t0, double *t
 	
 	if (!quadratic_formula(a, b, c, t0, t1))
 		return (FALSE);
-	if (*t0 > *t1)
+	if (*t0 > *t1|| *t0 < 0)
 	{
 		ft_swapf(t0, t1);
 		if (*t0 < 0.0f)

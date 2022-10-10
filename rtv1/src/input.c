@@ -153,43 +153,6 @@ int	get_object(t_scene *scene, char **words, int *flags)
 	return (TRUE);
 }
 
-int	get_camera(t_scene *scene, char **words, int *flags)
-{
-	if (words[0][0] == '}')
-		*flags &= ~(ft_bit(CAMERA));
-//	else if (ft_strncmp(*words, "}", 1))
-//		*flags &= ~(ft_bit(CAMERA));
-	else if (ft_strncmp(*words, "camera", 6) == 0)
-		*flags |= ft_bit(CAMERA);
-	else if (ft_strncmp(*words, "origin", 6) == 0)
-		get_vector(&scene->camera.pos, ++words);
-	else if (ft_strncmp(*words, "direction", 9) == 0)
-		get_vector(&scene->camera.dir, ++words);
-	return (TRUE);
-}
-
-int	init_light(t_scene *scene)
-{
-	if (scene->light == NULL)
-	{
-		scene->light = ft_calloc(sizeof(t_light), 1);
-	}
-	return (TRUE);
-}
-
-int	get_light(t_scene *scene, char **words, int *flags)
-{
-	if (words[0][0] == '}')
-		*flags &= ~(ft_bit(LIGHT));
-	else if (ft_strncmp(*words, "light", 6) == 0)
-		*flags |= ft_bit(LIGHT);
-	else if (ft_strncmp(*words, "origin", 6) == 0)
-		get_vector(&scene->light->pos, words + 1);
-	else if (ft_strncmp(*words, "color", 5) == 0)
-		get_color(&scene->light->color, words + 1);
-	return (TRUE);
-}
-
 int	init_scene(t_scene *scene, char **words, int *flags)
 {
 	char	*name;
@@ -222,9 +185,6 @@ int	init_scene(t_scene *scene, char **words, int *flags)
 	else
 		name = ft_strcpy(ft_strnew(7), "Default");
 	scene->name = name;
-	scene->camera.pos = (t_vec3f){0.0, 0.0, 0.0};
-	scene->camera.dir = (t_vec3f){0.0, 0.0, -1.0};
-	scene->light = NULL;
 	scene->obj = NULL;
 	*flags |= ft_bit(SCENE);
 	return(TRUE);
@@ -278,7 +238,6 @@ void	parse(t_scene *scene, const int fd)
 	t_obj	*temp;
 
 	flags = 0;
-	scene->light = NULL;
 	scene->obj = init_obj();
 	while (get_next_line(fd, &line))
 	{
@@ -289,6 +248,8 @@ void	parse(t_scene *scene, const int fd)
 			flags = 0;
 			continue;
 		}
+		if (line[0] == '#')
+			continue;
 		if (line && *line)
 		{
 			words = ft_strsplit(line, ' ');
@@ -305,6 +266,8 @@ void	parse(t_scene *scene, const int fd)
 				{
 					flags |= ft_bit(LIGHT);
 					temp->type = e_light;
+					temp->brightness = 100;
+					temp->color.color = 0xFFFFFFFF;
 					continue;
 				}
 				else if (ft_strncmp(words[0], "sphere", 6) == 0)
@@ -368,6 +331,7 @@ void	parse(t_scene *scene, const int fd)
 				}
 				else if (ft_strncmp(words[1], "radius", 6) == 0)
 				{
+					//MAKE ATOF!
 					temp->radius = ft_atoi(words[2]);
 					temp->radius2 = temp->radius * temp->radius;
 				}

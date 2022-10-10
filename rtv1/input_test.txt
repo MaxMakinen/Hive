@@ -1,15 +1,21 @@
 camera
-- pos 20.0 60.0 30.0
+- pos 0.0 50.0 50.0
 - dir 0.0 0.0 0.0
 - up 0.0 1.0 0.0
-- vfov 40
+- vfov 60
 
 light
 - pos -50.0 50.0 20.0
 
+
+sphere
+- radius 1.1
+- pos 0.0 0.0 0.0
+- color 0xf0f0f0
+
 sphere
 - radius 3.0
-- pos 0.0 0.0 0.0
+- pos 20.0 0.0 20.0
 - color 0xf0f0f0
 
 sphere
