@@ -7,6 +7,9 @@ camera
 light
 - pos 40.0 0.0 30.0
 
+light
+- pos -80.0 0.0 100.0
+
 sphere
 - radius 10.0
 - pos -20.0 0.0 0.0

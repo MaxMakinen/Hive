@@ -20,9 +20,9 @@ SRC_DIR =		src
 INC_DIR =		include
 OBJ_DIR =		obj
 SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
-				brightness.o vector_math.o vector_math2.o input.o ft_bit.o ft_clamp.o ft_swapf.o\
-				cone_intersect.o cylinder_intersect.o sphere_intersect.o quaternion.o\
-				get_normal.o plane_intersect.o shade_ray.o utility.o ft_floor.o get_surface.o rotation.o\
+				vector_math.o vector_math2.o input.o ft_bit.o ft_clamp.o ft_swapf.o\
+				intersect_cone.o intersect_cylinder.o intersect_sphere.o quaternion.o\
+				get_normal.o intersect_plane.o shade_ray.o utility.o ft_floor.o get_surface.o rotation.o\
 				input_utils.o quat_utils.o math.o ray_utils.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit

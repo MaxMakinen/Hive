@@ -5,17 +5,17 @@ camera
 - vfov 30
 
 light
-- pos 10.0 30.0 0.0
+- pos 10.0 10.0 0.0
 - brightness 5
 - color 0xFF0000
 
 light
-- pos -10.0 30.0 0.0
+- pos -10.0 10.0 0.0
 - brightness 5
 - color 0x00FF00
 
 light
-- pos 0.0 30.0 5.0
+- pos 0.0 10.0 10.0
 - brightness 5
 - color 0x0000FF
 
@@ -24,6 +24,11 @@ sphere
 - pos 0.0 0.0 0.0
 - dir 0.0 0.0 1.0
 - color 0xabcdef
+
+sphere
+- radius 3.8
+- pos 8.0 0.0 0.0
+- dir 0.0 0.0 1.0
 
 plane
 - pos 0.0 -10.0 0.0

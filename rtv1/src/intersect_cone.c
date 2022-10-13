@@ -34,7 +34,7 @@ int	cone_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1)
 	q_f[1] = 2.0f * (dot_product(ray->dir, origin) - \
 	(pre_c[2] * pre_c[5]) - pre_c[5]);
 	q_f[2] = dot_product(origin, origin) - pre_c[2] * pre_c[4] - pre_c[4];
-	if (!quadratic_formula(q_f[0], q_f[1], q_f[2], t0, t1))
+	if (!quadratic_formula(q_f, t0, t1))
 		return (FALSE);
 	if (*t0 > *t1 || *t0 < 0)
 	{

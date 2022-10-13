@@ -22,16 +22,28 @@ t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, double distance)
 	return (intersect);
 }
 
-int	check_intersect(t_obj *obj, t_ray *ray, double *temp, double *t1)
+int	check_intersect(t_obj *obj, t_ray *ray, t_hit *hit)
 {
+	double	intersect;
+	double	t1;
+	int		check;
+
+	intersect = INFINITY;
+	check = FALSE;
 	if (obj->type == e_sphere)
-		return (sphere_intersect(ray, obj, temp, t1));
+		check = sphere_intersect(ray, obj, &intersect, &t1);
 	else if (obj->type == e_plane)
-		return (plane_intersect(ray, obj, temp, t1));
+		check = plane_intersect(ray, obj, &intersect, &t1);
 	else if (obj->type == e_cylinder)
-		return (cylinder_intersect(ray, obj, temp, t1));
+		check = cylinder_intersect(ray, obj, &intersect, &t1);
 	else if (obj->type == e_cone)
-		return (cone_intersect(ray, obj, temp, t1));
+		check = cone_intersect(ray, obj, &intersect, &t1);
+	if (check == TRUE && intersect < hit->dist)
+	{
+		hit->dist = intersect;
+		hit->obj = obj;
+		return (TRUE);
+	}
 	return (FALSE);
 }
 

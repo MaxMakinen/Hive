@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder_intersect.c                               :+:      :+:    :+:   */
+/*   sphere_intersect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmakinen <mmakinen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 09:02:15 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/10/11 09:02:18 by mmakinen         ###   ########.fr       */
+/*   Created: 2022/10/11 08:58:26 by mmakinen          #+#    #+#             */
+/*   Updated: 2022/10/11 08:58:51 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-int	cylinder_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1)
+int	sphere_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1)
 {
-	double		q_f[3];
-	double		dir;
-	double		orig;
+	double		a;
+	double		b;
+	double		c;
 	t_vec3f		origin;
 
 	origin = vec_minus(ray->orig, obj->pos);
-	dir = dot_product(ray->dir, obj->dir);
-	orig = dot_product(origin, obj->dir);
-	q_f[0] = dot_product(ray->dir, ray->dir) - (dir * dir);
-	q_f[1] = 2.0f * ((dot_product(ray->dir, origin) - (dir * orig)));
-	q_f[2] = dot_product(origin, origin) - (orig * orig) - obj->radius2;
-	if (!quadratic_formula(q_f[0], q_f[1], q_f[2], t0, t1))
+	a = dot_product(ray->dir, ray->dir);
+	b = 2.0f * dot_product(ray->dir, origin);
+	c = dot_product(origin, origin) - obj->radius2;
+	if (!quadratic_formula((double [3]){a, b, c}, t0, t1))
 		return (FALSE);
 	if (*t0 > *t1 || *t0 < 0)
 	{

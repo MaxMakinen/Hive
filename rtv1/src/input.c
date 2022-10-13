@@ -29,11 +29,7 @@ int	identify_obj(t_obj *temp, char **words)
 		temp->vfov = VFOV;
 	}
 	else if (ft_strncmp(words[0], "light", 4) == 0)
-	{
 		temp->type = e_light;
-		temp->brightness = 100;
-		temp->color.color = 0xFFFFFFFF;
-	}
 	else if (ft_strncmp(words[0], "sphere", 6) == 0)
 		temp->type = e_sphere;
 	else if (ft_strncmp(words[0], "plane", 5) == 0)
@@ -71,8 +67,6 @@ void	populate_obj(t_obj *temp, char **words)
 	}
 	else if (ft_strncmp(words[1], "height", 6) == 0)
 		temp->height = ft_atod(words[2]);
-	else if (ft_strncmp(words[1], "brightness", 6) == 0)
-		temp->brightness = ft_atoi(words[2]);
 }
 
 int	parse_line(char *line, t_obj *temp)

@@ -51,8 +51,9 @@ double	ft_atod(char *str)
 		temp = ft_strsplit(str, '.');
 		if (temp && *temp)
 		{
-			if(temp[1])
-				num = (double)ft_atoi(temp[1]) / powf(10.0f, (double)ft_strlen(temp[1]));
+			if (temp[1])
+				num = (double)ft_atoi(temp[1]) / \
+				powf(10.0f, (double)ft_strlen(temp[1]));
 			num += (double)ft_atoi(temp[0]);
 		}
 	}

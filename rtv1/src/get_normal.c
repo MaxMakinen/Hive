@@ -41,7 +41,7 @@ void	get_cone(t_obj *object, t_hit *hit)
 	hit->normal.y *= object->radius / object->height;
 }
 
-t_hit	*get_normal(t_obj *object, t_hit *hit, t_ray *ray)
+void	get_normal(t_obj *object, t_hit *hit, t_ray *ray)
 {
 	rotate(object, hit);
 	if (object->type == e_plane)
@@ -55,5 +55,4 @@ t_hit	*get_normal(t_obj *object, t_hit *hit, t_ray *ray)
 	if (dot_product(hit->normal, ray->dir) > 0)
 		hit->normal = vec_mult(hit->normal, -1.0);
 	hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));
-	return (hit);
 }
