@@ -27,7 +27,7 @@ void	clean_exit(t_data *data)
 	exit(0);
 }
 
-int	destroy(void	*param)
+int	destroy(void *param)
 {
 	clean_exit(param);
 	return (1);
@@ -57,13 +57,6 @@ void	draw(t_data *data)
 	}
 }
 
-void	print_vec(t_vec3f *vec)
-{
-	printf("vec.x = %f\n",vec->x);
-	printf("vec.y = %f\n",vec->y);
-	printf("vec.z = %f\n",vec->z);
-}
-
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -72,16 +65,12 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		exit_error("Usage: ./rtv1 <input file>");
-//	if (!build_scene(&scene))
-//		exit_error("build scene error");
 	scene.name = "default";
 	read_input(&scene, av[1]);
 	init_data(&data, &scene);
 	create_img(&data, "scene");
 	render_scene(&scene, &data);
-	//make_image(&scene, &data);
 	draw(&data);
-	//print_scene(&scene);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, \
 			data.img->mlx_img, 0, 0);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);

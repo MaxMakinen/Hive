@@ -65,7 +65,7 @@ int	shade_ray(t_scene *scene, t_ray *ray, t_hit *hit, t_rgb *color)
 			{
 				if (object->type > e_light)
 				{
-					if (check_intersect(scene, object, &new_ray, &t0, &t1))
+					if (check_intersect(object, &new_ray, &t0, &t1))
 					{
 						if (t0 < closest)
 						{
