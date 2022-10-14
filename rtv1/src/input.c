@@ -45,8 +45,6 @@ int	identify_obj(t_obj *temp, char **words)
 
 void	populate_obj(t_obj *temp, char **words)
 {
-	if (ft_strncmp(words[1], "name", 3) == 0)
-		temp->name = str_insert(words[2]);
 	if (ft_strncmp(words[1], "pos", 3) == 0)
 		get_vector(&temp->pos, &words[2]);
 	else if (ft_strncmp(words[1], "up", 3) == 0)
@@ -77,7 +75,10 @@ int	parse_line(char *line, t_obj *temp)
 	if (words && words[0][0] != '-')
 	{
 		if (identify_obj(temp, words))
+		{
+			ft_arrfree(words);
 			return (FALSE);
+		}
 	}
 	if (*words && temp)
 	{
@@ -88,8 +89,8 @@ int	parse_line(char *line, t_obj *temp)
 			return (FALSE);
 		}
 		populate_obj(temp, words);
-		ft_arrfree(words);
 	}
+	ft_arrfree(words);
 	return (TRUE);
 }
 
@@ -99,22 +100,24 @@ void	parse(t_scene *scene, const int fd)
 	char	**words;
 	t_obj	*obj;
 	t_obj	*temp;
+	int		empty;
 
+	empty = 0;
 	scene->obj = init_obj();
 	while (get_next_line(fd, &line))
 	{
-		if (line && line[0] == '#')
-			continue ;
 		temp = get_last(scene->obj);
-		if (*line == 0)
+		if (line && line[0] == '#')
+			;
+		else if (*line == 0 && empty == 0)
 		{
 			temp->next = init_obj();
-			continue ;
+			empty = 1;
 		}
-		if (line && *line)
+		else if (line && *line)
 		{
-			if (!parse_line(line, temp))
-				continue ;
+			parse_line(line, temp);
+			empty = 0;
 		}
 		free(line);
 	}

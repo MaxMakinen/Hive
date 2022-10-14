@@ -16,6 +16,7 @@ void	clean_exit(t_data *data)
 {
 	mlx_destroy_image(data->mlx_ptr, data->img->mlx_img);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	free(data->mlx_ptr);
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
 	free(data->img);
@@ -24,6 +25,7 @@ void	clean_exit(t_data *data)
 	data->img = NULL;
 	data->map.pool = NULL;
 	data->map.ptr = NULL;
+	free_objects(data->scene);
 	exit(0);
 }
 
@@ -66,6 +68,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		exit_error("Usage: ./rtv1 <input file>");
 	scene.name = "default";
+	data.scene = &scene;
 	read_input(&scene, av[1]);
 	init_data(&data, &scene);
 	create_img(&data, "scene");

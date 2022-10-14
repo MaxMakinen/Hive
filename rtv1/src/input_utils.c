@@ -28,7 +28,6 @@ t_obj	*init_obj(void)
 	if (new)
 	{
 		new->next = NULL;
-		new->name = NULL;
 		new->color.color = WHITE;
 		new->dir = (t_vec3f){0.0, 1.0, 0.0};
 	}
@@ -43,14 +42,4 @@ t_obj	*get_last(t_obj *head)
 	while (temp->next != NULL)
 		temp = temp->next;
 	return (temp);
-}
-
-char	*str_insert(char *str)
-{
-	char	*new;
-
-	new = ft_calloc(ft_strlen(str), sizeof(char));
-	if (!new)
-		exit_error("str_insert error");
-	return (new);
 }

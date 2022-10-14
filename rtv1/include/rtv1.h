@@ -74,7 +74,6 @@ typedef struct s_map
 
 typedef struct s_obj
 {
-	char			*name;
 	enum e_type		type;
 	double			vfov;
 	t_vec3f			pos;
@@ -120,15 +119,8 @@ typedef struct s_data
 	double	aspect_ratio;
 	t_img	*img;
 	t_map	map;
+	t_scene	*scene;
 }	t_data;
-
-typedef struct s_pattern
-{
-	double	width;
-	double	height;
-	t_rgb	color1;
-	t_rgb	color2;
-}	t_pattern;
 
 typedef struct s_hit
 {
@@ -159,6 +151,7 @@ int		handle_keypress(int keysym, t_data *data);
 int		render(t_data *data);
 
 void	clean_exit(t_data *data);
+void	free_objects(t_scene *scene);
 
 int		sphere_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1);
 int		cylinder_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);

@@ -12,6 +12,21 @@
 
 #include "rtv1.h"
 
+void	free_objects(t_scene *scene)
+{
+	t_obj	*temp;
+	t_obj	*temp2;
+
+	temp = scene->obj;
+	while (temp->next != NULL)
+	{
+		temp2 = temp->next;
+		free(temp);
+		temp = temp2;
+	}
+	free(temp);
+}
+
 int	open_file(int *fd, const char *filename)
 {
 	*fd = open(filename, O_RDONLY);
@@ -56,6 +71,7 @@ double	ft_atod(char *str)
 				powf(10.0f, (double)ft_strlen(temp[1]));
 			num += (double)ft_atoi(temp[0]);
 		}
+		ft_arrfree(temp);
 	}
 	return (num);
 }
