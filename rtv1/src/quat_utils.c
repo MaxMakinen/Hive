@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include "quaternion.h"
 
 double	rad_to_deg(double rad)
 {

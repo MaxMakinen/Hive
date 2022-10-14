@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include "quaternion.h"
 
 void	quat_init(t_quat *quat)
 {
