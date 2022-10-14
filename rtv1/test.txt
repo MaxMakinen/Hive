@@ -32,6 +32,7 @@ sphere
 sphere
 - radius 3.8
 - pos 8.0 0.0 0.0
+- translate 2.0 0.0 0.0
 - dir 0.0 0.0 1.0
 
 plane

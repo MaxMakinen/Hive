@@ -48,13 +48,6 @@ int	close_file(int fd)
 	return (TRUE);
 }
 
-void	print_vec(t_vec3f *vec)
-{
-	printf("vec.x = %f\n", vec->x);
-	printf("vec.y = %f\n", vec->y);
-	printf("vec.z = %f\n", vec->z);
-}
-
 double	ft_atod(char *str)
 {
 	double	num;

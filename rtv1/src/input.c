@@ -12,15 +12,6 @@
 
 #include "rtv1.h"
 
-#define SCENE 1
-#define CAMERA 2
-#define LIGHT 3
-#define OBJECT 4
-#define SPHERE 5
-#define PLANE 6
-#define CYLINDER 7
-#define CONE 8
-
 int	identify_obj(t_obj *temp, char **words)
 {
 	if (ft_strncmp(words[0], "camera", 6) == 0)
@@ -46,12 +37,14 @@ int	identify_obj(t_obj *temp, char **words)
 void	populate_obj(t_obj *temp, char **words)
 {
 	if (ft_strncmp(words[1], "pos", 3) == 0)
-		get_vector(&temp->pos, &words[2]);
+		temp->pos = get_vector(temp->pos, &words[2]);
+	if (ft_strncmp(words[1], "translate", 3) == 0)
+		temp->pos = vec_plus(temp->pos, get_vector(temp->pos, &words[2]));
 	else if (ft_strncmp(words[1], "up", 3) == 0)
-		get_vector(&temp->up, &words[2]);
+		temp->up = get_vector(temp->up, &words[2]);
 	else if (ft_strncmp(words[1], "dir", 3) == 0)
 	{
-		get_vector(&temp->dir, &words[2]);
+		temp->dir = get_vector(temp->dir, &words[2]);
 		temp->dir = normalize(temp->dir);
 	}
 	else if (ft_strncmp(words[1], "color", 5) == 0)

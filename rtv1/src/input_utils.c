@@ -12,12 +12,12 @@
 
 #include "rtv1.h"
 
-int	get_vector(t_vec3f *vector, char **words)
+t_vec3f	get_vector(t_vec3f vector, char **words)
 {
-	vector->x = ft_atod(words[0]);
-	vector->y = ft_atod(words[1]);
-	vector->z = ft_atod(words[2]);
-	return (TRUE);
+	vector.x = ft_atod(words[0]);
+	vector.y = ft_atod(words[1]);
+	vector.z = ft_atod(words[2]);
+	return (vector);
 }
 
 t_obj	*init_obj(void)

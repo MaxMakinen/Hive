@@ -62,7 +62,6 @@ void	draw(t_data *data)
 int	main(int ac, char **av)
 {
 	t_data	data;
-	t_map	map;
 	t_scene	scene;
 
 	if (ac != 2)
@@ -79,6 +78,7 @@ int	main(int ac, char **av)
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
 	mlx_hook(data.win_ptr, 17, 0, destroy, &data);
+	mlx_hook(data.win_ptr, 12, 0, render, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

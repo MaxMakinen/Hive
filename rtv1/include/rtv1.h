@@ -41,8 +41,6 @@
 # define ALBEDO 0.05729577951
 # define GAMMA 2.2
 
-typedef int	(*t_funcptr)();
-
 typedef union u_rgb
 {
 	unsigned int	color;
@@ -135,19 +133,17 @@ typedef struct s_hit
 	double	dist;
 }	t_hit;
 
-void	render_scene(t_scene *scene, t_data *data);
-
-void	make_image(t_scene *scene, t_data *data);
 void	exit_error(char *str);
-void	init_data(t_data *data, t_scene *scene);
-
 int		open_file(int *fd, const char *filename);
 int		close_file(int fd);
 
-void	render_background(t_img *img, int color);
+void	init_data(t_data *data, t_scene *scene);
+void	render_scene(t_scene *scene, t_data *data);
+void	make_image(t_scene *scene, t_data *data);
 void	create_img(t_data *data, char *name);
-void	img_pix_put(t_img *img, int x, int y, int color);
 
+void	render_background(t_img *img, int color);
+void	img_pix_put(t_img *img, int x, int y, int color);
 int		handle_keypress(int keysym, t_data *data);
 int		render(t_data *data);
 
@@ -197,7 +193,7 @@ void	print_vec(t_vec3f *vec);
 char	*str_insert(char *str);
 t_obj	*get_last(t_obj *head);
 t_obj	*init_obj(void);
-int		get_vector(t_vec3f *vector, char **words);
+t_vec3f	get_vector(t_vec3f vector, char **words);
 
 //ray utils
 t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, double distance);

@@ -5,40 +5,40 @@ camera
 
 light
 - pos 0.0 0.0 -200.0
-- brightness 13
+- brightness 20
 - color 0xff0000
 
 light
 - pos -18.0 19.0 -116.0
-- brightness 5
+- brightness 10
 
 light
 - pos 18.0 19.0 -116.0
-- brightness 5
+- brightness 10
 
 light
 - pos -18.0 19.0 -26.0
-- brightness 5
+- brightness 10
 
 light
 - pos 18.0 19.0 -26.0
-- brightness 5
+- brightness 10
 
 light
 - pos -18.0 19.0 -66.0
-- brightness 5
+- brightness 10
 
 light
 - pos 18.0 19.0 -66.0
-- brightness 5
+- brightness 10
 
 light
 - pos -18.0 19.0 14.0
-- brightness 5
+- brightness 10
 
 light
 - pos 18.0 19.0 14.0
-- brightness 5
+- brightness 10
 
 plane
 - pos 0.0 20.0 0.0
@@ -100,18 +100,22 @@ sphere
 
 cylinder
 - pos 20.0 0.0 -20.0
+- color 0xc1a077
 - radius 3
 
 cylinder
 - pos -20.0 0.0 -20.0
+- color 0xc1a077
 - radius 3
 
 cylinder
 - pos 20.0 0.0 20.0
+- color 0xc1a077
 - radius 3
 
 cylinder
 - pos -20.0 0.0 20.0
+- color 0xc1a077
 - radius 3
 
 sphere
@@ -156,18 +160,22 @@ sphere
 
 cylinder
 - pos 20.0 0.0 -60.0
+- color 0xc1a077
 - radius 3
 
 cylinder
 - pos -20.0 0.0 -60.0
+- color 0xc1a077
 - radius 3
 
 cylinder
 - pos 20.0 0.0 -100.0
+- color 0xc1a077
 - radius 3
 
 cylinder
 - pos -20.0 0.0 -100.0
+- color 0xc1a077
 - radius 3
 
 cone
@@ -175,3 +183,42 @@ cone
 - height 10.0
 - radius 5.0
 - color 0xFFD700
+
+sphere
+- pos 0.0 -3.1 -120.0
+- radius 2.9
+- color 0xFF00FF
+
+sphere
+- pos 0.0 3.1 -120.0
+- radius 2.9
+- color 0xFF00FF
+
+light
+- pos 0.0 0.0 -125.0
+- color 0xFF00FF
+- brightness 15
+
+cylinder
+- pos -34.0 24.0 0.0
+- dir 0.0 0.0 1.0
+- color 0x786D5F
+- radius 8
+
+cylinder
+- pos -35.0 -25.0 0.0
+- dir 0.0 0.0 1.0
+- color 0x786D5F
+- radius 8
+
+cylinder
+- pos 34.0 24.0 0.0
+- dir 0.0 0.0 1.0
+- color 0x786D5F
+- radius 8
+
+cylinder
+- pos 35.0 -25.0 0.0
+- dir 0.0 0.0 1.0
+- color 0x786D5F
+- radius 8

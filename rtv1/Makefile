@@ -14,7 +14,7 @@ SHELL =			/bin/sh
 .SUFFIXES =		
 .SUFFIXES =		.c .o .h
 CC =			clang
-FLAGS = 		-Wall -Wextra -Werror -g
+FLAGS = 		-Wall -Wextra -Werror
 NAME =			RTv1
 SRC_DIR =		src
 INC_DIR =		include
@@ -69,4 +69,4 @@ re: fclean all
 
 re_linux: fclean linux
 
-.PHONY: all libclean libfclean clean fclean re tidy linux re_linux
+.PHONY: all libclean libfclean clean fclean re linux re_linux
