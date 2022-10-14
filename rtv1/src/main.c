@@ -26,6 +26,7 @@ void	clean_exit(t_data *data)
 	data->map.pool = NULL;
 	data->map.ptr = NULL;
 	free_objects(data->scene);
+	free(data);
 	exit(0);
 }
 
@@ -61,24 +62,25 @@ void	draw(t_data *data)
 
 int	main(int ac, char **av)
 {
-	t_data	data;
+	t_data	*data;
 	t_map	map;
 	t_scene	scene;
 
 	if (ac != 2)
 		exit_error("Usage: ./rtv1 <input file>");
+	data = ft_calloc(1, sizeof(t_data));
 	scene.name = "default";
-	data.scene = &scene;
+	data->scene = &scene;
 	read_input(&scene, av[1]);
-	init_data(&data, &scene);
-	create_img(&data, "scene");
-	render_scene(&scene, &data);
-	draw(&data);
-	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, \
-			data.img->mlx_img, 0, 0);
-	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
-	mlx_hook(data.win_ptr, 17, 0, destroy, &data);
-	mlx_loop(data.mlx_ptr);
-	free(data.mlx_ptr);
+	init_data(data, &scene);
+	render_scene(&scene, data);
+	create_img(data, "scene");
+	draw(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
+			data->img->mlx_img, 0, 0);
+	mlx_loop_hook(data->mlx_ptr, &render, data);
+	mlx_hook(data->win_ptr, 2, 1L << 0, handle_keypress, data);
+	mlx_hook(data->win_ptr, 17, 0, destroy, data);
+	mlx_loop(data->mlx_ptr);
+	free(data->mlx_ptr);
 }

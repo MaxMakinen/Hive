@@ -6,24 +6,28 @@ camera
 
 light
 - pos 10.0 10.0 0.0
-- brightness 5
+- brightness 10
 - color 0xFF0000
 
 light
+- pos 0.0 0.0 0.0
+- brightness 100
+
+light
 - pos -10.0 10.0 0.0
-- brightness 5
+- brightness 10
 - color 0x00FF00
 
 light
 - pos 0.0 10.0 10.0
-- brightness 5
+- brightness 10
 - color 0x0000FF
 
 sphere
 - radius 3.3
 - pos 0.0 0.0 0.0
 - dir 0.0 0.0 1.0
-- color 0xabcdef
+- color 0xaaaaaa
 
 sphere
 - radius 3.8
@@ -32,4 +36,4 @@ sphere
 
 plane
 - pos 0.0 -10.0 0.0
-- color 0xff00ff
+- color 0xFFFFFF

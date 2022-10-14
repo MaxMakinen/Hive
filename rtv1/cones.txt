@@ -1,16 +1,22 @@
 camera
-- pos 0.0 0.0 90.0
+- pos 0.0 0.0 200.0
 - dir 0.0 0.0 0.0
 - up 0.0 1.0 0.0
+- vfov 60
 
 light
-- pos 50.0 0.0 30.0
+- pos 80.0 0.0 90.0
+- brightness 40
+
+light
+- pos -80.0 0.0 90.0
+- brightness 40
 
 cone
 - pos 0.0 0.0 0.0
 - dir 0.0 1.0 0.0
 - height 10.0
-- radius 2.0
+- radius 5.0
 - color 0xff0000
 
 cone
@@ -28,6 +34,5 @@ cone
 - color 0x0000ff
 
 sphere
-- pos -10.0 0.0 -15.0
-- radius 5.0
-- color 0xffffff
+- pos 0.0 0.0 -200.0
+- radius 60.0

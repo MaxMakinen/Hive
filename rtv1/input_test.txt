@@ -1,14 +1,16 @@
 camera
-- pos 0.0 50.0 50.0
-- dir 0.0 0.0 0.0
-- up 0.0 1.0 0.0
+- pos 0.0 20.0 -50.0
+- dir 0.0 10.0 -10.0
+- up 1.0 1.0 0.0
 - vfov 60
 
 light
 - pos -50.0 50.0 20.0
+- brightness 80
 
 light
 - pos -20.0 0.0 0.0
+- brightness 12
 
 sphere
 - radius 1.1

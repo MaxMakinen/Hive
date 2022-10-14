@@ -65,6 +65,8 @@ void	populate_obj(t_obj *temp, char **words)
 	}
 	else if (ft_strncmp(words[1], "height", 6) == 0)
 		temp->height = ft_atod(words[2]);
+	else if (ft_strncmp(words[1], "brightness", 6) == 0)
+		temp->brightness = ft_atod(words[2]);
 }
 
 int	parse_line(char *line, t_obj *temp)

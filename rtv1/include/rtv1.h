@@ -38,8 +38,8 @@
 # define FALSE 0
 # define BIAS 1e-4
 # define VFOV 90
-# define BLACK 0x000000
-# define WHITE 0xFFFFFF
+# define ALBEDO 0.05729577951
+# define GAMMA 2.2
 
 typedef int	(*t_funcptr)();
 
@@ -84,6 +84,7 @@ typedef struct s_obj
 	double			radius;
 	double			radius2;
 	double			height;
+	double			brightness;
 	struct s_obj	*next;
 }	t_obj;
 
@@ -186,7 +187,8 @@ int		ft_floor(double num);
 t_obj	*get_obj(t_obj *head, enum e_type type);
 
 void	cast_ray(t_ray *ray, t_scene *scene, t_hit *hit);
-uint	shade_ray(t_scene *scene, t_hit *hit, t_obj *light);
+int		shade_ray(t_scene *scene, t_hit *hit, t_obj *light);
+t_vec3f	gamma_correct(t_vec3f color);
 
 t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, double distance);
 void	print_vec(t_vec3f *vec);

@@ -29,6 +29,7 @@ t_obj	*init_obj(void)
 	{
 		new->next = NULL;
 		new->color.color = WHITE;
+		new->brightness = 10;
 		new->dir = (t_vec3f){0.0, 1.0, 0.0};
 	}
 	return (new);
