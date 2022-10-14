@@ -86,7 +86,6 @@ int	parse_line(char *line, t_obj *temp)
 	{
 		if (words[0][0] != '-')
 		{
-			free(line);
 			ft_arrfree(words);
 			return (FALSE);
 		}
