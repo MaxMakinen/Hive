@@ -32,16 +32,25 @@ void	create_img(t_data *data, char *name)
 {
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
-		exit_error("MLX ERROR: init");
+	{
+		free(data->mlx_ptr);
+		exit_error("MLX ERROR: mlx_init");
+	}
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, \
 			WINDOW_HEIGHT, name);
 	if (data->win_ptr == NULL)
 	{
-		free(data->win_ptr);
-		exit_error("MLX ERROR: img");
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr)
+		exit_error("MLX ERROR: mlx_new_window");
 	}
 	data->img->mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, \
 			WINDOW_HEIGHT);
+	if (data->img->mlx_img == NULL)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->img->mlx_img);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		exit_error("MLX ERROR: mlx_new_image");
+	}
 	data->img->addr = mlx_get_data_addr(data->img->mlx_img, \
 			&data->img->bpp, &data->img->line_len, &data->img->endian);
 	render_background(data->img, BLACK);

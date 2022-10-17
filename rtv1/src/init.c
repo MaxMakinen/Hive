@@ -12,13 +12,15 @@
 
 #include "rtv1.h"
 
-void	init_map(t_map *map)
+int	init_map(t_map *map)
 {
 	int	*itemp;
 	int	x;
 
 	map->pool = (int *)ft_calloc(WINDOW_WIDTH * WINDOW_HEIGHT, sizeof(int));
 	map->ptr = (int **)ft_calloc(WINDOW_HEIGHT, sizeof(int *));
+	if (map->pool == NULL || map->ptr == NULL)
+		return (FALSE);
 	itemp = map->pool;
 	x = 0;
 	while (x < WINDOW_HEIGHT)
@@ -27,6 +29,7 @@ void	init_map(t_map *map)
 		itemp += WINDOW_WIDTH;
 		x++;
 	}
+	return (TRUE);
 }
 
 void	get_view(t_scene *scene, t_data *data, t_obj *temp)
@@ -88,5 +91,9 @@ void	init_data(t_data *data, t_scene *scene)
 	data->screen_max.z = 0;
 	if (!(init_camera(scene, data)))
 		exit_error("camera init failed");
-	init_map(&data->map);
+	if (!init_map(&data->map));
+	{
+		ft_putendl("init map failed");
+		clean_exit(data);
+	}
 }
