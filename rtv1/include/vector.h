@@ -43,5 +43,9 @@ t_vec3f	unit_vec(t_vec3f vec);
 double	vec_len(t_vec3f vec);
 double	dot_product(t_vec3f vec1, t_vec3f vec2);
 int		vec_compare(t_vec3f vec1, t_vec3f vec2);
+t_vec3f	vec_invert(t_vec3f vec);
+t_vec3f	vec_times(t_vec3f vec1, t_vec3f vec2);
+t_vec3f	reflect_ray(t_vec3f ray, t_vec3f normal);
+t_vec3f	get_vector(t_vec3f vector, char **words);
 
 #endif

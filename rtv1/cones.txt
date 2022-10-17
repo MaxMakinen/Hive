@@ -5,12 +5,12 @@ camera
 - vfov 60
 
 light
-- pos 80.0 0.0 90.0
-- brightness 40
+- pos 100.0 50.0 90.0
+- brightness 9000
 
 light
-- pos -80.0 0.0 90.0
-- brightness 40
+- pos -100.0 -10.0 90.0
+- brightness 8000
 
 cone
 - pos 0.0 0.0 0.0
@@ -18,6 +18,8 @@ cone
 - height 10.0
 - radius 5.0
 - color 0xff0000
+- shiny 1
+- n 5
 
 cone
 - pos 20.0 -5.0 0.0
@@ -25,6 +27,7 @@ cone
 - height 10.0
 - radius 2.0
 - color 0x00ff00
+- pattern 1
 
 cone
 - pos -20.0 -5.0 0.0
@@ -32,6 +35,9 @@ cone
 - height 10.0
 - radius 2.0
 - color 0x0000ff
+- shiny 1
+- n 5
+- pattern 1
 
 sphere
 - pos 0.0 0.0 -200.0

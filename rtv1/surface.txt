@@ -30,6 +30,7 @@ sphere
 - color 0xffffff
 - pos 50.0 20.0 -120.0
 - dir 0.1 0.2 1.0
+- pattern 1
 
 sphere
 - radius 1000.0

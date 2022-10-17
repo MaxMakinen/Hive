@@ -17,6 +17,7 @@ void	quat_init(t_quat *quat)
 	*quat = (t_quat){0.0, 0.0, 0.0, 1.0};
 }
 
+/*creates quaternion from axis angle pair*/
 void	quat_from_axis_angle(t_vec3f *axis, double angle, t_quat *quat)
 {
 	double	temp;
@@ -28,6 +29,7 @@ void	quat_from_axis_angle(t_vec3f *axis, double angle, t_quat *quat)
 	quat->z = axis->z * temp;
 }
 
+/*utility function for quat_rotate*/
 void	quat_rot_prep(t_quat *quat, double *temp)
 {
 	temp[0] = quat->w * quat->w;

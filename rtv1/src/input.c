@@ -14,20 +14,20 @@
 
 int	identify_obj(t_obj *temp, char **words)
 {
-	if (ft_strncmp(words[0], "camera", 6) == 0)
+	if (ft_strcmp(words[0], "camera") == 0)
 	{
 		temp->type = e_camera;
 		temp->vfov = VFOV;
 	}
-	else if (ft_strncmp(words[0], "light", 4) == 0)
+	else if (ft_strcmp(words[0], "light") == 0)
 		temp->type = e_light;
-	else if (ft_strncmp(words[0], "sphere", 6) == 0)
+	else if (ft_strcmp(words[0], "sphere") == 0)
 		temp->type = e_sphere;
-	else if (ft_strncmp(words[0], "plane", 5) == 0)
+	else if (ft_strcmp(words[0], "plane") == 0)
 		temp->type = e_plane;
-	else if (ft_strncmp(words[0], "cylinder", 8) == 0)
+	else if (ft_strcmp(words[0], "cylinder") == 0)
 		temp->type = e_cylinder;
-	else if (ft_strncmp(words[0], "cone", 4) == 0)
+	else if (ft_strcmp(words[0], "cone") == 0)
 		temp->type = e_cone;
 	else
 		return (FALSE);
@@ -36,30 +36,30 @@ int	identify_obj(t_obj *temp, char **words)
 
 void	populate_obj(t_obj *temp, char **words)
 {
-	if (ft_strncmp(words[1], "pos", 3) == 0)
+	if (ft_strcmp(words[1], "pos") == 0)
 		temp->pos = get_vector(temp->pos, &words[2]);
-	if (ft_strncmp(words[1], "translate", 3) == 0)
+	else if (ft_strcmp(words[1], "translate") == 0)
 		temp->pos = vec_plus(temp->pos, get_vector(temp->pos, &words[2]));
-	else if (ft_strncmp(words[1], "up", 3) == 0)
+//	else if (ft_strcmp(words[1], "rotate") == 0)
+//		temp->dir = rotate(temp, &words[2]);
+	else if (ft_strcmp(words[1], "up") == 0)
 		temp->up = get_vector(temp->up, &words[2]);
-	else if (ft_strncmp(words[1], "dir", 3) == 0)
+	else if (ft_strcmp(words[1], "dir") == 0)
 	{
 		temp->dir = get_vector(temp->dir, &words[2]);
-		temp->dir = normalize(temp->dir);
+		if (temp->type != e_camera)
+			temp->dir = normalize(temp->dir);
 	}
-	else if (ft_strncmp(words[1], "color", 5) == 0)
-		temp->color.color = ft_atoi(words[2]);
-	else if (ft_strncmp(words[1], "vfov", 5) == 0)
+	else if (ft_strcmp(words[1], "vfov") == 0)
 		temp->vfov = ft_atoi(words[2]);
-	else if (ft_strncmp(words[1], "radius", 6) == 0)
+	else if (ft_strcmp(words[1], "radius") == 0)
 	{
 		temp->radius = ft_atod(words[2]);
 		temp->radius2 = temp->radius * temp->radius;
 	}
-	else if (ft_strncmp(words[1], "height", 6) == 0)
+	else if (ft_strcmp(words[1], "height") == 0)
 		temp->height = ft_atod(words[2]);
-	else if (ft_strncmp(words[1], "brightness", 6) == 0)
-		temp->brightness = ft_atod(words[2]);
+	get_description(temp, words);
 }
 
 int	parse_line(char *line, t_obj *temp)
@@ -88,7 +88,7 @@ int	parse_line(char *line, t_obj *temp)
 	return (TRUE);
 }
 
-void	parse(t_scene *scene, const int fd)
+void	parse(t_data *data, const int fd)
 {
 	char	*line;
 	char	**words;
@@ -97,15 +97,15 @@ void	parse(t_scene *scene, const int fd)
 	int		empty;
 
 	empty = 0;
-	scene->obj = init_obj();
+	data->scene->obj = init_obj(data);
 	while (get_next_line(fd, &line))
 	{
-		temp = get_last(scene->obj);
+		temp = get_last(data->scene->obj);
 		if (line && line[0] == '#')
 			;
 		else if (*line == 0 && empty == 0)
 		{
-			temp->next = init_obj();
+			temp->next = init_obj(data);
 			empty = 1;
 		}
 		else if (line && *line)
@@ -117,12 +117,12 @@ void	parse(t_scene *scene, const int fd)
 	}
 }
 
-int	read_input(t_scene *scene, const char *file_name)
+int	read_input(t_data *data, const char *file_name)
 {
 	int	fd;
 
 	open_file(&fd, file_name);
-	parse(scene, fd);
+	parse(data, fd);
 	close_file(fd);
 	return (TRUE);
 }

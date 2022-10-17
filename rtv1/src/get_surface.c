@@ -17,7 +17,7 @@ t_vec2f	get_spherical(t_obj *obj, t_vec3f rotated)
 	t_vec2f	map;
 
 	rotated = normalize(rotated);
-	map.u = (1 + atan2(rotated.z, rotated.x) / M_PI) * 0.5;
+	map.u = 1 + (atan2(rotated.z, rotated.x) / M_PI) * 0.5;
 	map.v = acos(rotated.y) / M_PI;
 	return (map);
 }

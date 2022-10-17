@@ -68,7 +68,7 @@ int	main(int ac, char **av)
 		exit_error("Usage: ./rtv1 <input file>");
 	scene.name = "default";
 	data.scene = &scene;
-	read_input(&scene, av[1]);
+	read_input(&data, av[1]);
 	init_data(&data, &scene);
 	render_scene(&scene, &data);
 	create_img(&data, "scene");

@@ -24,3 +24,26 @@ t_vec3f	gamma_correct(t_vec3f color)
 	temp.z = pow(color.z, (1 / GAMMA));
 	return (temp);
 }
+
+t_vec3f	get_pattern(t_hit *hit)
+{
+	double	u;
+	double	v;
+
+	u = 2;
+	v = 2;
+	if (hit->obj->pattern == 1)
+	{
+		if (hit->obj->type == e_cone || hit->obj->type == e_cylinder)
+			u = hit->obj->radius * 10;
+		if (hit->obj->type == e_sphere)
+		{
+			v = hit->obj->radius * 2;
+			u = hit->obj->radius * 4;
+		}
+		if ((ft_floor(hit->surface.u * u) + \
+		ft_floor(hit->surface.v * v)) % 2 == 0)
+			return (vec_mult(hit->obj->col, 0.8));
+	}
+	return (hit->obj->col);
+}

@@ -26,6 +26,7 @@ static int	determine_color(t_scene *scene, t_hit *hit, t_ray *ray)
 	color = 0;
 	if (hit->dist > 0.0f && hit->dist < INFINITY)
 	{
+		hit->ray = ray;
 		hit->pos = get_intersect(scene->cam->pos, ray->dir, hit->dist);
 		get_normal(hit->obj, hit, ray);
 		color = shade_ray(scene, hit, scene->obj);

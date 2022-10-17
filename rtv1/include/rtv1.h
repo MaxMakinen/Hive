@@ -72,17 +72,23 @@ typedef struct s_map
 
 typedef struct s_obj
 {
-	enum e_type		type;
-	double			vfov;
-	t_vec3f			pos;
-	t_vec3f			dir;
-	t_vec3f			up;
-	t_vec3f			right;
-	t_rgb			color;
-	double			radius;
-	double			radius2;
-	double			height;
-	double			brightness;
+	enum e_type	type;
+	double		vfov;
+	t_vec3f		pos;
+	t_vec3f		dir;
+	t_vec3f		up;
+	t_vec3f		right;
+	t_vec3f		col;
+	t_rgb		color;
+	double		radius;
+	double		radius2;
+	double		height;
+	double		brightness;
+	int			pattern;
+	int			shiny;
+	double	n;
+	double	kd;
+	double	ks;
 	struct s_obj	*next;
 }	t_obj;
 
@@ -97,7 +103,6 @@ typedef struct s_scene
 	t_obj		*obj;
 	t_obj		*light;
 	t_obj		*cam;
-	int			max_objects;
 }	t_scene;
 
 typedef struct s_img
@@ -127,15 +132,17 @@ typedef struct s_hit
 	t_vec3f	normal;
 	t_vec2f	surface;
 	t_vec3f	rotated;
+	t_ray	*ray;
 	t_obj	*obj;
 	t_rgb	color;
-	t_vec3f	color3;
 	double	dist;
 }	t_hit;
 
 void	exit_error(char *str);
 int		open_file(int *fd, const char *filename);
 int		close_file(int fd);
+int		read_input(t_data *data, const char *file_name);
+t_obj	*init_obj(t_data *data);
 
 void	init_data(t_data *data, t_scene *scene);
 void	render_scene(t_scene *scene, t_data *data);
@@ -155,8 +162,6 @@ int		cylinder_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 int		cone_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 int		plane_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 
-t_rgb	color_mult(t_rgb color, double num);
-
 t_vec2f	get_spherical(t_obj *obj, t_vec3f rotated);
 t_vec2f	get_planar(t_vec3f rotated);
 t_vec2f	get_cylindrical(t_vec3f rotated);
@@ -168,34 +173,29 @@ double	deg_to_rad(double deg);
 double	get_angle(t_vec3f vec1, t_vec3f vec2);
 int		quadratic_formula(double *input, double *t0, double *t1);
 
-int		norm_dot_color(t_data *data, t_vec3f *light, t_hit *hit);
-
-int		read_input(t_scene *scene, const char *file_name);
-
 int		ft_bit(int step);
 double	ft_clamp(double num, double min, double max);
 void	ft_swapf(double *a, double *b);
 double	ft_atod(char *str);
-
-t_obj	*init_object(t_scene *scene);
-
 int		ft_floor(double num);
+
 t_obj	*get_obj(t_obj *head, enum e_type type);
 
 void	cast_ray(t_ray *ray, t_scene *scene, t_hit *hit);
 int		shade_ray(t_scene *scene, t_hit *hit, t_obj *light);
 t_vec3f	gamma_correct(t_vec3f color);
+t_vec3f	get_pattern(t_hit *hit);
 
 t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, double distance);
 void	print_vec(t_vec3f *vec);
 
-//input
+/*input*/
 char	*str_insert(char *str);
 t_obj	*get_last(t_obj *head);
-t_obj	*init_obj(void);
 t_vec3f	get_vector(t_vec3f vector, char **words);
+void	get_description(t_obj *temp, char** words);
 
-//ray utils
+/*ray utils*/
 t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, double distance);
 int		check_intersect(t_obj *obj, t_ray *ray, t_hit *hit);
 t_vec3f	get_direction(t_data *data, double x, double y, t_scene *scene);

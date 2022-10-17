@@ -20,8 +20,8 @@ SRC_DIR =		src
 INC_DIR =		include
 OBJ_DIR =		obj
 SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
-				vector_math.o vector_math2.o input.o ft_bit.o ft_clamp.o \
-				ft_swapf.o intersect_cone.o intersect_cylinder.o \
+				vector_math.o vector_math2.o vector_utils.o input.o ft_bit.o \
+				ft_clamp.o ft_swapf.o intersect_cone.o intersect_cylinder.o \
 				intersect_sphere.o quaternion.o get_normal.o intersect_plane.o\
 				shade_ray.o utility.o ft_floor.o get_surface.o rotation.o \
 				input_utils.o quat_utils.o math.o ray_utils.o shade_utils.o
