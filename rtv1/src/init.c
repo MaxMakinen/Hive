@@ -91,7 +91,7 @@ void	init_data(t_data *data, t_scene *scene)
 	data->screen_max.z = 0;
 	if (!(init_camera(scene, data)))
 		exit_error("camera init failed");
-	if (!init_map(&data->map));
+	if (!init_map(&data->map))
 	{
 		ft_putendl("init map failed");
 		clean_exit(data);

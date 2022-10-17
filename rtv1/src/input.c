@@ -40,8 +40,6 @@ void	populate_obj(t_obj *temp, char **words)
 		temp->pos = get_vector(temp->pos, &words[2]);
 	else if (ft_strcmp(words[1], "translate") == 0)
 		temp->pos = vec_plus(temp->pos, get_vector(temp->pos, &words[2]));
-//	else if (ft_strcmp(words[1], "rotate") == 0)
-//		temp->dir = rotate(temp, &words[2]);
 	else if (ft_strcmp(words[1], "up") == 0)
 		temp->up = get_vector(temp->up, &words[2]);
 	else if (ft_strcmp(words[1], "dir") == 0)
