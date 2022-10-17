@@ -40,7 +40,7 @@ void	create_img(t_data *data, char *name)
 			WINDOW_HEIGHT, name);
 	if (data->win_ptr == NULL)
 	{
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit_error("MLX ERROR: mlx_new_window");
 	}
 	data->img->mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, \

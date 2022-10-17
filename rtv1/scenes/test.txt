@@ -26,21 +26,23 @@ light
 sphere
 - radius 3.4
 - pos 0.0 0.0 0.0
-- dir 0.0 0.0 1.0
-- color 0xaaaaaa
+- rotate x 45
+- pattern 1
+
+sphere
+- radius 3.4
+- pos 8.0 0.0 0.0
+- rotate y 45
 - pattern 1
 - shiny 1
 
 sphere
-- radius 3.8
-- pos 8.0 0.0 0.0
-#- translate 2.0 0.0 0.0
-- dir 0.0 0.0 1.0
-#- color 0xFF00FF
+- radius 3.4
+- pos -8.0 0.0 0.0
+- rotate z 45
+- rotate y 45
+- pattern 1
 - shiny 1
-- n 10
-- kd 0.8
-- ks 0.2
 
 plane
 - pos 0.0 -10.0 0.0

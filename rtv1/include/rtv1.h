@@ -194,6 +194,7 @@ char	*str_insert(char *str);
 t_obj	*get_last(t_obj *head);
 t_vec3f	get_vector(t_vec3f vector, char **words);
 void	get_description(t_obj *temp, char** words);
+t_vec3f	rotation(t_obj *temp, char **words);
 
 /*ray utils*/
 t_vec3f	get_intersect(t_vec3f origin, t_vec3f direction, double distance);
