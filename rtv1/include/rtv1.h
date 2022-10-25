@@ -72,23 +72,23 @@ typedef struct s_map
 
 typedef struct s_obj
 {
-	enum e_type	type;
-	double		vfov;
-	t_vec3f		pos;
-	t_vec3f		dir;
-	t_vec3f		up;
-	t_vec3f		right;
-	t_vec3f		col;
-	t_rgb		color;
-	double		radius;
-	double		radius2;
-	double		height;
-	double		brightness;
-	int			pattern;
-	int			shiny;
-	double	n;
-	double	kd;
-	double	ks;
+	enum e_type		type;
+	double			vfov;
+	t_vec3f			pos;
+	t_vec3f			dir;
+	t_vec3f			up;
+	t_vec3f			right;
+	t_vec3f			col;
+	t_rgb			color;
+	double			radius;
+	double			radius2;
+	double			height;
+	double			brightness;
+	int				pattern;
+	int				shiny;
+	double			n;
+	double			kd;
+	double			ks;
 	struct s_obj	*next;
 }	t_obj;
 
@@ -193,7 +193,7 @@ void	print_vec(t_vec3f *vec);
 char	*str_insert(char *str);
 t_obj	*get_last(t_obj *head);
 t_vec3f	get_vector(t_vec3f vector, char **words);
-void	get_description(t_obj *temp, char** words);
+void	get_description(t_obj *temp, char **words);
 t_vec3f	rotation(t_obj *temp, char **words);
 
 /*ray utils*/

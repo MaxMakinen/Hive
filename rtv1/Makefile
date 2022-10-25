@@ -31,7 +31,6 @@ LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread
 INCLUDES =		-I $(INC_DIR)/ -I libft/
 OBJECTS =		$(addprefix $(OBJ_DIR)/, $(SRCS))
 
-
 all: $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
