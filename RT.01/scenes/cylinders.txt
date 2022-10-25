@@ -1,0 +1,48 @@
+camera
+- pos 0.0 0.0 100.0
+- dir 0.0 0.0 0.0
+- up 0.0 1.0 0.0
+- vfov 60
+
+light
+- pos 10.0 5.0 50.0
+- brightness 3000
+
+light
+- pos 5.0 0.0 10.0
+
+sphere
+- radius 5.0
+- pos 10.0 10.0 10.0
+- color 0xffffff
+- pattern 1
+#- shiny 1
+
+cylinder
+- radius 3.0
+- dir 1.0 1.0 0.0
+- pos 0.0 0.0 0.0
+- color 0xff00ff
+- pattern 1
+
+cylinder
+- radius 8.0
+- dir 0.0 1.0 0.0
+- pos -10.0 0.0 0.0
+- color 0x00ffff
+- pattern 1
+- shiny 1
+- n 5
+
+cylinder
+- radius 3.0
+- dir -1.0 1.0 0.0
+- pos -20.0 0.0 0.0
+- color 0xffff00
+- pattern 1
+- shiny 1
+
+sphere
+- radius 3.0
+- pos 10.0 0.0 0.0
+- color 0x00ff00
