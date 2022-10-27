@@ -39,6 +39,6 @@ int	disc_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1)
 		if(vec_len(vec_minus(get_intersect(ray->orig, ray->dir, *t0), obj->pos)) <= obj->radius)
 			return (TRUE);
 	}
-	*t0 = INFINITY;
+//	*t0 = INFINITY;
 	return (FALSE);
 }

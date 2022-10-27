@@ -1,0 +1,26 @@
+camera
+- pos 5.0 5.0 -10.0
+- dir 0.0 0.0 0.0
+- up 0.0 1.0 0.0
+- vfov 60
+
+light
+- pos 20.0 30.0 10.0
+
+light
+- pos 0.0 0.2 -10.0
+
+light
+- pos -20.0 30.0 0.0
+
+box
+- dir 0.0 1.0 0.0
+- bbmin -1.0 -1.0 -1.0
+- bbmax 2.0 1.0 1.0
+- color 0xFF00FF
+- pattern 1
+
+plane
+- pos 0.0 -5.0 0.0
+- dir 0.0 1.0 0.0
+- color 0x00FFAA

@@ -41,6 +41,41 @@ void	get_cone(t_obj *object, t_hit *hit)
 	hit->normal.y *= object->radius / object->height;
 }
 
+void	get_box(t_obj *object, t_hit *hit)
+{
+	t_vec3f	temp;
+	t_vec3f	sign;
+
+	temp = vec_minus(hit->pos, object->pos);
+	
+	sign.x = 1;
+	sign.y = 1;
+	sign.z = 1;
+
+	if (temp.x < 0)
+		sign.x = -1;
+	if (temp.y < 0)
+		sign.y = -1;
+	if (temp.z < 0)
+		sign.z = -1;
+	if (fabs(temp.x - object->bb_max.x) < EPSILON)
+		hit->normal = (t_vec3f){1.0, 0.0, 0.0};
+	if (fabs(temp.x - object->bb_min.x) < EPSILON)
+		hit->normal = (t_vec3f){-1.0, 0.0, 0.0};
+	
+	else if (fabs(temp.y - object->bb_max.y) < EPSILON)
+		hit->normal = (t_vec3f){0.0, 1.0, 0.0};
+	else if (fabs(temp.y - object->bb_min.y) < EPSILON)
+		hit->normal = (t_vec3f){0.0, -1.0, 0.0};
+	
+	else if (fabs(temp.z - object->bb_max.z) < EPSILON)
+		hit->normal = (t_vec3f){0.0, 0.0, 1.0};
+	else if (fabs(temp.z - object->bb_min.z) < EPSILON)
+		hit->normal = (t_vec3f){0.0, 0.0, -1.0};
+	hit->normal = normalize(hit->normal);
+	
+}
+
 void	get_normal(t_obj *object, t_hit *hit, t_ray *ray)
 {
 	rotate(object, hit);
@@ -52,6 +87,8 @@ void	get_normal(t_obj *object, t_hit *hit, t_ray *ray)
 		get_cylinder(object, hit);
 	else if (object->type == e_cone)
 		get_cone(object, hit);
+	else if (object->type == e_box)
+		get_box(object, hit);
 	if (dot_product(hit->normal, ray->dir) > 0)
 		hit->normal = vec_mult(hit->normal, -1.0);
 	hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));

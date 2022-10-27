@@ -40,6 +40,7 @@
 # define VFOV 90
 # define ALBEDO 0.05729577951
 # define GAMMA 2.2
+# define EPSILON 2.220446e-15
 
 typedef union u_rgb
 {
@@ -56,7 +57,8 @@ enum e_type
 	e_plane,
 	e_cylinder,
 	e_cone,
-	e_disc
+	e_disc,
+	e_box
 };
 
 typedef struct s_ray
@@ -80,6 +82,8 @@ typedef struct s_obj
 	t_vec3f			up;
 	t_vec3f			right;
 	t_vec3f			col;
+	t_vec3f			bb_min;
+	t_vec3f			bb_max;
 	t_rgb			color;
 	double			radius;
 	double			radius2;
@@ -163,6 +167,7 @@ int		cylinder_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 int		cone_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 int		plane_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 int		disc_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1);
+int		aabb_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1);
 
 t_vec2f	get_spherical(t_obj *obj, t_vec3f rotated);
 t_vec2f	get_planar(t_vec3f rotated);
@@ -204,5 +209,8 @@ int		check_intersect(t_obj *obj, t_ray *ray, t_hit *hit);
 t_vec3f	get_direction(t_data *data, double x, double y, t_scene *scene);
 t_obj	*get_obj(t_obj *head, enum e_type type);
 void	prep_round(t_hit *hit, t_obj **object, t_scene *scene);
+
+double	ft_max(const double num1, const double num2);
+double	ft_min(const double num1, const double num2);
 
 #endif

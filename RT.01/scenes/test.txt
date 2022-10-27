@@ -1,5 +1,5 @@
 camera
-- pos 0.0 10.0 50.0
+- pos 0.0 0.0 50.0
 - dir 0.0 0.0 0.0
 - up 0.0 1.0 0.0
 - vfov 30
@@ -10,7 +10,7 @@ light
 - color 0xFF0000
 
 light
-- pos 0.0 0.0 0.0
+- pos 0.0 90.0 90.0
 - brightness 10000
 
 light
@@ -32,7 +32,7 @@ sphere
 sphere
 - radius 3.4
 - pos 8.0 0.0 0.0
-- rotate y 45
+- rotate x 90
 - pattern 1
 - shiny 1
 

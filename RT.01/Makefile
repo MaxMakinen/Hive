@@ -24,7 +24,8 @@ SRCS =			main.o init.o keyboard_controls.o render.o img.o raytrace.o \
 				ft_clamp.o ft_swapf.o intersect_cone.o intersect_cylinder.o \
 				intersect_sphere.o quaternion.o get_normal.o intersect_plane.o\
 				shade_ray.o utility.o ft_floor.o get_surface.o rotation.o \
-				input_utils.o quat_utils.o math.o ray_utils.o shade_utils.o
+				input_utils.o quat_utils.o math.o ray_utils.o shade_utils.o \
+				ft_min.o ft_max.o intersect_box.o
 LIB =			libft/libft.a
 MAC_LIBS =		-lmlx -lm -framework OpenGL -framework AppKit
 LINUX_LIBS =	-lX11 -lXext -lmlx -lm -lpthread

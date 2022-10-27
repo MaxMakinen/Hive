@@ -51,10 +51,11 @@ t_vec3f	rotation(t_obj *temp, char **words)
 {
 	double	angle;
 
-	if (ft_isnumber(words[1], 10))
+//	if (ft_isnumber(words[1], 10))
 		angle = ft_atod(words[1]);
-	else
-		angle = 0;
+		angle = deg_to_rad(angle);
+//	else
+//		angle = 0;
 	if (ft_strcmp(words[0], "x") == 0)
 		return (rotate_xyz(temp, angle, (t_vec3f){1.0, 0.0, 0.0}));
 	else if (ft_strcmp(words[0], "y") == 0)

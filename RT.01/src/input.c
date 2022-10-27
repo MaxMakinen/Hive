@@ -31,6 +31,8 @@ int	identify_obj(t_obj *temp, char **words)
 		temp->type = e_cone;
 	else if (ft_strcmp(words[0], "disc") == 0)
 		temp->type = e_disc;
+	else if (ft_strcmp(words[0], "box") == 0)
+		temp->type = e_box;
 	else
 		return (FALSE);
 	return (TRUE);
@@ -61,6 +63,10 @@ void	populate_obj(t_obj *temp, char **words)
 	}
 	else if (ft_strcmp(words[1], "height") == 0)
 		temp->height = ft_atod(words[2]);
+	else if (ft_strcmp(words[1], "bbmin") == 0)
+		temp->bb_min = get_vector(temp->pos, &words[2]);
+	else if (ft_strcmp(words[1], "bbmax") == 0)
+		temp->bb_max = get_vector(temp->pos, &words[2]);
 	get_description(temp, words);
 }
 
