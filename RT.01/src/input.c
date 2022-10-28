@@ -33,6 +33,8 @@ int	identify_obj(t_obj *temp, char **words)
 		temp->type = e_disc;
 	else if (ft_strcmp(words[0], "box") == 0)
 		temp->type = e_box;
+	else if (ft_strcmp(words[0], "triangle") == 0)
+		temp->type = e_triangle;
 	else
 		return (FALSE);
 	return (TRUE);
@@ -67,6 +69,12 @@ void	populate_obj(t_obj *temp, char **words)
 		temp->bb_min = get_vector(temp->pos, &words[2]);
 	else if (ft_strcmp(words[1], "bbmax") == 0)
 		temp->bb_max = get_vector(temp->pos, &words[2]);
+	else if (ft_strcmp(words[1], "vertex0") == 0)
+		temp->vertex0 = get_vector(temp->pos, &words[2]);
+	else if (ft_strcmp(words[1], "vertex1") == 0)
+		temp->vertex1 = get_vector(temp->pos, &words[2]);
+	else if (ft_strcmp(words[1], "vertex2") == 0)
+		temp->vertex2 = get_vector(temp->pos, &words[2]);
 	get_description(temp, words);
 }
 

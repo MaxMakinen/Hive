@@ -29,6 +29,13 @@ void	free_objects(t_scene *scene)
 
 int	open_file(int *fd, const char *filename)
 {
+	*fd = open(filename, O_DIRECTORY);
+	if (*fd > 0)
+	{
+		ft_putendl("ERROR: input was directory.\nUsage: ./rtv1 <input .txt file>");
+		close_file(*fd);
+		exit(0);
+	}
 	*fd = open(filename, O_RDONLY);
 	if (*fd == -1)
 	{

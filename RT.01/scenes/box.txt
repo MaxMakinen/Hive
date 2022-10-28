@@ -1,5 +1,5 @@
 camera
-- pos 5.0 5.0 -10.0
+- pos 10.0 10.0 -10.0
 - dir 0.0 0.0 0.0
 - up 0.0 1.0 0.0
 - vfov 60
@@ -24,3 +24,75 @@ plane
 - pos 0.0 -5.0 0.0
 - dir 0.0 1.0 0.0
 - color 0x00FFAA
+
+triangle
+- vertex0 0.0 3.0 0.0
+- vertex1 3.0 3.0 0.0
+- vertex2 0.0 3.0 3.0
+- color 0xFFA11F
+
+triangle
+- vertex0 3.0 3.0 3.0
+- vertex1 3.0 3.0 0.0
+- vertex2 0.0 3.0 3.0
+- color 0xFFA0FF
+
+triangle
+- vertex0 0.0 3.0 0.0
+- vertex1 3.0 3.0 0.0
+- vertex2 0.0 6.0 0.0
+- color 0xFFA11F
+
+triangle
+- vertex0 3.0 3.0 0.0
+- vertex1 0.0 6.0 0.0
+- vertex2 3.0 6.0 0.0
+- color 0xFFA0FF
+
+triangle
+- vertex0 0.0 3.0 3.0
+- vertex1 0.0 6.0 3.0
+- vertex2 0.0 3.0 0.0
+- color 0xFFA11F
+
+triangle
+- vertex0 0.0 6.0 0.0
+- vertex1 0.0 3.0 0.0
+- vertex2 0.0 6.0 3.0
+- color 0xFFA0FF
+
+triangle
+- vertex0 3.0 3.0 3.0
+- vertex1 3.0 6.0 3.0
+- vertex2 0.0 3.0 3.0
+- color 0xFFA11F
+
+triangle
+- vertex0 0.0 6.0 3.0
+- vertex1 0.0 3.0 3.0
+- vertex2 3.0 6.0 3.0
+- color 0xFFA0FF
+
+triangle
+- vertex0 3.0 3.0 0.0
+- vertex1 3.0 6.0 0.0
+- vertex2 3.0 3.0 3.0
+- color 0xFFA11F
+
+triangle
+- vertex0 3.0 6.0 3.0
+- vertex1 3.0 3.0 3.0
+- vertex2 3.0 6.0 0.0
+- color 0xFFA0FF
+
+triangle
+- vertex0 0.0 6.0 0.0
+- vertex1 0.0 6.0 3.0
+- vertex2 3.0 6.0 0.0
+- color 0xFFA11F
+
+triangle
+- vertex0 3.0 6.0 3.0
+- vertex1 3.0 6.0 0.0
+- vertex2 0.0 6.0 3.0
+- color 0xFFA0FF

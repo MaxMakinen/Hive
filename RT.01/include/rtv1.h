@@ -58,13 +58,15 @@ enum e_type
 	e_cylinder,
 	e_cone,
 	e_disc,
-	e_box
+	e_box,
+	e_triangle
 };
 
 typedef struct s_ray
 {
 	t_vec3f	orig;
 	t_vec3f	dir;
+	t_vec3f	inv_dir;
 }	t_ray;
 
 typedef struct s_map
@@ -84,6 +86,9 @@ typedef struct s_obj
 	t_vec3f			col;
 	t_vec3f			bb_min;
 	t_vec3f			bb_max;
+	t_vec3f			vertex0;
+	t_vec3f			vertex1;
+	t_vec3f			vertex2;
 	t_rgb			color;
 	double			radius;
 	double			radius2;
@@ -168,6 +173,7 @@ int		cone_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 int		plane_intersect(t_ray *ray, t_obj *object, double *t0, double *t1);
 int		disc_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1);
 int		aabb_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1);
+int		triangle_intersect(t_ray *ray, t_obj *obj, double *t0, double *t1);
 
 t_vec2f	get_spherical(t_obj *obj, t_vec3f rotated);
 t_vec2f	get_planar(t_vec3f rotated);

@@ -42,6 +42,8 @@ int	check_intersect(t_obj *obj, t_ray *ray, t_hit *hit)
 		check = disc_intersect(ray, obj, &intersect, &t1);
 	else if (obj->type == e_box)
 		check = aabb_intersect(ray, obj, &intersect, &t1);
+	else if (obj->type == e_triangle)
+		check = triangle_intersect(ray, obj, &intersect, &t1);
 	if (check == TRUE && intersect < hit->dist)
 	{
 		hit->dist = intersect;

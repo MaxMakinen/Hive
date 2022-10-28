@@ -39,6 +39,7 @@ void	cast_ray(t_ray *ray, t_scene *scene, t_hit *hit)
 	t_obj	*object;
 
 	ft_bzero(hit, sizeof(t_hit));
+	ray->inv_dir = (t_vec3f){1 / ray->dir.x, 1 / ray->dir.y, 1 / ray->dir.z};
 	object = scene->obj;
 	hit->dist = INFINITY;
 	while (object != NULL)

@@ -73,7 +73,14 @@ void	get_box(t_obj *object, t_hit *hit)
 	else if (fabs(temp.z - object->bb_min.z) < EPSILON)
 		hit->normal = (t_vec3f){0.0, 0.0, -1.0};
 	hit->normal = normalize(hit->normal);
-	
+}
+
+void	get_triangle(t_obj *obj, t_hit *hit)
+{
+	hit->normal = cross_product(\
+	vec_minus(obj->vertex1, obj->vertex0), \
+	vec_minus(obj->vertex2, obj->vertex0));
+	hit->normal = normalize(hit->normal);
 }
 
 void	get_normal(t_obj *object, t_hit *hit, t_ray *ray)
@@ -89,6 +96,8 @@ void	get_normal(t_obj *object, t_hit *hit, t_ray *ray)
 		get_cone(object, hit);
 	else if (object->type == e_box)
 		get_box(object, hit);
+	else if (object->type == e_triangle)
+		get_triangle(object, hit);
 	if (dot_product(hit->normal, ray->dir) > 0)
 		hit->normal = vec_mult(hit->normal, -1.0);
 	hit->pos = vec_plus(hit->pos, vec_mult(hit->normal, BIAS));
