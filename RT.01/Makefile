@@ -57,6 +57,7 @@ libclean:
 
 libfclean:
 	rm -f $(LIB)
+	@make -C libft/ fclean
 
 clean: libclean
 	rm -f $(OBJECTS) 
