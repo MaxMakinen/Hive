@@ -99,6 +99,7 @@ int	xml_parser(char *input, t_data *output)
 	char	***storage;
 	char	*line;
 
+	//Count new lines
 	open_file(&fd, input);
 	while ((len = read(fd, buffer, 4096)) > 0)
 	{
@@ -110,7 +111,8 @@ int	xml_parser(char *input, t_data *output)
 		}
 	}
 	close_file(fd)
-	storage = (char ***)ft_calloc(sizeof(char **), nl);
+	storage = (char ***)ft_calloc(sizeof(char **), nl + 1);
+	storage[nl] = 0;
 	index = 0;
 	open_file(&fd, input);
 	while (get_next_line(fd, &line))
