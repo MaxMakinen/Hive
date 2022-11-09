@@ -3,6 +3,10 @@
 
 # include "./libft/libft.h"
 # include <math.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
 # ifndef TRUE
 #  define TRUE 1
@@ -28,6 +32,9 @@ typedef struct	s_data
 	float	vertex0;
 	float	vertex1;
 	float	vertex2;
+	char	***storage;
+	int		nl;
+	char	*nlc;
 }	t_data;
 
 #endif
