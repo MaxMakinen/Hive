@@ -90,6 +90,9 @@ int	get_floats(char *start, char *end, float *output, int max)
 	return (TRUE);
 }
 
+int	get_tuple(char *input, t_tuple *output)
+{}
+
 int	xml_parser(char *input, t_data *output)
 {
 	int		fd;
@@ -159,6 +162,11 @@ int	xml_parser(char *input, t_data *output)
 	return (TRUE);
 }
 
+void	xml_reader(t_data *data)
+{
+	char	keywords[12][10] = {"loc", "coi", "up", "rot", "size", "brightness", "type", "is", "transform", "color", "material"};
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -168,6 +176,7 @@ int	main(int ac, char **av)
 	int	x = 0;
 
 	xml_parser(av[1], &data);
+	xml_reader(&data);
 	printf("nl = %d\n", data.nl);
 	while (i <= data.nl)
 	{

@@ -25,7 +25,7 @@ CFILES += ft_strmapi.c ft_strjoin.c ft_strtrim.c ft_strsplit.c ft_wordcount.c
 CFILES += ft_memdel.c ft_strsub.c ft_strequ.c ft_strnequ.c ft_itoa.c
 CFILES += ft_arrdel.c ft_numlen.c ft_isupper.c ft_islower.c ft_isthere.c
 CFILES += ft_strmove.c values_abs.c get_next_line.c ft_atoi_base.c
-CFILES += atof.c
+CFILES += atof.c ft_isspace.c ft_calloc.c
 
 OFILES = ft_putchar.o ft_putendl.o ft_putnbr.o ft_putstr.o ft_strchr.o
 OFILES += ft_strcmp.o ft_strcpy.o ft_strdup.o ft_strlen.o ft_strncpy.o
@@ -40,7 +40,7 @@ OFILES += ft_strmapi.o ft_strjoin.o ft_strtrim.o ft_strsplit.o ft_wordcount.o
 OFILES += ft_memdel.o ft_strsub.o ft_strequ.o ft_strnequ.o ft_itoa.o
 OFILES += ft_arrdel.o ft_numlen.o ft_isupper.o ft_islower.o ft_isthere.o
 OFILES += ft_strmove.o values_abs.o get_next_line.o ft_atoi_base.o
-OFILES += atof.o
+OFILES += atof.o ft_isspace.o ft_calloc.o
 all: $(NAME) 
 
 $(NAME): $(OFILES) 
