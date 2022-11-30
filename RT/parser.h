@@ -17,7 +17,9 @@
 #  define FALSE 0
 # endif
 
-//use nodex for variable size vertex lists etc?
+typedef char ***(*t_funcptr)();
+
+//use nodes for variable size vertex lists etc?
 typedef struct	s_node
 {
 	void			*content;
@@ -31,6 +33,7 @@ typedef struct	s_data
 	int		nl;
 	char	*nlc;
 	t_object *object;
+	t_funcptr	func_ptr_array[10];
 }	t_data;
 
 #endif

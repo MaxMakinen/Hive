@@ -137,6 +137,126 @@ int	get_tuple(char **input, t_tuple *output)
 	return (TRUE);
 }
 
+int	get_end(char ***start, char **parent_end, int mode, t_data *data)
+{
+	char ***temp;
+
+	temp = start;
+	// GET_END FUNCTION give error if finds a copy before end
+	while (**temp && **temp < *parent_end)
+	{
+		if (***temp == "<")
+		{
+			if (***temp + 1 == "/" && ft_strcmp(&***temp + 2, &data->keyword_array[mode][2]))
+				temp;;
+			if (ft_strcmp(**temp, data->keyword_array[mode]))
+				printf("keyword error\n");
+		}
+		**temp++;
+	}
+	if (temp == parent_end)
+		return (FALSE);
+
+}
+
+//void	stack_new_object(t_main *main)
+//{
+//	if (main->o)
+//}
+
+//TO DO ENUM FOR MODES
+int	parse(char ***start, char ***parent_end, int mode, int *pos, t_main *main, t_data *data)
+{
+	char	***temp;
+	char	*t_word;
+	char	*end;
+	char	*keyword;
+	int		line;
+	int		row;
+	int		new_mode = 0;
+
+	temp = start;
+	//DO PREP DEPENDING ON MODE
+//	if (mode == 10)
+//		stack_new_object(main);
+	if (!get_end(start, parent_end, mode, data))
+		return (FALSE);
+	// choose mode from func ptr array
+	t_word = temp[pos[0]][pos[1]];
+	if (t_word[0] == "<")
+	{
+		while (new_mode < 13)
+		{
+			if (ft_strcmp(&t_word[1], data->keyword_array[new_mode]))
+				break;
+		}
+		if (new_mode == 13)
+			return (FALSE);
+		else
+			data->func_ptr_array[new_mode](start, end, new_mode, main, data);
+	}
+
+	if (mode == 2)
+	{
+		get_tuple(*start, &main->obj->loc);
+		return (TRUE);
+	}
+	while (**temp < end)
+	{
+
+		**temp++;
+	}
+	if (mode == 1)
+	{
+	}
+}
+
+int	*find_end(t_data *data, int *pos, int *p_end, int mode)
+{
+	while (pos[0] < p_end[0])
+	{
+		if (data->storage[pos[0]][pos[1]] == 0)
+			pos[1] = 0;
+		while (pos[1] < p_end[1])
+		{
+			if (data->storage[pos[0]][pos[1]][1] == '<')
+			{
+				if (data->storage[pos[0]][pos[1]][2] == '/')
+				{
+					if (ft_strcmp(&data->storage[pos[0]][pos[1]][2], data->keyword_array[mode]))
+						return (TRUE);
+				}
+				else if (ft_strcmp(&data->storage[pos[0]][pos[1]][1], data->keyword_array[mode]))
+					return (FALSE);
+			}
+			pos[1]++;
+		}
+		pos[0]++;
+	}
+	return (FALSE);
+
+}
+int	wordfinder(t_main *main, t_data *data, int *pos, int *parent_end, int mode)
+{
+	int	end[2];
+
+	//memset(end, 0, (sizeof(int) * 3));
+	end[0] = pos[0];
+	end[1] = pos[1];
+	if (!find_end(data, end, parent_end, mode))
+		return (FALSE);
+	while (pos[0] < p_end[0])
+	{
+		if (data->storage[pos[0]][pos[1]] == 0)
+			pos[1] = 0;
+		while (pos[1] < p_end[1])
+		{
+			pos[1]++;
+		}
+		pos[0]++
+	}
+}
+
 int	xml_parser(char *input, t_data *output)
 {
 	int		fd;
@@ -213,42 +333,4 @@ void	xml_end(t_data *data)
 		}
 		x++;
 	}
-}
-
-int	main(int ac, char **av)
-{
-	t_data	data;
-	t_object obj;
-	char	nlc[1];
-
-	int	i = 0;
-	int	x = 0;
-
-	data.object = &obj;
-
-	xml_parser(av[1], &data);
-	xml_end(&data);
-	printf("nl = %d\n", data.nl);
-	while (i <= data.nl)
-	{
-		x = 0;
-		if (data.storage[i] == NULL)
-		{
-			printf("S[%d][%d] -=EMPTY=-\n", i + 1, x);
-			i++;
-			continue;
-		}
-		while (data.storage[i][x] && data.storage[i][x] != 0)
-		{
-			if (x > 0 && data.storage[i][x][1] != '/')
-				printf("	S[%d][%d] = %s	", i + 1, x, data.storage[i][x]);
-			else
-				printf("S[%d][%d] = %s	", i + 1, x, data.storage[i][x]);
-			printf("\n");
-			x++;
-		}
-		i++;
-	}
-	printf("= loc = \na[0] = %f\na[1] = %f\na[2] = %f\na[3] = %f\n", data.object->loc.a[0], data.object->loc.a[1], data.object->loc.a[2], data.object->loc.a[3]);
-	return (0);
 }

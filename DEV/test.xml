@@ -2,7 +2,18 @@
 	<camera>
 		<position> 1.0 2.0 -3.0 </position>
 	</camera>
-	<object>
-		<loc> 0.0 0.0 1.0 </loc>
+	<object type="sphere">
+		<loc> 0.0 2.0 10.0 </loc>
+		<rot> 3.0 0.0 0.0 </rot>
+	</object>
+	<object type="plane">
+		<loc> 65.0 0.0 27.0 </loc>
+		<rot> 0.00045 -0.0 -890.0 </rot>
+		<coi> 9.5 86.0 0.0 </coi>
+	</object>
+	<object type="cylinder">
+		<loc>50.0 8.0 13.0 </loc>
+		<rot> 3.0 9.0 0.0 </rot>
+		<coi> 9.5 2.87 0.0 </coi>
 	</object>
 </scene>
