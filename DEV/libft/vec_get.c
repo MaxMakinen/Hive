@@ -15,11 +15,13 @@
 void	*vec_get(t_vec *src, size_t index)
 {
 	unsigned char	*ptr;
+	unsigned char	*memory;
 
+	memory = (unsigned char *)src->memory;
 	if (index >= src->len)
 		return (NULL);
 	if (index >= src->len || !src || !src->memory)
 		return (NULL);
-	ptr = &src->memory[src->elem_size * index];
+	ptr = &memory[src->elem_size * index];
 	return (ptr);
 }

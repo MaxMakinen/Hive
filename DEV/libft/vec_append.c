@@ -17,8 +17,10 @@
 */
 int	vec_append(t_vec *dst, t_vec *src)
 {
-	size_t	space_needed;
+	size_t			space_needed;
+	unsigned char	*memory;
 
+	memory = (unsigned char *)dst->memory;
 	if (!dst || !src || !src->memory)
 		return (-1);
 	if (!dst->memory)
@@ -30,7 +32,7 @@ int	vec_append(t_vec *dst, t_vec *src)
 			return (-1);
 	}
 	ft_memcpy(
-		&dst->memory[dst->len * dst->elem_size],
+		&memory[dst->len * dst->elem_size],
 		src->memory,
 		src->len * 1);
 	dst->len += src->len;

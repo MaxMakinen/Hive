@@ -17,12 +17,15 @@
  */
 int	vec_push(t_vec *vec, void *elem)
 {
+	unsigned char *memory;
+
+	memory = (unsigned char *)vec->memory;
 	if (!vec || !elem)
 		return (-1);
 	if ((vec->len * vec->elem_size) == vec->alloc_size)
 		if (vec_resize(vec, vec->len * 2) == -1)
 			return (-1);
-	ft_memcpy(&vec->memory[vec->len * vec->elem_size], elem, vec->elem_size);
+	ft_memcpy(&memory[vec->len * vec->elem_size], elem, vec->elem_size);
 	vec->len++;
 	return (1);
 }
