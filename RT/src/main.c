@@ -98,11 +98,7 @@ int	main(int ac, char **av)
 //		ft_putendl_fd("Usage: Give .xml file as input", 2);
 //		return (1);
 //	}
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		return (1);
-	if (initialize_window(&main) == 0)
-		return (1);
-		//FREE BUFFERS!!!!!!
+
 	
 	main.sdl.stereocopy = FALSE;
 	cam_transform = matrix_translate(0.0, 0.0, -10.0);
@@ -144,29 +140,35 @@ int	main(int ac, char **av)
 		main.obj[0].material.pattern.pattern_perlin = TRUE;
 		main.obj[0].negative = FALSE;
 
-		main.obj[0] = object_new(CONE);
-		main.obj[0].transform = matrix_translate(5.0, 2.0, 20.0);
-												x_r = 0.0;
-												y_r = 0.0;
-												z_r = 0.0;
+	main.obj[1] = object_new(CONE);
+	main.obj[1].transform = matrix_translate(5.0, 2.0, 10.0);
+											x_r = 0.0;
+											y_r = 0.0;
+											z_r = 0.0;
 
-		rotate = matrix_rotate_x(x_r);
-		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-		rotate = matrix_rotate_y(y_r);
-		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-		rotate = matrix_rotate_z(z_r);
-		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-		scale = matrix_scale(0.5, 1, 1);
-		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &scale);
-		main.obj[1].material.color = color_new(1, 0.5, 0);
-		main.obj[1].material.pattern.pattern_id = NONE;
-		main.obj[1].material.pattern.pattern_perlin = FALSE;
-		main.obj[1].negative = FALSE;
+	rotate = matrix_rotate_x(x_r);
+	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+	rotate = matrix_rotate_y(y_r);
+	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+	rotate = matrix_rotate_z(z_r);
+	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+	scale = matrix_scale(0.5,1,1);
+	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &scale);
+	main.obj[1].material.color = color_new(1, 0.5,0);
+	main.obj[1].material.pattern.pattern_id = NONE;
+	main.obj[1].material.pattern.pattern_perlin = FALSE;
+	main.obj[1].negative = FALSE;
+
 
 		main.obj_count = 2;
 	}
 	int draw_debug = 0;
 
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+		return (1);
+	if (initialize_window(&main) == 0)
+		return (1);
+		//FREE BUFFERS!!!!!!
 	if (!draw_debug)
 	{
 		initialize_camera(&main.cam, cam_transform);

@@ -17,49 +17,52 @@
 void	get_tuple(t_tuple *tuple, char *str)
 {
 	int	index;
+	int	index_t = 0;
 
 	index = 0;
-	while (*str != '\0')
+	while (str[index] != '\0')
 	{
-		while (ft_isspace(*str))
-			str++;
-		if (!str)
-			break;
-		tuple->a[index] = ft_atof(str);
+
+		tuple->a[index_t] = ft_atof(str);
+		str++;
 		while(ft_isalnum(*str))
 			str++;
-		if (!str)
-			break;
-		index++;
+		index_t++;
 	}
 }
-
+/*
 int	get_material(t_xml_node *node, t_object *obj)
 {
-	t_xml_attr	*attr;
+//	t_xml_attr	*attr;
 	int			index;
+//	t_tuple		col;
 
 	index = 0;
 	if (node->attributes.size == 0)
 		return (FALSE);
 	while (index < node->attributes.size)
 	{
-		attr = &node->attributes.list[index];
-		if (!ft_strcmp(attr->key, "pattern") && !ft_strcmp(attr->key, "grid"))
-		{
-			obj->material.pattern.pattern_id = GRID;
-		}
-		else if (!ft_strcmp(attr->key, "perlin") && !ft_strcmp(attr->key, "false"))
-		{
-			obj->material.pattern.pattern_id = FALSE;
-		}
+//		attr = &node->attributes.list[index];
+//		if (!ft_strcmp(attr->key, "pattern") && !ft_strcmp(attr->value, "grid"))
+//		{
+//			obj->material.pattern.pattern_id = GRID;
+//		}
+//		else if (!ft_strcmp(attr->key, "perlin") && !ft_strcmp(attr->value, "true"))
+//		{
+//			obj->material.pattern.pattern_perlin = TRUE;
+//		}
+//		else if (!ft_strcmp(attr->key, "perlin") && !ft_strcmp(attr->value, "false"))
+//		{
+//			obj->material.pattern.pattern_perlin = FALSE;
+//		}
 		index++;
 	}
-	get_tuple(&obj->material.color, node->data);
+//	get_tuple(&col, node->data);
+//	obj->material.color = color_new(col.a[0], col.a[1], col.a[2]);
 	return (TRUE);
-}
+}*/
 
-int	get_object(t_xml_node *node, t_object *obj)
+int	get_object(t_xml_node *node, t_object *obj, t_object *storage)
 {
 	t_xml_attr	*attr;
 	t_xml_node	*temp;
@@ -71,32 +74,32 @@ int	get_object(t_xml_node *node, t_object *obj)
 	while (index < node->attributes.size)
 	{
 		attr = &node->attributes.list[index];
-		if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->key, "sphere"))
+		if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->value, "sphere"))
 		{
 			*obj = object_new(SPHERE);
 			break;
 		}
-		if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->key, "cylinder"))
+		else if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->value, "cylinder"))
 		{
 			*obj = object_new(CYLINDER);
 			break;
 		}
-		if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->key, "plane"))
+		else if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->value, "plane"))
 		{
 			*obj = object_new(PLANE);
 			break;
 		}
-		if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->key, "cone"))
+		else if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->value, "cone"))
 		{
 			*obj = object_new(CONE);
 			break;
 		}
-		if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->key, "sun"))
+		else if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->value, "sun"))
 		{
 			*obj = object_new(SUN);
 			break;
 		}
-		if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->key, "point"))
+		else if (!ft_strcmp(attr->key, "type") && !ft_strcmp(attr->value, "point"))
 		{
 			*obj = object_new(POINT);
 			break;
@@ -109,31 +112,39 @@ int	get_object(t_xml_node *node, t_object *obj)
 		temp = node->children.list[index];
 		if (!ft_strcmp(temp->tag, "loc"))
 		{
-			get_tuple(&obj->loc, temp->data);
+			get_tuple(&storage->loc, temp->data);
 		}
 		else if (!ft_strcmp(temp->tag, "coi"))
 		{
-			get_tuple(&obj->coi, temp->data);
+			get_tuple(&storage->coi, temp->data);
 		}
 		else if (!ft_strcmp(temp->tag, "up"))
 		{
-			get_tuple(&obj->up, temp->data);
+			get_tuple(&storage->up, temp->data);
 		}
 		else if (!ft_strcmp(temp->tag, "rot"))
 		{
-			get_tuple(&obj->rot, temp->data);
+			get_tuple(&storage->rot, temp->data);
 		}
 		else if (!ft_strcmp(temp->tag, "color"))
 		{
-			get_tuple(&obj->color, temp->data);
+			get_tuple(&storage->color, temp->data);
 		}
 		else if (!ft_strcmp(temp->tag, "size"))
 		{
-			obj->size = ft_atof(temp->data);
+			storage->size = ft_atof(temp->data);
 		}
 		else if (!ft_strcmp(temp->tag, "brightness"))
 		{
-			obj->brightness = ft_atof(temp->data);
+			storage->brightness = ft_atof(temp->data);
+		}
+		else if (!ft_strcmp(temp->tag, "material"))
+		{
+//			if(!get_material(temp, obj))
+//			{
+//				ft_putendl_fd("ERROR: Failed to get material info", 2);
+//				return (FALSE);
+//			}
 		}
 		index++;
 	}
@@ -144,25 +155,34 @@ int	read_xml(t_xml_doc *doc, t_main *main)
 {
 	t_xml_node	*node;
 	int			index;
-	int			obj_amount = 0;
+	int			obj_amount;
 	t_matrix	rotate;
 	t_object	*obj;
+	t_object	storage;
 
 	index = 0;
+	obj_amount = 0;
 	node = doc->head;
 	while (index < node->children.size)
 	{
 		if (!ft_strcmp(node->children.list[index]->tag, "object"))
 		{
 			obj = &main->obj[obj_amount];
-			get_object(node, obj);
-			obj->transform = matrix_translate(obj->loc.a[0], obj->loc.a[1], obj->loc.a[2]);
-			rotate = matrix_rotate_x(obj->rot.s_xyzw.x);
+			get_object(node->children.list[index], obj, &storage);
+			obj->transform = matrix_translate(storage.loc.a[0], storage.loc.a[1], storage.loc.a[2]);
+			rotate = matrix_rotate_x(storage.rot.a[0]);
 			obj->transform = matrix_multiply(&obj->transform, &rotate);
-			rotate = matrix_rotate_y(obj->rot.s_xyzw.y);
+			rotate = matrix_rotate_y(storage.rot.a[1]);
 			obj->transform = matrix_multiply(&obj->transform, &rotate);
-			rotate = matrix_rotate_z(obj->rot.s_xyzw.z);
+			rotate = matrix_rotate_z(storage.rot.a[2]);
 			obj->transform = matrix_multiply(&obj->transform, &rotate);
+			rotate = matrix_scale(4, 4, 4);
+			obj->transform = matrix_multiply(&obj->transform, &rotate);
+			obj->loc = point_new(0, 0, 0);
+			obj->rot.a[0] = 0;
+			obj->rot.a[1] = 0;
+			obj->rot.a[2] = 0;
+			obj->rot.a[3] = 0;
 			obj_amount++;
 		}
 		index++;

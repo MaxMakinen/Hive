@@ -99,7 +99,6 @@ t_xml_node	*xml_nodelist_at(t_xml_nodelist *list, int index);
 
 /* input */
 int		read_xml(t_xml_doc *doc, t_main *main);
-int		get_object(t_xml_node *node, t_object *obj);
 int		get_material(t_xml_node *node, t_object *obj);
 void	get_tuple(t_tuple *tuple, char *str);
 

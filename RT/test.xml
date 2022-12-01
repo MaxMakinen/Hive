@@ -1,7 +1,6 @@
-<object type="sphere">
-	<loc> 0.0 0.0 0.0 </loc>
+<object type="cone">
+	<loc> 0.2 0.0 10.0 </loc>
 	<rot> 0.0 0.0 0.0 </rot>
-	<color> 1 0 0 </color>
-	<material pattern="grid" perlin="false"> 1 0 0 </material>
-	<scale> 5 5 5 </scale>
+	<material pattern="grid" perlin="false"> 1.0 0.0 0.0 </material>
+	<scale> 4.0 4.0 4.0 </scale>
 </object>
