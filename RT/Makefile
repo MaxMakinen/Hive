@@ -6,7 +6,7 @@
 #    By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 15:53:52 by jjuntune          #+#    #+#              #
-#    Updated: 2022/11/28 17:04:27 by jjuntune         ###   ########.fr        #
+#    Updated: 2022/12/01 11:43:49 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,7 +106,7 @@ SRC_FILES = $(addprefix $(SRC_DIR), main.c \
 								negative_shape.c\
 								camera_coi_transform.c\
 								stereoscopy.c)
-
+# unit_tests.c
 OBJCT_FILES = $(subst $(SRC_DIR), $(BUILD_DIR), $(SRC_FILES:.c=.o))
 
 NAME = RT
