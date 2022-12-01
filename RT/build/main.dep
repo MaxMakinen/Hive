@@ -53,7 +53,7 @@ build/main.o: src/main.c src/../include/rt.h \
  src/../include/multi_thread.h src/../include/rt.h \
  src/../include/object.h src/../include/matrix.h src/../include/coords.h \
  src/../include/tuple.h src/../include/vector.h src/../include/patterns.h \
- src/../include/perlin_noice.h
+ src/../include/perlin_noice.h src/../include/yaxml.h
 src/../include/rt.h:
 src/../include/../build/libsdl2/include/SDL2/SDL.h:
 src/../include/../build/libsdl2/include/SDL2/SDL_main.h:
@@ -117,3 +117,4 @@ src/../include/tuple.h:
 src/../include/vector.h:
 src/../include/patterns.h:
 src/../include/perlin_noice.h:
+src/../include/yaxml.h:

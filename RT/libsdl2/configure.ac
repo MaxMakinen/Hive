@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_PREREQ([2.63])
+AC_PREREQ([2.71])
 AC_INIT
 AC_CONFIG_SRCDIR([src/SDL.c])
 AC_CONFIG_HEADERS([include/SDL_config.h])
@@ -309,7 +309,15 @@ if test x$enable_libc = xyes; then
     AC_DEFINE(HAVE_LIBC, 1, [ ])
 
 dnl Check for C library headers
-    AC_HEADER_STDC
+    m4_warn([obsolete],
+[The preprocessor macro `STDC_HEADERS' is obsolete.
+  Except in unusual embedded environments, you can safely include all
+  ISO C90 headers unconditionally.])dnl
+# Autoupdate added the next two lines to ensure that your configure
+# script's behavior did not change.  They are probably safe to remove.
+AC_CHECK_INCLUDES_DEFAULT
+AC_PROG_EGREP
+
     AC_CHECK_HEADERS(sys/types.h stdio.h stdlib.h stddef.h stdarg.h malloc.h memory.h string.h strings.h wchar.h inttypes.h stdint.h limits.h ctype.h math.h float.h iconv.h signal.h)
 
 dnl Check for typedefs, structures, etc.
@@ -2651,7 +2659,7 @@ dnl             Work around that we don't have Objective-C support in autoconf
         esac
         if test x$enable_video_vulkan = xno; then
             # For reasons I am totally unable to see, I get an undefined macro error if
-            # I put this in the AC_TRY_COMPILE.
+            # I put this in the AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[],[]).
             AC_MSG_WARN([Vulkan does not work on this configuration.])
         fi
     fi

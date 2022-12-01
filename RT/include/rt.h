@@ -33,6 +33,14 @@
 # define A_A_DIV 6
 # define EPSILON 0.00006103515625
 
+# ifndef TRUE
+#  define TRUE 1
+# endif
+
+# ifndef FALSE
+#  define FALSE 0
+# endif
+
 enum
 {
 	STEREOSCOPY,

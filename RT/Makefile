@@ -10,19 +10,19 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRC_DIR = src/
-INCLUDE_DIR = src/ include/ build/libsdl2/include/
-BUILD_DIR = build/
-SCREEN_SHOT_DIR = Images/
+SRC_DIR := src/
+INCLUDE_DIR = src/ include/ build/libsdl2/include/ libft/
+BUILD_DIR := build/
+SCREEN_SHOT_DIR := Images/
 
-libsdl2_makefile = libsdl2/Makefile
-libsdl2_lib = $(BUILD_DIR)libsdl2/lib/libSDL2.a
-libsdl2_cflags = `$(BUILD_DIR)libsdl2/bin/sdl2-config --cflags`
-libsdl2_ldflags = `$(BUILD_DIR)libsdl2/bin/sdl2-config --libs`
+libsdl2_makefile := libsdl2/Makefile
+libsdl2_lib := $(BUILD_DIR)libsdl2/lib/libSDL2.a
+libsdl2_cflags := `$(BUILD_DIR)libsdl2/bin/sdl2-config --cflags`
+libsdl2_ldflags := `$(BUILD_DIR)libsdl2/bin/sdl2-config --libs`
 
-FT_LIBRERY = libft/libft.a
+FT_LIBRERY := libft/libft.a
 
-SRC_FILES = $(addprefix $(SRC_DIR), main.c \
+SRC_FILES := $(addprefix $(SRC_DIR), main.c \
 								initialize.c\
 								vector_functions.c\
 								vector_functions2.c\
@@ -105,29 +105,30 @@ SRC_FILES = $(addprefix $(SRC_DIR), main.c \
 								pattern_grid.c\
 								negative_shape.c\
 								camera_coi_transform.c\
-								stereoscopy.c)
+								stereoscopy.c\
+								input.c)
 # unit_tests.c
-OBJCT_FILES = $(subst $(SRC_DIR), $(BUILD_DIR), $(SRC_FILES:.c=.o))
+OBJCT_FILES := $(subst $(SRC_DIR), $(BUILD_DIR), $(SRC_FILES:.c=.o))
 
-NAME = RT
+NAME := RT
 
-DEPENDENCY_FILES = $(subst $(SRC_DIR), $(BUILD_DIR), $(SRC_FILES:.c=.dep))
+DEPENDENCY_FILES := $(subst $(SRC_DIR), $(BUILD_DIR), $(SRC_FILES:.c=.dep))
 DEPENDENCY_FLAGS = -MT $(@) -MMD -MP -MF $(BUILD_DIR)$(*).dep
 
-LD = gcc
-LDFLAGS = $(libsdl2_ldflags) # -flto
-CC = gcc
-OPTFLAGS = -O3 -flto # PUT BACK IN
-CFLAGS = -g -c -Wall -Werror -Wextra  $(addprefix -I, $(INCLUDE_DIR))\
+LD := gcc
+LDFLAGS := $(libsdl2_ldflags) # -flto
+CC := gcc
+OPTFLAGS := -O3 -flto # PUT BACK IN
+CFLAGS := -g -c -Wall -Werror -Wextra  $(addprefix -I , $(INCLUDE_DIR))\
 	$(libsdl2_cflags)
-CPPFLAGS = -D_REENTRANT
+CPPFLAGS := -D_REENTRANT
 
 all: $(NAME)
 
 $(NAME): $(FT_LIBRERY) $(SCREEN_SHOT_DIR) $(OBJCT_FILES) | $(BUILD_DIR) 
-	$(LD) -g $(OBJCT_FILES) $(LDFLAGS) -o $(NAME) $(FT_LIBRERY)
+	$(LD) -g $(OBJCT_FILES) $(LDFLAGS) -o $(NAME) $(FT_LIBRERY) yaxml.a
 
-$(OBJCT_FILES): $(libsdl2_lib)
+$(OBJCT_FILES): #$(libsdl2_lib)
 
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)

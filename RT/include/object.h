@@ -20,10 +20,8 @@
 # include "patterns.h"
 # include <stdlib.h>
 
-enum
+enum e_object
 {
-	FALSE,
-	TRUE,
 	SPHERE,
 	CYLINDER,
 	PLANE,

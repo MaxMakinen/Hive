@@ -1,0 +1,7 @@
+<object type="sphere">
+	<loc> 0.0 0.0 0.0 </loc>
+	<rot> 0.0 0.0 0.0 </rot>
+	<color> 1 0 0 </color>
+	<material pattern="grid" perlin="false"> 1 0 0 </material>
+	<scale> 5 5 5 </scale>
+</object>

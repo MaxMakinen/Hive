@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/rt.h"
+#include "../include/yaxml.h"
 
 //Copys 1d arrey to texture and draws it.
 
@@ -80,7 +81,7 @@ void	rt_loop_and_exit(t_sdl *sdl)
 
 void	tests(t_main *main, int draw_debug); // unit tests
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_main		main;
 	t_matrix	cam_transform;
@@ -90,7 +91,13 @@ int	main(void)
 	double	x_r;
 	double	y_r;
 	double	z_r;
+	t_xml_doc	doc;
 
+//	if (ac != 2)
+//	{
+//		ft_putendl_fd("Usage: Give .xml file as input", 2);
+//		return (1);
+//	}
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		return (1);
 	if (initialize_window(&main) == 0)
@@ -105,123 +112,59 @@ int	main(void)
 	main.cam.coi = point_new(0.0, 0.0, 0.0);
 
 	main.light = point_light_new(point_new(0.0, 2.5, -10.0), color_new(1,1,1));
-	// main.light.pos = point_new(10, 0, 0);
-	
-	main.obj[0] = object_new(SPHERE);
-	main.obj[0].transform = matrix_translate(0.0, 0.0, 0.0);
-											x_r = 0.0;
-											y_r = 0.0;
-											z_r = 0.0;
+	//main.light.pos = point_new(10, 0, 0);
+	if (ac == 2)
+	{
+		if (!xml_doc_load(&doc, av[1]))
+		{
+			ft_putendl_fd("couldn't read file!", 2);
+			return (1);
+		}
+		read_xml(&doc, &main);
+		xml_doc_free(&doc);
+	}
+	else
+	{
+		main.obj[0] = object_new(SPHERE);
+		main.obj[0].transform = matrix_translate(0.2, 0.0, 10.0);
+												x_r = 0.0;
+												y_r = 0.0;
+												z_r = 0.0;
 
-	rotate = matrix_rotate_x(x_r);
-	main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &rotate);
-	rotate = matrix_rotate_y(y_r);
-	main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &rotate);
-	rotate = matrix_rotate_z(z_r);
-	main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &rotate);
-	scale = matrix_scale(5,5,5);
-	main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &scale);
-	main.obj[0].material.color = color_new(0,1,1);
-	main.obj[0].material.pattern.pattern_id = GRID;
-	main.obj[0].material.pattern.pattern_perlin = TRUE;
-	main.obj[0].negative = TRUE;
-	
-	main.obj[1] = object_new(PLANE);
-	main.obj[1].transform = matrix_translate(0, -10.0, 15.0);
-											x_r = 0.0;
-											y_r = 0.0;
-											z_r = 0.0;
+		rotate = matrix_rotate_x(x_r);
+		main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &rotate);
+		rotate = matrix_rotate_y(y_r);
+		main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &rotate);
+		rotate = matrix_rotate_z(z_r);
+		main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &rotate);
+		scale = matrix_scale(4,4,4);
+		main.obj[0].transform = matrix_multiply(&main.obj[0].transform, &scale);
+		main.obj[0].material.color = color_new(1, 0.3,0.1);
+		main.obj[0].material.pattern.pattern_id = GRID;
+		main.obj[0].material.pattern.pattern_perlin = TRUE;
+		main.obj[0].negative = FALSE;
 
-	rotate = matrix_rotate_x(x_r);
-	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-	rotate = matrix_rotate_y(y_r);
-	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-	rotate = matrix_rotate_z(z_r);
-	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-	main.obj[1].material.color = color_new(0.1, 0.0, 0.9);
-	main.obj[1].material.pattern.pattern_id = NONE;
-	main.obj[1].material.pattern.pattern_perlin = TRUE;
-	main.obj[1].negative = FALSE;
+		main.obj[0] = object_new(CONE);
+		main.obj[0].transform = matrix_translate(5.0, 2.0, 20.0);
+												x_r = 0.0;
+												y_r = 0.0;
+												z_r = 0.0;
 
+		rotate = matrix_rotate_x(x_r);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+		rotate = matrix_rotate_y(y_r);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+		rotate = matrix_rotate_z(z_r);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+		scale = matrix_scale(0.5, 1, 1);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &scale);
+		main.obj[1].material.color = color_new(1, 0.5, 0);
+		main.obj[1].material.pattern.pattern_id = NONE;
+		main.obj[1].material.pattern.pattern_perlin = FALSE;
+		main.obj[1].negative = FALSE;
 
-	main.obj[2] = object_new(PLANE);
-	main.obj[2].transform = matrix_translate(2.5, -1.0, 15.0);
-											x_r = 0.0;
-											y_r = 0.0;
-											z_r = 0.0;
-
-	rotate = matrix_rotate_x(x_r);
-	main.obj[2].transform = matrix_multiply(&main.obj[2].transform, &rotate);
-	rotate = matrix_rotate_y(y_r);
-	main.obj[2].transform = matrix_multiply(&main.obj[2].transform, &rotate);
-	rotate = matrix_rotate_z(z_r);
-	main.obj[2].transform = matrix_multiply(&main.obj[2].transform, &rotate);
-	main.obj[2].material.color = color_new(0.9,1,0.5);
-	main.obj[2].material.pattern.pattern_id = NONE;
-	main.obj[2].material.pattern.pattern_perlin = TRUE;
-	main.obj[2].negative = FALSE;
-
-
-
-	main.obj[3] = object_new(CONE);
-	main.obj[3].transform = matrix_translate(5.0, 2.0, 10.0);
-											x_r = 0.0;
-											y_r = 0.0;
-											z_r = 0.0;
-
-	rotate = matrix_rotate_x(x_r);
-	main.obj[3].transform = matrix_multiply(&main.obj[3].transform, &rotate);
-	rotate = matrix_rotate_y(y_r);
-	main.obj[3].transform = matrix_multiply(&main.obj[3].transform, &rotate);
-	rotate = matrix_rotate_z(z_r);
-	main.obj[3].transform = matrix_multiply(&main.obj[3].transform, &rotate);
-	scale = matrix_scale(0.5,1,1);
-	main.obj[3].transform = matrix_multiply(&main.obj[3].transform, &scale);
-	main.obj[3].material.color = color_new(1, 0.5,0);
-	main.obj[3].material.pattern.pattern_id = NONE;
-	main.obj[3].material.pattern.pattern_perlin = FALSE;
-	main.obj[3].negative = FALSE;
-
-	main.obj[4] = object_new(CYLINDER);
-	main.obj[4].transform = matrix_translate(-3.0, -2.0, 10.0);
-											x_r = 0.0;
-											y_r = 0.0;
-											z_r = 0.0;
-
-	rotate = matrix_rotate_x(x_r);
-	main.obj[4].transform = matrix_multiply(&main.obj[4].transform, &rotate);
-	rotate = matrix_rotate_y(y_r);
-	main.obj[4].transform = matrix_multiply(&main.obj[4].transform, &rotate);
-	rotate = matrix_rotate_z(z_r);
-	main.obj[4].transform = matrix_multiply(&main.obj[4].transform, &rotate);
-	scale = matrix_scale(1,1,1);
-	main.obj[4].transform = matrix_multiply(&main.obj[4].transform, &scale);
-	main.obj[4].material.color = color_new(1, 0.5,0);
-	main.obj[4].material.pattern.pattern_id = NONE;
-	main.obj[4].material.pattern.pattern_perlin = FALSE;
-	main.obj[4].negative = FALSE;
-	
-	main.obj[5] = object_new(SPHERE);
-	main.obj[5].transform = matrix_translate(0.0, 0.0, 10.0);
-											x_r = 0.0;
-											y_r = 0.0;
-											z_r = 0.0;
-
-	rotate = matrix_rotate_x(x_r);
-	main.obj[5].transform = matrix_multiply(&main.obj[5].transform, &rotate);
-	rotate = matrix_rotate_y(y_r);
-	main.obj[5].transform = matrix_multiply(&main.obj[5].transform, &rotate);
-	rotate = matrix_rotate_z(z_r);
-	main.obj[5].transform = matrix_multiply(&main.obj[5].transform, &rotate);
-	scale = matrix_scale(4,4,4);
-	main.obj[5].transform = matrix_multiply(&main.obj[5].transform, &scale);
-	main.obj[5].material.color = color_new(1, 0.3,0.1);
-	main.obj[5].material.pattern.pattern_id = GRID;
-	main.obj[5].material.pattern.pattern_perlin = TRUE;
-	main.obj[5].negative = FALSE;
-
-	main.obj_count = 4;
-	
+		main.obj_count = 2;
+	}
 	int draw_debug = 0;
 
 	if (!draw_debug)
