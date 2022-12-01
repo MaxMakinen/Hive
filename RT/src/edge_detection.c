@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:02:06 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/10/20 13:43:00 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:16:49 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	int_to_rgb(int color, t_color *rgb)
 {
-	rgb->rgb.r = (color) >> 24 & 255;
-	rgb->rgb.g = (color) >> 16 & 255;
-	rgb->rgb.b = (color) >> 8 & 255;
+	rgb->s_rgb.r = (color) >> 24 & 255;
+	rgb->s_rgb.g = (color) >> 16 & 255;
+	rgb->s_rgb.b = (color) >> 8 & 255;
 }
 
 int	rgb_to_white(t_color *rgb)
 {
 	int	color;
 
-	color = (((rgb->rgb.r) + (rgb->rgb.g) + (rgb->rgb.b)) / 3);
+	color = (((rgb->s_rgb.r * 0.4) + (rgb->s_rgb.g * 0.3) + (rgb->s_rgb.b * 0.3)));
 	return (color << 24 | color << 16 | color << 8);
 }
 
@@ -53,7 +53,7 @@ static void	great_mask(t_frame_buffer *fb)
 	double	color;
 	double	scale;
 
-	scale = 0.015686;
+	scale = 0.02;
 	j = 1;
 	while (j < (WIN_H - 1))
 	{

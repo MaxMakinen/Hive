@@ -1,0 +1,1 @@
+build/discriminant.o: src/discriminant.c

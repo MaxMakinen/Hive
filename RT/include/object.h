@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:56:24 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/11/16 19:08:48 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:06:12 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_object
 	double			size;
 	double			brightness;
 	int				type;
+	int				negative;
 	size_t			id;
 	t_matrix		transform;
 	t_tuple			color;
@@ -79,7 +80,7 @@ typedef struct s_abcd
 
 typedef struct s_intersections
 {
-	t_vector			vec;
+	t_vec			vec;
 }					t_intersections;
 
 typedef struct s_hit_record
@@ -117,6 +118,11 @@ typedef struct s_light
 	int				type;
 	t_point			pos;
 }					t_light;
+typedef struct s_negative
+{
+	double			t[2];
+}				t_negative;
+
 
 
 
@@ -148,6 +154,8 @@ void				set_transform(t_object *obj, t_matrix *transform);
 t_vector			normal_at(t_object *obj, t_point point);
 t_material			material_new();
 t_hit_record		precompute(t_intersection *intersection, t_ray *ray);
+
+t_intersection	find_negative_object_intersect(t_ray *ray, int neg_obj_id, t_object *obj);
 
 
 #endif

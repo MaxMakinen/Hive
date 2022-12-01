@@ -1,0 +1,2 @@
+build/point_new.o: src/point_new.c include/tuple.h
+include/tuple.h:

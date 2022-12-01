@@ -1,0 +1,5 @@
+build/matrix_cofactor.o: src/matrix_cofactor.c include/matrix.h \
+ include/coords.h include/tuple.h
+include/matrix.h:
+include/coords.h:
+include/tuple.h:

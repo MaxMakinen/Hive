@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakinen <mmakinen@hive.fi>                +#+  +:+       +#+        */
+/*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 10:30:11 by mmakinen          #+#    #+#             */
-/*   Updated: 2022/01/05 12:55:10 by mmakinen         ###   ########.fr       */
+/*   Created: 2021/11/16 15:40:35 by jjuntune          #+#    #+#             */
+/*   Updated: 2021/11/29 13:13:00 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *d, const void *s, int c, size_t n)
 {
-	unsigned char	*srcp;
-	unsigned char	*dstp;
-	unsigned char	*end;
+	size_t	i;
+	unsigned char *uc;
+	unsigned char *dest;
 
-	if (!dst || !src || dst == src)
-		return (NULL);
-	srcp = (unsigned char *)src;
-	dstp = (unsigned char *)dst;
-	end = srcp + n;
-	while (srcp < end)
+	uc = (unsigned char *)s;
+	dest = (unsigned char *)d;
+	i = 0;
+	while (i < n)
 	{
-		*dstp++ = *srcp;
-		if (*srcp++ == (unsigned char)c)
-			return (dstp);
+		dest[i] = uc[i];
+		if (uc[i] == (unsigned char)c)
+			return ((void *)dest);
+		i++;
 	}
 	return (NULL);
 }

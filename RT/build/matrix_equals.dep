@@ -1,0 +1,5 @@
+build/matrix_equals.o: src/matrix_equals.c include/matrix.h \
+ include/coords.h include/tuple.h
+include/matrix.h:
+include/coords.h:
+include/tuple.h:

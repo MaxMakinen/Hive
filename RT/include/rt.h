@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 16:01:57 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/11/16 20:35:58 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:06:34 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@
 
 enum
 {
+	STEREOSCOPY,
 	NORMAL,
 	BLACK_AND_WHITE,
+	SEPIA,
 	CARTOON,
 	B_W_CARTOON,
 	EDGE,
@@ -49,6 +51,8 @@ typedef struct s_frame_buffer
 	int				*b_w;
 	int				*b_w_cartoon;
 	int				*edge_map;
+	int				*sepia;
+	int				*stereocopy;
 	char			*mask;
 	int				data_len;
 }					t_frame_buffer;
@@ -60,6 +64,7 @@ typedef struct s_sdl
 	SDL_Event		event;
 	SDL_Texture		*texture;
 	t_frame_buffer	frame_buffer;
+	int				stereocopy;
 }					t_sdl;
 
 typedef struct s_cam
@@ -85,8 +90,8 @@ typedef struct s_screen_shot
 
 typedef struct s_scene
 {
-	t_vector			lights;
-	t_vector			objects;
+	t_vec			lights;
+	t_vec			objects;
 }					t_scene;
 
 typedef struct s_main
@@ -107,6 +112,7 @@ typedef struct s_main
 
 int					initialize_window(t_main *main);
 void				initialize_camera(t_cam *cam, t_matrix transform);
+t_matrix			coi_transform(t_cam *cam, t_matrix transform);
 void				initialize_ray(t_ray *ray, double x, double y, t_cam *cam);
 void				render_image(t_main *main, int task, int ant_al);
 
@@ -131,6 +137,9 @@ unsigned int		color_to_int(t_color color);
 void				fix_aliasing_color(t_main *main, int sub_pixel_count);
 int					check_shadow(t_main *main, t_ray *ray);
 void				creat_filters(t_frame_buffer *fb);
+void				create_sepia(t_frame_buffer *fb);
+void				create_stereoscope(t_main *main, t_matrix cam_scale, t_matrix cam_transform);
+
 
 int					rgb_to_white(t_color *rgb);
 void				int_to_rgb(int color, t_color *rgb);
@@ -142,7 +151,7 @@ void				draw_filter(t_sdl *sdl, int *filter_type, int i);
 void				kay_hooks(t_sdl *sdl, int *quit, int *filter_type);
 void				creat_screen_shot(int *image);
 
-void				taskhandler(void *main);
+void				*taskhandler(void *main);
 void				create_threads(t_main *main, int ant_al);
 void				init_pthread(t_main *main);
 double				fabs(double x);
@@ -170,6 +179,6 @@ int					default_scene(t_scene *scene);
 t_intersections		scene_intersect(t_scene *scene, t_ray *ray);
 
 
-void	pattern_at(t_object *obj,t_point hit_loc, t_color *hit_color, t_perlin *perlin);
+void	pattern_at(t_hit_record hit,t_point hit_loc, t_color *hit_color, t_perlin *perlin);
 
 #endif

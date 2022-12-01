@@ -1,0 +1,5 @@
+build/matrix_submatrix.o: src/matrix_submatrix.c include/matrix.h \
+ include/coords.h include/tuple.h
+include/matrix.h:
+include/coords.h:
+include/tuple.h:

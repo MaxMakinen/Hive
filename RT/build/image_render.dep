@@ -47,10 +47,13 @@ build/image_render.o: src/image_render.c src/../include/rt.h \
  src/../include/../build/libsdl2/include/SDL2/SDL_timer.h \
  src/../include/../build/libsdl2/include/SDL2/SDL_version.h \
  src/../include/../build/libsdl2/include/SDL2/SDL_locale.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_misc.h libft/libft.h \
- libft/get_next_line.h libft/libft.h src/../include/vector.h \
- src/../include/rt.h src/../include/object.h \
- src/../include/multi_thread.h
+ src/../include/../build/libsdl2/include/SDL2/SDL_misc.h \
+ src/../include/../libft/libft.h src/../include/../libft/get_next_line.h \
+ src/../include/../libft/libft.h src/../include/../libft/vec.h \
+ src/../include/multi_thread.h src/../include/rt.h \
+ src/../include/object.h src/../include/matrix.h src/../include/coords.h \
+ src/../include/tuple.h src/../include/vector.h src/../include/patterns.h \
+ src/../include/perlin_noice.h
 src/../include/rt.h:
 src/../include/../build/libsdl2/include/SDL2/SDL.h:
 src/../include/../build/libsdl2/include/SDL2/SDL_main.h:
@@ -101,10 +104,16 @@ src/../include/../build/libsdl2/include/SDL2/SDL_timer.h:
 src/../include/../build/libsdl2/include/SDL2/SDL_version.h:
 src/../include/../build/libsdl2/include/SDL2/SDL_locale.h:
 src/../include/../build/libsdl2/include/SDL2/SDL_misc.h:
-libft/libft.h:
-libft/get_next_line.h:
-libft/libft.h:
-src/../include/vector.h:
+src/../include/../libft/libft.h:
+src/../include/../libft/get_next_line.h:
+src/../include/../libft/libft.h:
+src/../include/../libft/vec.h:
+src/../include/multi_thread.h:
 src/../include/rt.h:
 src/../include/object.h:
-src/../include/multi_thread.h:
+src/../include/matrix.h:
+src/../include/coords.h:
+src/../include/tuple.h:
+src/../include/vector.h:
+src/../include/patterns.h:
+src/../include/perlin_noice.h:

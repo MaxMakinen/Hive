@@ -1,0 +1,5 @@
+build/matrix_rotate.o: src/matrix_rotate.c include/matrix.h \
+ include/coords.h include/tuple.h
+include/matrix.h:
+include/coords.h:
+include/tuple.h:

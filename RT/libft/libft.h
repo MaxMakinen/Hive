@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:22:17 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/09/09 18:20:15 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/11/06 14:18:16 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include "get_next_line.h"
+# include "vec.h"
 
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
@@ -69,7 +70,6 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
-int		ft_isspace(int c);
 /*
 **to
 */
@@ -86,7 +86,6 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memalloc(size_t size);
 void	ft_memdel(void **ap);
-void	*ft_calloc(size_t count, size_t size);
 /*
 ** own functions
 */
@@ -100,4 +99,7 @@ int		ft_strmove(char **dst, char **src);
 double	values_abs(double i);
 int		ft_atoi_base(const char *str, int base);
 double	ft_atof(char *line_arg_r);
+int		ft_isspace(int c);
+void	*ft_calloc(size_t count, size_t size);
+
 #endif

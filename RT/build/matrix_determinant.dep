@@ -1,0 +1,5 @@
+build/matrix_determinant.o: src/matrix_determinant.c include/matrix.h \
+ include/coords.h include/tuple.h
+include/matrix.h:
+include/coords.h:
+include/tuple.h:

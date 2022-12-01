@@ -1,0 +1,5 @@
+build/matrix_inverse.o: src/matrix_inverse.c include/matrix.h \
+ include/coords.h include/tuple.h
+include/matrix.h:
+include/coords.h:
+include/tuple.h:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_plane.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 20:22:17 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/10/20 11:24:13 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:54:28 by jsaarine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	fix_normal(t_ray *ray, t_object *plane)
 {
 	double	temp;
 
-	temp = sqrt((vec3_dot(plane->rot, plane->rot)));
-	div_vect_float(plane->rot, temp);
-	temp = vec3_dot(plane->rot, ray->dir);
+	temp = sqrt((vector_dot(plane->rot, plane->rot)));
+	tuple_scalar_div(plane->rot, temp);
+	temp = vector_dot(plane->rot, ray->dir);
 	if (temp < 0)
-		plane->rot = div_vect_float(plane->rot, -1.0);
+		plane->rot = tuple_scalar_div(plane->rot, -1.0);
 }
 
 /*
@@ -46,17 +46,18 @@ double	intersects_plane(t_ray *ray, t_object *plane)
 {
 	double		intersection;
 	double		t;
-	t_vec3		n;
-	t_vec3		abc;
+	t_tuple		n;
+	t_tuple		abc;
 
 	fix_normal(ray, plane);
 	n = plane->rot;
-	intersection = vec3_dot(ray->dir, n);
-	abc = vec3_sub(ray->orig, plane->loc);
-	abc.x *= -1.0;
-	abc.y *= -1.0;
-	abc.z *= -1.0;
-	t = (vec3_dot(abc, n) / intersection);
+	intersection = vector_dot(ray->dir, n);
+	abc = tuple_sub(ray->orig, plane->loc);
+	// abc.s_xyzw.x *= -1.0;
+	// abc.s_xyzw.y *= -1.0;
+	// abc.s_xyzw.z *= -1.0;
+	tuple_neg(abc);
+	t = (vector_dot(abc, n) / intersection);
 	if (intersection != 0 && t > 0)
 		return (t);
 	return (-1);

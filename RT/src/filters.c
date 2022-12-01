@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 22:21:39 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/10/20 13:44:13 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/11/17 18:08:05 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void	creat_filters(t_frame_buffer *fb)
 	create_black_and_white(fb);
 	create_black_and_white_cartoon(fb);
 	create_cartoon(fb);
+	create_sepia(fb);
 	create_edge_map(fb);
 }

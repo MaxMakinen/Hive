@@ -1,0 +1,2 @@
+build/tuple_equal.o: src/tuple_equal.c include/tuple.h
+include/tuple.h:

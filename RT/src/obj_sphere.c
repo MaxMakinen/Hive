@@ -6,20 +6,20 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:28:21 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/10/20 14:20:57 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:09:15 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rt.h"
 
-t_vec3	get_sphere_normal(t_main *main, t_hit_record *hit)
+t_tuple	get_sphere_normal(t_main *main, t_hit_record *hit)
 {
-	t_vec3	result;
+	t_tuple	result;
 
-	result = vec3_scalar_mult(main->ray.dir, hit->hit_dist);
-	result = vec3_add(main->ray.orig, result);
-	result = vec3_sub(result, main->obj[main->ray.hit.clo_obj_id].loc);
-	result = vec3_unit(result);
+	result = tuple_scalar_mult(main->ray.dir, hit->hit_dist);
+	result = tuple_add(main->ray.orig, result);
+	result = tuple_sub(result, main->obj[main->ray.hit.clo_obj_id].loc);
+	result = tuple_unit(result);
 	return (result);
 }
 
@@ -38,15 +38,15 @@ t_vec3	get_sphere_normal(t_main *main, t_hit_record *hit)
 
 double	intersects_sphere(t_ray *ray, t_object *sphere)
 {
-	t_vec3	ray_origin_to_sphere;
+	t_tuple	ray_origin_to_sphere;
 	double	distance_to_intersection;
 	double	b2_4ac;
 	t_abc	abc;
 
-	ray_origin_to_sphere = vec3_sub(ray->orig, sphere->loc);
-	abc.a = vec3_dot(ray->dir, ray->dir);
-	abc.b = (2 * vec3_dot(ray->dir, ray_origin_to_sphere));
-	abc.c = (vec3_dot(ray_origin_to_sphere, ray_origin_to_sphere)
+	ray_origin_to_sphere = tuple_sub(ray->orig, sphere->loc);
+	abc.a = vector_dot(ray->dir, ray->dir);
+	abc.b = (2 * vector_dot(ray->dir, ray_origin_to_sphere));
+	abc.c = (vector_dot(ray_origin_to_sphere, ray_origin_to_sphere)
 			- (sphere->size * sphere->size));
 	b2_4ac = calc_b2_4ac(abc);
 	if (b2_4ac > 0)

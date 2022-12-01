@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+         #
+#    By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/29 13:01:51 by jjuntune          #+#    #+#              #
-#    Updated: 2022/10/28 14:31:30 by mmakinen         ###   ########.fr        #
+#    Updated: 2022/12/01 09:18:17 by mmakinen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,10 @@ CFILES += ft_strmapi.c ft_strjoin.c ft_strtrim.c ft_strsplit.c ft_wordcount.c
 CFILES += ft_memdel.c ft_strsub.c ft_strequ.c ft_strnequ.c ft_itoa.c
 CFILES += ft_arrdel.c ft_numlen.c ft_isupper.c ft_islower.c ft_isthere.c
 CFILES += ft_strmove.c values_abs.c get_next_line.c ft_atoi_base.c
-CFILES += atof.c ft_isspace.c ft_calloc.c
+CFILES += ft_atof.c
+CFILES += vec_append.c vec_free.c vec_from.c vec_get.c vec_new.c
+CFILES += vec_push.c vec_resize.c
+CFILES += ft_calloc.c ft_isspace.c
 
 OFILES = ft_putchar.o ft_putendl.o ft_putnbr.o ft_putstr.o ft_strchr.o
 OFILES += ft_strcmp.o ft_strcpy.o ft_strdup.o ft_strlen.o ft_strncpy.o
@@ -40,14 +43,18 @@ OFILES += ft_strmapi.o ft_strjoin.o ft_strtrim.o ft_strsplit.o ft_wordcount.o
 OFILES += ft_memdel.o ft_strsub.o ft_strequ.o ft_strnequ.o ft_itoa.o
 OFILES += ft_arrdel.o ft_numlen.o ft_isupper.o ft_islower.o ft_isthere.o
 OFILES += ft_strmove.o values_abs.o get_next_line.o ft_atoi_base.o
-OFILES += atof.o ft_isspace.o ft_calloc.o
+OFILES += ft_atof.o
+OFILES += vec_append.o vec_free.o vec_from.o vec_get.o vec_new.o
+OFILES += vec_push.o vec_resize.o
+OFILES += ft_calloc.o ft_isspace.o
+
 all: $(NAME) 
 
 $(NAME): $(OFILES) 
 	ar -rc $(NAME) $(OFILES)
 
 $(OFILES):
-	gcc -Wall -Wextra -Werror -c -g $(CFILES) -I ./
+	gcc -Wall -Wextra -c $(CFILES) -g
 
 clean:
 	rm -f $(OFILES)
