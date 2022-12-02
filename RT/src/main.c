@@ -86,29 +86,14 @@ int	main(int ac, char **av)
 	t_main		main;
 	t_matrix	cam_transform;
 	t_matrix	rotate;
-	t_matrix	cam_scale;
+//	t_matrix	cam_scale;
 	t_matrix	scale;
 	double	x_r;
 	double	y_r;
 	double	z_r;
 	t_xml_doc	doc;
-
-//	if (ac != 2)
-//	{
-//		ft_putendl_fd("Usage: Give .xml file as input", 2);
-//		return (1);
-//	}
-
 	
 	main.sdl.stereocopy = FALSE;
-	cam_transform = matrix_translate(0.0, 0.0, -10.0);
-
-	cam_scale = matrix_scale(1,1,1);
-	cam_transform = matrix_multiply(&cam_transform, &cam_scale);
-	main.cam.coi = point_new(0.0, 0.0, 0.0);
-
-	main.light = point_light_new(point_new(0.0, 2.5, -10.0), color_new(1,1,1));
-	//main.light.pos = point_new(10, 0, 0);
 	if (ac == 2)
 	{
 		if (!xml_doc_load(&doc, av[1]))
@@ -121,6 +106,16 @@ int	main(int ac, char **av)
 	}
 	else
 	{
+		cam_transform = matrix_translate(0.0, 0.0, -10.0);
+
+	//	cam_scale = matrix_scale(1,1,1);
+	//	cam_transform = matrix_multiply(&cam_transform, &cam_scale);
+		main.cam.coi = point_new(0.0, 0.0, 0.0);
+		initialize_camera(&main.cam, cam_transform);
+
+		main.light = point_light_new(point_new(0.0, 2.5, -10.0), color_new(1,1,1));
+		//main.light.pos = point_new(10, 0, 0);
+
 		main.obj[0] = object_new(SPHERE);
 		main.obj[0].transform = matrix_translate(0.2, 0.0, 10.0);
 												x_r = 0.0;
@@ -140,30 +135,56 @@ int	main(int ac, char **av)
 		main.obj[0].material.pattern.pattern_perlin = TRUE;
 		main.obj[0].negative = FALSE;
 
-	main.obj[1] = object_new(CONE);
-	main.obj[1].transform = matrix_translate(5.0, 2.0, 10.0);
-											x_r = 0.0;
-											y_r = 0.0;
-											z_r = 0.0;
+		main.obj[1] = object_new(CONE);
+		main.obj[1].transform = matrix_translate(5.0, 2.0, 10.0);
+												x_r = 0.0;
+												y_r = 0.0;
+												z_r = 0.0;
 
-	rotate = matrix_rotate_x(x_r);
-	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-	rotate = matrix_rotate_y(y_r);
-	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-	rotate = matrix_rotate_z(z_r);
-	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
-	scale = matrix_scale(0.5,1,1);
-	main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &scale);
-	main.obj[1].material.color = color_new(1, 0.5,0);
-	main.obj[1].material.pattern.pattern_id = NONE;
-	main.obj[1].material.pattern.pattern_perlin = FALSE;
-	main.obj[1].negative = FALSE;
+		rotate = matrix_rotate_x(x_r);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+		rotate = matrix_rotate_y(y_r);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+		rotate = matrix_rotate_z(z_r);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &rotate);
+		scale = matrix_scale(0.5,1,1);
+		main.obj[1].transform = matrix_multiply(&main.obj[1].transform, &scale);
+		main.obj[1].material.color = color_new(1, 0.5,0);
+		main.obj[1].material.pattern.pattern_id = NONE;
+		main.obj[1].material.pattern.pattern_perlin = FALSE;
+		main.obj[1].negative = FALSE;
 
 
 		main.obj_count = 2;
 	}
 	int draw_debug = 0;
-
+	int	print = 1;
+	if (print)
+	{
+		int	m = 0;
+		int p = 0;
+		printf("obj_count = %d\n", main.obj_count);
+		printf("LIGHT\nlocation=%f %f %f\nintensity=%f %f %f\npos=%f %f %f\n", main.light.location.a[0], main.light.location.a[1], main.light.location.a[2]\
+		, main.light.intensity.a[0], main.light.intensity.a[1], main.light.intensity.a[2]\
+		, main.light.pos.a[0], main.light.pos.a[1], main.light.pos.a[2]);
+		printf("CAMERA\npos = %f %f %f\ncoi = %f %f %f\nv_up = %f %f %f\nrot= %f %f %f\n",
+		main.cam.pos.a[0], main.cam.pos.a[1], main.cam.pos.a[2],\
+		main.cam.coi.a[0], main.cam.coi.a[1], main.cam.coi.a[2],\
+		main.cam.v_up.a[0], main.cam.v_up.a[1], main.cam.v_up.a[2],\
+		main.cam.rot.a[0], main.cam.rot.a[1], main.cam.rot.a[2]);
+		printf("CAMERA MATRIX\n");
+		while (m < 4)
+		{
+			p = 0;
+			while (p < 4)
+			{
+				printf("[%d][%d]:%f ", m, p, main.cam.transform.rc[m][p]);
+				p++;
+			}
+			printf("\n");
+			m++;
+		}
+	}
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		return (1);
 	if (initialize_window(&main) == 0)
@@ -171,7 +192,6 @@ int	main(int ac, char **av)
 		//FREE BUFFERS!!!!!!
 	if (!draw_debug)
 	{
-		initialize_camera(&main.cam, cam_transform);
 		load_perlin_data(&main.perlin);
 		create_threads(&main, 1);
 		draw_frame(&main);
@@ -182,7 +202,7 @@ int	main(int ac, char **av)
 		draw_frame(&main);
 		
 		if (main.sdl.stereocopy == TRUE)
-			create_stereoscope(&main, cam_scale, cam_transform);
+			create_stereoscope(&main, matrix_scale(1,1,1), main.cam.transform);
 		creat_filters(&main.sdl.frame_buffer);
 	}
 //	tests(&main, draw_debug);

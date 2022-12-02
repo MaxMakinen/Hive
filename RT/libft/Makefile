@@ -54,7 +54,7 @@ $(NAME): $(OFILES)
 	ar -rc $(NAME) $(OFILES)
 
 $(OFILES):
-	gcc -Wall -Wextra -c $(CFILES) -g
+	gcc -Wall -Wextra -Werror -g -c $(CFILES)
 
 clean:
 	rm -f $(OFILES)

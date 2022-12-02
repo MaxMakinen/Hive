@@ -58,6 +58,7 @@ typedef struct s_object
 	size_t			id;
 	t_matrix		transform;
 	t_tuple			color;
+	t_tuple			scale;
 	t_material		material;
 }					t_object;
 

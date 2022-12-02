@@ -80,6 +80,7 @@ typedef struct s_cam
 	t_point			pos;
 	t_tuple			v_up;
 	t_point			coi;
+	t_vector		rot;
 	t_tuple			v;
 	t_tuple			u;
 	t_tuple			n;

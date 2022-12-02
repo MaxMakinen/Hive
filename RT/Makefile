@@ -138,7 +138,7 @@ $(SCREEN_SHOT_DIR):
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c | $(BUILD_DIR)%.dep
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(DEPENDENCY_FLAGS) -o $(@) $(<)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(DEPENDENCY_FLAGS) -g -o $(@) $(<)
 
 $(DEPENDENCY_FILES):
 

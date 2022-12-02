@@ -1,16 +1,24 @@
 build/precompute.o: src/precompute.c include/object.h \
- include/../libft/libft.h include/../libft/get_next_line.h \
- include/../libft/libft.h include/../libft/vec.h include/matrix.h \
- include/coords.h include/tuple.h include/vector.h include/patterns.h \
- include/object.h
+  include/../libft/libft.h libft/get_next_line.h libft/libft.h \
+  libft/vec.h include/matrix.h include/coords.h include/tuple.h \
+  include/vector.h include/patterns.h
+
 include/object.h:
+
 include/../libft/libft.h:
-include/../libft/get_next_line.h:
-include/../libft/libft.h:
-include/../libft/vec.h:
+
+libft/get_next_line.h:
+
+libft/libft.h:
+
+libft/vec.h:
+
 include/matrix.h:
+
 include/coords.h:
+
 include/tuple.h:
+
 include/vector.h:
+
 include/patterns.h:
-include/object.h:

@@ -1,5 +1,8 @@
 build/matrix_tuple_multiply.o: src/matrix_tuple_multiply.c \
- include/matrix.h include/coords.h include/tuple.h
+  include/matrix.h include/coords.h include/tuple.h
+
 include/matrix.h:
+
 include/coords.h:
+
 include/tuple.h:

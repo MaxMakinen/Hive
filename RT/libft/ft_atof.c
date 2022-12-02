@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include <math.h>
+/*
 static double	get_desimal_div(int count)
 {
 	double	ret;
@@ -24,31 +25,33 @@ static double	get_desimal_div(int count)
 	}
 	return (ret);
 }
-
+*/
 double	ft_atof(char *line_arg_r)
 {
-	int		i;
-	int		count;
 	double	r;
 	double	negative;
 
 	negative = 1.0f;
 	r = 0.0;
-	i = 0;
-	count = 1;
-	if (line_arg_r[i] == '-')
+	if (*line_arg_r == '-')
 	{
 		negative = -1.0f;
-		i++;
+		line_arg_r++;
 	}
-	while (line_arg_r[i] >= '0' && line_arg_r[i] <= '9')
+	int num = 0;
+	int dec = 0;
+	int len = 0;
+
+	num = ft_atoi(line_arg_r);
+	while (*line_arg_r != '\0' && *line_arg_r != '.')
+		line_arg_r++;
+	line_arg_r++;
+	while (line_arg_r[len] != '\0' && ft_isdigit(line_arg_r[len]))
+		len++;
+	if (len)
 	{
-		r += ((double)line_arg_r[i] - '0');
-		if ((double)line_arg_r[++i] >= '0' && (double)line_arg_r[i] <= '9')
-			r *= 10.0;
+		dec = ft_atoi(line_arg_r);
+		r = (double)(dec / powf(10, len));
 	}
-	if (line_arg_r[i++] == ',')
-		while (line_arg_r[i] >= '0' && line_arg_r[i] <= '9')
-			r += ((double)line_arg_r[i++] - '0') / get_desimal_div(count++);
-	return (r * (double)negative);
+	return ((r + (double)num) * (double)negative);
 }

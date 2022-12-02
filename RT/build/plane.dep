@@ -1,119 +1,180 @@
 build/plane.o: src/plane.c src/../include/rt.h \
- src/../include/../build/libsdl2/include/SDL2/SDL.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_main.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_stdinc.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_config.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_platform.h \
- src/../include/../build/libsdl2/include/SDL2/begin_code.h \
- src/../include/../build/libsdl2/include/SDL2/close_code.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_assert.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_atomic.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_audio.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_error.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_endian.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_mutex.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_thread.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_rwops.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_clipboard.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_cpuinfo.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_events.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_video.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_pixels.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_rect.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_surface.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_blendmode.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_keyboard.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_keycode.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_scancode.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_mouse.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_joystick.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_gamecontroller.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_sensor.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_quit.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_gesture.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_touch.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_filesystem.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_haptic.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_hidapi.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_hints.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_loadso.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_log.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_messagebox.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_metal.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_power.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_render.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_shape.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_system.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_timer.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_version.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_locale.h \
- src/../include/../build/libsdl2/include/SDL2/SDL_misc.h \
- src/../include/../libft/libft.h src/../include/../libft/get_next_line.h \
- src/../include/../libft/libft.h src/../include/../libft/vec.h \
- src/../include/multi_thread.h src/../include/rt.h \
- src/../include/object.h src/../include/matrix.h src/../include/coords.h \
- src/../include/tuple.h src/../include/vector.h src/../include/patterns.h \
- src/../include/perlin_noice.h
+  include/../build/libsdl2/include/SDL2/SDL.h \
+  include/../build/libsdl2/include/SDL2/SDL_main.h \
+  include/../build/libsdl2/include/SDL2/SDL_stdinc.h \
+  include/../build/libsdl2/include/SDL2/SDL_config.h \
+  include/../build/libsdl2/include/SDL2/SDL_platform.h \
+  include/../build/libsdl2/include/SDL2/begin_code.h \
+  include/../build/libsdl2/include/SDL2/close_code.h \
+  include/../build/libsdl2/include/SDL2/SDL_assert.h \
+  include/../build/libsdl2/include/SDL2/SDL_atomic.h \
+  include/../build/libsdl2/include/SDL2/SDL_audio.h \
+  include/../build/libsdl2/include/SDL2/SDL_error.h \
+  include/../build/libsdl2/include/SDL2/SDL_endian.h \
+  include/../build/libsdl2/include/SDL2/SDL_mutex.h \
+  include/../build/libsdl2/include/SDL2/SDL_thread.h \
+  include/../build/libsdl2/include/SDL2/SDL_rwops.h \
+  include/../build/libsdl2/include/SDL2/SDL_clipboard.h \
+  include/../build/libsdl2/include/SDL2/SDL_cpuinfo.h \
+  include/../build/libsdl2/include/SDL2/SDL_events.h \
+  include/../build/libsdl2/include/SDL2/SDL_video.h \
+  include/../build/libsdl2/include/SDL2/SDL_pixels.h \
+  include/../build/libsdl2/include/SDL2/SDL_rect.h \
+  include/../build/libsdl2/include/SDL2/SDL_surface.h \
+  include/../build/libsdl2/include/SDL2/SDL_blendmode.h \
+  include/../build/libsdl2/include/SDL2/SDL_keyboard.h \
+  include/../build/libsdl2/include/SDL2/SDL_keycode.h \
+  include/../build/libsdl2/include/SDL2/SDL_scancode.h \
+  include/../build/libsdl2/include/SDL2/SDL_mouse.h \
+  include/../build/libsdl2/include/SDL2/SDL_joystick.h \
+  include/../build/libsdl2/include/SDL2/SDL_gamecontroller.h \
+  include/../build/libsdl2/include/SDL2/SDL_sensor.h \
+  include/../build/libsdl2/include/SDL2/SDL_quit.h \
+  include/../build/libsdl2/include/SDL2/SDL_gesture.h \
+  include/../build/libsdl2/include/SDL2/SDL_touch.h \
+  include/../build/libsdl2/include/SDL2/SDL_filesystem.h \
+  include/../build/libsdl2/include/SDL2/SDL_haptic.h \
+  include/../build/libsdl2/include/SDL2/SDL_hidapi.h \
+  include/../build/libsdl2/include/SDL2/SDL_hints.h \
+  include/../build/libsdl2/include/SDL2/SDL_loadso.h \
+  include/../build/libsdl2/include/SDL2/SDL_log.h \
+  include/../build/libsdl2/include/SDL2/SDL_messagebox.h \
+  include/../build/libsdl2/include/SDL2/SDL_metal.h \
+  include/../build/libsdl2/include/SDL2/SDL_power.h \
+  include/../build/libsdl2/include/SDL2/SDL_render.h \
+  include/../build/libsdl2/include/SDL2/SDL_shape.h \
+  include/../build/libsdl2/include/SDL2/SDL_system.h \
+  include/../build/libsdl2/include/SDL2/SDL_timer.h \
+  include/../build/libsdl2/include/SDL2/SDL_version.h \
+  include/../build/libsdl2/include/SDL2/SDL_locale.h \
+  include/../build/libsdl2/include/SDL2/SDL_misc.h \
+  include/../libft/libft.h libft/get_next_line.h libft/libft.h \
+  libft/vec.h include/multi_thread.h include/rt.h include/object.h \
+  include/matrix.h include/coords.h include/tuple.h include/vector.h \
+  include/patterns.h include/perlin_noice.h
+
 src/../include/rt.h:
-src/../include/../build/libsdl2/include/SDL2/SDL.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_main.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_stdinc.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_config.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_platform.h:
-src/../include/../build/libsdl2/include/SDL2/begin_code.h:
-src/../include/../build/libsdl2/include/SDL2/close_code.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_assert.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_atomic.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_audio.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_error.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_endian.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_mutex.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_thread.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_rwops.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_clipboard.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_cpuinfo.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_events.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_video.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_pixels.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_rect.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_surface.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_blendmode.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_keyboard.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_keycode.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_scancode.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_mouse.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_joystick.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_gamecontroller.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_sensor.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_quit.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_gesture.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_touch.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_filesystem.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_haptic.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_hidapi.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_hints.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_loadso.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_log.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_messagebox.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_metal.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_power.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_render.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_shape.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_system.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_timer.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_version.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_locale.h:
-src/../include/../build/libsdl2/include/SDL2/SDL_misc.h:
-src/../include/../libft/libft.h:
-src/../include/../libft/get_next_line.h:
-src/../include/../libft/libft.h:
-src/../include/../libft/vec.h:
-src/../include/multi_thread.h:
-src/../include/rt.h:
-src/../include/object.h:
-src/../include/matrix.h:
-src/../include/coords.h:
-src/../include/tuple.h:
-src/../include/vector.h:
-src/../include/patterns.h:
-src/../include/perlin_noice.h:
+
+include/../build/libsdl2/include/SDL2/SDL.h:
+
+include/../build/libsdl2/include/SDL2/SDL_main.h:
+
+include/../build/libsdl2/include/SDL2/SDL_stdinc.h:
+
+include/../build/libsdl2/include/SDL2/SDL_config.h:
+
+include/../build/libsdl2/include/SDL2/SDL_platform.h:
+
+include/../build/libsdl2/include/SDL2/begin_code.h:
+
+include/../build/libsdl2/include/SDL2/close_code.h:
+
+include/../build/libsdl2/include/SDL2/SDL_assert.h:
+
+include/../build/libsdl2/include/SDL2/SDL_atomic.h:
+
+include/../build/libsdl2/include/SDL2/SDL_audio.h:
+
+include/../build/libsdl2/include/SDL2/SDL_error.h:
+
+include/../build/libsdl2/include/SDL2/SDL_endian.h:
+
+include/../build/libsdl2/include/SDL2/SDL_mutex.h:
+
+include/../build/libsdl2/include/SDL2/SDL_thread.h:
+
+include/../build/libsdl2/include/SDL2/SDL_rwops.h:
+
+include/../build/libsdl2/include/SDL2/SDL_clipboard.h:
+
+include/../build/libsdl2/include/SDL2/SDL_cpuinfo.h:
+
+include/../build/libsdl2/include/SDL2/SDL_events.h:
+
+include/../build/libsdl2/include/SDL2/SDL_video.h:
+
+include/../build/libsdl2/include/SDL2/SDL_pixels.h:
+
+include/../build/libsdl2/include/SDL2/SDL_rect.h:
+
+include/../build/libsdl2/include/SDL2/SDL_surface.h:
+
+include/../build/libsdl2/include/SDL2/SDL_blendmode.h:
+
+include/../build/libsdl2/include/SDL2/SDL_keyboard.h:
+
+include/../build/libsdl2/include/SDL2/SDL_keycode.h:
+
+include/../build/libsdl2/include/SDL2/SDL_scancode.h:
+
+include/../build/libsdl2/include/SDL2/SDL_mouse.h:
+
+include/../build/libsdl2/include/SDL2/SDL_joystick.h:
+
+include/../build/libsdl2/include/SDL2/SDL_gamecontroller.h:
+
+include/../build/libsdl2/include/SDL2/SDL_sensor.h:
+
+include/../build/libsdl2/include/SDL2/SDL_quit.h:
+
+include/../build/libsdl2/include/SDL2/SDL_gesture.h:
+
+include/../build/libsdl2/include/SDL2/SDL_touch.h:
+
+include/../build/libsdl2/include/SDL2/SDL_filesystem.h:
+
+include/../build/libsdl2/include/SDL2/SDL_haptic.h:
+
+include/../build/libsdl2/include/SDL2/SDL_hidapi.h:
+
+include/../build/libsdl2/include/SDL2/SDL_hints.h:
+
+include/../build/libsdl2/include/SDL2/SDL_loadso.h:
+
+include/../build/libsdl2/include/SDL2/SDL_log.h:
+
+include/../build/libsdl2/include/SDL2/SDL_messagebox.h:
+
+include/../build/libsdl2/include/SDL2/SDL_metal.h:
+
+include/../build/libsdl2/include/SDL2/SDL_power.h:
+
+include/../build/libsdl2/include/SDL2/SDL_render.h:
+
+include/../build/libsdl2/include/SDL2/SDL_shape.h:
+
+include/../build/libsdl2/include/SDL2/SDL_system.h:
+
+include/../build/libsdl2/include/SDL2/SDL_timer.h:
+
+include/../build/libsdl2/include/SDL2/SDL_version.h:
+
+include/../build/libsdl2/include/SDL2/SDL_locale.h:
+
+include/../build/libsdl2/include/SDL2/SDL_misc.h:
+
+include/../libft/libft.h:
+
+libft/get_next_line.h:
+
+libft/libft.h:
+
+libft/vec.h:
+
+include/multi_thread.h:
+
+include/rt.h:
+
+include/object.h:
+
+include/matrix.h:
+
+include/coords.h:
+
+include/tuple.h:
+
+include/vector.h:
+
+include/patterns.h:
+
+include/perlin_noice.h:

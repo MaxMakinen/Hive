@@ -1,2 +1,3 @@
 build/tuple_scalar_div.o: src/tuple_scalar_div.c include/tuple.h
+
 include/tuple.h:
