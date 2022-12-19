@@ -6,11 +6,12 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 20:03:27 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/11/15 14:52:52 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:48:27 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 /*
 	take in a target_size parameter and either shrink (destructively)
 	or grow the vector to the target size, copying the old contents
@@ -28,5 +29,6 @@ int	vec_resize(t_vec *src, size_t target_size)
 	resized.len = src->len;
 	vec_free(src);
 	*src = resized;
+	
 	return (1);
 }

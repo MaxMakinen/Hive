@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_determinant.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 14:44:03 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/11/06 20:04:22 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/12/15 12:48:44 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "matrix.h"
+#include "rt.h"
 
 double	matrix_determinant(t_matrix *m)
 {

@@ -6,52 +6,18 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:13:33 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/11/28 15:45:36 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/17 15:29:07 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rt.h"
 
-int	first_positive_object(t_ray *ray, t_intersection *closest_t, t_negative *neg_hits, t_object *obj)
+void	get_negative_intersects(t_ray *ray, size_t neg_obj_id,
+								t_negative *neg_hits)
 {
 	t_intersection	t;
-	t_intersection	t2;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < ray->xs.vec.len)
-	{
-		t = *(t_intersection *) vec_get(&ray->xs.vec, i);
-		if (obj[t.object->id].negative != TRUE && t.t > neg_hits->t[0] && t.t < neg_hits->t[1])
-		{
-			j = 0;
-			while (j < ray->xs.vec.len)
-			{
-				if (j != i)
-				{
-					t2 = *(t_intersection *) vec_get(&ray->xs.vec, j);
-					if (t2.object->id == t.object->id && t2.t > t.t && t2.t > neg_hits->t[1] && t.t > closest_t->t)
-					{
-						closest_t->t = t.t;
-						closest_t->i = t.object->id;
-					}
-				}
-				j++;
-			}
-		}
-		i++;
-	}
-	if (closest_t->t != -1.0)
-		return (1);
-	return (0);
-}
-
-void	get_negative_intersects(t_ray *ray, size_t neg_obj_id, t_negative *neg_hits)
-{
-	t_intersection	t;
-	size_t	i;
-	size_t	hit;
+	size_t			i;
+	size_t			hit;
 
 	i = 0;
 	hit = 0;
@@ -67,89 +33,70 @@ void	get_negative_intersects(t_ray *ray, size_t neg_obj_id, t_negative *neg_hits
 	}
 }
 
-size_t move_negative(t_ray *ray, size_t neg_obj_id, t_negative *neg_hits, t_object *obj)
+int	check_next_obj(t_ray *ray, t_intersection *closest_t, t_scene *scene)
 {
-	t_intersection	t;
-	t_intersection	t2;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < ray->xs.vec.len)
+	if (closest_t->t != INFINITY && closest_t->object->negative == TRUE)
 	{
-		t = *(t_intersection *) vec_get(&ray->xs.vec, i);
-		if (obj[t.object->id].negative == TRUE && t.t > neg_hits->t[0] && t.t < neg_hits->t[1])
-		{
-			j = 0;
-			while (j < ray->xs.vec.len)
-			{
-				if (j != i)
-				{
-					t2 = *(t_intersection *) vec_get(&ray->xs.vec, j);
-					if (t2.object->id == t.object->id && t2.t > t.t && t2.t > neg_hits->t[1])
-					{
-						neg_hits->t[1] = t2.t;
-						neg_obj_id = t2.object->id;
-						i = 0;
-						break;
-					}
-				}
-				j++;
-			}
-		}
-		i++;
+		*closest_t = find_negative_object_intersect(ray, closest_t->object->id, scene);
+		if (closest_t->t == INFINITY)
+			return (1);
 	}
-	return (neg_obj_id);
+	else
+	{
+		ray->hit.hit_dist = closest_t->t;
+		if (ray->hit.hit_dist != INFINITY)
+		{
+			ray->hit.hit_loc = ray_position(*ray, ray->hit.hit_dist);
+			ray->hit.object = closest_t->object;
+			ray->hit.normal = normal_at(closest_t->object, ray->hit.hit_loc);
+			ray->hit.to_eye = tuple_neg(ray->dir);
+		}
+	}
+	return (0);
 }
 
-int		find_next_intersection(t_ray *ray, t_intersection *closest_t, t_negative *neg_hits, t_object *obj)
+int	find_next_intersection(t_ray *ray, t_intersection *closest_t,
+							t_negative *neg_hits, t_scene *scene)
 {
-	t_intersection	t;
-	size_t	i;
+	t_intersection	*t;
+	size_t			i;
 
 	i = 0;
 	closest_t->t = INFINITY;
 	while (i < ray->xs.vec.len)
 	{
-		t = *(t_intersection *) vec_get(&ray->xs.vec, i);
-		if (t.t > neg_hits->t[1] && t.t > neg_hits->t[0] && t.t < closest_t->t)
-		{
-			closest_t->t = t.t;
-			closest_t->i = (int)t.object->id;
-		}
+		t = (t_intersection *) vec_get(&ray->xs.vec, i);
+		if (t->t > neg_hits->t[1] && t->t < closest_t->t)
+			closest_t = t;
 		i++;
 	}
-	if (closest_t->t == INFINITY)
-		return (1);
-	if (obj[closest_t->i].negative == TRUE)
-	{
-			*closest_t = find_negative_object_intersect(ray, closest_t->i, obj);
-			return (0);
-	}
-	ray->hit.hit_dist = closest_t->t;
-	ray->hit.clo_obj_id = (int)closest_t->i;
-	ray->hit.hit_loc = ray_position(*ray, ray->hit.hit_dist);
-	ray->hit.normal = normal_at(&obj[ray->hit.clo_obj_id], ray->hit.hit_loc);
-	return (0);
+	return (check_next_obj(ray, closest_t, scene));
 }
 
-t_intersection	find_negative_object_intersect(t_ray *ray, int neg_obj_id, t_object *obj)
+t_intersection	find_negative_object_intersect(t_ray *ray, int neg_obj_id,
+												t_scene *scene)
 {
 	t_intersection	closest_t;
 	t_negative		neg_hits;
+	t_object		obj;
 
 	closest_t.t = -1.0;
 	get_negative_intersects(ray, neg_obj_id, &neg_hits);
-	neg_obj_id = move_negative(ray, neg_obj_id, &neg_hits, obj);
-	if (first_positive_object(ray, &closest_t, &neg_hits, obj) == 1)
+	neg_obj_id = move_negative(ray, neg_obj_id, &neg_hits);
+	ray->hit.neg_hit_id = neg_obj_id;
+	if (first_positive_object(ray, &closest_t, &neg_hits) == 1)
 	{
+		ray->hit.neg_hit = 1;
+		ray->hit.neg_hit_id = neg_obj_id;
 		ray->hit.hit_dist = neg_hits.t[1];
-		ray->hit.clo_obj_id = closest_t.i;
+		ray->hit.object = closest_t.object;
 		ray->hit.hit_loc = ray_position(*ray, ray->hit.hit_dist);
-		ray->hit.normal = normal_at(&obj[neg_obj_id], ray->hit.hit_loc);
+		obj = *(t_object *) vec_get(&scene->objects, neg_obj_id);
+		ray->hit.normal = normal_at(&obj, ray->hit.hit_loc);
 		ray->hit.normal = tuple_neg(ray->hit.normal);
+		ray->hit.to_eye = tuple_neg(ray->dir);
 	}
 	else
-		find_next_intersection(ray, &closest_t, &neg_hits, obj);
+		find_next_intersection(ray, &closest_t, &neg_hits, scene);
 	return (closest_t);
 }

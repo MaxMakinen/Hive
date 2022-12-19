@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:54:58 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/11/14 15:00:42 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:53:59 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_light	point_light_new(t_point location, t_color intensity)
 	light.type = POINT;
 	light.intensity = intensity;
 	light.location = location;
-
 	return (light);
 }
 

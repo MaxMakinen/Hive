@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 15:59:18 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/11/17 15:22:16 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:09:05 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ enum
 typedef struct s_pattern
 {
 	t_matrix	pattern_transfor;
-	int			pattern_id;
-	int			pattern_perlin;
+	int			pattern_id; //enum abow
+	int			pattern_perlin; //TRUE / FALSE
 	double		pattern_dif;
 }	t_pattern;
 

@@ -6,56 +6,18 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:43:24 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/11/15 20:05:40 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:08:32 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/rt.h"
-
-double	fade(double t)
-{
-	return (t * t * t * (t * (t * 6 - 15) + 10));
-}
-
-double	lerp(double t, double a, double b)
-{
-	return (a + t * (b - a));
-}
-
-double	grad(int hash, double x, double y, double z)
-{
-	int		h;
-	double	u;
-	double	v;
-
-	h = hash & 15;
-	if (h < 8)
-		u = x;
-	else
-		u = y;
-	if (h < 4)
-		v = y;
-	else if (h == 12 || h == 14)
-		v = z;
-	else
-		v = x;
-	if ((h & 1) == 0)
-	{
-		if ((h & 2) == 0)
-			return (u + v);
-		return (u + -v);
-	}
-	if ((h & 2) == 0)
-		return (-u + v);
-	return (-u + -v);
-}
 
 int	load_perlin_data(t_perlin *perlin)
 {
 	FILE	*fp;
 	int		permutation[256];
 	int		i;
-//fscanf???????
+
 	if (!(perlin->is_data_writen))
 	{
 		i = 0;
@@ -76,7 +38,7 @@ int	load_perlin_data(t_perlin *perlin)
 	return (1);
 }
 
-double	calculate_return(t_tuple point, t_perlin *perlin)
+double	calculate_return(t_tuple p, t_perlin *perlin)
 {
 	double	temp;
 	double	temp_a;
@@ -84,20 +46,21 @@ double	calculate_return(t_tuple point, t_perlin *perlin)
 	double	temp_c;
 
 	temp = lerp(perlin->u, grad(perlin->p[perlin->ab + 1],
-				point.s_xyzw.x, point.s_xyzw.y - 1, point.s_xyzw.z - 1),
-			grad(perlin->p[perlin->bb + 1], point.s_xyzw.x - 1,
-				point.s_xyzw.y - 1, point.s_xyzw.z - 1));
+				p.s_xyzw.x, p.s_xyzw.y - 1, p.s_xyzw.z - 1),
+			grad(perlin->p[perlin->bb + 1], p.s_xyzw.x - 1,
+				p.s_xyzw.y - 1, p.s_xyzw.z - 1));
 	temp_a = lerp(perlin->v, lerp(perlin->u,
-				grad(perlin->p[perlin->aa + 1], point.s_xyzw.x, point.s_xyzw.y,
-					point.s_xyzw.z - 1), grad(perlin->p[perlin->ba + 1],
-					point.s_xyzw.x - 1, point.s_xyzw.y, point.s_xyzw.z - 1)), temp);
-	temp_b = lerp(perlin->u, grad(perlin->p[perlin->ab], point.s_xyzw.x,
-				point.s_xyzw.y - 1, point.s_xyzw.z), grad(perlin->p[perlin->bb],
-				point.s_xyzw.x - 1, point.s_xyzw.y - 1, point.s_xyzw.z));
+				grad(perlin->p[perlin->aa + 1], p.s_xyzw.x, p.s_xyzw.y,
+					p.s_xyzw.z - 1), grad(perlin->p[perlin->ba + 1],
+					p.s_xyzw.x - 1, p.s_xyzw.y, p.s_xyzw.z - 1)), temp);
+	temp_b = lerp(perlin->u, grad(perlin->p[perlin->ab], p.s_xyzw.x,
+				p.s_xyzw.y - 1, p.s_xyzw.z), grad(perlin->p[perlin->bb],
+				p.s_xyzw.x - 1, p.s_xyzw.y - 1, p.s_xyzw.z));
 	temp_c = lerp(perlin->w, lerp(perlin->v, lerp(perlin->u,
-					grad(perlin->p[perlin->aa], point.s_xyzw.x, point.s_xyzw.y, point.s_xyzw.z),
-					grad(perlin->p[perlin->ba], point.s_xyzw.x - 1,
-						point.s_xyzw.y, point.s_xyzw.z)), temp_b), temp_a);
+					grad(perlin->p[perlin->aa], p.s_xyzw.x,
+						p.s_xyzw.y, p.s_xyzw.z),
+					grad(perlin->p[perlin->ba], p.s_xyzw.x - 1,
+						p.s_xyzw.y, p.s_xyzw.z)), temp_b), temp_a);
 	return (temp_c);
 }
 

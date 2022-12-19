@@ -1,3 +1,2 @@
 build/tuple_neg.o: src/tuple_neg.c include/tuple.h
-
 include/tuple.h:

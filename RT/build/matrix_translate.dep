@@ -1,8 +1,5 @@
 build/matrix_translate.o: src/matrix_translate.c include/matrix.h \
-  include/coords.h include/tuple.h
-
+ include/coords.h include/tuple.h
 include/matrix.h:
-
 include/coords.h:
-
 include/tuple.h:

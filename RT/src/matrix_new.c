@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 14:44:03 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/11/11 22:24:51 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:29:45 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_matrix	matrix_new(size_t size)
 {
 	t_matrix	m;
 
-	//ft_bzero(&m, sizeof(t_matrix));
 	if (size >= 2 && size <= 4)
 		m.size = size;
 	else

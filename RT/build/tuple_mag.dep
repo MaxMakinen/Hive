@@ -1,3 +1,2 @@
 build/tuple_mag.o: src/tuple_mag.c include/tuple.h
-
 include/tuple.h:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaarine <jsaarine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:41:16 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/11/14 15:54:20 by jsaarine         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:26:18 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@
 
 int	intersect_sphere(t_ray *inc_ray, t_object *s)
 {
-	static t_abcd	abcd;
+	t_abcd			abcd;
 	t_vector		sphere_to_ray;
-	double			t1;
-	double			t2;
+	double			t[2];
 	t_matrix		inverse_transform;
 	t_ray			ray;
 
@@ -35,12 +34,9 @@ int	intersect_sphere(t_ray *inc_ray, t_object *s)
 	abcd.d = calc_discriminant(abcd.a, abcd.b, abcd.c);
 	if (abcd.d < 0)
 		return (0);
-	t1 = (-(abcd.b) - sqrt(abcd.d)) / (2 * abcd.a);
-	t2 = (-(abcd.b) + sqrt(abcd.d)) / (2 * abcd.a);
-	//printf("%f %f\n", t1, t2);
-	// intersection_record_test(inc_ray, t1, t2, s);
-	// printf("o xs: %f %f\n", t1, t2);
-	intersection_record(inc_ray, t1, s);
-	intersection_record(inc_ray, t2, s);
+	t[0] = (-(abcd.b) - sqrt(abcd.d)) / (2 * abcd.a);
+	t[1] = (-(abcd.b) + sqrt(abcd.d)) / (2 * abcd.a);
+	intersection_record(inc_ray, t[0], s);
+	intersection_record(inc_ray, t[1], s);
 	return (1);
 }

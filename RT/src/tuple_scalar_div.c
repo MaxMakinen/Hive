@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 14:44:03 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/11/09 15:02:47 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:27:03 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_tuple	tuple_scalar_div(t_tuple u, double x)
 {
 	t_tuple	r;
-
 
 	if (u.s_xyzw.x == 0.0 && x == 0.0)
 		r.s_xyzw.x = 0;

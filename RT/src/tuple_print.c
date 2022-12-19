@@ -6,13 +6,13 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 14:44:03 by jsaarine          #+#    #+#             */
-/*   Updated: 2022/11/11 20:07:42 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/13 09:48:19 by mmakinen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tuple.h"
-#include <stdio.h>
 #include <printf.h>
+#include <stdio.h>
 
 void	tuple_print(t_tuple t)
 {

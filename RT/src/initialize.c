@@ -6,7 +6,7 @@
 /*   By: jjuntune <jjuntune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 16:43:10 by jjuntune          #+#    #+#             */
-/*   Updated: 2022/11/21 15:29:28 by jjuntune         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:28:54 by jjuntune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,10 @@ static int	initialize_buffers(t_frame_buffer *fb)
 {
 	fb->data_len = (WIN_H * WIN_W);
 	fb->data = (int *)malloc(sizeof(int) * fb->data_len);
-	fb->cartoon = (int *)malloc(sizeof(int) * fb->data_len);
-	fb->b_w = (int *)malloc(sizeof(int) * fb->data_len);
-	fb->b_w_cartoon = (int *)malloc(sizeof(int) * fb->data_len);
-	fb->edge_map = (int *)malloc(sizeof(int) * fb->data_len);
-	fb->sepia = (int *)malloc(sizeof(int) * fb->data_len);
-	fb->stereocopy = (int *)malloc(sizeof(int) * fb->data_len);
+	fb->filter = (int *)malloc(sizeof(int) * fb->data_len);
 	fb->mask = (char *)malloc(sizeof(char) * fb->data_len);
-	if (fb->data == NULL || fb->cartoon == NULL || fb->b_w == NULL
-		||fb->b_w_cartoon == NULL || fb->edge_map == NULL
-		|| fb->stereocopy == NULL || fb->mask == NULL)
+	fb->motion_calc = (t_color *)malloc(sizeof(t_color) * fb->data_len);
+	if (fb->data == NULL || fb->filter == NULL || fb->motion_calc == NULL)
 		return (0);
 	return (1);
 }
@@ -53,6 +47,7 @@ int	initialize_window(t_main *main)
 void	initialize_camera(t_cam *cam, t_matrix transform)
 {
 	cam->pos = point_new(0.0, 0.0, 0.0);
+	cam->coi = point_new(0.0, 0.0, 0.0);
 	cam->v_up = vector_new(0.0, 1.0, 0.0);
 	cam->n = vector_new(0.0, 0.0, 1.0);
 	cam->u = vector_new(-1.0, 0.0, 0.0);
@@ -77,5 +72,6 @@ void	initialize_ray(t_ray *ray, double x, double y, t_cam *cam)
 	ray->dir = tuple_sub(cam->pos, ray->dir);
 	ray->dir = tuple_unit(ray->dir);
 	*ray = ray_transform(ray, &cam->transform);
-	vec_new(&ray->xs.vec, 8, sizeof(t_intersection));
+	vec_new(&ray->xs.vec, 4, sizeof(t_intersection));
+	ray->remaining = 4;
 }
