@@ -95,6 +95,9 @@ int	main(int ac, char **av)
 	
 	if (ac == 2)
 	{
+		doc.head = NULL;
+		doc.version = NULL;
+		doc.encoding = NULL;
 		if (!xml_doc_load(&doc, av[1]))
 		{
 			ft_putendl_fd("couldn't read file!", 2);
@@ -104,6 +107,15 @@ int	main(int ac, char **av)
 		read_xml(&doc, &main);
 		xml_doc_free(&doc);
 		main.cam = main.scene.cam;
+		initialize_camera(&main.cam, main.scene.cam.transform);
+		main.cam.pos = main.scene.cam.pos;
+		main.light = point_light_new(point_new(0, 2.5, -10.0), color_new(1,1,1));
+//		vec_push(&main.scene.lights, &main.light);
+		main.obj_count = 2;
+		printf("objs = %zu\nlights = %zu\ncamera = %f %f %f\ncam coi %f %f %f\n",\
+		 main.scene.objects.len, main.scene.lights.len, main.scene.cam.pos.a[0], main.scene.cam.pos.a[1], main.scene.cam.pos.a[2],\
+		 main.scene.cam.coi.a[0], main.scene.cam.coi.a[1], main.scene.cam.coi.a[2]);
+
 	}
 	else
 	{
@@ -119,7 +131,6 @@ int	main(int ac, char **av)
 	main.cam.coi_motion = motion_new(FALSE, 5.0, tuple_unit(vector_new(1,0,0)));
 
 	main.light = point_light_new(point_new(0, 0, 0.0), color_new(1,1,1));
-	vec_push(&main.scene.lights, &main.light);
 	// main.light = point_light_new(point_new(20, 20, 0.0), color_new(1,0,0));
 	// vec_push(&main.scene.lights, &main.light);
 	// main.light = point_light_new(point_new(-20, -20, 0.0), color_new(0,1,0));
@@ -282,6 +293,7 @@ int	main(int ac, char **av)
 	vec_push(&main.scene.objects, &main.obj[3]);
 	vec_push(&main.scene.objects, &main.obj[4]);
 	//vec_push(&main.scene.objects, &main.obj[5]);
+
 	}
 
 	int draw_debug = 0;

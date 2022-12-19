@@ -96,7 +96,6 @@ int	get_object(t_xml_node *node, t_object *obj)
 	int			index;
 	char		types[4][9];
 	char		*value;
-	char		*temp = NULL;
 
 	index = 0;
 	populate_types(types);
@@ -117,8 +116,9 @@ int	get_object(t_xml_node *node, t_object *obj)
 			*obj = object_new(index);
 		index++;
 	}
-	temp = xml_node_attr_value(node, "negative");
-	if (!temp || !ft_strcmp(temp, "true"))
+	obj->negative = FALSE;
+	value = xml_node_attr_value(node, "negative");
+	if (value != NULL && !ft_strcmp(value, "true"))
 		obj->negative = TRUE;
 	if (!get_obj_details(node, obj))
 	{

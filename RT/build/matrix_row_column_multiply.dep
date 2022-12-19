@@ -1,5 +1,8 @@
 build/matrix_row_column_multiply.o: src/matrix_row_column_multiply.c \
- include/matrix.h include/coords.h include/tuple.h
+  include/matrix.h include/coords.h include/tuple.h
+
 include/matrix.h:
+
 include/coords.h:
+
 include/tuple.h:

@@ -37,7 +37,7 @@ int	prepare_objects(t_xml_nodelist *list, t_vec *objects)
 		obj.transform = matrix_multiply(&obj.transform, &rotate);
 		rotate = matrix_scale(obj.scale.a[0], obj.scale.a[1], obj.scale.a[2]);
 		obj.transform = matrix_multiply(&obj.transform, &rotate);
-		printf("objects = %p\nobj = %p\n", objects, &obj);
+		obj.id = index;
 		vec_push(objects, &obj);
 		index++;
 	}
@@ -45,9 +45,21 @@ int	prepare_objects(t_xml_nodelist *list, t_vec *objects)
 
 }
 
+void	initialize_camera_2(t_cam *cam, t_matrix transform)
+{
+	cam->c = tuple_sub(point_new(0, 0, 0), tuple_scalar_mult(cam->n, 0.1));
+	cam->plane_h = tan(1.04719 / 2) * 2 * 0.1;
+	cam->plane_w = cam->plane_h * ((float)WIN_W / WIN_H);
+	cam->l = tuple_sub(cam->c,
+			tuple_scalar_mult(cam->u, (cam->plane_w / 2.0)));
+	cam->l = tuple_sub(cam->l,
+			tuple_scalar_mult(cam->v, cam->plane_h / 2.0));
+	cam->transform = coi_transform(cam, transform);
+}
+
 int	prepare_camera(t_xml_nodelist *list, t_cam *cam)
 {
-
+	t_matrix	temp;
 	if (list->size != 1)
 	{
 		if (list->size < 1)
@@ -56,12 +68,17 @@ int	prepare_camera(t_xml_nodelist *list, t_cam *cam)
 			ft_putendl_fd("Error: too many cameras in input", 2);
 		return (FALSE);
 	}
+	initialize_camera(cam, matrix_translate_2(tuple_unit(vector_new(0, 0, 0))));
 	cam->coi = point_new(0.0, 0.0, 0.0);
 	get_camera(list->list[0], cam);
 	cam->coi_transform = matrix_translate_2(cam->coi);
 	cam->motion = motion_new(FALSE, 5.0, tuple_unit(vector_new(1, 0, 0)));
 	cam->coi_motion = motion_new(FALSE, 5.0, tuple_unit(vector_new(1, 0, 0)));
-	initialize_camera(cam, matrix_translate_2(cam->pos));
+	cam->transform = matrix_translate_2(cam->pos);
+	printf("cam pos = %f %f %f\n", cam->pos.a[0], cam->pos.a[1], cam->pos.a[2]);
+	temp = matrix_translate_2(cam->pos);
+	initialize_camera_2(cam, cam->transform);
+	printf("cam coi = %f %f %f\n", cam->coi.a[0], cam->coi.a[1], cam->coi.a[2]);
 	return (TRUE);
 }
 
@@ -89,6 +106,7 @@ int	prepare_lights(t_xml_nodelist *list, t_vec *lights)
 			light.type = POINT;
 		get_light(node, &light);
 		vec_push(lights, &light);
+		index++;
 	}
 	return (TRUE);
 }

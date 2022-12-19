@@ -1,5 +1,8 @@
 build/matrix_identity_new.o: src/matrix_identity_new.c include/matrix.h \
- include/coords.h include/tuple.h
+  include/coords.h include/tuple.h
+
 include/matrix.h:
+
 include/coords.h:
+
 include/tuple.h:

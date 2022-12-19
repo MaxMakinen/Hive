@@ -14,10 +14,10 @@ library_names=''
 old_library='libSDL2.a'
 
 # Linker flags that cannot go in dependency_libs.
-inherited_linker_flags=''
+inherited_linker_flags=' '
 
 # Libraries that this one depends upon.
-dependency_libs=' -lm -ldl -lpthread -lrt'
+dependency_libs=' -lm -liconv -lobjc'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/max/RT/build/libsdl2/lib'
+libdir='/Users/mmakinen/hive/RT/build/libsdl2/lib'

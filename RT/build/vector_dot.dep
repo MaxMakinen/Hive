@@ -1,2 +1,3 @@
 build/vector_dot.o: src/vector_dot.c include/tuple.h
+
 include/tuple.h:
