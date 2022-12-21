@@ -1,8 +1,0 @@
-build/matrix_scale.o: src/matrix_scale.c include/matrix.h \
-  include/coords.h include/tuple.h
-
-include/matrix.h:
-
-include/coords.h:
-
-include/tuple.h:

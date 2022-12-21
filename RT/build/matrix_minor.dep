@@ -1,8 +1,0 @@
-build/matrix_minor.o: src/matrix_minor.c include/matrix.h \
-  include/coords.h include/tuple.h
-
-include/matrix.h:
-
-include/coords.h:
-
-include/tuple.h:
