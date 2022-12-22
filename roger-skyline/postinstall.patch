@@ -1,21 +1,12 @@
---- vboxpostinstall_origin.sh	2022-12-22 16:41:37.000000000 +0200
-+++ vboxpostinstall_n.sh	2022-12-22 16:39:55.000000000 +0200
-@@ -207,12 +207,15 @@
- #
- 
- 
--
- #
- # Run user command.
- #
--
--
-+log_command_in_target apt-get -y update
-+log_command_in_target apt-get -y upgrade
-+log_command_in_target apt-get -y install net-tools
-+log_command_in_target apt-get -y install ufw
-+log_command_in_target apt-get -y install sudo
-+log_command_in_target adduser user sudo
- 
- #
- # Unmount the cdrom if we bound it and clean up the chroot if we set it up.
+210d209
+< 
+214,215c213,218
+< 
+< 
+---
+> log_command_in_target apt-get -y update
+> log_command_in_target apt-get -y upgrade
+> log_command_in_target apt-get -y install net-tools
+> log_command_in_target apt-get -y install ufw
+> log_command_in_target apt-get -y install sudo
+> log_command_in_target adduser user sudo

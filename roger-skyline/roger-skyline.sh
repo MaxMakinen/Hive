@@ -142,7 +142,7 @@ patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-isolinu
 patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-preseed.cfg < partition.patch
 
 # Here we try to add our own commands into the postinstall script
-#patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch
+patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch
 
 # I echo the UUID to check that it was found properly and so that I can, if necessary, manually check that the patch went through.
 echo $UUID
