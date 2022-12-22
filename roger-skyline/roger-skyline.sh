@@ -32,17 +32,30 @@ VBoxManage modifyvm $VM  --mouse usbtablet
 
 VBoxManage modifyvm $VM --memory 1024 --vram 128 --cpus 2
 
-VBoxManage modifyvm $VM --nic1 bridged --bridgeadapter1 "en0: Ethernet"
-# --nic<1-N> none|null|nat|natnetwork|bridged|intnet|hostonly|generic: Configures the type of networking for each of the VM's virtual network cards. Options are: not present (none), not connected to the host (null), use network address translation (nat), use the new network address translation engine (natnetwork), bridged networking (bridged), or use internal networking (intnet), host-only networking (hostonly), or access rarely used sub-modes (generic). These options correspond to the modes described in Section 6.2, “Introduction to Networking Modes”.
-# With bridged networking, Oracle VM VirtualBox uses a device driver on your host system that filters data from your physical network adapter. This driver is therefore called a net filter driver. This enables Oracle VM VirtualBox to intercept data from the physical network and inject data into it, effectively creating a new network interface in software. When a guest is using such a new software interface, it looks to the host system as though the guest were physically connected to the interface using a network cable. The host can send data to the guest through that interface and receive data from it. This means that you can set up routing or bridging between the guest and the rest of your network.
+VBoxManage modifyvm $VM --nat-pf1 "guestssh,tcp,,2222,10.11.198.133,22"
+# https://www.virtualbox.org/manual/ch06.html#network_nat
+
+#VBoxManage modifyvm $VM --nic1 bridged --bridgeadapter1 "en0: Ethernet"
+# --nic<1-N> none|null|nat|natnetwork|bridged|intnet|hostonly|generic: Configures the type of networking for each of the VM's virtual network cards. Options are: not present (none),
+# not connected to the host (null), use network address translation (nat), use the new network address translation engine (natnetwork), bridged networking (bridged), or use internal networking (intnet),
+# host-only networking (hostonly), or access rarely used sub-modes (generic). These options correspond to the modes described in Section 6.2, “Introduction to Networking Modes”.
+# With bridged networking, Oracle VM VirtualBox uses a device driver on your host system that filters data from your physical network adapter. This driver is therefore called a net filter driver.
+# This enables Oracle VM VirtualBox to intercept data from the physical network and inject data into it, effectively creating a new network interface in software. When a guest is using such a new software interface,
+# it looks to the host system as though the guest were physically connected to the interface using a network cable. The host can send data to the guest through that interface and receive data from it.
+# This means that you can set up routing or bridging between the guest and the rest of your network.
 
 #	Note
 #	Even though TAP interfaces are no longer necessary on Linux for bridged networking, you can still use TAP interfaces for certain advanced setups, since you can connect a VM to any host interface.
 #
-# To enable bridged networking, open the Settings dialog of a virtual machine, go to the Network page and select Bridged Network in the drop-down list for the Attached To field. Select a host interface from the list at the bottom of the page, which contains the physical network interfaces of your systems. On a typical MacBook, for example, this will allow you to select between en1: AirPort, which is the wireless interface, and en0: Ethernet, which represents the interface with a network cable.
+# To enable bridged networking, open the Settings dialog of a virtual machine, go to the Network page and select Bridged Network in the drop-down list for the Attached To field. 
+# Select a host interface from the list at the bottom of the page, which contains the physical network interfaces of your systems.
+# On a typical MacBook, for example, this will allow you to select between en1: AirPort, which is the wireless interface, and en0: Ethernet, which represents the interface with a network cable.
 
 #	Note
-#	Bridging to a wireless interface is done differently from bridging to a wired interface, because most wireless adapters do not support promiscuous mode. All traffic has to use the MAC address of the host's wireless adapter, and therefore Oracle VM VirtualBox needs to replace the source MAC address in the Ethernet header of an outgoing packet to make sure the reply will be sent to the host interface. When Oracle VM VirtualBox sees an incoming packet with a destination IP address that belongs to one of the virtual machine adapters it replaces the destination MAC address in the Ethernet header with the VM adapter's MAC address and passes it on. Oracle VM VirtualBox examines ARP and DHCP packets in order to learn the IP addresses of virtual machines.
+#	Bridging to a wireless interface is done differently from bridging to a wired interface, because most wireless adapters do not support promiscuous mode.
+# All traffic has to use the MAC address of the host's wireless adapter, and therefore Oracle VM VirtualBox needs to replace the source MAC address in the Ethernet header of an outgoing packet to make sure 
+# the reply will be sent to the host interface. When Oracle VM VirtualBox sees an incoming packet with a destination IP address that belongs to one of the virtual machine adapters it replaces the destination
+# MAC address in the Ethernet header with the VM adapter's MAC address and passes it on. Oracle VM VirtualBox examines ARP and DHCP packets in order to learn the IP addresses of virtual machines.
 
 
 # This command creates a new virtual hard disk image. The syntax is as follows:
@@ -115,13 +128,13 @@ patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-isolinu
 patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-preseed.cfg < partition.patch
 
 # Here we try to add our own commands into the postinstall script
-patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch
+#patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch
 
 # I echo the UUID to check that it was found properly and so that I can, if necessary, manually check that the patch went through.
 echo $UUID
 
 # VBoxManage startvm $VM --type headless
-VBoxManage startvm $VM
+VBoxManage startvm $VM --type headless
 
 # /Users/mmakinen/VirtualBox VMs/roger-skyline-1
 
