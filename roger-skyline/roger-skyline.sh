@@ -46,7 +46,7 @@ VBoxManage modifyvm $VM  --mouse usbtablet
 VBoxManage modifyvm $VM --memory 1024 --vram 128 --cpus 2
 
 VBoxManage modifyvm $VM --nic1 nat
-VBoxManage modifyvm $VM --natpf1 "ssh,tcp,,2222,10.0.2.15,22"
+VBoxManage modifyvm $VM --natpf1 "ssh,tcp,,2222,,22"
 # https://www.virtualbox.org/manual/ch06.html#network_nat
 
 #VBoxManage modifyvm $VM --nic1 bridged --bridgeadapter1 "en0: Ethernet"
@@ -180,7 +180,7 @@ VBoxManage startvm $VM
 # The primary network interface
 # allow-hotplug enp0s3
 # iface enp0s3 inet static
-#  address 10.0.2.15
+#  address 10.13.199.238
 #  netmask 255.255.254.0 This doensn't follow the assignment. it's closer now.
 #  gateway 10.13.254.254
 #  nameserver 10.511.1.253
