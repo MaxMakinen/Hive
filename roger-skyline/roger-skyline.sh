@@ -1,6 +1,19 @@
 #!/bin/bash
 # https://andreafortuna.org/2019/10/24/how-to-create-a-virtualbox-vm-from-command-line/
 # https://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
+# https://www.edwardstafford.com/how-to-using-vboxmanage-to-delete-a-virtual-machine-from-virtualbox/
+# Delete VM: 
+# Step one: Get the name or UUID and details of your VM
+#  VBoxManage list vms
+# Step two: Get the disc information for your VM
+#  VBoxManage showvminfo <Virtual Machine Name or UUID>
+# Step Three: Disassociate the Virtual Disk[s]
+#  VBoxManage modifyvm VNAS –hda none
+# Step Four: Unregister and delete the VM
+#  VBoxManage unregistervm <Virtual Machine Name or UUID>Â –delete
+#  VBoxManage unregistervm VNAS –delete
+# Step Five: Confirm
+#  VBoxManage list vms
 
 if [ $# == 1 ]; then
 	VM=$1
@@ -32,7 +45,8 @@ VBoxManage modifyvm $VM  --mouse usbtablet
 
 VBoxManage modifyvm $VM --memory 1024 --vram 128 --cpus 2
 
-VBoxManage modifyvm $VM --nat-pf1 "guestssh,tcp,,2222,10.11.198.133,22"
+VBoxManage modifyvm $VM --nic1 nat
+VBoxManage modifyvm $VM --natpf1 "ssh,tcp,,2222,10.0.2.15,22"
 # https://www.virtualbox.org/manual/ch06.html#network_nat
 
 #VBoxManage modifyvm $VM --nic1 bridged --bridgeadapter1 "en0: Ethernet"
@@ -133,8 +147,13 @@ patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-preseed
 # I echo the UUID to check that it was found properly and so that I can, if necessary, manually check that the patch went through.
 echo $UUID
 
+# Turn on VM
+VBoxManage startvm $VM
 # VBoxManage startvm $VM --type headless
-VBoxManage startvm $VM --type headless
+
+
+# Turn off VM
+# VBoxManage controlvm roger-skyline-1 poweroff
 
 # /Users/mmakinen/VirtualBox VMs/roger-skyline-1
 
@@ -154,12 +173,14 @@ VBoxManage startvm $VM --type headless
 # then logout and login.
 # get ip with hostname -I then 'ssh user@<ip--addr>'
 
+# ssh -p 2222 user@localhost
+
 # "ip route" gives good info about ip and gateway etc.
 # Make changes in /etc/network/interfaces to turn off DHCP and use a static ip
 # The primary network interface
 # allow-hotplug enp0s3
 # iface enp0s3 inet static
-#  address 10.13.199.238
+#  address 10.0.2.15
 #  netmask 255.255.254.0 This doensn't follow the assignment. it's closer now.
 #  gateway 10.13.254.254
 #  nameserver 10.511.1.253
