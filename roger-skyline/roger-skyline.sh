@@ -184,3 +184,22 @@ VBoxManage startvm $VM
 #  netmask 255.255.254.0 This doensn't follow the assignment. it's closer now.
 #  gateway 10.13.254.254
 #  nameserver 10.511.1.253
+# sudo touch /var/log/update_script.log
+# sudo chmod 755 /var/log/update_script.log
+
+# #!/bin/bash
+# printf "\n" >> /var/log/update_script.log
+# date >> /var/log/update_script.log
+
+# sudo apt-get update -y >> /var/log/update_script.log
+# sudo apt-get upgrade -y >> /var/log/update_script.log
+
+# sudo chmod 755 update.sh
+# sudo chown root update.sh
+
+# sudo crontab -e
+
+# @reboot sudo ~/update.sh (for running it at boot)
+# 0 4 * * 0 sudo ~/update.sh (for running it once a week, e.g. Sunday, at 4am)
+
+# sudo systemctl enable cron
