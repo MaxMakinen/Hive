@@ -24,7 +24,7 @@ fi
 PASSWORD="p4ssw0rd"
 USER="user"
 BASEFOLDER="/goinfre/mmakinen"
-ISO="/Users/mmakinen/Downloads/debian-11.3.0-amd64-netinst.iso"
+ISO="/Users/mmakinen/Downloads/debian-11.6.0-amd64-netinst.iso"
 
 VBoxManage createvm --name $VM --ostype "Debian_64" --register
 # VBoxManage createvm --name $VM --ostype "Debian_64" --register --basefolder $BASEFOLDER
@@ -45,11 +45,11 @@ VBoxManage modifyvm $VM  --mouse usbtablet
 
 VBoxManage modifyvm $VM --memory 1024 --vram 128 --cpus 2
 
-VBoxManage modifyvm $VM --nic1 nat
-VBoxManage modifyvm $VM --natpf1 "ssh,tcp,,2222,,22"
+# VBoxManage modifyvm $VM --nic1 nat
+# VBoxManage modifyvm $VM --natpf1 "ssh,tcp,,2222,,22"
 # https://www.virtualbox.org/manual/ch06.html#network_nat
 
-#VBoxManage modifyvm $VM --nic1 bridged --bridgeadapter1 "en0: Ethernet"
+VBoxManage modifyvm $VM --nic1 bridged --bridgeadapter1 "en0: Ethernet"
 # --nic<1-N> none|null|nat|natnetwork|bridged|intnet|hostonly|generic: Configures the type of networking for each of the VM's virtual network cards. Options are: not present (none),
 # not connected to the host (null), use network address translation (nat), use the new network address translation engine (natnetwork), bridged networking (bridged), or use internal networking (intnet),
 # host-only networking (hostonly), or access rarely used sub-modes (generic). These options correspond to the modes described in Section 6.2, “Introduction to Networking Modes”.
@@ -142,7 +142,7 @@ patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-isolinu
 patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-preseed.cfg < partition.patch
 
 # Here we try to add our own commands into the postinstall script
-patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch
+# patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch
 
 # I echo the UUID to check that it was found properly and so that I can, if necessary, manually check that the patch went through.
 echo $UUID
@@ -178,11 +178,11 @@ VBoxManage startvm $VM
 # "ip route" gives good info about ip and gateway etc.
 # Make changes in /etc/network/interfaces to turn off DHCP and use a static ip
 # The primary network interface
-# allow-hotplug enp0s3
+# auto enp0s3
 # iface enp0s3 inet static
-#  address 10.13.199.238
-#  netmask 255.255.254.0 This doensn't follow the assignment. it's closer now.
-#  gateway 10.13.254.254
+#  address 10.11.198.126
+#  netmask 255.255.255.252
+#  gateway 10.11.254.254
 #  nameserver 10.511.1.253
 # sudo touch /var/log/update_script.log
 # sudo chmod 755 /var/log/update_script.log
