@@ -1,0 +1,93 @@
+Roger Evaluation
+
+
+CHECK THE SIZE OF PARTITION:
+* lsblk
+
+CHECK THE SERVICES:
+* systemctl list-units --type service --all --state active
+* apt-get update && apt-get upgrade
+
+CREATE A SUPERUSER
+* new
+
+CHANGE THE SSHD_CONFIG
+* sudo vim /etc/ssh/sshd_config
+    * Check PORT is 51051
+    * uncomment SSH
+    * PASSWD yes
+* sudo systemctl restart sshd ; sudo systemctl status ssh
+
+EXIT and 
+* ssh-keygen -f ~/.ssh/vmkey ; ssh-add ~/.ssh/vmkey ; ssh-copy-id -i ~/.ssh/vmkey
+* peppa@10.11.201.42 -p 51051
+* ssh peppa@10.11.201.42 -p 51051
+
+CHANGE THE SSHD_CONFIG
+* sudo vim /etc/ssh/sshd_config
+    * comment and uncomment
+* sudo systemctl restart sshd ; sudo systemctl status ssh
+
+EXIT
+* ssh peppa@10.11.201.42 -p 51051
+
+CHECK DCHP
+* ip addr
+* cat /etc/network/interfaces.d/enp0s3
+
+CHANGE net mask
+* sudo vim /etc/network/interfaces.d/enp0s3
+* sudo systemctl restart networking.service
+* ip addr
+
+grep -v "#" /etc/ssh/sshd_config
+
+CHECK FIREWALL RULES
+* sudo ufw status
+* sudo ufw status verbose
+* sudo netstat -tulpn | grep LISTEN
+* sudo systemctl list-unit-files --type service | grep "enabled "
+
+OPEN ATTACK_VM
+* ssh hacker@10.11.198.158
+* ab -k -c 360 -n 20000 http://10.11.201.42
+* sudo tail -F /var/log/fail2ban.log
+* sudo fail2ban-client status http-get-dos
+* sudo fail2ban-client status sshd
+* sudo fail2ban-client banned
+
+PORTS LISTENED and SCAN
+* nmap 10.11.201.42
+* sudo lsof -i -P -n | grep "LISTEN”
+* sudo iptables --list | head
+* iptables -D INPUT 1
+
+
+UP TO DATE?
+* sudo apt update && sudo apt upgrade 
+    * OR
+* cat /var/log/apt/history.log
+
+SCRIPT FOR UPDATES
+* su -
+* cd /root ; ls
+* cat update.sh
+
+CRONTAB -e ( CHECK the last two lines)
+* crontab -e
+
+CRONTAB changed mail
+* sudo vim /etc/crontab
+* sudo bash /root/crontab_monitor.sh
+* mutt
+
+WEBSITE
+* https://10.11.201.42
+* check SSL cert.
+
+
+systemctl list-units --type service --all --state active
+
+
+
+

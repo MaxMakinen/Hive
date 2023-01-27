@@ -1,0 +1,1 @@
+sudo ufw limit 56789/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443

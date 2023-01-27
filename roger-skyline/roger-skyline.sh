@@ -18,7 +18,7 @@
 if [ $# == 1 ]; then
 	VM=$1
 else
-	VM="roger-skyline-1"
+	VM="roger-skyline"
 fi
 
 PASSWORD="p4ssw0rd"
@@ -34,7 +34,7 @@ VBoxManage modifyvm $VM --ioapic on
 # With an I/O APIC, OSes can use more than 16 interrupt requests (IRQs) and therefore avoid IRQ sharing for improved reliability.
 # Note: Enabling the I/O APIC is required, especially for 64-bit Windows guest OSes. It is also required if you want to use more than one virtual CPU in a virtual machine.
 
-VBoxManage modifyvm $VM --rtcuseutc on
+#VBoxManage modifyvm $VM --rtcuseutc on
 # --rtcuseutc on|off: Sets the real-time clock (RTC) to operate in UTC time. See Section 3.5.1, “Motherboard Tab”.
 
 VBoxManage modifyvm $VM  --mouse usbtablet
@@ -43,7 +43,7 @@ VBoxManage modifyvm $VM  --mouse usbtablet
 # --memory <memorysize>: Sets the amount of RAM, in MB, that the virtual machine should allocate for itself from the host.
 # --vram <vramsize>: Sets the amount of RAM that the virtual graphics card should have.
 
-VBoxManage modifyvm $VM --memory 1024 --vram 128 --cpus 2
+VBoxManage modifyvm $VM --memory 2048 --vram 128 --cpus 2
 
 # VBoxManage modifyvm $VM --nic1 nat
 # VBoxManage modifyvm $VM --natpf1 "ssh,tcp,,2222,,22"
@@ -107,11 +107,9 @@ VBoxManage modifyvm $VM --nic1 bridged --bridgeadapter1 "en0: Ethernet"
 #	VBoxManage createmedium --filename $BASEFOLDER/$VM/${VM}_DISK.vdi --size 8000 --format VDI
 # -- size 8000 ends u with 7.8GB disc inside the VM
 
-#	VBoxManage createmedium --filename $BASEFOLDER/$VM/${VM}_DISK.vdi --sizebyte 8589934590 --format VDI
-#	8GiB = 8.58993459GB
 VBoxManage createmedium --filename $BASEFOLDER/$VM/${VM}_DISK.vdi --size 8192 --format VDI #--variant fixed
 # 8192MB copied from a 8GB VDI created through GUI
-# 8gib = 8192mib. it's base 2 dumbass.
+# 8gib = 8192mib.
 
 #	https://www.virtualbox.org/manual/ch08.html#vboxmanage-storagectl
 VBoxManage storagectl $VM --name "SATA Controller" --add sata --controller IntelAhci
@@ -129,20 +127,20 @@ VBoxManage modifyvm $VM --boot1 dvd --boot2 disk --boot3 none --boot4 none
 
 
 VBoxManage unattended install $VM --user=$USER --password=$PASSWORD --locale=en_US --time-zone=UTC --iso=$ISO --package-selection-adjustment=minimal
-# VBoxManage unattended install $VM --user=$USER --password=$PASSWORD --locale=en_US --time-zone=UTC --iso=$ISO --package-selection-adjustment=minimal --post-install-command="su && apt update && apt upgrade -y && apt install sudo"
+# VBoxManage unattended install $VM --user=$USER --password=$PASSWORD --locale=en_US --time-zone=UTC --iso=$ISO --package-selection-adjustment=minimal --post-install-command="apt update && apt upgrade -y && apt install sudo -y"
 
 # I use awk to get the UUID of the created VM and then use a patch file to fix a bug with unattended Debian installs.
 # I also patch the generated preseed.cfg file to include the instructions for our desired partitioning.
 UUID=$(vboxmanage list vms | awk -v vm="$VM" '{ gsub(/[{}]/, "", $0); } $1 ~ vm{ print $2; }')
 
 # Without patch the unattended install launches graphical install instead of the standard install; and then gets stuck in region/language/country check.
-patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-isolinux-txt.cfg < fix.patch
+patch /Users/mmakinen/VirtualBox\ VMs/$VM/Unattended-${UUID}-isolinux-txt.cfg < fix.patch
 
 # The following adds our partitioning information into the preseed file for the automated installation of the Debian OS
-patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-preseed.cfg < partition.patch
+patch /Users/mmakinen/VirtualBox\ VMs/$VM/Unattended-${UUID}-preseed.cfg < partition.patch
 
 # Here we try to add our own commands into the postinstall script
-# patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch
+# patch /Users/mmakinen/VirtualBox\ VMs/roger-skyline-1/Unattended-${UUID}-vboxpostinstall.sh < postinstall.patch 
 
 # I echo the UUID to check that it was found properly and so that I can, if necessary, manually check that the patch went through.
 echo $UUID
@@ -164,16 +162,28 @@ VBoxManage startvm $VM
 #	https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/vboxmanage-list.html
 #	https://www.openlogic.com/blog/how-use-vagrant-and-virtualbox
 
-# Add to .bashrc: export PATH="/sbin:$PATH"
-# apt update && apt upgrade -y
+# apt update && apt upgrade -y && apt install sudo vim ufw fail2ban mailutils apache2 portsentry -y && sudo ufw limit 56789/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443
 # apt install net-tools
-# apt install ufw
-# apt install sudo
-# adduser user sudo
+
+# sudo adduser mmakinen && sudo adduser mmakinen sudo
+# auto enp0s3
+#iface enp0s3 inet static
+#	address 10.12.179.153
+#	netmask 255.255.255.252
+#	gateway 10.12.254.254
+
+# attack user@10.12.179.154
+# ssh-copy-id -i /Users/mmakinen/.ssh/id_rsa.pub mmakinen@10.12.179.153 -p 56789
 # then logout and login.
 # get ip with hostname -I then 'ssh user@<ip--addr>'
 
-# ssh -p 2222 user@localhost
+
+# ssh -p 56789 user@localhost
+
+# sudo ufw default reject incoming && sudo ufw default allow outgoing && sudo ufw status verbose
+# sudo ufw limit 56789/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443
+
+# sudo ufw reload && sudo systemctl restart fail2ban && sudo systemctl status fail2ban
 
 # "ip route" gives good info about ip and gateway etc.
 # Make changes in /etc/network/interfaces to turn off DHCP and use a static ip
@@ -181,9 +191,15 @@ VBoxManage startvm $VM
 # auto enp0s3
 # iface enp0s3 inet static
 #  address 10.11.198.126
-#  netmask 255.255.255.252
+#  netmask 255.255.255.25
 #  gateway 10.11.254.254
-#  nameserver 10.511.1.253
+
+# auto enp0s3
+# iface enp0s3 inet static
+# 	address 10.12.179.168
+# 	netmask 255.255.255.252
+# 	gateway 10.12.254.254
+
 # sudo touch /var/log/update_script.log
 # sudo chmod 755 /var/log/update_script.log
 
@@ -203,3 +219,41 @@ VBoxManage startvm $VM
 # 0 4 * * 0 sudo ~/update.sh (for running it once a week, e.g. Sunday, at 4am)
 
 # sudo systemctl enable cron
+
+
+# sudo ufw limit 56789/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443
+
+
+# To create a self-signed SSL certificate in Debian with Apache2, you can use the openssl command-line tool. Here are the general steps to follow:
+
+# Open a terminal and run the following command to create a private key for your certificate:
+# openssl genrsa -out server.key 2048
+
+# Use the private key to create a certificate signing request (CSR) file:
+# openssl req -new -key server.key -out server.csr
+
+# You will be prompted to enter information about your organization, 
+# such as the common name (domain name) for the certificate.
+
+# Use the CSR file to create a self-signed certificate:
+# openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+# Once you have your certificate and key files, you need to configure Apache to use them. On Debian and Ubuntu, Apache's configuration files are located in the /etc/apache2 directory.
+
+# Open the default SSL virtual host configuration file using your preferred text editor:
+# sudo vim /etc/apache2/sites-available/default-ssl.conf
+
+# Find the <VirtualHost _default_:443> block and within it, 
+# locate the lines that specify the paths to the SSL certificate and key files. 
+# Replace the default paths with the paths to the server.crt and server.key files that you created earlier
+# 
+# Save the changes and exit the text editor.
+
+# Enable the SSL module and the default-ssl site:
+# sudo a2enmod ssl
+# sudo a2ensite default-ssl
+
+# Restart Apache for the changes to take effect:
+# sudo service apache2 restart
+
+# Now, you should be able to access your website using https:// and you can confirm the SSL certificate is self-signed by checking in the browser, it will show a warning message as the certificate is not verified by a trusted CA.

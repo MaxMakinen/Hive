@@ -7,13 +7,13 @@
 > d-i partman-auto/choose_recipe select unencrypted-install
 > d-i partman-auto/expert_recipe string \
 >         unencrypted-install :: \
->                 4301 4301 4301 ext4 \
->                         $primary{ } \
+>                 4509 4555 4600 ext4 \
+>                         $primary{ } $bootable { }\
 >                         method{ format } format{ } \
 >                         use_filesystem{ } filesystem{ ext4 } \
 >                         mountpoint{ / } \
 >                 . \
->                 1024 1024 1024 linux-swap \
+>                 1024 2147 -1 linux-swap \
 >                         $primary{ } \
 >                         method{ swap } format{ } \
 >                 . \
@@ -21,6 +21,6 @@
 >                         $primary{ } \
 >                         method{ format } format{ } \
 >                         use_filesystem{ } filesystem{ ext4 } \
->                         mountpoint{ /home } \
+>                         mountpoint{ /var } \
 >                 .
 > d-i partman-md/confirm boolean true

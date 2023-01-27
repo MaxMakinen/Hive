@@ -1,0 +1,253 @@
+Roger-Skyline-1
+
+IMPORTANT
+Take snapshots of you program whenever you change something. Also right after the installation. SAVES TIME humonguosly! NOTE: remember to change the snapshot folder to be in the /Users/<user>/goinfre/ or you’ll run out of space like I did.
+
+Snapshots:
+https://www.techrepublic.com/article/how-to-use-snapshots-in-virtualbox/
+
+Notes:
+
+Installation:
+* I decided to use: (direct download) debian-11.5.0-amd64-netinst.iso
+    * Memory size: 4096MB
+    * Created VDI (Virtual Disk Image)
+    * Fixed size (read that it is faster)
+    * local: /goinfre/pskytta/roger-skyline.vdi
+* Created 3 partitions (MANUAL):
+    * 4.55 GB (beginning; primary; bootable on) /
+    * 2.8 GB (logigal) /home
+    * 1.2 GB [SWAP] (logigal)
+        * LEFT: Pri/log 90.2MB FREE SPACE
+* root: pw: (space)
+* User: peetu (pw: 1)
+* Decided not to search media.
+* Decided not to participate in anonymous research.
+* Decided not to install desktop environment.
+* Install the GRUB boot loader: <YES>
+    * /dev/sda   (ata-VBOX_HARDDISK….)
+
+
+Initial steps:
+
+After the installation has been completed. Do the following things in the settings of the VirtualBox VM you just created:
+
+1. Settings > network > Attached to: >bridged adapter
+2. Settings > network > advanced > Promiscuous Mode > Allow VMs
+3. OK
+
+* When installation  and the 3 steps above are done start your VM and type the following commands in the terminal after login:
+    * `apt-get update && apt-get upgrade`
+    * `apt-get install sudo vim ufw fail2ban mailutils net-tools portsentry apache2 -y`
+        * (-y flag == --assume-yes)
+    * `useradd <login> && useradd <login> sudo` (if not already created)
+        * If this doesn’t work use command:
+            * `export PATH=$PATH:/usr/local/sbin`
+    * MODIFY the /etc/sudoers content:
+        * `sudo vim /etc/sudoers`
+        * UNDER: User privilege specification add:
+            * <login> ALL=(ALL:ALL) NOPASSWD:ALL
+* Added two scripts in ‘/usr/bin/‘ to handle some stuff:
+    * ADD new user by typing `new`
+    * REMOVE user by typing `remove`
+    * UNBAN user ip by typing `unban`
+    * UPDATE CHECK checks that updates are up to date type “update”
+
+Network, disabling DCHP, using static IP
+* Modify /etc/network/interfaces file
+    * under “# The primary network interface“
+        * auto enp0s3
+* Create file in `/etc/network/interfaces.d/enp0s3`
+    * write this to the file:
+            * iface enp0s3 net static
+                * address 10.11.201.42
+                * netmask 255.255.255.252
+                * gateway 10.11.254.254
+* Restart the networking service and check the status of it:
+    * `sudo systemctl restart networking && sudo systemctl status networking`
+
+SSH Service
+* `sudo vim /etc/ssh/sshd_config`
+    * Edits by line (uncomment the line and make changes). Note that depending on the distro the line numbers might have changed:
+        * line 15:
+            * Port 51051 (between 49152-65535)
+        * Save and exit.
+        * NOTE: after changing the port `sudo reboot` and do the following command on iMac terminal:
+            * `ls ~/.ssh/id_rsa*`
+                * If you have ssh key then proceed:
+                    * `ssh-copy-id -i /Users/<yourusername>/.ssh/id_rsa.pub <username>@10.11.201.42 -p 51051`
+                * If you don’t have: ‘ssh-keygen -t rsa’ in your iMac terminal and continue with the command above. 
+                * Check that the pub key has been added to the authorized_keys file with:
+                    * `cat /home/<username>/.ssh/authorized_keys`
+        * Now proceed to make changes to the rest of the lines:
+* `sudo vim /etc/ssh/sshd_config`
+        * line 34:
+            * PermitRootLogin no
+        * line 39:
+            * PubkeyAuthentication yes
+        * line 58:
+            * PasswordAuthentication no
+    * `sudo systemctl restart sshd && sudo systemctl status sshd`
+
+
+Firewall (ufw) settings
+
+* Check ufw status: `sudo ufw status` if inactive execute next command:
+    * `sudo ufw enable` > you’re unable to reconnect by ssh if you reboot now.
+* `sudo ufw default reject incoming ; sudo ufw default allow outgoing ; sudo ufw status verbose`
+
+Now setup the firewall rules as follows:
+* SSH: `sudo ufw limit 51051/tcp`
+* HTTP: `sudo ufw allow 80/tcp`
+* HTTPS: `sudo ufw allow 443`
+
+https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server
+https://www.cyberciti.biz/faq/howto-limiting-ssh-connections-with-ufw-on-ubuntu-debian/
+
+
+Fail2ban Setup
+
+* `systemctl status fail2ban` to check the service status
+* 'sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local'
+* `sudo vim /etc/fail2ban/jail.local` and add:
+```
+[sshd]
+enabled = true
+port = 56789
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+maxretry = 3
+bantime = 600
+
+#Add after HTTP servers:
+[http-get-dos]
+enabled = true
+port = http,https
+filter = http-get-dos
+logpath = /var/log/apache2/access.log
+maxretry = 300
+findtime = 300
+bantime = 600
+action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
+```
+
+* `sudo vim /etc/fail2ban/filter.d/http-get-dos.conf` to add the following regex:
+```[Definition]
+failregex = ^<HOST> -.*"(GET|POST).*
+ignoreregex =```
+* `sudo ufw reload ; sudo systemctl restart fail2ban ; sudo systemctl status fail2ban`
+
+
+Portsentry Setup
+
+* `sudo vim /etc/default/portsentry` modify the last two lines as follows:
+    * TCP_MODE="atcp"
+    * UDP_MODE="audp"
+* `sudo vim /etc/portsentry/portsentry.conf`: modify lines 135 and  136 as follows:
+    * BLOCK_UDP="1"
+    * BLOCK_TCP="1"
+* Remove comment on line 209:
+    * KILL_ROUTE="/sbin/iptables -I INPUT -s $TARGET$ -j DROP"
+* Add comment on lines: 170, 243:
+    * #KILL_ROUTE="/sbin/route add -host $TARGET$ reject"
+    * #KILL_HOSTS_DENY="ALL: $TARGET$ : DENY
+
+
+Learned to move the .vdi to /Users/pskytta/goinfre/
+Change the snapshot folder to /Users/pskytta/goinfre/ otherwise you’ll run out of space
+
+Crontab rules:
+			* * * * * command to be executed
+			- - - - -
+			| | | | |
+			| | | | ----- Day of week (0 - 7) (Sunday=0 or 7)
+			| | | ------- Month (1 - 12)
+			| | --------- Day of month (1 - 31)
+			| ----------- Hour (0 - 23)
+			------------- Minute (0 - 59)
+
+SSL
+* `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt`
+    * Country name: FI
+    * State: Uusimaa
+    * Locality name: Helsinki
+    * ENTER
+    * ENTER
+    * Common Name: 10.11.201.42
+    * Email Address: root@roger.lan
+Create file /etc/apache2/conf-available/ssl-params.conf:
+* `sudo vim /etc/apache2/conf-available/ssl-params.conf`
+```
+SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+SSLProtocol All -SSLv2 -SSLv3
+SSLHonorCipherOrder On
+
+Header always set X-Frame-Options DENY
+Header always set X-Content-Type-Options nosniff
+
+SSLCompression off
+SSLSessionTickets Off
+SSLUseStapling on
+SSLStaplingCache "shmcb:logs/stapling-cache(150000)"
+```
+
+Edit the file /etc/apache2/sites-available/default-ssl.conf:
+* `sudo vim /etc/apache2/sites-available/default-ssl.conf`
+```
+<IfModule mod_ssl.c>
+	<VirtualHost _default_:443>
+		ServerAdmin root@localhost
+		ServerName 192.168.10.42
+		DocumentRoot /var/www/html
+		ErrorLog ${APACHE_LOG_DIR}/error.log
+		CustomLog ${APACHE_LOG_DIR}/access.log combined
+		SSLEngine on
+		SSLCertificateFile	/etc/ssl/certs/apache-selfsigned.crt
+		SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+		<FilesMatch "\.(cgi|shtml|phtml|php)$">
+				SSLOptions +StdEnvVars
+		</FilesMatch>
+		<Directory /usr/lib/cgi-bin>
+				SSLOptions +StdEnvVars
+		</Directory>
+	</VirtualHost>
+</IfModule>
+```
+Add the following to /etc/apache2/sites-available/000-default.conf:
+* `sudo vim /etc/apache2/sites-available/000-default.conf`
+    * `Redirect "/" "https://10.11.201.42/“`
+* Run the following commands:
+    * `sudo a2enmod ssl ; sudo a2enmod headers ; sudo a2ensite default-ssl ; sudo a2enconf ssl-params ; sudo apache2ctl configtest ; sudo systemctl restart apache2
+
+`sudo vim /var/www/html/index.html` and change something in the file, the refresh browser and check that the changes have been applied.
+
+CHANGE crontab:
+* `sudo vim /etc/crontab’ and change something.
+* `sudo bash /root/crontab_monitor.sh`
+* `su -` to root
+* `mutt` to check the mail for root (q to exit)
+
+Use the hacker_VM to execute portscans and DDoS attacks.
+* It has `nmap` installed.
+
+DDoS attack: `ab -k -c 360 -n 20000 http://10.11.201.42/`
+`sudo tail -F /var/log/fail2ban.log`
+`sudo fail2ban-client status sshd` :::: to check ssh banned actions
+`sudo fail2ban-client status http-get-dos`
+`fail2ban-client set http-get-dos unbanip 10.11.3.1` OR ‘unban’ executable
+
+Scan for open ports
+* `sudo lsof -i -P -n | grep "LISTEN”’
+* `sudo iptables --list | head`
+* `iptables -D INPUT 1`
+* `sudo service restart portsentry` restarts the portstentry
+* `lsof -i -P -n | grep "LISTEN"` command to check listened and open ports
+
+
+systemctl list-units --type service --all --state active | grep ‘traefik’
+sudo systemctl disable console-setup.service
+sudo systemctl disable keyboard-setup.service
+sudo systemctl disable apt-daily.timer
+sudo systemctl disable apt-daily-upgrade.timer
+sudo systemctl disable rsyslog.service
+
