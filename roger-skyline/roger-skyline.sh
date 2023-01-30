@@ -165,7 +165,7 @@ VBoxManage startvm $VM
 # apt update && apt upgrade -y && apt install sudo vim ufw fail2ban mailutils apache2 portsentry -y && sudo ufw limit 56789/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443
 # apt install net-tools
 
-# sudo adduser mmakinen && sudo adduser mmakinen sudo
+# sudo adduser mmak && sudo adduser mmak sudo
 # auto enp0s3
 #iface enp0s3 inet static
 #	address 10.12.179.153
@@ -257,3 +257,71 @@ VBoxManage startvm $VM
 # sudo service apache2 restart
 
 # Now, you should be able to access your website using https:// and you can confirm the SSL certificate is self-signed by checking in the browser, it will show a warning message as the certificate is not verified by a trusted CA.
+
+CHECK THE SIZE OF PARTITION:
+* lsblk
+
+CHECK THE SERVICES:
+* systemctl list-units --type service --all --state active
+* apt-get update && apt-get upgrade
+
+CREATE A SUPERUSER
+* sudo adduser temp && sudo adduser temp sudo
+
+CHANGE THE SSHD_CONFIG
+* sudo vim /etc/ssh/sshd_config
+* sudo systemctl restart sshd && sudo systemctl status ssh
+* ssh-keygen -f ~/.ssh/vmkey && ssh-add ~/.ssh/vmkey && ssh-copy-id -i ~/.ssh/vmkey temp@10.12.179.153 -p 56789
+* ssh temp@10.12.179.153 -p 56789
+
+CHANGE THE SSHD_CONFIG
+* sudo vim /etc/ssh/sshd_config
+    * comment and uncomment
+* sudo systemctl restart sshd ; sudo systemctl status ssh
+
+EXIT
+* ssh temp@10.12.179.153 -p 56789
+
+CHECK DCHP
+* ip addr
+* cat /etc/network/interfaces
+
+CHANGE net mask
+* sudo vim /etc/network/interfaces
+* sudo systemctl restart networking.service
+* ip addr
+
+CHECK FIREWALL RULES
+* sudo ufw status verbose
+* sudo netstat -tulpn | grep LISTEN
+* sudo systemctl list-unit-files --type service | grep "enabled "
+
+OPEN ATTACK_VM
+* ssh hacker@10.11.198.158
+* ab -k -c 360 -n 20000 http://10.11.201.42
+* sudo tail -F /var/log/fail2ban.log
+* sudo fail2ban-client status http-get-dos
+* sudo fail2ban-client status sshd
+* sudo fail2ban-client banned
+
+PORTS LISTENED and SCAN
+* nmap 10.12.179.153
+* sudo iptables --list | head
+
+UP TO DATE?
+* sudo apt update && sudo apt upgrade 
+
+SCRIPT FOR UPDATES
+* su -
+* cd /root && ls
+* cat update.sh
+
+CRONTAB -e ( CHECK the last two lines)
+* crontab -e
+
+CRONTAB changed mail
+* sudo vim /etc/crontab
+* sudo bash /root/crontab_check.sh
+
+https://10.12.179.153
+systemctl list-units --type service --all --state active
